@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<title>Citizen Swords against the Ogre King</title>
+		<link rel="stylesheet" href="style.css">
+		<script src="data.js"></script>
+		<script src="handlers.js"></script>
+		<script src="model.js"></script>
+		<script src="view.js"></script>
+	</head>
+
+	<body>
+		
+		<div id='mainMenuDiv'>
+		
+			<button onclick = 'handlers.newGame()'>New Game</button>
+		
+		</div>
+		
+		<div id='mapDiv'>
+			
+			<div id='mapBackgroundDiv' class='mapOverlay'>
+				<img id='mapBackgroundImg' src='img/background.jpg' />
+			</div>
+			
+			<div id='mapGridDiv' class='mapOverlay'></div>
+			
+			<div id ='mapMobDiv' class='mapOverlay'></div>
+		
+		</div>
+		
+		<div id='companyHQDiv'>
+		
+		</div>
+		
+		<div id='dialogueDiv'>
+					
+			<div id ='focusMobDiv'></div>
+		
+		</div>
+	
+	</body>
+
+</html>

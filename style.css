@@ -1,0 +1,70 @@
+body {
+	font-family: sans-serif;
+	cursor: default;
+	text-align: center;
+	}
+
+#mainMenuDiv {
+	text-align: left;
+	}
+	
+#mapDiv {
+	margin-left: auto;
+	margin-right: auto;
+	border: 2px dashed red;
+	width: 75vw;
+	height: 50vw;
+	position: relative;
+	overflow: scroll;
+	}
+	
+.mapOverlay {
+	position: absolute;
+	top: 0px;
+	left: 0px;
+	}
+
+#mapBackgroundDiv {
+	z-index: 1;
+	width: 100vw;
+	height: 100vw;
+	}
+
+#mapGridDiv {
+	z-index: 2;
+	width: 150vw;
+	height: 100vw;
+	}
+
+#mapBackgroundImg {
+	width: 150vw;
+	height: 100vw;
+	}
+
+.mapRow {
+	clear: both;
+	}
+
+.mapTile {
+	position: relative;
+	float: left;
+/* 	border: 1px dashed blue; */
+	}
+
+.tileCanvas {
+	}
+
+.oddRowSpacer {
+	float: left;
+/* 	border: 1px dotted purple; */
+	}
+
+.mobDiv {
+	z-index: 3;
+	position: relative;
+	transition: all 1s;
+	}
+
+.mobImg {
+	height: 100%;
+	}
