@@ -2,15 +2,16 @@ var map = {};
 var mobs = [];
 
 function Map(sizeX,sizeY) {
-	if (sizeX == undefined) {sizeX = 20};
-	if (sizeY == undefined) {sizeY = 12};
+	if (sizeX == undefined) {sizeX = 30};
+	if (sizeY == undefined) {sizeY = 15};
 	
 	var hexes = [];
 	
 	for (y=0;y<sizeY;y++) {
 		for (x=0;x<sizeX;x++) {
-				var newHex = new Hex(x,y);
-				hexes.push(newHex);
+			var type = ["open","open","open","pit","wall"][Math.random() * 5 << 0]
+			var newHex = new Hex(x,y,type);
+			hexes.push(newHex);
 		};
 	};
 	
@@ -62,9 +63,10 @@ function Map(sizeX,sizeY) {
 	this.hexes = hexes;
 };
 
-function Hex(x,y) {
+function Hex(x,y,type) {
 	this.x = x;
 	this.y = y;
+	this.type = type;
 	
 	this.adjacent = [];
 	this.visible = [];
@@ -90,7 +92,7 @@ function Mob() {
 		for (i=0;i<this.remainingMove;i++) {
 			for (h in moveOptions) {
 				for (a in moveOptions[h].adjacent) {
-					if (moveOptions.indexOf(moveOptions[h].adjacent[a]) == -1) {
+					if (moveOptions.indexOf(moveOptions[h].adjacent[a]) == -1 && moveOptions[h].adjacent[a].type === "open") {
 						newMoveOptions.push(moveOptions[h].adjacent[a]);
 					};
 				};

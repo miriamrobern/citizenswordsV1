@@ -16,32 +16,23 @@ var view = {
 		
 		document.getElementById('mapGridDiv').innerHTML = "";
 		
-		var lastRow = -1;
-		var newMapRow;
-		var rowEvenOdd = true;
 		for (i in map.hexes) {
-			if (map.hexes[i].y !== lastRow) {
-				newMapRow = document.createElement('div');
-				document.getElementById('mapGridDiv').appendChild(newMapRow);
-				newMapRow.className = "mapRow";
-				lastRow = map.hexes[i].y;
-				if (rowEvenOdd) {
-					var spacerDiv = document.createElement('div');
-					spacerDiv.className = "oddRowSpacer";
-					spacerDiv.style.width = "2vw";
-					spacerDiv.innerHTML = '<img />';
-					newMapRow.appendChild(spacerDiv);
-					rowEvenOdd = false;
-				} else {
-					rowEvenOdd = true;
-				};
-			};
 			var newHexDiv = document.createElement('div');
-			newMapRow.appendChild(newHexDiv);
+			document.getElementById('mapGridDiv').appendChild(newHexDiv);
+			
 			newHexDiv.className = "mapTile";
 			newHexDiv.id = "hex_" + map.hexes[i].x + "_" + map.hexes[i].y;
+			
+			var hexPosition = {};
+			hexPosition.left = map.hexes[i].x * 4;
+			hexPosition.top = map.hexes[i].y * 4;
+			if (map.hexes[i].y % 2 === 0) {hexPosition.left += 2};
+			newHexDiv.style.left = hexPosition.left + "vw";
+			newHexDiv.style.top = hexPosition.top + "vw";
+			
 			newHexDiv.style.width = "4vw";
 			newHexDiv.style.height = "4vw";
+			
 			newHexDiv.setAttribute("onmouseover","handlers.hexMouseOver("+map.hexes[i].x+","+map.hexes[i].y+",'over')");
 			newHexDiv.setAttribute("onmouseleave","handlers.hexMouseOver("+map.hexes[i].x+","+map.hexes[i].y+",'left')");
 			newHexDiv.setAttribute("onclick","handlers.hexSelect("+map.hexes[i].x+","+map.hexes[i].y+")");
@@ -50,11 +41,15 @@ var view = {
 			newHexCanvas.className = "tileCanvas";
 			newHexDiv.appendChild(newHexCanvas);
 			
+			if (map.hexes[i].type === "open") {
+			
 			var draw = newHexCanvas.getContext('2d');
 			var size = document.documentElement.clientWidth * 0.04;
 			var x = size / 2;
 			var y = size / 2;
 			view.drawHex(draw,x,y,size,false);
+			
+			};
 			
 			map.hexes[i].div = newHexDiv;
 		};
@@ -65,7 +60,7 @@ var view = {
 		document.getElementById('mapMobDiv').innerHTML = '';
 		for (i in mobs) {
 			var newMobDiv = document.createElement('div');
-			newMobDiv.className = 'mobDiv mapOverlay';
+			newMobDiv.className = 'mobDiv';
 			document.getElementById('mapMobDiv').appendChild(newMobDiv);
 
 			newMobDiv.setAttribute("onclick","handlers.mobSelect("+i+")");
@@ -89,7 +84,7 @@ var view = {
 			newMobDiv.style.right = mobPosition.right + "px";
 			
 			newMobDiv.style.height = hexPosition.height + "px";
-			newMobDiv.style.height = hexPosition.width + "px";
+			newMobDiv.style.width = hexPosition.width + "px";
 			
 			mobs[i].div = newMobDiv;
 			
@@ -137,15 +132,17 @@ var view = {
 			style = 'selectable';
 		};
 		
-		var size = document.documentElement.clientWidth * 0.04;
-		var x = size / 2;
-		var y = size / 2;
-		view.drawHex(draw,x,y,size,style);
-		
-		// Identify hex for mouseover 'what is in this tile' use later?
+		var hex = undefined;
 		for (i in map.hexes) {
-			if (map.hexes[i].x === x && map.hexes[i].y === y) {var hex = map.hexes[i]};
-		}
+			if (map.hexes[i].x === x && map.hexes[i].y === y) {hex = map.hexes[i]}
+		};
+		if (hex.type === "open") {
+			var size = document.documentElement.clientWidth * 0.04;
+			var x = size / 2;
+			var y = size / 2;
+			view.drawHex(draw,x,y,size,style);
+		};
+		
 	},
 	
 	selectMob: function(mob) {
@@ -175,7 +172,7 @@ var view = {
 		var destinationHex = document.getElementById('hex_'+mob.x+"_"+mob.y);
 		
 		var hexPosition = destinationHex.getBoundingClientRect();
-		var mapPosition = document.getElementById('mapDiv').getBoundingClientRect();
+		var mapPosition = document.getElementById('mapMobDiv').getBoundingClientRect();
 		var mobPosition = {}
 		mobPosition.top = hexPosition.top - mapPosition.top;
 		mobPosition.left = hexPosition.left - mapPosition.left;

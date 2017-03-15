@@ -11,7 +11,6 @@ body {
 #mapDiv {
 	margin-left: auto;
 	margin-right: auto;
-	border: 2px dashed red;
 	width: 75vw;
 	height: 50vw;
 	position: relative;
@@ -36,6 +35,11 @@ body {
 	height: 100vw;
 	}
 
+#mapMobDiv {
+	width: 150vw;
+	height: 100vw;
+	}
+
 #mapBackgroundImg {
 	width: 150vw;
 	height: 100vw;
@@ -46,8 +50,7 @@ body {
 	}
 
 .mapTile {
-	position: relative;
-	float: left;
+	position: absolute;
 /* 	border: 1px dashed blue; */
 	}
 
