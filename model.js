@@ -1,18 +1,34 @@
 var map = {};
 var mobs = [];
 
-function Map(sizeX,sizeY) {
-	if (sizeX == undefined) {sizeX = 30};
-	if (sizeY == undefined) {sizeY = 15};
+function Map(level) {
+	if (level == undefined) {level = firstLevel};
 	
+	// Blank Map
 	var hexes = [];
-	
-	for (y=0;y<sizeY;y++) {
-		for (x=0;x<sizeX;x++) {
-// 			var type = ["open","open","open","pit","wall"][Math.random() * 5 << 0]
-			var type = ["open","open","open","wall","wall"][Math.random() * 5 << 0]
-			var newHex = new Hex(x,y,type);
+	for (y=0;y<level.sizeY;y++) {
+		for (x=0;x<level.sizeX;x++) {
+			var newHex = new Hex(x,y);
 			hexes.push(newHex);
+		};
+	};
+	this.hexes = hexes;
+	
+	// Walls
+	for (i in level.walls) {
+		for (h in hexes) {
+			if (hexes[h].x == level.walls[i].x && hexes[h].y == level.walls[i].y ) {
+				hexes[h].type = "wall";
+			};
+		};
+	};
+	
+	// Pits
+	for (i in level.pits) {
+		for (h in hexes) {
+			if (hexes[h].x == level.pits[i].x && hexes[h].y == level.pits[i].y ) {
+				hexes[h].type = "pit";
+			};
 		};
 	};
 	
@@ -60,26 +76,34 @@ function Map(sizeX,sizeY) {
 		if (hexUp2 !== undefined) {hexes[i].adjacent.push(hexUp2);};
 		if (hexDown2 !== undefined) {hexes[i].adjacent.push(hexDown2);};
 	};
+		
 	
-	this.hexes = hexes;
+	// End Map
 };
 
 function Hex(x,y,type) {
+	
+	if ( type == undefined ) { type = "open" };
+	
 	this.x = x;
 	this.y = y;
 	this.type = type;
 	
 	this.adjacent = [];
-	this.visible = [];
-	this.passable = [];
 	
 };
 
-function Mob() {
-	this.x = 0;
-	this.y = 0;
-	this.location = map.hexes[0];
-	this.img = "img/figure.png";
+function Mob(id,x,y) {
+
+	this.x = x;
+	this.y = y;	
+	for (h in map.hexes) {
+		if (map.hexes[h].x === x && map.hexes[h].y === y) {
+			this.location = map.hexes[h];
+		}
+	};
+	
+	this.img = id.img;
 	
 	this.move = 4;
 	this.remainingMove = 4;
@@ -109,8 +133,8 @@ function Mob() {
 		}
 		
 		var removeList = [];
-		var mobCoords = {x:this.x,y:this.y};
-		if (this.y % 2 === 0) {mobCoords.x += 0.5};
+		var mobCoords = {x:this.location.x,y:this.location.y};
+		if (this.location.y % 2 === 0) {mobCoords.x += 0.5};
 		for (i in visible) {
 			var targetCoords = {x:visible[i].x,y:visible[i].y};
 			if (visible[i].y % 2 === 0) {targetCoords.x += 0.5}
@@ -123,7 +147,6 @@ function Mob() {
 				var semiperimeter = ( sightlineDist + mobWallDist + targetWallDist ) / 2;
 				var area = Math.pow(semiperimeter*(semiperimeter - sightlineDist)*(semiperimeter - mobWallDist)*(semiperimeter - targetWallDist),.5);
 				var height = 2 * area / sightlineDist;
-				console.log(height);
 				if (height < 0.7 && mobWallDist < sightlineDist && targetWallDist < sightlineDist  && walls[w] !== visible[i]) {
 					removeList.push(visible[i]);
 					w = 999;
@@ -160,14 +183,14 @@ function Mob() {
 		view.selectableHexes(moveOptions);
 	};
 	
-	this.move = function(hex,path) {
+	this.move = function(hex) {
 		this.x = hex.x;
 		this.y = hex.y;
 		this.location = hex;
 		
-		this.remainingMove -= path.length;
+// 		this.remainingMove -= path.length;
 		
-		view.moveMob(this,path);
+		view.moveMob(this);
 		this.look();
 	};
 };

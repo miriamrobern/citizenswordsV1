@@ -12,7 +12,12 @@ var view = {
 		view.refreshMapMobs();
 	},
 	
-	setupFog: function() {
+	displayMapBackground: function(level) {
+		var mapBackgroundImg = document.getElementById('mapBackgroundImg');
+		mapBackgroundImg.src = level.background;
+	},
+	
+	displayFog: function() {
 		
 		for (i in map.hexes) {
 			var newFogDiv = document.createElement('div');
@@ -74,14 +79,17 @@ var view = {
 			newHexDiv.appendChild(newHexCanvas);
 			
 			if (map.hexes[i].type === "open") {
-			
-			var draw = newHexCanvas.getContext('2d');
-			var size = document.documentElement.clientWidth * 0.04;
-			var x = size / 2;
-			var y = size / 2;
-			view.drawHex(draw,x,y,size,false);
-			
+				var draw = newHexCanvas.getContext('2d');
+				var size = document.documentElement.clientWidth * 0.04;
+				var x = size / 2;
+				var y = size / 2;
+				view.drawHex(draw,x,y,size,false);
 			};
+			
+			var newHexCoords = document.createElement('p');
+			newHexCoords.className = 'hexCoords';
+			newHexCoords.innerHTML = "(" + map.hexes[i].x + "," + map.hexes[i].y + ")";
+			newHexDiv.appendChild(newHexCoords);
 			
 			map.hexes[i].div = newHexDiv;
 		};

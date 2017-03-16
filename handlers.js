@@ -1,9 +1,28 @@
 var handlers = {
 
 	newGame: function() {
-		map = new Map();
-		mob = new Mob();
-		view.setupFog();
+	
+		var level = firstLevel;
+	
+		// Map
+		map = {};
+		mobs = [];
+		document.getElementById('mapGridDiv').innerHTML = '';
+		document.getElementById('mapMobDiv').innerHTML = '';
+		map = new Map(level);
+		view.displayMapBackground(level);
+		view.displayFog();
+		
+		// Mobs
+		for (i in level.startLocations) {
+			var newMob = new Mob(heroes[i],level.startLocations[i].x,level.startLocations[i].y);
+			newMob.look();
+		};
+	
+		for (i in level.mobs) {
+			var newMob = new Mob(level.mobs[0].id,level.mobs[0].x,level.mobs[0].y);
+		};
+		
 		view.displayMap();
 	},
 	
@@ -18,7 +37,7 @@ var handlers = {
 			};
 		}
 		if (view.focus.mob !== undefined && view.focus.range.indexOf(selectedHex) !== -1) {
-			view.focus.mob.move(selectedHex,[]);
+			view.focus.mob.move(selectedHex);
 		};
 	},
 	
