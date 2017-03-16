@@ -76,6 +76,8 @@ var view = {
 			
 			var newHexCanvas = document.createElement('canvas');
 			newHexCanvas.className = "tileCanvas";
+			newHexCanvas.setAttribute("height","50px");
+			newHexCanvas.setAttribute("width","50px");
 			newHexDiv.appendChild(newHexCanvas);
 			
 			if (map.hexes[i].type === "open") {
@@ -110,7 +112,7 @@ var view = {
 			newMobImg.className = "mobImg";
 			newMobDiv.appendChild(newMobImg);
 		
-			var hexPosition = document.getElementById('hex_'+mobs[i].x+'_'+mobs[i].y).getBoundingClientRect();
+			var hexPosition = document.getElementById('hex_'+mobs[i].location.x+'_'+mobs[i].location.y).getBoundingClientRect();
 			var mapPosition = document.getElementById('mapMobDiv').getBoundingClientRect();
 			var mobPosition = {}
 			mobPosition.top = hexPosition.top - mapPosition.top;

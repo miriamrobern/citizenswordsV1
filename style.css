@@ -4,13 +4,6 @@ body {
 	text-align: center;
 	}
 
-/* 
-canvas {
-	width: 100%;
-	height: 100%;
-	}
- */
-
 #mainMenuDiv {
 	text-align: left;
 	}
@@ -36,17 +29,9 @@ canvas {
 
 #mapGridDiv {
 	z-index: 2;
-/* 
-	width: 150vw;
-	height: 100vw;
- */
 	}
 
 #mapMobDiv {
-/* 
-	width: 150vw;
-	height: 100vw;
- */
 	}
 
 #mapBackgroundImg {

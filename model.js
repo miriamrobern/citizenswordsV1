@@ -95,8 +95,6 @@ function Hex(x,y,type) {
 
 function Mob(id,x,y) {
 
-	this.x = x;
-	this.y = y;	
 	for (h in map.hexes) {
 		if (map.hexes[h].x === x && map.hexes[h].y === y) {
 			this.location = map.hexes[h];
