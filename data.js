@@ -2,7 +2,7 @@
  var heroes = [
  
  	{
- 		name: "Daisy",
+ 		name: "Daisy Moucau",
  		img: 'img/minotaur.png',
  	},
  

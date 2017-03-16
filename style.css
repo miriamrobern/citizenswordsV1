@@ -49,6 +49,7 @@ body {
 	}
 
 .tileCanvas {
+	opacity = 0.3;
 	}
 
 .oddRowSpacer {
@@ -59,7 +60,7 @@ body {
 .mobDiv {
 	z-index: 3;
 	position: absolute;
-	transition: all 1s;
+	transition: all .2s;
 	}
 
 .mobImg {

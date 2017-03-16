@@ -134,6 +134,7 @@ var view = {
 	},
 	
 	drawHex: function(draw,x,y,size,style) {
+		draw.clearRect(0,0,50,50);
 		draw.moveTo(x,y-size/2);
 		draw.lineTo(x+(0.5 * Math.cos(Math.PI/6) * size),y-(0.5 * Math.sin(Math.PI/6) * size));
 		draw.lineTo(x+(0.5 * Math.cos(Math.PI/6) * size),y+(0.5 * Math.sin(Math.PI/6) * size));
@@ -200,11 +201,21 @@ var view = {
 		
 		// focusMob display
 		
+		var focusMobDetailsDiv = document.getElementById('focusMobDetailsDiv');
+		focusMobDetailsDiv.innerHTML = '';
+		
 		var focusMobImg = document.getElementById('focusMobImg');
 		focusMobImg.src = mob.img;
 		
-		var focusMobNameHead = document.getElementById('focusMobNameHead');
+		var focusMobNameHead = document.createElement('h3');
+		focusMobNameHead.id = 'focusMobNameHead';
 		focusMobNameHead.innerHTML = mob.name;
+		focusMobDetailsDiv.appendChild(focusMobNameHead);
+		
+		var focusMobMovesSpan = document.createElement('span');
+		focusMobMovesSpan.id = 'focusMobMovesSpan';
+		focusMobMovesSpan.innerHTML = mob.stats.remainingMove + " / " +mob.stats.move + " Move";
+		focusMobDetailsDiv.appendChild(focusMobMovesSpan);
 		
 		if (mob.player) {
 			var moveOptions = view.focus.mob.moveOptions();
@@ -223,8 +234,8 @@ var view = {
 		};
 	},
 	
-	moveMob: function(mob) {
-		var destinationHex = document.getElementById('hex_'+mob.x+"_"+mob.y);
+	moveMob: function(mob,hex) {
+		var destinationHex = document.getElementById('hex_'+hex.x+"_"+hex.y);
 		
 		var hexPosition = destinationHex.getBoundingClientRect();
 		var mapPosition = document.getElementById('mapMobDiv').getBoundingClientRect();

@@ -17,7 +17,7 @@ var handlers = {
 		for (i in level.startLocations) {
 			var newMob = new Mob(heroes[i],level.startLocations[i].x,level.startLocations[i].y);
 			newMob.player = true;
-			newMob.look();
+			newMob.look(newMob.location);
 		};
 	
 		for (i in level.mobs) {

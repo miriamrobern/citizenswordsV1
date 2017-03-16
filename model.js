@@ -1,6 +1,24 @@
 var map = {};
 var mobs = [];
 
+var game = {
+	checkEndTurn: function() {
+		console.log('end turn?');
+		var endTurn = true;
+		for (i in mobs) {
+			if (mobs[i].player && mobs[i].stats.remainingMove > 0) {
+				endTurn = false;
+			};
+		};
+		if (endTurn) {
+			for (i in mobs) {
+				mobs[i].stats.remainingMove = mobs[i].stats.move;
+				view.selectMob(view.focus.mob);
+			};
+		};
+	},
+};
+
 function Map(level) {
 	if (level == undefined) {level = firstLevel};
 	
@@ -104,16 +122,17 @@ function Mob(id,x,y) {
 	this.name = id.name;
 	this.img = id.img;
 	
-	this.move = 4;
-	this.remainingMove = 4;
+	this.stats = {};
+	this.stats.move = 4;
+	this.stats.remainingMove = 4;
 	
 	mobs.push(this);
 	
 	// Functions
-	this.look = function() {
+	this.look = function(vantage) {
 
-		var visible = [this.location];
-		for (i=0;i<5;i++) {
+		var visible = [vantage];
+		for (i=0;i<10;i++) {
 			for (v in visible) {
 				for (a in visible[v].adjacent) {
 					if (visible.indexOf(visible[v].adjacent[a]) == -1) {
@@ -132,8 +151,8 @@ function Mob(id,x,y) {
 		}
 		
 		var removeList = [];
-		var mobCoords = {x:this.location.x,y:this.location.y};
-		if (this.location.y % 2 === 0) {mobCoords.x += 0.5};
+		var mobCoords = {x:vantage.x,y:vantage.y};
+		if (vantage.y % 2 === 0) {mobCoords.x += 0.5};
 		for (i in visible) {
 			var targetCoords = {x:visible[i].x,y:visible[i].y};
 			if (visible[i].y % 2 === 0) {targetCoords.x += 0.5}
@@ -168,7 +187,7 @@ function Mob(id,x,y) {
 	this.moveOptions = function() {
 		var moveOptions = [this.location];
 		var newMoveOptions = [];
-		for (i=0;i<this.remainingMove;i++) {
+		for (i=0;i<this.stats.remainingMove;i++) {
 			for (h in moveOptions) {
 				for (a in moveOptions[h].adjacent) {
 					if (moveOptions.indexOf(moveOptions[h].adjacent[a]) == -1 && moveOptions[h].adjacent[a].type === "open") {
@@ -184,13 +203,37 @@ function Mob(id,x,y) {
 	};
 	
 	this.move = function(hex) {
-		this.x = hex.x;
-		this.y = hex.y;
+	
+		var paths = [[this.location]];
+		var newPath;
+		var newPaths = [];
+		for (i=0;i<this.stats.remainingMove+1;i++) {
+			for (p in paths) {
+				var end = paths[p][paths[p].length-1];
+				if (end === hex) {
+					var path = paths[p];
+					i = 999;
+				} else {
+					for (h in end.adjacent) {
+						if (end.adjacent[h].type === "open") {
+							newPath = paths[p].concat(end.adjacent[h]);
+							newPaths.push(newPath);
+						}
+					};
+				};
+			};
+			paths = paths.concat(newPaths);
+		};
+
+		for (p in path) {
+			var timedEvent = setTimeout(view.moveMob.bind(view,this,path[p]),p*200);
+			var timedEvent = setTimeout(this.look.bind(this,path[p]),p*200);
+		};
 		this.location = hex;
-		
-// 		this.remainingMove -= path.length;
-		
-		view.moveMob(this);
-		this.look();
+		this.stats.remainingMove -= path.length - 1 ;
+		view.selectMob(this);
+		if (this.stats.remainingMove < 1) {
+			game.checkEndTurn();
+		};
 	};
 };
