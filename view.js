@@ -12,6 +12,38 @@ var view = {
 		view.refreshMapMobs();
 	},
 	
+	setupFog: function() {
+		
+		for (i in map.hexes) {
+			var newFogDiv = document.createElement('div');
+			document.getElementById('mapMobDiv').appendChild(newFogDiv);
+			
+			newFogDiv.className = 'fogTile';
+
+			var hexPosition = {};
+			hexPosition.left = map.hexes[i].x * 4;
+			hexPosition.top = map.hexes[i].y * 4;
+			if (map.hexes[i].y % 2 === 0) {hexPosition.left += 2};
+			newFogDiv.style.left = hexPosition.left + "vw";
+			newFogDiv.style.top = hexPosition.top + "vw";
+			
+			newFogDiv.style.width = "4vw";
+			newFogDiv.style.height = "4vw";
+			
+			map.hexes[i].fogDiv = newFogDiv;
+			
+		};
+	},
+	
+	dispelFog: function(hex) {
+		hex.fogDiv.style.opacity = 0;
+		var fogDispelEvent = setTimeout(view.removeFog.bind(view,hex),500);
+	},
+	
+	removeFog: function(hex) {
+		hex.fogDiv.remove();
+	},
+	
 	displayMapGrid: function() {
 		
 		document.getElementById('mapGridDiv').innerHTML = "";
@@ -57,7 +89,7 @@ var view = {
 	
 	refreshMapMobs: function() {
 		
-		document.getElementById('mapMobDiv').innerHTML = '';
+// 		document.getElementById('mapMobDiv').innerHTML = '';
 		for (i in mobs) {
 			var newMobDiv = document.createElement('div');
 			newMobDiv.className = 'mobDiv';
@@ -71,7 +103,7 @@ var view = {
 			newMobDiv.appendChild(newMobImg);
 		
 			var hexPosition = document.getElementById('hex_'+mobs[i].x+'_'+mobs[i].y).getBoundingClientRect();
-			var mapPosition = document.getElementById('mapDiv').getBoundingClientRect();
+			var mapPosition = document.getElementById('mapMobDiv').getBoundingClientRect();
 			var mobPosition = {}
 			mobPosition.top = hexPosition.top - mapPosition.top;
 			mobPosition.bottom = hexPosition.bottom - mapPosition.bottom;

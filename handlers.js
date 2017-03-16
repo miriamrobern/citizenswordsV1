@@ -3,6 +3,7 @@ var handlers = {
 	newGame: function() {
 		map = new Map();
 		mob = new Mob();
+		view.setupFog();
 		view.displayMap();
 	},
 	

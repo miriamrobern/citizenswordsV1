@@ -71,3 +71,11 @@ body {
 .mobImg {
 	height: 100%;
 	}
+	
+.fogTile {
+	z-index: 999;
+	position: absolute;
+	transition: all 1s;
+	background-color: lightgrey;
+	opacity: 0.5;
+	}

@@ -9,7 +9,8 @@ function Map(sizeX,sizeY) {
 	
 	for (y=0;y<sizeY;y++) {
 		for (x=0;x<sizeX;x++) {
-			var type = ["open","open","open","pit","wall"][Math.random() * 5 << 0]
+// 			var type = ["open","open","open","pit","wall"][Math.random() * 5 << 0]
+			var type = ["open","open","open","wall","wall"][Math.random() * 5 << 0]
 			var newHex = new Hex(x,y,type);
 			hexes.push(newHex);
 		};
@@ -80,12 +81,68 @@ function Mob() {
 	this.location = map.hexes[0];
 	this.img = "img/figure.png";
 	
-	this.move = 3;
-	this.remainingMove = 3;
+	this.move = 4;
+	this.remainingMove = 4;
 	
 	mobs.push(this);
 	
 	// Functions
+	this.look = function() {
+
+		var visible = [this.location];
+		for (i=0;i<5;i++) {
+			for (v in visible) {
+				for (a in visible[v].adjacent) {
+					if (visible.indexOf(visible[v].adjacent[a]) == -1) {
+						visible.push(visible[v].adjacent[a]);
+					};
+				};
+			};
+		};
+		
+		// remove hexes whose sightlines collide with a wall
+		var walls = [];
+		for (i in visible) {
+			if (visible[i].type === "wall") {
+				walls.push(visible[i]);
+			};
+		}
+		
+		var removeList = [];
+		var mobCoords = {x:this.x,y:this.y};
+		if (this.y % 2 === 0) {mobCoords.x += 0.5};
+		for (i in visible) {
+			var targetCoords = {x:visible[i].x,y:visible[i].y};
+			if (visible[i].y % 2 === 0) {targetCoords.x += 0.5}
+			var sightlineDist = Math.pow(Math.pow(targetCoords.x-mobCoords.x,2)+Math.pow(targetCoords.y-mobCoords.y,2),.5);
+			for (w=0;w<walls.length;w++) {
+				var wallCoords = {x:walls[w].x,y:walls[w].y};
+				if (walls[w].y % 2 === 0) {wallCoords.x += 0.5};
+				var mobWallDist = Math.pow(Math.pow(wallCoords.x-mobCoords.x,2)+Math.pow(wallCoords.y-mobCoords.y,2),.5);
+				var targetWallDist = Math.pow(Math.pow(targetCoords.x-wallCoords.x,2)+Math.pow(targetCoords.y-wallCoords.y,2),.5);
+				var semiperimeter = ( sightlineDist + mobWallDist + targetWallDist ) / 2;
+				var area = Math.pow(semiperimeter*(semiperimeter - sightlineDist)*(semiperimeter - mobWallDist)*(semiperimeter - targetWallDist),.5);
+				var height = 2 * area / sightlineDist;
+				console.log(height);
+				if (height < 0.7 && mobWallDist < sightlineDist && targetWallDist < sightlineDist  && walls[w] !== visible[i]) {
+					removeList.push(visible[i]);
+					w = 999;
+					}
+			};
+		};
+		
+		for (i in removeList) {
+			visible.splice(visible.indexOf(removeList[i]),1);
+		};
+
+		for (i in visible) {
+			if (!visible[i].seen) {
+				visible[i].seen = true;
+				view.dispelFog(visible[i]);
+			}
+		};
+	};
+	
 	this.moveOptions = function() {
 		var moveOptions = [this.location];
 		var newMoveOptions = [];
@@ -111,5 +168,6 @@ function Mob() {
 		this.remainingMove -= path.length;
 		
 		view.moveMob(this,path);
+		this.look();
 	};
 };
