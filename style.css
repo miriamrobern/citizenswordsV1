@@ -82,3 +82,21 @@ body {
 	text-align: center;
 	display: none;
 	}
+	
+#focusMobDiv {
+	position: relative;
+	margin-left: auto;
+	margin-right: auto;
+	width: 75vw;
+	height: 25vw;
+	overflow-y:scroll;
+	text-align: left;
+	}
+
+#focusMobImg {
+	float:left;
+	width: 20vw;
+	}
+
+#focusMobDetailsDiv {
+	}

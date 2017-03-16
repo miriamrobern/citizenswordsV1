@@ -7,7 +7,7 @@
  	},
  
  	{
- 		name: "Megalostithos",
+ 		name: "Mx. Stout",
  		img: 'img/dwarf.png',
  	},
  	
@@ -16,6 +16,7 @@
  var dataMobs = {
  
  	hellhound: {
+ 		name: "Hellhound",
  		img: "img/hellhound.png",
  	},
  

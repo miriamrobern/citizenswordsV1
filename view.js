@@ -188,15 +188,28 @@ var view = {
 	},
 	
 	selectMob: function(mob) {
+
+		// Clear old selectable hexes
+		var oldRange = view.focus.range;
+		view.focus.range = [];
+		for (i in oldRange) {
+			view.mouseOverTile(oldRange[i].x,oldRange[i].y,'left')
+		};
 	
 		view.focus.mob = mob;
 		
-		var focusMobImg = document.createElement('img');
-		focusMobImg.src = mob.img;
-		document.getElementById('focusMobDiv').innerHTML = '';
-		document.getElementById('focusMobDiv').appendChild(focusMobImg);
+		// focusMob display
 		
-		view.focus.mob.moveOptions();
+		var focusMobImg = document.getElementById('focusMobImg');
+		focusMobImg.src = mob.img;
+		
+		var focusMobNameHead = document.getElementById('focusMobNameHead');
+		focusMobNameHead.innerHTML = mob.name;
+		
+		if (mob.player) {
+			var moveOptions = view.focus.mob.moveOptions();
+			view.selectableHexes(moveOptions);
+		};
 	},
 	
 	selectableHexes: function(hexes) {

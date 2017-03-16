@@ -101,6 +101,7 @@ function Mob(id,x,y) {
 		}
 	};
 	
+	this.name = id.name;
 	this.img = id.img;
 	
 	this.move = 4;
@@ -178,7 +179,8 @@ function Mob(id,x,y) {
 			moveOptions = moveOptions.concat(newMoveOptions);
 			newMoveOptions = [];
 		};
-		view.selectableHexes(moveOptions);
+		return moveOptions;
+		// view.selectableHexes(moveOptions);
 	};
 	
 	this.move = function(hex) {
