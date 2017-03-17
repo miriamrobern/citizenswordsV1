@@ -1,26 +1,4 @@
  
- var heroes = [
- 
- 	{
- 		name: "Daisy Moucau",
- 		img: 'img/minotaur.png',
- 	},
- 
- 	{
- 		name: "Mx. Stout",
- 		img: 'img/dwarf.png',
- 	},
- 	
- ];
- 
- var dataMobs = {
- 
- 	hellhound: {
- 		name: "Hellhound",
- 		img: "img/hellhound.png",
- 	},
- 
- };
  
  var dataWounds = {
  
@@ -90,6 +68,151 @@
  		penalty: -3,
  	},
  	
+ 
+ };
+ 
+ var dataManeuvers = {
+ 	
+ 	arcaneBolt: {
+ 		name: "Arcane Bolt",
+ 		id: 'arcaneBolt',
+ 		img: '',
+ 		cost: {focus:1,move:1},
+ 		target: true,
+ 		targetHostiles: true,
+ 		targetTeam: false,
+ 		range: 10,
+ 		execute: function() {},
+ 	},
+ 	
+ 	exhort: {
+ 		name: "Exhort",
+ 		id: 'exhort',
+ 		img: '',
+ 		cost: {move:1},
+ 		target: true,
+ 		targetHostiles: false,
+ 		targetTeam: true,
+ 		range: 2,
+ 		execute: function() {},
+ 	},
+ 
+ 	hack: {
+ 		name: "Hack",
+ 		id: 'hack',
+ 		img: '',
+ 		cost: {move:1,strength:1},
+ 		target: true,
+ 		targetHostiles: true,
+ 		targetTeam: false,
+ 		range: 1,
+ 		execute: function(target) {},
+ 	},
+ 
+ 	lunge: {
+ 		name: "Lunge",
+ 		id: 'lunge',
+ 		img: '',
+ 		cost: {move:1,strength:1},
+ 		target: true,
+ 		targetHostiles: true,
+ 		targetTeam: false,
+ 		range: 2,
+ 		execute: function(target) {},
+ 	},
+ 
+ 	overhead: {
+ 		name: "Overhead Strike",
+ 		id: 'overhead',
+ 		img: '',
+ 		cost: {move:1,strength:3},
+ 		target: true,
+ 		targetHostiles: true,
+ 		targetTeam: false,
+ 		range: 1,
+ 		execute: function(target) {},
+ 	},
+ 	
+ 	taunt: {
+ 		name: "Taunt",
+ 		id: 'taunt',
+ 		img: '',
+ 		cost: {move:1},
+ 		target: false,
+ 		range: 2,
+ 		execute: function() {},
+ 	},
+ 	
+ 	trance: {
+ 		name: "Quick Trance",
+ 		id: 'trance',
+ 		img: '',
+ 		cost: {move:4},
+ 		target: false,
+ 		range: 0,
+ 		execute: function() {},
+ 	},
+ 
+ };
+ 
+ 
+ var heroes = [
+ 
+ 	{
+ 		name: "Daisy Moucau",
+ 		img: 'img/minotaur.png',
+ 		stats: {
+ 			morale: 70,
+ 			move: 4,
+ 			moveMax: 4,
+ 			strength: 5,
+ 			strengthMax: 5,
+ 			focus: 4,
+ 			focusMax: 4,
+ 		},
+ 		maneuvers: [
+ 			dataManeuvers.lunge,
+ 			dataManeuvers.overhead,
+ 			dataManeuvers.exhort,
+ 		],
+ 	},
+ 
+ 	{
+ 		name: "Mx. Stout",
+ 		img: 'img/dwarf.png',
+ 		stats: {
+ 			morale: 100,
+ 			move: 3,
+ 			moveMax: 3,
+ 			strength: 3,
+ 			strengthMax: 3,
+ 			focus: 6,
+ 			focusMax: 6,
+ 		},
+ 		maneuvers: [
+ 			dataManeuvers.hack,
+ 			dataManeuvers.arcaneBolt,
+ 			dataManeuvers.trance,
+ 		],
+ 	},
+ 	
+ ];
+ 
+ var dataMobs = {
+ 
+ 	hellhound: {
+ 		name: "Hellhound",
+ 		img: "img/hellhound.png",
+ 		stats: {
+ 			morale: 100,
+ 			move: 6,
+ 			moveMax: 6,
+ 			strength: 5,
+ 			strengthMax: 5,
+ 			focus: 2,
+ 			focusMax: 2,
+ 		},
+ 	},
  
  };
  

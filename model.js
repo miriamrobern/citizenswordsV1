@@ -163,16 +163,15 @@ function Mob(id,x,y) {
 	this.name = id.name;
 	this.img = id.img;
 	
-	this.stats = {};
-	this.stats.morale = 100;
-	this.stats.move = 4;
-	this.stats.moveMax = 4;
-	this.stats.strength = 6;
-	this.stats.strengthMax = 8;
-	this.stats.focus = 7;
-	this.stats.focusMax = 8;
+	this.stats = id.stats;
 	
-	this.wounds = {move:[],strength:[],focus:[]};
+	if (id.wounds == undefined) {
+		this.wounds = {move:[],strength:[],focus:[]};
+	} else {
+		this.wounds = id.wounds;
+	};
+	
+	this.maneuvers = id.maneuvers;
 	
 	mobs.push(this);
 	
@@ -224,12 +223,52 @@ function Mob(id,x,y) {
 			visible.splice(visible.indexOf(removeList[i]),1);
 		};
 
+		// Dispel Fog Hexes
 		for (i in visible) {
 			if (!visible[i].seen) {
 				visible[i].seen = true;
 				view.dispelFog(visible[i]);
 			}
 		};
+	};
+	
+	this.removeBlockedHexes = function(visible,vantage) {
+
+		// remove hexes whose sightlines collide with a wall
+		var walls = [];
+		for (i in visible) {
+			if (visible[i].type === "wall") {
+				walls.push(visible[i]);
+			};
+		}
+		
+		var removeList = [];
+		var mobCoords = {x:vantage.x,y:vantage.y};
+		if (vantage.y % 2 === 0) {mobCoords.x += 0.5};
+		for (i in visible) {
+			var targetCoords = {x:visible[i].x,y:visible[i].y};
+			if (visible[i].y % 2 === 0) {targetCoords.x += 0.5}
+			var sightlineDist = Math.pow(Math.pow(targetCoords.x-mobCoords.x,2)+Math.pow(targetCoords.y-mobCoords.y,2),.5);
+			for (w=0;w<walls.length;w++) {
+				var wallCoords = {x:walls[w].x,y:walls[w].y};
+				if (walls[w].y % 2 === 0) {wallCoords.x += 0.5};
+				var mobWallDist = Math.pow(Math.pow(wallCoords.x-mobCoords.x,2)+Math.pow(wallCoords.y-mobCoords.y,2),.5);
+				var targetWallDist = Math.pow(Math.pow(targetCoords.x-wallCoords.x,2)+Math.pow(targetCoords.y-wallCoords.y,2),.5);
+				var semiperimeter = ( sightlineDist + mobWallDist + targetWallDist ) / 2;
+				var area = Math.pow(semiperimeter*(semiperimeter - sightlineDist)*(semiperimeter - mobWallDist)*(semiperimeter - targetWallDist),.5);
+				var height = 2 * area / sightlineDist;
+				if (height < 0.7 && mobWallDist < sightlineDist && targetWallDist < sightlineDist  && walls[w] !== visible[i]) {
+					removeList.push(visible[i]);
+					w = 999;
+					}
+			};
+		};
+		
+		for (i in removeList) {
+			visible.splice(visible.indexOf(removeList[i]),1);
+		};
+	
+		return visible;
 	};
 	
 	this.moveOptions = function() {
@@ -247,7 +286,39 @@ function Mob(id,x,y) {
 			newMoveOptions = [];
 		};
 		return moveOptions;
-		// view.selectableHexes(moveOptions);
+	};
+	
+	this.rangeOptions = function(vantage,maneuver) {
+		var range;
+		if (vantage == undefined) {vantage = this.location};
+		if (maneuver == undefined) {
+			range = 10
+		} else {
+			range = maneuver.range;
+		};
+		
+		var rangeOptions = [this.location];
+		var newRangeOptions = [];
+		for (i=0;i<range;i++) {
+			for (h in rangeOptions) {
+				for (a in rangeOptions[h].adjacent) {
+					if (rangeOptions.indexOf(rangeOptions[h].adjacent[a]) == -1) {
+						newRangeOptions.push(rangeOptions[h].adjacent[a]);
+					};
+				};
+			};
+			rangeOptions = rangeOptions.concat(newRangeOptions);
+			newRangeOptions = [];
+		};
+		rangeOptions = this.removeBlockedHexes(rangeOptions,vantage);
+		
+		var openRangeOptions = []
+		for (i in rangeOptions) {
+			if (rangeOptions[i].type === 'open') {
+				openRangeOptions.push(rangeOptions[i]);
+			};
+		};
+		return openRangeOptions;
 	};
 	
 	this.move = function(hex) {

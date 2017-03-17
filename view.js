@@ -143,8 +143,14 @@ var view = {
 		draw.lineTo(x-(0.5 * Math.cos(Math.PI/6) * size),y-(0.5 * Math.sin(Math.PI/6) * size));
 		draw.lineTo(x,y-size/2);
 		if (style === 'over') {
+			draw.strokeStyle = 'lightblue';
+			draw.lineWidth = 2;
+		} else if (style === 'targetable') {
 			draw.strokeStyle = 'red';
 			draw.lineWidth = 2;
+		} else if (style === 'targetable-over') {
+			draw.strokeStyle = 'red';
+			draw.lineWidth = 4;
 		} else if (style === 'selectable') {
 			draw.strokeStyle = 'green';
 			draw.lineWidth = 2;
@@ -158,6 +164,18 @@ var view = {
 		draw.stroke();
 	},
 	
+	drawHexRange: function(hexes,style) {
+		if (style == undefined) {style = 'selectable';};
+		view.focus.range = hexes;
+		for (i in hexes) {
+			var draw = hexes[i].div.firstChild.getContext('2d');
+			var size = document.documentElement.clientWidth * 0.04;
+			var x = size / 2;
+			var y = size / 2;
+			view.drawHex(draw,x,y,size,style);
+		};
+	},
+	
 	mouseOverTile: function(x,y,style) {
 		var hexDiv = document.getElementById('hex_'+x+'_'+y);
 		var draw = hexDiv.firstChild.getContext('2d');
@@ -169,10 +187,14 @@ var view = {
 				withinRange = true;
 			};
 		};
-		if (withinRange && style === 'over') {
+		if (withinRange && style === 'over' && handlers.mode === 'move') {
 			style = 'selectable-over';
-		} else if (withinRange) {
+		} else if (withinRange && handlers.mode === 'move') {
 			style = 'selectable';
+		} else if (withinRange && style === 'over' && handlers.mode === 'target') {
+			style = 'targetable-over';
+		} else if (withinRange && handlers.mode === 'target') {
+			style = 'targetable';
 		};
 		
 		var hex = undefined;
@@ -277,19 +299,35 @@ var view = {
 		}
 		
 		if (mob.player) {
+			var focusMobManveuversDiv = document.createElement('div');
+			focusMobManveuversDiv.id = 'focusMobManveuversDiv';
+			focusMobDetailsDiv.appendChild(focusMobManveuversDiv);
+		
+			var focusMobManeuversList = document.createElement('ol');
+			focusMobManeuversList.id = 'focusMobManeuversList';
+			focusMobManveuversDiv.appendChild(focusMobManeuversList);
+		
+			for (i in mob.maneuvers) {
+				var focusMobManeuverLi = document.createElement('li');
+				focusMobManeuverLi.id = 'focusMobManeuverLi'+i;
+				focusMobManeuverLi.innerHTML = mob.maneuvers[i].name;
+				focusMobManeuverLi.className = 'focusMobManeuverLi';
+				focusMobManeuverLi.setAttribute('onclick','handlers.selectManeuver("'+mob.maneuvers[i].id+'",focusMobManeuverLi'+i+')');
+				focusMobManeuversList.appendChild(focusMobManeuverLi);
+			};
+		
 			var moveOptions = view.focus.mob.moveOptions();
-			view.selectableHexes(moveOptions);
+			view.drawHexRange(moveOptions,'selectable');
 		};
 	},
 	
-	selectableHexes: function(hexes) {
-		view.focus.range = hexes;
-		for (i in hexes) {
-			var draw = hexes[i].div.firstChild.getContext('2d');
-			var size = document.documentElement.clientWidth * 0.04;
-			var x = size / 2;
-			var y = size / 2;
-			view.drawHex(draw,x,y,size,'selectable');
+	deselectManeuverButton: function(button) {
+		button.className = 'focusMobManeuverLi';
+	},
+	
+	deselectAllManeuverButtons: function() {
+		for (i in view.focus.mob.maneuvers) {
+			document.getElementById('focusMobManeuverLi'+i).className = 'focusMobManeuverLi';
 		};
 	},
 	

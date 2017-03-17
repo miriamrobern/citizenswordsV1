@@ -123,7 +123,7 @@ body {
 #focusMobMoraleBar {
 	background-color: red;
 	border: 1px solid darkgray;
-	width: 30vw;
+	width: 48vw;
 	margin-left: 20.5vw;
 	}
 
@@ -171,6 +171,34 @@ body {
 	padding: .5vw;
 	text-align: left;
 	font-size: .8em;
+	}
+
+#focusMobManveuversDiv {
+	float: left;
+	margin: .5vw;
+	width: 16vw;
+	}
+
+#focusMobManeuversList {
+	list-style-position: inside;
+	margin: 0;
+	padding: 0;
+	}
+
+.focusMobManeuverLi {
+	background-color:gray;
+	color: lightgray;
+	border: 2px solid #777;
+	margin-bottom: .25vw;
+	width: 100%;
+	padding: .4vw;
+	font-size: .8em;
+	transition: all 0.25s;
+	}
+
+.focusMobManeuverLiSelected {
+	background-color: lightblue;
+	color: #777;
 	}
 
 
