@@ -48,5 +48,21 @@ var handlers = {
 	mobSelect: function(index) {
 		view.selectMob(mobs[index]);
 	},
+	
+	showDialogueDiv: function() {
+		document.getElementById('dialogueBacksplash').style.display = 'block';
+	},
+	
+	hideDialogueDiv: function() {
+		document.getElementById('dialogueBacksplash').style.display = 'none';
+	},
 
+
+}
+
+window.onclick = function(event) {
+	var dialogueBacksplash = document.getElementById('dialogueBacksplash');
+	if (event.target == dialogueBacksplash) {
+		dialogueBacksplash.style.display = 'none';
+	};
 }

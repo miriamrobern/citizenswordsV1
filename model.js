@@ -3,7 +3,6 @@ var mobs = [];
 
 var game = {
 	checkEndTurn: function() {
-		console.log('end turn?');
 		var endTurn = true;
 		for (i in mobs) {
 			if (mobs[i].player && mobs[i].stats.remainingMove > 0) {
@@ -46,6 +45,15 @@ function Map(level) {
 		for (h in hexes) {
 			if (hexes[h].x == level.pits[i].x && hexes[h].y == level.pits[i].y ) {
 				hexes[h].type = "pit";
+			};
+		};
+	};
+	
+	// Events
+	for (i in level.events) {
+		for (h in hexes) {
+			if (hexes[h].x == level.events[i].x && hexes[h].y == level.events[i].y) {
+				hexes[h].event = level.events[i];
 			};
 		};
 	};
@@ -125,6 +133,10 @@ function Mob(id,x,y) {
 	this.stats = {};
 	this.stats.move = 4;
 	this.stats.remainingMove = 4;
+	this.stats.strength = 6;
+	this.stats.remainingStrength = 4;
+	this.stats.focus = 8;
+	this.stats.remainingFocus = 6;
 	
 	mobs.push(this);
 	
@@ -225,12 +237,16 @@ function Mob(id,x,y) {
 			paths = paths.concat(newPaths);
 		};
 
-		for (p in path) {
+		for (p=1;p<path.length;p++) {
 			var timedEvent = setTimeout(view.moveMob.bind(view,this,path[p]),p*200);
 			var timedEvent = setTimeout(this.look.bind(this,path[p]),p*200);
+			this.location = path[p];
+			this.stats.remainingMove--;
+			if (this.location.event !== undefined) {
+				var timedEvent = setTimeout(path[p].event.execute.bind(this),p*250+250);
+				p = 999;
+			};
 		};
-		this.location = hex;
-		this.stats.remainingMove -= path.length - 1 ;
 		view.selectMob(this);
 		if (this.stats.remainingMove < 1) {
 			game.checkEndTurn();

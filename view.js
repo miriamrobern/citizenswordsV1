@@ -212,10 +212,20 @@ var view = {
 		focusMobNameHead.innerHTML = mob.name;
 		focusMobDetailsDiv.appendChild(focusMobNameHead);
 		
-		var focusMobMovesSpan = document.createElement('span');
-		focusMobMovesSpan.id = 'focusMobMovesSpan';
-		focusMobMovesSpan.innerHTML = mob.stats.remainingMove + " / " +mob.stats.move + " Move";
-		focusMobDetailsDiv.appendChild(focusMobMovesSpan);
+		var focusMobMovesP = document.createElement('p');
+		focusMobMovesP.id = 'focusMobMovesP';
+		focusMobMovesP.innerHTML = mob.stats.remainingMove + " / " +mob.stats.move + " Move";
+		focusMobDetailsDiv.appendChild(focusMobMovesP);
+		
+		var focusMobStrengthP = document.createElement('p');
+		focusMobStrengthP.id = 'focusMobStrengthP';
+		focusMobStrengthP.innerHTML = mob.stats.remainingStrength + " / " +mob.stats.strength + " Strength";
+		focusMobDetailsDiv.appendChild(focusMobStrengthP);
+		
+		var focusMobFocusP = document.createElement('p');
+		focusMobFocusP.id = 'focusMobFocusP';
+		focusMobFocusP.innerHTML = mob.stats.remainingFocus + " / " +mob.stats.focus + " Focus";
+		focusMobDetailsDiv.appendChild(focusMobFocusP);
 		
 		if (mob.player) {
 			var moveOptions = view.focus.mob.moveOptions();
@@ -253,5 +263,33 @@ var view = {
 		};
 
 	},
+	
+	displayDialogue: function(text,name,bust,bustPosition) {
+	
+		handlers.hideDialogueDiv();
 
+		if (text !== undefined) {
+			document.getElementById('dialogueTextDiv').innerHTML = "<span class='dialogueNameSpan'>"+name+": </span>";
+		}
+		
+		document.getElementById('dialogueTextDiv').innerHTML += text;
+		
+		var dialogueBustLeftImg = document.getElementById('dialogueBustLeftImg');
+		if (bustPosition === "left") {
+			dialogueBustLeftImg.style.display = 'block';
+			dialogueBustLeftImg.src = bust;
+		} else {
+			dialogueBustLeftImg.style.display = 'none';
+		}
+		
+		var dialogueBustRightImg = document.getElementById('dialogueBustRightImg');
+		if (bustPosition === "right") {
+			dialogueBustRightImg.style.display = 'block';
+			dialogueBustRightImg.src = bust;
+		} else {
+			dialogueBustRightImg.style.display = 'none';
+		}
+		
+		handlers.showDialogueDiv();
+	},
 }

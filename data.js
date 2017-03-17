@@ -100,6 +100,24 @@
  		},
  	],
  	
- 	events: [],
+ 	events: [
+ 		{
+ 			x: 2,
+ 			y: 4,
+ 			execute: function() {
+ 				view.displayDialogue("The hellhound that has plagued the locals lurks within this cave!",this.name,this.img,"left");
+ 				this.location.event = undefined;
+ 			},
+ 		},
+ 		
+ 		{
+ 			x: 8,
+ 			y: 2,
+ 			execute: function() {
+ 				view.displayDialogue("Aren't you just the cutest little puppy?  Yes you are!  YES YOU ARE!!!<br />That's it, I'm taking you home!",this.name,this.img,"left");
+ 				this.location.event = undefined;
+ 			},
+ 		},
+ 	],
  
  };
