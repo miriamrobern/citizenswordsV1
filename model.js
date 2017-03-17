@@ -2,6 +2,31 @@ var map = {};
 var mobs = [];
 
 var game = {
+
+	loadLevel: function(level) {
+
+		// Map
+		map = {};
+		mobs = [];
+		map = new Map(level);
+		
+		view.displayMapBackground(level);
+		view.displayFog();
+		
+		// Mobs
+		for (i in level.startLocations) {
+			var newMob = new Mob(heroes[i],level.startLocations[i].x,level.startLocations[i].y);
+			newMob.player = true;
+			newMob.look(newMob.location);
+		};
+	
+		for (i in level.mobs) {
+			var newMob = new Mob(level.mobs[i].id,level.mobs[i].x,level.mobs[i].y);
+		};
+
+	
+	},
+
 	checkEndTurn: function() {
 		var endTurn = true;
 		for (i in mobs) {
@@ -48,6 +73,49 @@ var game = {
 			view.selectMob(view.focus.mob);
 		};
 	
+	},
+	
+	simpleAttack: function(attacker,attackStat,defender,defenseStat,dodge,wounds) {
+		
+		if (wounds == undefined) {wounds = [dataWounds.blunt];};
+		wound = wounds[Math.random() * wounds.length << 0];
+		
+		var result;
+		
+		var toHit = 0;
+		for (i=0;i<attacker.stats[attackStat];i++) {
+			toHit += Math.random();
+		};
+
+		var toDefend = 0;
+		var passiveDefense = defender.stats[defenseStat];
+		var activeDefense = 0;
+		if (dodge) {activeDefense = defender.stats.move;};
+		for (i=0;i<passiveDefense+activeDefense;i++) {
+			toDefend += Math.random();
+		};
+		
+		var woundType;
+		if (toHit > toDefend) {
+			console.log('wounded: ',toHit,' vs ',toDefend);
+			var woundLevel = Math.floor(toHit/toDefend)-1;
+			if (wound.names.length > woundLevel) {
+				woundName = wound.names[woundLevel];
+			} else {
+				console.log(wound);
+				woundName = wound.names[wound.names.length-1];
+			};
+			woundPenalty = -1 * (1+woundLevel);
+			console.log(attacker.name,'inflicts a',woundName,'on',defender.name);
+			defender.takeWound({type:wound,name:woundName,stat:wound.stat,penalty:woundPenalty});
+			result = woundType;
+		} else {
+			console.log('defend: ',toHit,' vs ',toDefend);
+			result = false;
+		};
+		
+		return result;
+		
 	},
 };
 
@@ -163,7 +231,10 @@ function Mob(id,x,y) {
 	this.name = id.name;
 	this.img = id.img;
 	
-	this.stats = id.stats;
+	this.stats = {};
+	for (i in id.stats) {
+		this.stats[i] = id.stats[i];
+	};
 	
 	if (id.wounds == undefined) {
 		this.wounds = {move:[],strength:[],focus:[]};
@@ -346,16 +417,18 @@ function Mob(id,x,y) {
 
 		for (p=1;p<path.length;p++) {
 			var timedEvent = setTimeout(view.moveMob.bind(view,this,path[p]),p*200);
-			var timedEvent = setTimeout(this.look.bind(this,path[p]),p*200);
+			if (this.player) {
+				var timedEvent = setTimeout(this.look.bind(this,path[p]),p*200);
+			};
 			this.location = path[p];
 			this.stats.move--;
-			if (this.location.event !== undefined) {
+			if (this.location.event !== undefined && this.player) {
 				var timedEvent = setTimeout(path[p].event.execute.bind(this),p*250+250);
 				p = 999;
 			};
 		};
 		view.selectMob(this);
-		if (this.stats.move < 1) {
+		if (this.stats.move < 1 && this.player) {
 			game.checkEndTurn();
 		};
 	};
@@ -363,11 +436,19 @@ function Mob(id,x,y) {
 	this.takeWound = function(wound) {
 		console.log('taking a wound: ',wound);
 		
+		// jiggle
+		var timedEvent = setTimeout(view.tiltMob.bind(this,this,15),1);
+		var timedEvent = setTimeout(view.tiltMob.bind(this,this,-15),150);
+		var timedEvent = setTimeout(view.tiltMob.bind(this,this,0),300);
+		
 		// add wound
 		this.wounds[wound.stat].push(wound);
 		
 		// adjust morale
 		this.stats.morale = Math.max(0,this.stats.morale + ( 200 * wound.penalty / (this.stats.moveMax + this.stats.strengthMax + this.stats.focusMax) ) );
+		if (this.stats.morale === 0) {
+			var timedEvent = setTimeout(view.tiltMob.bind(this,this,90),1000);
+		};
 		
 		view.selectMob(view.focus.mob);
 	};

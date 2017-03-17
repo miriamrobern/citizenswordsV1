@@ -351,6 +351,10 @@ var view = {
 
 	},
 	
+	tiltMob: function(mob,tilt) {
+		mob.div.style.transform= "rotate("+tilt+"deg)";
+	},
+	
 	displayDialogue: function(text,name,bust,bustPosition) {
 	
 		handlers.hideDialogueDiv();

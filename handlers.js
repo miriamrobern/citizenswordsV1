@@ -3,27 +3,12 @@ var handlers = {
 	newGame: function() {
 	
 		var level = firstLevel;
-	
-		// Map
-		map = {};
-		mobs = [];
+		
 		document.getElementById('mapGridDiv').innerHTML = '';
 		document.getElementById('mapMobDiv').innerHTML = '';
-		map = new Map(level);
-		view.displayMapBackground(level);
-		view.displayFog();
 		
-		// Mobs
-		for (i in level.startLocations) {
-			var newMob = new Mob(heroes[i],level.startLocations[i].x,level.startLocations[i].y);
-			newMob.player = true;
-			newMob.look(newMob.location);
-		};
-	
-		for (i in level.mobs) {
-			var newMob = new Mob(level.mobs[0].id,level.mobs[0].x,level.mobs[0].y);
-		};
-		
+		game.loadLevel(level);
+			
 		document.getElementById('endTurnButton').disabled = false;
 		
 		view.displayMap();
@@ -86,7 +71,6 @@ var handlers = {
 	
 	selectManeuver: function(maneuver,button) {
 		maneuver = dataManeuvers[maneuver];
-		console.log(button);
 		if (this.mode === "target") {
 			view.deselectAllManeuverButtons();
 		};
@@ -112,8 +96,10 @@ var handlers = {
 	},
 	
 	executeManeuver: function(maneuver,target) {
-		console.log('execute ',maneuver,'on',target);
+		console.log('execute ',maneuver.name,'on',target.name);
 		this.mode = undefined;
+		
+		maneuver.execute(view.focus.mob,target);
 		
 		// Maneuver Cost
 		for (i in maneuver.cost) {

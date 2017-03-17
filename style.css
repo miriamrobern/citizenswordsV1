@@ -129,6 +129,7 @@ body {
 
 #focusMobMoralFillBlock {
 	background-color: green;
+	transition: all .2s;
 	}
 
 .focusMobStatDiv {

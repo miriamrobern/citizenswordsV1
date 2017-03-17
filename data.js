@@ -2,70 +2,54 @@
  
  var dataWounds = {
  
- 	bewitched: {
- 		name: "Bewitched",
- 		stat: "focus",
- 		penalty: -3,
- 	},
- 
  	bite: {
- 		name: "Bite",
+ 		names: ["Bitten"],
  		stat: "strength",
- 		penalty: -2,
  	},
  
- 	dazed: {
- 		name: "Dazed",
+ 	blunt: {
+ 		names: ["Dazed","Dizzy","Concussion"],
  		stat: "focus",
- 		penalty: -1,
  	},
  
- 	laceration: {
- 		name: "Lacerated Chest",
+ 	fire: {
+ 		names: ["Light Burns","Moderate Burns","Serious Burns"],
  		stat: "strength",
- 		penalty: -3,
  	},
  
- 	intimidation: {
- 		name: "Intimidated",
- 		stat: "focus",
- 		penalty: -1,
- 	},
- 
- 	scratch: {
- 		name: "Just a Scratch",
- 		stat: "strength",
- 		penalty: -1,
- 	},
- 
- 	sprain: {
- 		name: "Sprained Ankle",
+ 	cold: {
+ 		names: ["Chilled","Frozen"],
  		stat: "move",
- 		penalty: -2,
  	},
  
- 	stab: {
- 		name: "Stab Wound",
+ 	sharp: {
+ 		names: ["Just a Scratch","Cut Up","Seriously Lacerated","Blood Everywhere"],
  		stat: "strength",
- 		penalty: -4,
+ 	},
+ 
+ 	fear: {
+ 		names: ["Daunted","Intimidated","Scared","Terrified"],
+ 		stat: "focus",
+ 	},
+ 	
+ 	restraints: {
+ 		names: ["Tangled","Restrained","Trussed Up"],
+ 		stat: "move",
  	},
  
  	sting: {
- 		name: "Sting",
+ 		names: ["Stung"],
  		stat: "focus",
- 		penalty: -1,
  	},
- 
- 	strain: {
- 		name: "Strained Knee",
- 		stat: "move",
- 		penalty: -1,
+ 	
+ 	torsion: {
+ 		names: ['Strain','Sprain','Dislocated Joint','Broken Bone'],
+ 		stat: 'move',
  	},
- 
- 	terror: {
- 		name: "Terror",
- 		stat: "focus",
- 		penalty: -3,
+ 	
+ 	vertigo: {
+ 		names: ['Dizzy','Nauseous'],
+ 		stat: 'move',
  	},
  	
  
@@ -82,7 +66,9 @@
  		targetHostiles: true,
  		targetTeam: false,
  		range: 10,
- 		execute: function() {},
+ 		execute: function(attacker,defender) {
+ 			game.simpleAttack(attacker,'focus',defender,'armor',true,[dataWounds.fire,dataWounds.fear])
+ 		},
  	},
  	
  	exhort: {
@@ -94,7 +80,11 @@
  		targetHostiles: false,
  		targetTeam: true,
  		range: 2,
- 		execute: function() {},
+ 		execute: function(enactor,target) {
+ 			var moraleCost = enactor.stats.morale * 0.2;
+ 			target.stats.morale = Math.min(100,target.stats.morale + moraleCost*2);
+ 			enactor.stats.morale -= moraleCost;
+ 		},
  	},
  
  	hack: {
@@ -106,7 +96,9 @@
  		targetHostiles: true,
  		targetTeam: false,
  		range: 1,
- 		execute: function(target) {},
+ 		execute: function(attacker,defender) {
+ 			game.simpleAttack(attacker,'strength',defender,'armor',true,[dataWounds.sharp])
+ 		},
  	},
  
  	lunge: {
@@ -118,7 +110,9 @@
  		targetHostiles: true,
  		targetTeam: false,
  		range: 2,
- 		execute: function(target) {},
+ 		execute: function(attacker,defender) {
+ 			game.simpleAttack(attacker,'focus',defender,'armor',true,[dataWounds.sharp])
+ 		},
  	},
  
  	overhead: {
@@ -130,7 +124,37 @@
  		targetHostiles: true,
  		targetTeam: false,
  		range: 1,
- 		execute: function(target) {},
+ 		execute: function(attacker,defender) {
+ 			game.simpleAttack(attacker,'strength',defender,'armor',true,[dataWounds.sharp,dataWounds.fear])
+ 		},
+ 	},
+ 	
+ 	puppyKisses: {
+ 		name: "Puppy Kisses",
+ 		id: 'puppyKisses',
+ 		img: '',
+ 		cost: {move:1,focus:1},
+ 		target: true,
+ 		targetHostiles: false,
+ 		targetTeam: true,
+ 		range: 1,
+ 		execute: function(enactor,target) {
+ 			target.stats.morale = 100;
+ 		},
+ 	},
+ 
+ 	shieldSlam: {
+ 		name: "Shield Slam",
+ 		id: 'shieldSlam',
+ 		img: '',
+ 		cost: {move:1},
+ 		target: true,
+ 		targetHostiles: true,
+ 		targetTeam: false,
+ 		range: 1,
+ 		execute: function(attacker,defender) {
+ 			game.simpleAttack(attacker,'strength',defender,'strength',true,[dataWounds.blunt])
+ 		},
  	},
  	
  	taunt: {
@@ -150,7 +174,9 @@
  		cost: {move:4},
  		target: false,
  		range: 0,
- 		execute: function() {},
+ 		execute: function() {
+ 			view.focus.mob.stats.focus = view.focus.mob.stats.focusMax;
+ 		},
  	},
  
  };
@@ -169,6 +195,7 @@
  			strengthMax: 5,
  			focus: 4,
  			focusMax: 4,
+ 			armor: 2,
  		},
  		maneuvers: [
  			dataManeuvers.lunge,
@@ -181,16 +208,18 @@
  		name: "Mx. Stout",
  		img: 'img/dwarf.png',
  		stats: {
- 			morale: 100,
+ 			morale: 60,
  			move: 3,
  			moveMax: 3,
  			strength: 3,
  			strengthMax: 3,
  			focus: 6,
  			focusMax: 6,
+ 			armor: 4,
  		},
  		maneuvers: [
  			dataManeuvers.hack,
+ 			dataManeuvers.shieldSlam,
  			dataManeuvers.arcaneBolt,
  			dataManeuvers.trance,
  		],
@@ -211,6 +240,40 @@
  			strengthMax: 5,
  			focus: 2,
  			focusMax: 2,
+ 			armor: 4,
+ 		},
+ 		maneuvers: [
+ 			dataManeuvers.puppyKisses,
+ 		],
+ 	},
+ 
+ 	rat: {
+ 		name: "Rat",
+ 		img: "img/rat.png",
+ 		stats: {
+ 			morale: 100,
+ 			move: 2,
+ 			moveMax: 2,
+ 			strength: 2,
+ 			strengthMax: 2,
+ 			focus: 2,
+ 			focusMax: 2,
+ 			armor: 1,
+ 		},
+ 	},
+ 
+ 	giant: {
+ 		name: "Giant",
+ 		img: "img/giant.png",
+ 		stats: {
+ 			morale: 100,
+ 			move: 1,
+ 			moveMax: 1,
+ 			strength: 1,
+ 			strengthMax: 1,
+ 			focus: 2,
+ 			focusMax: 2,
+ 			armor: 2,
  		},
  	},
  
@@ -292,6 +355,18 @@
 			y:2,
 			id:dataMobs.hellhound,
  		},
+ 		
+ 		{
+			x:6,
+			y:9,
+			id:dataMobs.rat,
+ 		},
+ 		
+ 		{
+			x:7,
+			y:9,
+			id:dataMobs.rat,
+ 		},
  	],
  	
  	events: [
@@ -311,6 +386,19 @@
  				view.displayDialogue("Aren't you just the cutest little puppy?  Yes you are!  YES YOU ARE!!!<br />That's it, I'm taking you home!",this.name,this.img,"left");
  				this.location.event = undefined;
  				mobs[2].player = true;
+ 			},
+ 		},
+ 		
+ 		{
+ 			x: 5,
+ 			y: 4,
+ 			execute: function() {
+ 				view.displayDialogue("Ugh, I see rat droppings.  Is this cave filled with giant rats?  What is this, the first level of a fantasy RPG?",this.name,this.img,"left");
+ 				this.location.event = undefined;
+ 				mobs[4].stats.move = 4;
+ 				mobs[4].move(map.hexes[67]);
+ 				mobs[3].stats.move = 4;
+ 				mobs[3].move(map.hexes[77]);
  			},
  		},
  	],
