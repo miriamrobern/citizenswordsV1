@@ -5,16 +5,49 @@ var game = {
 	checkEndTurn: function() {
 		var endTurn = true;
 		for (i in mobs) {
-			if (mobs[i].player && mobs[i].stats.remainingMove > 0) {
+			if (mobs[i].player && mobs[i].stats.move > 0) {
 				endTurn = false;
 			};
 		};
-		if (endTurn) {
-			for (i in mobs) {
-				mobs[i].stats.remainingMove = mobs[i].stats.move;
-				view.selectMob(view.focus.mob);
+		if (endTurn) {game.endTurn()};
+	},
+	
+	endTurn: function() {
+	
+		// Refresh Move
+		for (i in mobs) {
+		
+			var adjustedStrengthMax = mobs[i].stats.strengthMax;
+			for (w in mobs[i].wounds.strength) {
+				adjustedStrengthMax += mobs[i].wounds.strength[w].penalty;
 			};
+			if (mobs[i].stats.strength < adjustedStrengthMax) {
+				mobs[i].stats.strength++;
+			};
+			
+			var adjustedFocusMax = mobs[i].stats.focusMax;
+			for (w in mobs[i].wounds.focus) {
+				adjustedFocusMax += mobs[i].wounds.focus[w].penalty;
+			};
+			if (mobs[i].stats.focus < adjustedFocusMax) {
+				mobs[i].stats.focus += mobs[i].stats.move;
+			};
+			
+			var adjustedMoveMax = mobs[i].stats.moveMax;
+			for (w in mobs[i].wounds.move) {
+				adjustedMoveMax += mobs[i].wounds.move[w].penalty;
+			};
+			if (mobs[i].stats.move < adjustedMoveMax) {
+				mobs[i].stats.move = adjustedMoveMax;
+			};
+			
+			if (mobs[i].stats.morale <= 0) {
+				mobs[i].stats.move = 0;
+			};
+			
+			view.selectMob(view.focus.mob);
 		};
+	
 	},
 };
 
@@ -131,12 +164,15 @@ function Mob(id,x,y) {
 	this.img = id.img;
 	
 	this.stats = {};
+	this.stats.morale = 100;
 	this.stats.move = 4;
-	this.stats.remainingMove = 4;
+	this.stats.moveMax = 4;
 	this.stats.strength = 6;
-	this.stats.remainingStrength = 4;
-	this.stats.focus = 8;
-	this.stats.remainingFocus = 6;
+	this.stats.strengthMax = 8;
+	this.stats.focus = 7;
+	this.stats.focusMax = 8;
+	
+	this.wounds = {move:[],strength:[],focus:[]};
 	
 	mobs.push(this);
 	
@@ -199,7 +235,7 @@ function Mob(id,x,y) {
 	this.moveOptions = function() {
 		var moveOptions = [this.location];
 		var newMoveOptions = [];
-		for (i=0;i<this.stats.remainingMove;i++) {
+		for (i=0;i<this.stats.move;i++) {
 			for (h in moveOptions) {
 				for (a in moveOptions[h].adjacent) {
 					if (moveOptions.indexOf(moveOptions[h].adjacent[a]) == -1 && moveOptions[h].adjacent[a].type === "open") {
@@ -219,7 +255,7 @@ function Mob(id,x,y) {
 		var paths = [[this.location]];
 		var newPath;
 		var newPaths = [];
-		for (i=0;i<this.stats.remainingMove+1;i++) {
+		for (i=0;i<this.stats.move+1;i++) {
 			for (p in paths) {
 				var end = paths[p][paths[p].length-1];
 				if (end === hex) {
@@ -241,15 +277,27 @@ function Mob(id,x,y) {
 			var timedEvent = setTimeout(view.moveMob.bind(view,this,path[p]),p*200);
 			var timedEvent = setTimeout(this.look.bind(this,path[p]),p*200);
 			this.location = path[p];
-			this.stats.remainingMove--;
+			this.stats.move--;
 			if (this.location.event !== undefined) {
 				var timedEvent = setTimeout(path[p].event.execute.bind(this),p*250+250);
 				p = 999;
 			};
 		};
 		view.selectMob(this);
-		if (this.stats.remainingMove < 1) {
+		if (this.stats.move < 1) {
 			game.checkEndTurn();
 		};
+	};
+	
+	this.takeWound = function(wound) {
+		console.log('taking a wound: ',wound);
+		
+		// add wound
+		this.wounds[wound.stat].push(wound);
+		
+		// adjust morale
+		this.stats.morale = Math.max(0,this.stats.morale + ( 200 * wound.penalty / (this.stats.moveMax + this.stats.strengthMax + this.stats.focusMax) ) );
+		
+		view.selectMob(view.focus.mob);
 	};
 };

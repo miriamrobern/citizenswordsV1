@@ -102,6 +102,66 @@ body {
 #focusMobDetailsDiv {
 	}
 
+#focusMobMoraleHead {
+	display: inline;
+	padding: .5vw;
+	color: white;
+	opacity: 0.75;
+	}
+
+#focusMobMoraleBar {
+	background-color: red;
+	border: 1px solid darkgray;
+	width: 30vw;
+	margin-left: 20.5vw;
+	}
+
+#focusMobMoralFillBlock {
+	background-color: green;
+	}
+
+.focusMobStatDiv {
+	float: left;
+	margin: .5vw;
+	padding: .5vw;
+	text-align: center;
+	width: 8vw;
+	}
+
+#focusMobMoveDiv {
+	background-color: goldenrod;
+	border: 2px solid yellow;
+	color: yellow;
+	}
+
+#focusMobStrengthDiv {
+	background-color: purple;
+	border: 2px solid lavender;
+	color: lavender;
+	}
+
+#focusMobFocusDiv {
+	background-color: darkslateblue;
+	border: 2px solid lightblue;
+	color: lightblue;
+	}
+
+.bigStatSpan {
+	font-size: 3em;
+	font-weight: bold;
+	}
+
+.statNameSpan {
+	font-weight: bold;
+	}
+
+.woundDiv {
+	margin: .5vw;
+	padding: .5vw;
+	text-align: left;
+	font-size: .8em;
+	}
+
 
 /* Dialogue Pop Up */
 
@@ -182,10 +242,13 @@ body {
 	margin-right: 2.5vw;
 	min-height: 10vw;
 	padding: 2.5vw;
+	text-align: left;
+	font-size: 1.2em;
 	}
 	
 .dialogueNameSpan {
 	font-weight: bold;
+	font-size: 1.5em;
 	}
 
 #dialogueCloseDiv {

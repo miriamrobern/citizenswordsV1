@@ -22,6 +22,77 @@
  
  };
  
+ var dataWounds = {
+ 
+ 	bewitched: {
+ 		name: "Bewitched",
+ 		stat: "focus",
+ 		penalty: -3,
+ 	},
+ 
+ 	bite: {
+ 		name: "Bite",
+ 		stat: "strength",
+ 		penalty: -2,
+ 	},
+ 
+ 	dazed: {
+ 		name: "Dazed",
+ 		stat: "focus",
+ 		penalty: -1,
+ 	},
+ 
+ 	laceration: {
+ 		name: "Lacerated Chest",
+ 		stat: "strength",
+ 		penalty: -3,
+ 	},
+ 
+ 	intimidation: {
+ 		name: "Intimidated",
+ 		stat: "focus",
+ 		penalty: -1,
+ 	},
+ 
+ 	scratch: {
+ 		name: "Just a Scratch",
+ 		stat: "strength",
+ 		penalty: -1,
+ 	},
+ 
+ 	sprain: {
+ 		name: "Sprained Ankle",
+ 		stat: "move",
+ 		penalty: -2,
+ 	},
+ 
+ 	stab: {
+ 		name: "Stab Wound",
+ 		stat: "strength",
+ 		penalty: -4,
+ 	},
+ 
+ 	sting: {
+ 		name: "Sting",
+ 		stat: "focus",
+ 		penalty: -1,
+ 	},
+ 
+ 	strain: {
+ 		name: "Strained Knee",
+ 		stat: "move",
+ 		penalty: -1,
+ 	},
+ 
+ 	terror: {
+ 		name: "Terror",
+ 		stat: "focus",
+ 		penalty: -3,
+ 	},
+ 	
+ 
+ };
+ 
  
  var firstLevel = {
  
