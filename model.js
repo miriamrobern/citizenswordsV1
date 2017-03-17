@@ -30,7 +30,7 @@ var game = {
 				adjustedFocusMax += mobs[i].wounds.focus[w].penalty;
 			};
 			if (mobs[i].stats.focus < adjustedFocusMax) {
-				mobs[i].stats.focus += mobs[i].stats.move;
+				mobs[i].stats.focus = Math.min(adjustedFocusMax,mobs[i].stats.focus + mobs[i].stats.move);
 			};
 			
 			var adjustedMoveMax = mobs[i].stats.moveMax;

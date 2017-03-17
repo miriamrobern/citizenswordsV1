@@ -187,6 +187,7 @@
  			execute: function() {
  				view.displayDialogue("Aren't you just the cutest little puppy?  Yes you are!  YES YOU ARE!!!<br />That's it, I'm taking you home!",this.name,this.img,"left");
  				this.location.event = undefined;
+ 				mobs[2].player = true;
  			},
  		},
  	],

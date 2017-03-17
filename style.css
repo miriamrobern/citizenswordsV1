@@ -83,6 +83,17 @@ body {
 	text-align: center;
 	display: none;
 	}
+
+#buttonRowDiv {
+	position: relative;
+	margin-left: auto;
+	margin-right: auto;
+	width: 75vw;
+	text-align: right;
+	}
+
+#endTurnButton {
+	}
 	
 #focusMobDiv {
 	position: relative;

@@ -24,6 +24,8 @@ var handlers = {
 			var newMob = new Mob(level.mobs[0].id,level.mobs[0].x,level.mobs[0].y);
 		};
 		
+		document.getElementById('endTurnButton').disabled = false;
+		
 		view.displayMap();
 	},
 	
@@ -47,6 +49,10 @@ var handlers = {
 	
 	mobSelect: function(index) {
 		view.selectMob(mobs[index]);
+	},
+	
+	endTurn: function() {
+		game.endTurn();
 	},
 	
 	showDialogueDiv: function() {
