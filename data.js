@@ -185,11 +185,11 @@
  		name: "Quick Trance",
  		id: 'trance',
  		img: '',
- 		cost: {move:4},
+ 		cost: {move:2},
  		target: false,
  		range: 0,
  		execute: function() {
- 			view.focus.mob.stats.focus = view.focus.mob.stats.focusMax;
+ 			view.focus.mob.stats.focus = Math.min(view.focus.mob.stats.focus+4,view.focus.mob.stats.focusMax);
  		},
  	},
  

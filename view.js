@@ -80,8 +80,8 @@ var view = {
 			
 			var newHexCanvas = document.createElement('canvas');
 			newHexCanvas.className = "tileCanvas";
-			newHexCanvas.setAttribute("height","50px");
-			newHexCanvas.setAttribute("width","50px");
+			newHexCanvas.setAttribute("height","55px");
+			newHexCanvas.setAttribute("width","55px");
 			newHexDiv.appendChild(newHexCanvas);
 			
 			if (map.hexes[i].type === "open") {
@@ -332,6 +332,13 @@ var view = {
 					var num = parseInt(i)+1;
 					focusMobManeuverButton.innerHTML = num + '. ' + mob.maneuvers[i].name + ' ';
 					focusMobManeuverButton.setAttribute('onclick','handlers.selectManeuver("'+mob.maneuvers[i].id+'",focusMobManeuverButton'+i+')');
+					var afford = false;
+					for (c in mob.maneuvers[i].cost) {
+						if (mob.maneuvers[i].cost[c] > mob.stats[c]) {
+							afford = true;
+						};
+					};
+					focusMobManeuverButton.disabled = afford;
 					focusMobManveuversDiv.appendChild(focusMobManeuverButton);
 				};
 			};

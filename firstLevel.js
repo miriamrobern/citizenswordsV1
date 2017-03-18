@@ -1,7 +1,7 @@
 var firstLevel = {
  
  	sizeX: 12,
- 	sizeY: 10,
+ 	sizeY: 11,
  	
  	background: 'img/background.png',
  	
@@ -44,6 +44,14 @@ var firstLevel = {
  		{x:11,y:7},
  		{x:11,y:8},
  		{x:11,y:9},
+ 		{x:4,y:10},
+ 		{x:5,y:10},
+ 		{x:6,y:10},
+ 		{x:7,y:10},
+ 		{x:8,y:10},
+ 		{x:9,y:10},
+ 		{x:10,y:10},
+ 		{x:11,y:10},
  	],
  		
  	pits: [
@@ -79,6 +87,10 @@ var firstLevel = {
  		{x:0,y:7},
  		{x:0,y:8},
  		{x:0,y:9},
+ 		{x:0,y:10},
+ 		{x:1,y:10},
+ 		{x:2,y:10},
+ 		{x:3,y:10},
  	],
  	
  	mobs: [

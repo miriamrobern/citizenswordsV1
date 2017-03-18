@@ -71,7 +71,8 @@ body {
 	z-index: 999;
 	position: absolute;
 	transition: opacity 1s;
-	background-color: lightgrey;
+	background-color: lightgray;
+	outline: 3px dotted lightgray;
 	opacity: 1;
 	}
 
@@ -200,20 +201,14 @@ body {
 	transition: all 0.25s;
 	}
 
-/* 
-.focusMobManeuverButton:active {
-	outline: none;
-	};
-
-.focusMobManeuverButton:focus {
-	outline: none;
-	};
- */
-
 .focusMobManeuverButtonSelected {
 	background-color: lightblue;
 	color: #777;
 	baseline-shift: sub;
+	}
+
+.focusMobManeuverButton:disabled {
+	opacity: 0.4;
 	}
 
 .dotMove {
