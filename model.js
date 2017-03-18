@@ -16,12 +16,14 @@ var game = {
 		// Mobs
 		for (i in level.startLocations) {
 			var newMob = new Mob(heroes[i],level.startLocations[i].x,level.startLocations[i].y);
-			newMob.player = true;
 			newMob.look(newMob.location);
 		};
 	
 		for (i in level.mobs) {
 			var newMob = new Mob(level.mobs[i].id,level.mobs[i].x,level.mobs[i].y);
+			if (level.mobs[i].ai !== undefined) {
+				newMob.ai = ai[level.mobs[i].ai];
+			};
 		};
 
 	
@@ -38,6 +40,12 @@ var game = {
 	},
 	
 	endTurn: function() {
+	
+		for (i in mobs) {
+			if (!mobs[i].player) {
+				mobs[i].ai();
+			};
+		};
 	
 		// Refresh Move
 		for (i in mobs) {
@@ -70,7 +78,7 @@ var game = {
 				mobs[i].stats.move = 0;
 			};
 			
-			view.selectMob(view.focus.mob);
+			view.displayFocusMob(view.focus.mob);
 		};
 	
 	},
@@ -232,8 +240,8 @@ function Mob(id,x,y) {
 	this.img = id.img;
 	
 	this.stats = {};
-	for (i in id.stats) {
-		this.stats[i] = id.stats[i];
+	for (s in id.stats) {
+		this.stats[s] = id.stats[s];
 	};
 	
 	if (id.wounds == undefined) {
@@ -243,6 +251,12 @@ function Mob(id,x,y) {
 	};
 	
 	this.maneuvers = id.maneuvers;
+	
+	if (id.ai == undefined) {
+		this.player = true;
+	} else {
+		this.ai = ai[id.ai];
+	};
 	
 	mobs.push(this);
 	
@@ -349,13 +363,24 @@ function Mob(id,x,y) {
 			for (h in moveOptions) {
 				for (a in moveOptions[h].adjacent) {
 					if (moveOptions.indexOf(moveOptions[h].adjacent[a]) == -1 && moveOptions[h].adjacent[a].type === "open") {
-						newMoveOptions.push(moveOptions[h].adjacent[a]);
+						var unoccupied = true;
+						for (m in mobs) {
+							if (mobs[m].location === moveOptions[h].adjacent[a]) {
+								unoccupied = false;
+							};
+						};
+						if (unoccupied) {
+							newMoveOptions.push(moveOptions[h].adjacent[a]);
+						}
 					};
 				};
 			};
 			moveOptions = moveOptions.concat(newMoveOptions);
 			newMoveOptions = [];
 		};
+		
+		// Needs to remove hexes that are already occupied
+		
 		return moveOptions;
 	};
 	
@@ -414,6 +439,8 @@ function Mob(id,x,y) {
 			};
 			paths = paths.concat(newPaths);
 		};
+		
+		console.log(hex);
 
 		for (p=1;p<path.length;p++) {
 			var timedEvent = setTimeout(view.moveMob.bind(view,this,path[p]),p*200);

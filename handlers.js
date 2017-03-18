@@ -87,25 +87,22 @@ var handlers = {
 			button.className = 'focusMobManeuverLi focusMobManeuverLiSelected';
 			var targetableHexes = view.focus.mob.rangeOptions(undefined,maneuver);
 			view.drawHexRange(targetableHexes,'targetable');
-			console.log('find target');
 		} else {
-			console.log('no target');
 			button.className = 'focusMobManeuverLi focusMobManeuverLiSelected';
 			handlers.executeManeuver(maneuver);
 		};
 	},
 	
 	executeManeuver: function(maneuver,target) {
-		console.log('execute ',maneuver.name,'on',target.name);
+
 		this.mode = undefined;
-		
 		maneuver.execute(view.focus.mob,target);
 		
 		// Maneuver Cost
 		for (i in maneuver.cost) {
 			view.focus.mob.stats[i] -= maneuver.cost[i];
 		};
-		var timedEvent = setTimeout(view.selectMob.bind(this,view.focus.mob),250);
+		var timedEvent = setTimeout(view.displayFocusMob.bind(this,view.focus.mob),250);
 	},
 
 

@@ -15,6 +15,10 @@ var view = {
 	displayMapBackground: function(level) {
 		var mapBackgroundImg = document.getElementById('mapBackgroundImg');
 		mapBackgroundImg.src = level.background;
+		var totalWidth = level.sizeX * 4 + 2;
+		var totalHeight = level.sizeY * 4;
+		mapBackgroundImg.style.width = totalWidth + 'vw';
+		mapBackgroundImg.style.height = totalHeight + 'vw';
 	},
 	
 	displayFog: function() {
@@ -119,14 +123,22 @@ var view = {
 			mobPosition.bottom = hexPosition.bottom - mapPosition.bottom;
 			mobPosition.left = hexPosition.left - mapPosition.left;
 			mobPosition.right = hexPosition.right - mapPosition.right;
+			mobPosition.height = hexPosition.height;
+			mobPosition.width = hexPosition.width;
 			
-			newMobDiv.style.top = mobPosition.top + "px";
-			newMobDiv.style.left = mobPosition.left + "px";
-			newMobDiv.style.bottom = mobPosition.bottom + "px";
-			newMobDiv.style.right = mobPosition.right + "px";
+			console.log('old',mobPosition);
+			for (d in mobPosition) {
+				mobPosition[d] = mobPosition[d] * (100 / document.documentElement.clientWidth);
+			};
+			console.log('new',mobPosition);
 			
-			newMobDiv.style.height = hexPosition.height + "px";
-			newMobDiv.style.width = hexPosition.width + "px";
+			newMobDiv.style.top = mobPosition.top + "vw";
+			newMobDiv.style.left = mobPosition.left + "vw";
+			newMobDiv.style.bottom = mobPosition.bottom + "vw";
+			newMobDiv.style.right = mobPosition.right + "vw";
+			
+			newMobDiv.style.height = mobPosition.height + "vw";
+			newMobDiv.style.width = mobPosition.width + "vw";
 			
 			mobs[i].div = newMobDiv;
 			
@@ -221,104 +233,114 @@ var view = {
 	
 		view.focus.mob = mob;
 		
-		// focusMob display
-		
-		var focusMobDetailsDiv = document.getElementById('focusMobDetailsDiv');
-		focusMobDetailsDiv.innerHTML = '';
-		
-		var focusMobImg = document.getElementById('focusMobImg');
-		focusMobImg.src = mob.img;
-		
-		var focusMobNameHead = document.createElement('h3');
-		focusMobNameHead.id = 'focusMobNameHead';
-		focusMobNameHead.innerHTML = mob.name;
-		focusMobDetailsDiv.appendChild(focusMobNameHead);
-				
-		var focusMobMoraleBar = document.createElement('div');
-		focusMobMoraleBar.id = 'focusMobMoraleBar';
-		var focusMobMoralFillBlock = document.createElement('div');
-		focusMobMoralFillBlock.id = 'focusMobMoralFillBlock';
-		focusMobMoralFillBlock.style.width = mob.stats.morale + "%";
-		focusMobDetailsDiv.appendChild(focusMobMoraleBar);
-		focusMobMoraleBar.appendChild(focusMobMoralFillBlock);
-		
-		var focusMobMoraleHead = document.createElement('h4');
-		focusMobMoraleHead.innerHTML = "Morale ";
-		focusMobMoraleHead.id = 'focusMobMoraleHead';
-		focusMobMoralFillBlock.appendChild(focusMobMoraleHead);
-		
-		var focusMobMovesDiv = document.createElement('div');
-		focusMobMovesDiv.id = 'focusMobMoveDiv';
-		focusMobMovesDiv.className = 'focusMobStatDiv'; 
-		focusMobMovesDiv.innerHTML = "<span class='bigStatSpan'>" + mob.stats.move + "</span> / " +mob.stats.moveMax + "<br /><span class='statNameSpan'>Move</span>";
-		focusMobDetailsDiv.appendChild(focusMobMovesDiv);
-		
-		if (mob.wounds.move.length > 0) {
-			var focusMobMovesWoundRule = document.createElement('hr');
-			focusMobMovesDiv.appendChild(focusMobMovesWoundRule);
-			for (i in mob.wounds.move) {
-				var focusMobMovesWoundDiv = document.createElement('div');
-				focusMobMovesWoundDiv.className = 'woundDiv';
-				focusMobMovesWoundDiv.innerHTML = mob.wounds.move[i].name + " (" + mob.wounds.move[i].penalty + ")";
-				focusMobMovesDiv.appendChild(focusMobMovesWoundDiv);
-			};
-		}
-		
-		var focusMobStrengthDiv = document.createElement('div');
-		focusMobStrengthDiv.id = 'focusMobStrengthDiv';
-		focusMobStrengthDiv.className = 'focusMobStatDiv'; 
-		focusMobStrengthDiv.innerHTML = "<span class='bigStatSpan'>" + mob.stats.strength + "</span> / " +mob.stats.strengthMax + "<br /><span class='statNameSpan'>Strength</span>";
-		focusMobDetailsDiv.appendChild(focusMobStrengthDiv);
-		
-		if (mob.wounds.strength.length > 0) {
-			var focusMobMovesWoundRule = document.createElement('hr');
-			focusMobStrengthDiv.appendChild(focusMobMovesWoundRule);
-			for (i in mob.wounds.strength) {
-				var focusMobMovesWoundDiv = document.createElement('div');
-				focusMobMovesWoundDiv.className = 'woundDiv';
-				focusMobMovesWoundDiv.innerHTML = mob.wounds.strength[i].name + " (" + mob.wounds.strength[i].penalty + ")";
-				focusMobStrengthDiv.appendChild(focusMobMovesWoundDiv);
-			};
-		}
-		
-		var focusMobFocusDiv = document.createElement('div');
-		focusMobFocusDiv.id = 'focusMobFocusDiv';
-		focusMobFocusDiv.className = 'focusMobStatDiv'; 
-		focusMobFocusDiv.innerHTML = "<span class='bigStatSpan'>" + mob.stats.focus + "</span> / " +mob.stats.focusMax + "<br /><span class='statNameSpan'>Focus</span>";
-		focusMobDetailsDiv.appendChild(focusMobFocusDiv);
-		
-		if (mob.wounds.focus.length > 0) {
-			var focusMobMovesWoundRule = document.createElement('hr');
-			focusMobFocusDiv.appendChild(focusMobMovesWoundRule);
-			for (i in mob.wounds.focus) {
-				var focusMobMovesWoundDiv = document.createElement('div');
-				focusMobMovesWoundDiv.className = 'woundDiv';
-				focusMobMovesWoundDiv.innerHTML = mob.wounds.focus[i].name + " (" + mob.wounds.focus[i].penalty + ")";
-				focusMobFocusDiv.appendChild(focusMobMovesWoundDiv);
-			};
-		}
+		view.displayFocusMob();
 		
 		if (mob.player) {
-			var focusMobManveuversDiv = document.createElement('div');
-			focusMobManveuversDiv.id = 'focusMobManveuversDiv';
-			focusMobDetailsDiv.appendChild(focusMobManveuversDiv);
-		
-			var focusMobManeuversList = document.createElement('ol');
-			focusMobManeuversList.id = 'focusMobManeuversList';
-			focusMobManveuversDiv.appendChild(focusMobManeuversList);
-		
-			for (i in mob.maneuvers) {
-				var focusMobManeuverLi = document.createElement('li');
-				focusMobManeuverLi.id = 'focusMobManeuverLi'+i;
-				focusMobManeuverLi.innerHTML = mob.maneuvers[i].name;
-				focusMobManeuverLi.className = 'focusMobManeuverLi';
-				focusMobManeuverLi.setAttribute('onclick','handlers.selectManeuver("'+mob.maneuvers[i].id+'",focusMobManeuverLi'+i+')');
-				focusMobManeuversList.appendChild(focusMobManeuverLi);
-			};
-		
 			var moveOptions = view.focus.mob.moveOptions();
 			view.drawHexRange(moveOptions,'selectable');
 		};
+	},
+	
+	displayFocusMob: function() {
+
+		if (view.focus.mob !== undefined) {		
+			var mob = view.focus.mob;
+		
+			var focusMobDetailsDiv = document.getElementById('focusMobDetailsDiv');
+			focusMobDetailsDiv.innerHTML = '';
+		
+			var focusMobImg = document.getElementById('focusMobImg');
+			focusMobImg.src = mob.img;
+		
+			var focusMobNameHead = document.createElement('h2');
+			focusMobNameHead.id = 'focusMobNameHead';
+			focusMobNameHead.innerHTML = mob.name;
+			focusMobDetailsDiv.appendChild(focusMobNameHead);
+				
+			var focusMobMoraleBar = document.createElement('div');
+			focusMobMoraleBar.id = 'focusMobMoraleBar';
+			var focusMobMoralFillBlock = document.createElement('div');
+			focusMobMoralFillBlock.id = 'focusMobMoralFillBlock';
+			focusMobMoralFillBlock.style.width = mob.stats.morale + "%";
+			focusMobDetailsDiv.appendChild(focusMobMoraleBar);
+			focusMobMoraleBar.appendChild(focusMobMoralFillBlock);
+		
+			var focusMobMoraleHead = document.createElement('h4');
+			focusMobMoraleHead.innerHTML = "Morale ";
+			focusMobMoraleHead.id = 'focusMobMoraleHead';
+			focusMobMoralFillBlock.appendChild(focusMobMoraleHead);
+		
+			var focusMobMovesDiv = document.createElement('div');
+			focusMobMovesDiv.id = 'focusMobMoveDiv';
+			focusMobMovesDiv.className = 'focusMobStatDiv'; 
+			focusMobMovesDiv.innerHTML = "<span class='bigStatSpan'>" + mob.stats.move + "</span> / " +mob.stats.moveMax + "<br /><span class='statNameSpan'>Move</span>";
+			focusMobDetailsDiv.appendChild(focusMobMovesDiv);
+		
+			if (mob.wounds.move.length > 0) {
+				var focusMobMovesWoundRule = document.createElement('hr');
+				focusMobMovesDiv.appendChild(focusMobMovesWoundRule);
+				for (i in mob.wounds.move) {
+					var focusMobMovesWoundDiv = document.createElement('div');
+					focusMobMovesWoundDiv.className = 'woundDiv';
+					focusMobMovesWoundDiv.innerHTML = mob.wounds.move[i].name + " (" + mob.wounds.move[i].penalty + ")";
+					focusMobMovesDiv.appendChild(focusMobMovesWoundDiv);
+				};
+			}
+		
+			var focusMobStrengthDiv = document.createElement('div');
+			focusMobStrengthDiv.id = 'focusMobStrengthDiv';
+			focusMobStrengthDiv.className = 'focusMobStatDiv'; 
+			focusMobStrengthDiv.innerHTML = "<span class='bigStatSpan'>" + mob.stats.strength + "</span> / " +mob.stats.strengthMax + "<br /><span class='statNameSpan'>Strength</span>";
+			focusMobDetailsDiv.appendChild(focusMobStrengthDiv);
+		
+			if (mob.wounds.strength.length > 0) {
+				var focusMobMovesWoundRule = document.createElement('hr');
+				focusMobStrengthDiv.appendChild(focusMobMovesWoundRule);
+				for (i in mob.wounds.strength) {
+					var focusMobMovesWoundDiv = document.createElement('div');
+					focusMobMovesWoundDiv.className = 'woundDiv';
+					focusMobMovesWoundDiv.innerHTML = mob.wounds.strength[i].name + " (" + mob.wounds.strength[i].penalty + ")";
+					focusMobStrengthDiv.appendChild(focusMobMovesWoundDiv);
+				};
+			}
+		
+			var focusMobFocusDiv = document.createElement('div');
+			focusMobFocusDiv.id = 'focusMobFocusDiv';
+			focusMobFocusDiv.className = 'focusMobStatDiv'; 
+			focusMobFocusDiv.innerHTML = "<span class='bigStatSpan'>" + mob.stats.focus + "</span> / " +mob.stats.focusMax + "<br /><span class='statNameSpan'>Focus</span>";
+			focusMobDetailsDiv.appendChild(focusMobFocusDiv);
+		
+			if (mob.wounds.focus.length > 0) {
+				var focusMobMovesWoundRule = document.createElement('hr');
+				focusMobFocusDiv.appendChild(focusMobMovesWoundRule);
+				for (i in mob.wounds.focus) {
+					var focusMobMovesWoundDiv = document.createElement('div');
+					focusMobMovesWoundDiv.className = 'woundDiv';
+					focusMobMovesWoundDiv.innerHTML = mob.wounds.focus[i].name + " (" + mob.wounds.focus[i].penalty + ")";
+					focusMobFocusDiv.appendChild(focusMobMovesWoundDiv);
+				};
+			}
+		
+			if (mob.player) {
+				var focusMobManveuversDiv = document.createElement('div');
+				focusMobManveuversDiv.id = 'focusMobManveuversDiv';
+				focusMobDetailsDiv.appendChild(focusMobManveuversDiv);
+		
+				var focusMobManeuversList = document.createElement('ol');
+				focusMobManeuversList.id = 'focusMobManeuversList';
+				focusMobManveuversDiv.appendChild(focusMobManeuversList);
+		
+				for (i in mob.maneuvers) {
+					var focusMobManeuverLi = document.createElement('li');
+					focusMobManeuverLi.id = 'focusMobManeuverLi'+i;
+					focusMobManeuverLi.innerHTML = mob.maneuvers[i].name;
+					focusMobManeuverLi.className = 'focusMobManeuverLi';
+					focusMobManeuverLi.setAttribute('onclick','handlers.selectManeuver("'+mob.maneuvers[i].id+'",focusMobManeuverLi'+i+')');
+					focusMobManeuversList.appendChild(focusMobManeuverLi);
+				};
+			};
+		};
+
 	},
 	
 	deselectManeuverButton: function(button) {
