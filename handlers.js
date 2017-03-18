@@ -78,22 +78,19 @@ var handlers = {
 			view.focus.range = undefined;
 		};
 		if (view.focus.maneuver === maneuver) {
-// 			this.mode = undefined;
-// 			view.focus.maneuver = undefined;
-// 			view.drawHexRange(view.focus.range,'open');
-// 			view.focus.range = undefined;
-			button.className = 'focusMobManeuverLi';
+			button.className = 'focusMobManeuverButton';
 		} else if (maneuver.target) {
 			this.mode = 'target';
 			view.focus.maneuver = maneuver;
 			view.drawHexRange(view.focus.range,'open');
-			button.className = 'focusMobManeuverLi focusMobManeuverLiSelected';
+			button.className = 'focusMobManeuverButton focusMobManeuverButtonSelected';
 			var targetableHexes = view.focus.mob.rangeOptions(undefined,maneuver);
 			view.drawHexRange(targetableHexes,'targetable');
 		} else {
-			button.className = 'focusMobManeuverLi focusMobManeuverLiSelected';
+			button.className = 'focusMobManeuverButton focusMobManeuverButtonSelected';
 			handlers.executeManeuver(maneuver);
 		};
+		button.blur();
 	},
 	
 	executeManeuver: function(maneuver,target) {
@@ -122,7 +119,7 @@ document.addEventListener('keydown',function(event) {
 	if (Number.isInteger(parseInt(event.key)) && view.focus.mob !== undefined) {
 		if (view.focus.mob.player) {
 			var num = event.key - 1;
-			document.getElementById('focusMobManeuverLi'+num).click();
+			document.getElementById('focusMobManeuverButton'+num).click();
 		}
 	}
 });

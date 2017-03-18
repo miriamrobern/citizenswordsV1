@@ -324,18 +324,15 @@ var view = {
 				var focusMobManveuversDiv = document.createElement('div');
 				focusMobManveuversDiv.id = 'focusMobManveuversDiv';
 				focusMobDetailsDiv.appendChild(focusMobManveuversDiv);
-		
-				var focusMobManeuversList = document.createElement('ol');
-				focusMobManeuversList.id = 'focusMobManeuversList';
-				focusMobManveuversDiv.appendChild(focusMobManeuversList);
-		
+				
 				for (i in mob.maneuvers) {
-					var focusMobManeuverLi = document.createElement('li');
-					focusMobManeuverLi.id = 'focusMobManeuverLi'+i;
-					focusMobManeuverLi.innerHTML = mob.maneuvers[i].name;
-					focusMobManeuverLi.className = 'focusMobManeuverLi';
-					focusMobManeuverLi.setAttribute('onclick','handlers.selectManeuver("'+mob.maneuvers[i].id+'",focusMobManeuverLi'+i+')');
-					focusMobManeuversList.appendChild(focusMobManeuverLi);
+					var focusMobManeuverButton = document.createElement('button');
+					focusMobManeuverButton.id = 'focusMobManeuverButton'+i;
+					focusMobManeuverButton.className = 'focusMobManeuverButton';
+					var num = parseInt(i)+1;
+					focusMobManeuverButton.innerHTML = num + '. ' + mob.maneuvers[i].name + ' ';
+					focusMobManeuverButton.setAttribute('onclick','handlers.selectManeuver("'+mob.maneuvers[i].id+'",focusMobManeuverButton'+i+')');
+					focusMobManveuversDiv.appendChild(focusMobManeuverButton);
 				};
 			};
 		};
@@ -343,12 +340,12 @@ var view = {
 	},
 	
 	deselectManeuverButton: function(button) {
-		button.className = 'focusMobManeuverLi';
+		button.className = 'focusMobManeuverButton';
 	},
 	
 	deselectAllManeuverButtons: function() {
 		for (i in view.focus.mob.maneuvers) {
-			document.getElementById('focusMobManeuverLi'+i).className = 'focusMobManeuverLi';
+			document.getElementById('focusMobManeuverButton'+i).className = 'focusMobManeuverButton';
 		};
 	},
 	
