@@ -91,15 +91,15 @@
  		name: "Exhort",
  		id: 'exhort',
  		img: '',
- 		cost: {move:1},
+ 		cost: {move:1,focus:1},
  		target: true,
  		targetHostiles: false,
  		targetTeam: true,
  		range: 2,
  		execute: function(enactor,target) {
  			var moraleCost = enactor.stats.morale * 0.2;
- 			target.stats.morale = Math.min(100,target.stats.morale + moraleCost*2);
- 			enactor.stats.morale -= moraleCost;
+ 			target.adjustMorale(moraleCost*2);
+ 			enactor.adjustMorale(-1 * moraleCost);
  		},
  	},
  
@@ -158,7 +158,7 @@
  		targetTeam: true,
  		range: 1,
  		execute: function(enactor,target) {
- 			target.stats.morale = 100;
+ 			target.adjustMorale(100);
  		},
  	},
  

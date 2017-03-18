@@ -468,12 +468,23 @@ function Mob(id,x,y) {
 		this.wounds[wound.stat].push(wound);
 		
 		// adjust morale
-		this.stats.morale = Math.max(0,this.stats.morale + ( 200 * wound.penalty / (this.stats.moveMax + this.stats.strengthMax + this.stats.focusMax) ) );
-		if (this.stats.morale === 0) {
-			var timedEvent = setTimeout(view.tiltMob.bind(this,this,90),1000);
-			this.state = 'defeated';
-		};
+		var moraleHit = 200 * wound.penalty / (this.stats.moveMax + this.stats.strengthMax + this.stats.focusMax);
+		this.adjustMorale(moraleHit);
 		
 		view.displayFocusMob();
+	};
+	
+	this.adjustMorale = function(gain) {
+		this.stats.morale = Math.max(0,Math.min(100,this.stats.morale + gain));
+		
+		if (this.stats.morale === 0) {
+			this.state = "defeated";
+			view.defeatMob(this);
+		};
+		
+		if (this.state === "defeated") {
+			this.state = "upright";
+			view.reviveMob(this);
+		}
 	};
 };

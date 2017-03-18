@@ -401,6 +401,15 @@ var view = {
 		var timedEvent = setTimeout(view.transformMob.bind(this,mob,undefined,undefined,0),300);	
 	},
 	
+	defeatMob: function(mob) {
+		view.transformMob(mob,1,1,90,1);
+	},
+	
+	reviveMob: function(mob) {
+		view.transformMob(mob,1,1,1,1);
+		var timedEvent = setTimeout(view.bounceMob.bind(this,mob),250);
+	},
+	
 	attackAnimate: function(mob,hex) {
 		console.log(mob.location,'to',hex);
 		var startCoords = {x:undefined,y:mob.location.y};

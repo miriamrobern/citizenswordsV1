@@ -105,6 +105,7 @@ var handlers = {
 		var timedEvent = setTimeout(view.displayFocusMob.bind(this,view.focus.mob),250);
 		view.drawHexRange(view.focus.range,'open');
 		view.focus.range = undefined;
+		view.focus.maneuver = undefined;
 	},
 
 

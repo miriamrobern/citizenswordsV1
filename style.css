@@ -54,7 +54,6 @@ body {
 
 .oddRowSpacer {
 	float: left;
-/* 	border: 1px dotted purple; */
 	}
 
 .mobDiv {
@@ -72,7 +71,11 @@ body {
 	position: absolute;
 	transition: opacity 1s;
 	background-color: lightgray;
-	outline: 3px dotted lightgray;
+	background-image: url('img/fogPattern.jpg');
+	background-size: contain;
+	background-repeat: repeat;
+	border-radius: 1vw;
+	border: 3px dotted #666;
 	opacity: 1;
 	}
 
