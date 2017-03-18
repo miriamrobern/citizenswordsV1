@@ -48,6 +48,8 @@ var handlers = {
 		if (this.mode == undefined && mobs[index].stats.move > 0) {
 			this.mode = 'move';
 			view.selectMob(mobs[index]);
+		} else if (this.mode === 'move') {
+			view.selectMob(mobs[index]);
 		} else if (this.mode === 'target' && view.focus.range.indexOf(selectedHex) !== -1) {
 			handlers.executeManeuver(view.focus.maneuver,mobs[index]);
 		} else {

@@ -57,9 +57,9 @@
  
  var dataManeuvers = {
  	
- 	arcaneBolt: {
- 		name: "Arcane Bolt",
- 		id: 'arcaneBolt',
+ 	arcaneBeam: {
+ 		name: "Arcane Beam",
+ 		id: 'arcaneBeam',
  		img: '',
  		cost: {focus:1,move:1},
  		target: true,
@@ -69,7 +69,7 @@
  		projectileImg: 'img/rainbow.png',
  		execute: function(attacker,defender) {
  			game.simpleAttack(attacker,'focus',defender,'armor',true,[dataWounds.fire,dataWounds.fear])
- 			view.attackAnimate(attacker,defender.location);
+ 			view.bounceMob(attacker,defender.location);
  			view.beamAnimate(attacker.location,defender.location,'img/rainbow.png');
  		},
  	},
@@ -246,7 +246,7 @@
  		maneuvers: [
  			dataManeuvers.hack,
  			dataManeuvers.shieldSlam,
- 			dataManeuvers.arcaneBolt,
+ 			dataManeuvers.arcaneBeam,
  			dataManeuvers.trance,
  		],
  	},

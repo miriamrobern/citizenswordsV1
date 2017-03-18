@@ -490,14 +490,14 @@ function Mob(id,x,y) {
 	this.adjustMorale = function(gain) {
 		this.stats.morale = Math.max(0,Math.min(100,this.stats.morale + gain));
 		
+		if (this.state === "defeated") {
+			this.state = "upright";
+			view.reviveMob(this);
+		};
+		
 		if (this.stats.morale === 0) {
 			this.state = "defeated";
 			view.defeatMob(this);
 		};
-		
-		if (this.state === "defeated") {
-			this.state = "upright";
-			view.reviveMob(this);
-		}
 	};
 };

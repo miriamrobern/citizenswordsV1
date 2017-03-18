@@ -407,7 +407,7 @@ var view = {
 	},
 	
 	defeatMob: function(mob) {
-		view.transformMob(mob,1,1,90,1);
+		var timedEvent = setTimeout(view.transformMob.bind(this,mob,1,1,90,1),350);
 	},
 	
 	reviveMob: function(mob) {
@@ -501,6 +501,8 @@ var view = {
 		console.log(length);
 		
 		beamDiv.style.transform = 'rotate('+degrees+'deg) scaleX('+length+')';
+		
+		beamImg.style.transform = 'scaleY(10)';
 		
 		var timedEvent = setTimeout(view.clearBeam.bind(this,beamDiv),500);
 	},
