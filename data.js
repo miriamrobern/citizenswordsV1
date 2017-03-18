@@ -100,6 +100,8 @@
  			var moraleCost = enactor.stats.morale * 0.2;
  			target.adjustMorale(moraleCost*2);
  			enactor.adjustMorale(-1 * moraleCost);
+ 			view.attackAnimate(enactor,target.location);
+ 			view.bounceMob(target);
  		},
  	},
  
@@ -159,6 +161,8 @@
  		range: 1,
  		execute: function(enactor,target) {
  			target.adjustMorale(100);
+ 			view.attackAnimate(enactor,target.location);
+ 			view.bounceMob(target);
  		},
  	},
  
