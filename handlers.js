@@ -114,7 +114,11 @@ var handlers = {
 window.onclick = function(event) {
 	var dialogueBacksplash = document.getElementById('dialogueBacksplash');
 	if (event.target == dialogueBacksplash) {
-		dialogueBacksplash.style.display = 'none';
+		if (document.getElementById('dialogueCloseButton').offsetParent !== null) {
+			document.getElementById('dialogueCloseButton').click();
+		} else if (document.getElementById('dialogueContinueButton').offsetParent !== null) {
+			document.getElementById('dialogueContinueButton').click();
+		};
 	};
 }
 

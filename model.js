@@ -166,6 +166,10 @@ function Map(level) {
 			};
 		};
 	};
+	this.events = {};
+	for (i in level.events) {
+		this.events[i] = level.events[i];
+	};
 	
 	// Adjacency
 	for (i in hexes) {

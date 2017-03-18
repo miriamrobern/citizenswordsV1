@@ -21,9 +21,11 @@ var view = {
 		mapBackgroundImg.style.height = totalHeight + 'vw';
 	},
 	
-	displayFog: function() {
+	displayFog: function(range) {
 		
-		for (i in map.hexes) {
+		if (range == undefined) {range = map.hexes};
+		
+		for (i in range) {
 			var newFogDiv = document.createElement('div');
 			document.getElementById('mapMobDiv').appendChild(newFogDiv);
 			
@@ -32,7 +34,10 @@ var view = {
 			var hexPosition = {};
 			hexPosition.left = map.hexes[i].x * 4;
 			hexPosition.top = map.hexes[i].y * 4;
-			if (map.hexes[i].y % 2 === 0) {hexPosition.left += 2};
+			if (map.hexes[i].y % 2 === 0) {
+				hexPosition.left += 2;
+				newFogDiv.style.backgroundPosition = '2vw 0vw';
+			};
 			newFogDiv.style.left = hexPosition.left + "vw";
 			newFogDiv.style.top = hexPosition.top + "vw";
 			

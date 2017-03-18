@@ -146,6 +146,19 @@ var firstLevel = {
  		intro: function() {
  			view.displayDialogue("The hellhound that has plagued the locals lurks within this cave!",this.name,this.img,"left");
  			this.location.event = undefined;
+ 			document.getElementById('dialogueCloseButton').style.display = "none";
+ 			document.getElementById('dialogueContinueButton').style.display = "inline";
+ 			var mobIndex = 0;
+ 			if (mobs[0] === this) {
+ 				mobIndex = 1;
+ 			};
+ 			document.getElementById('dialogueContinueButton').setAttribute('onclick','map.events.intro2('+mobIndex+')');
+ 		},
+ 		
+ 		intro2: function(mobIndex) {
+ 			view.displayDialogue("I am skeptical of the wisdom of the two of us, mere youngsters looking to make our mark, trying to take down a hellhound.  Yet, my steadfast loyalty to you, my childhood friend, impels me to join you in this misadventure.",mobs[mobIndex].name,mobs[mobIndex].img,"right");
+ 			document.getElementById('dialogueContinueButton').style.display = "none";
+ 			document.getElementById('dialogueCloseButton').style.display = "inline";
  		},
  		
  		noHellhound: function() {
