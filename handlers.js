@@ -73,12 +73,15 @@ var handlers = {
 		maneuver = dataManeuvers[maneuver];
 		if (this.mode === "target") {
 			view.deselectAllManeuverButtons();
+			view.drawHexRange(view.focus.range,'open');
+			this.mode = undefined;
+			view.focus.range = undefined;
 		};
 		if (view.focus.maneuver === maneuver) {
-			this.mode = undefined;
-			view.focus.maneuver = undefined;
-			view.drawHexRange(view.focus.range,'open');
-			view.focus.range = undefined;
+// 			this.mode = undefined;
+// 			view.focus.maneuver = undefined;
+// 			view.drawHexRange(view.focus.range,'open');
+// 			view.focus.range = undefined;
 			button.className = 'focusMobManeuverLi';
 		} else if (maneuver.target) {
 			this.mode = 'target';
