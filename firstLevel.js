@@ -90,50 +90,60 @@ var firstLevel = {
  		},
  	],
  	
- 	events: [
+ 	triggers: [
  		{
  			x: 2,
  			y: 4,
- 			execute: function() {
- 				view.displayDialogue("The hellhound that has plagued the locals lurks within this cave!",this.name,this.img,"left");
- 				this.location.event = undefined;
- 			},
+ 			event: 'intro',
  		},
  		
  		{
  			x: 9,
  			y: 5,
- 			execute: function() {
- 				view.displayDialogue("You know, it was probably those rats terrorizing the locals.  I bet there isn't even a hellhound in this cave at all!",this.name,this.img,"left");
- 				this.location.event = undefined;
- 				mobs[2].player = true;
- 			},
+ 			event: 'noHellhound',
  		},
  		
  		{
  			x: 8,
  			y: 2,
- 			execute: function() {
- 				view.displayDialogue("Aren't you just the cutest little puppy?  Yes you are!  YES YOU ARE!!!<br />That's it, I'm taking you home!",this.name,this.img,"left");
- 				this.location.event = undefined;
- 				mobs[2].player = true;
- 			},
+ 			event: 'puppy',
  		},
  		
  		{
  			x: 5,
  			y: 4,
- 			execute: function() {
- 				view.displayDialogue("Ugh, I see rat droppings.  Is this cave filled with giant rats?  What is this, the first level of a fantasy RPG?",this.name,this.img,"left");
- 				this.location.event = undefined;
- 				mobs[4].stats.move = 4;
- 				mobs[4].move(map.hexes[67]);
- 				mobs[3].stats.move = 4;
- 				mobs[3].move(map.hexes[77]);
- 				mobs[3].ai = ai.basic;
- 				mobs[4].ai = ai.basic;
- 			},
+ 			event: 'rats',
  		},
  	],
+ 	
+ 	events: {
+ 		intro: function() {
+ 			view.displayDialogue("The hellhound that has plagued the locals lurks within this cave!",this.name,this.img,"left");
+ 			this.location.event = undefined;
+ 		},
+ 		
+ 		noHellhound: function() {
+ 			view.displayDialogue("You know, it was probably those rats terrorizing the locals.  I bet there isn't even a hellhound in this cave at all!",this.name,this.img,"left");
+ 			this.location.event = undefined;
+ 			mobs[2].player = true;
+ 		},
+ 		
+ 		puppy: function() {
+ 			view.displayDialogue("Aren't you just the cutest little puppy?  Yes you are!  YES YOU ARE!!!<br />That's it, I'm taking you home!",this.name,this.img,"left");
+ 			this.location.event = undefined;
+ 			mobs[2].player = true;
+ 		},
+ 		
+ 		rats: function() {
+ 			view.displayDialogue("Ugh, I see rat droppings.  Is this cave filled with giant rats?  What is this, the first level of a fantasy RPG?",this.name,this.img,"left");
+ 			this.location.event = undefined;
+ 			mobs[4].stats.move = 4;
+ 			mobs[4].move(map.hexes[67]);
+ 			mobs[3].stats.move = 4;
+ 			mobs[3].move(map.hexes[77]);
+ 			mobs[3].ai = ai.basic;
+ 			mobs[4].ai = ai.basic;
+ 		},
+ 	},
  
  };

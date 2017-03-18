@@ -126,11 +126,10 @@ var view = {
 			mobPosition.height = hexPosition.height;
 			mobPosition.width = hexPosition.width;
 			
-			console.log('old',mobPosition);
+			// Translate px to vw
 			for (d in mobPosition) {
 				mobPosition[d] = mobPosition[d] * (100 / document.documentElement.clientWidth);
 			};
-			console.log('new',mobPosition);
 			
 			newMobDiv.style.top = mobPosition.top + "vw";
 			newMobDiv.style.left = mobPosition.left + "vw";

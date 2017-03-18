@@ -159,10 +159,10 @@ function Map(level) {
 	};
 	
 	// Events
-	for (i in level.events) {
+	for (i in level.triggers) {
 		for (h in hexes) {
-			if (hexes[h].x == level.events[i].x && hexes[h].y == level.events[i].y) {
-				hexes[h].event = level.events[i];
+			if (hexes[h].x == level.triggers[i].x && hexes[h].y == level.triggers[i].y) {
+				hexes[h].event = level.events[level.triggers[i].event];
 			};
 		};
 	};
@@ -448,7 +448,7 @@ function Mob(id,x,y) {
 			this.location = path[p];
 			this.stats.move--;
 			if (this.location.event !== undefined && this.player) {
-				var timedEvent = setTimeout(path[p].event.execute.bind(this),p*250+250);
+				var timedEvent = setTimeout(path[p].event.bind(this),p*250+250);
 				p = 999;
 			};
 		};
