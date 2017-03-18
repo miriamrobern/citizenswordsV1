@@ -68,6 +68,7 @@
  		range: 10,
  		execute: function(attacker,defender) {
  			game.simpleAttack(attacker,'focus',defender,'armor',true,[dataWounds.fire,dataWounds.fear])
+ 			view.attackAnimate(attacker,defender.location);
  		},
  	},
  
@@ -82,6 +83,7 @@
  		range: 1,
  		execute: function(attacker,defender) {
  			game.simpleAttack(attacker,'strength',defender,'armor',true,[dataWounds.bite])
+ 			view.attackAnimate(attacker,defender.location);
  		},
  	},
  	
@@ -112,6 +114,7 @@
  		range: 1,
  		execute: function(attacker,defender) {
  			game.simpleAttack(attacker,'strength',defender,'armor',true,[dataWounds.sharp])
+ 			view.attackAnimate(attacker,defender.location);
  		},
  	},
  
@@ -126,6 +129,7 @@
  		range: 2,
  		execute: function(attacker,defender) {
  			game.simpleAttack(attacker,'focus',defender,'armor',true,[dataWounds.sharp])
+ 			view.attackAnimate(attacker,defender.location);
  		},
  	},
  
@@ -140,6 +144,7 @@
  		range: 1,
  		execute: function(attacker,defender) {
  			game.simpleAttack(attacker,'strength',defender,'armor',true,[dataWounds.sharp,dataWounds.fear])
+ 			view.attackAnimate(attacker,defender.location);
  		},
  	},
  	
@@ -167,7 +172,8 @@
  		targetTeam: false,
  		range: 1,
  		execute: function(attacker,defender) {
- 			game.simpleAttack(attacker,'strength',defender,'strength',true,[dataWounds.blunt])
+ 			game.simpleAttack(attacker,'strength',defender,'strength',true,[dataWounds.blunt]);
+ 			view.attackAnimate(attacker,defender.location);
  		},
  	},
  	

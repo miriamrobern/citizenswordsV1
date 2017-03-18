@@ -103,6 +103,8 @@ var handlers = {
 			view.focus.mob.stats[i] -= maneuver.cost[i];
 		};
 		var timedEvent = setTimeout(view.displayFocusMob.bind(this,view.focus.mob),250);
+		view.drawHexRange(view.focus.range,'open');
+		view.focus.range = undefined;
 	},
 
 

@@ -376,8 +376,54 @@ var view = {
 
 	},
 	
-	tiltMob: function(mob,tilt) {
-		mob.div.style.transform= "rotate("+tilt+"deg)";
+	transformMob: function(mob,distX,distY,rotation,scale) {
+		var transformation = '';
+		if (distX !== undefined && distY !== undefined) {
+			transformation += "translate("+distX+"px, "+distY+"px) ";
+		};
+		if (rotation !== undefined) {
+			transformation += "rotate("+rotation+"deg) ";
+		};
+		if (scale !== undefined) {
+			transformation += "scale("+scale+", "+scale+") ";
+		};
+		mob.div.style.transform = transformation;
+	},
+	
+	bounceMob: function(mob) {
+		view.transformMob(mob,0,-10,10,1);
+		var andDown = setTimeout(view.transformMob.bind(this,mob,0,0,0,1),250);
+	},
+	
+	jiggleMob: function(mob) {
+		var timedEvent = setTimeout(view.transformMob.bind(this,mob,undefined,undefined,15),1);
+		var timedEvent = setTimeout(view.transformMob.bind(this,mob,undefined,undefined,-15),150);
+		var timedEvent = setTimeout(view.transformMob.bind(this,mob,undefined,undefined,0),300);	
+	},
+	
+	attackAnimate: function(mob,hex) {
+		console.log(mob.location,'to',hex);
+		var startCoords = {x:undefined,y:mob.location.y};
+		if (mob.location.y % 2 == 0) {
+			startCoords.x = mob.location.x + 0.5;
+		} else {
+			startCoords.x = mob.location.x;
+		};
+		var destinationCoords = {x:undefined,y:hex.y};
+		if (hex.y % 2 == 0) {
+			destinationCoords.x = hex.x + 0.5;
+		} else {
+			destinationCoords.x = hex.x;
+		};
+		console.log(startCoords,destinationCoords);
+		
+		var direction = {x:destinationCoords.x-startCoords.x,y:destinationCoords.y-startCoords.y};
+		var biggest = Math.max(Math.abs(direction.x),Math.abs(direction.y));
+		direction.x *= 20 / biggest;
+		direction.y *= 20 / biggest;
+		view.transformMob(mob,direction.x,direction.y,0,1);
+		
+		var andBack = setTimeout(view.transformMob.bind(this,mob,0,0,0,1),250);
 	},
 	
 	displayDialogue: function(text,name,bust,bustPosition) {

@@ -462,9 +462,7 @@ function Mob(id,x,y) {
 		console.log('taking a wound: ',wound);
 		
 		// jiggle
-		var timedEvent = setTimeout(view.tiltMob.bind(this,this,15),1);
-		var timedEvent = setTimeout(view.tiltMob.bind(this,this,-15),150);
-		var timedEvent = setTimeout(view.tiltMob.bind(this,this,0),300);
+		view.jiggleMob(this);
 		
 		// add wound
 		this.wounds[wound.stat].push(wound);
@@ -476,6 +474,6 @@ function Mob(id,x,y) {
 			this.state = 'defeated';
 		};
 		
-		view.selectMob(view.focus.mob);
+		view.displayFocusMob();
 	};
 };
