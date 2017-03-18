@@ -202,7 +202,7 @@
  		name: "Daisy Moucau",
  		img: 'img/minotaur.png',
  		stats: {
- 			morale: 70,
+ 			morale: 100,
  			move: 4,
  			moveMax: 4,
  			strength: 4,
@@ -222,7 +222,7 @@
  		name: "Mx. Stout",
  		img: 'img/dwarf.png',
  		stats: {
- 			morale: 60,
+ 			morale: 100,
  			move: 3,
  			moveMax: 3,
  			strength: 3,
@@ -270,8 +270,8 @@
  			morale: 100,
  			move: 3,
  			moveMax: 3,
- 			strength: 3,
- 			strengthMax: 3,
+ 			strength: 2,
+ 			strengthMax: 2,
  			focus: 1,
  			focusMax: 1,
  			armor: 1,

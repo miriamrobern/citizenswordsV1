@@ -101,6 +101,16 @@ var firstLevel = {
  		},
  		
  		{
+ 			x: 9,
+ 			y: 5,
+ 			execute: function() {
+ 				view.displayDialogue("You know, it was probably those rats terrorizing the locals.  I bet there isn't even a hellhound in this cave at all!",this.name,this.img,"left");
+ 				this.location.event = undefined;
+ 				mobs[2].player = true;
+ 			},
+ 		},
+ 		
+ 		{
  			x: 8,
  			y: 2,
  			execute: function() {

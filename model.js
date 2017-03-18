@@ -42,7 +42,7 @@ var game = {
 	endTurn: function() {
 	
 		for (i in mobs) {
-			if (!mobs[i].player) {
+			if (!mobs[i].player && mobs[i].stats.morale > 0) {
 				mobs[i].ai();
 			};
 		};
@@ -365,7 +365,7 @@ function Mob(id,x,y) {
 					if (moveOptions.indexOf(moveOptions[h].adjacent[a]) == -1 && moveOptions[h].adjacent[a].type === "open") {
 						var unoccupied = true;
 						for (m in mobs) {
-							if (mobs[m].location === moveOptions[h].adjacent[a]) {
+							if (mobs[m].location === moveOptions[h].adjacent[a] && mobs[m].stats.morale > 0) {
 								unoccupied = false;
 							};
 						};
@@ -439,8 +439,6 @@ function Mob(id,x,y) {
 			};
 			paths = paths.concat(newPaths);
 		};
-		
-		console.log(hex);
 
 		for (p=1;p<path.length;p++) {
 			var timedEvent = setTimeout(view.moveMob.bind(view,this,path[p]),p*200);
@@ -475,6 +473,7 @@ function Mob(id,x,y) {
 		this.stats.morale = Math.max(0,this.stats.morale + ( 200 * wound.penalty / (this.stats.moveMax + this.stats.strengthMax + this.stats.focusMax) ) );
 		if (this.stats.morale === 0) {
 			var timedEvent = setTimeout(view.tiltMob.bind(this,this,90),1000);
+			this.state = 'defeated';
 		};
 		
 		view.selectMob(view.focus.mob);
