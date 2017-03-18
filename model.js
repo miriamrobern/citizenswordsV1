@@ -410,7 +410,17 @@ function Mob(id,x,y) {
 			rangeOptions = rangeOptions.concat(newRangeOptions);
 			newRangeOptions = [];
 		};
-		rangeOptions = this.removeBlockedHexes(rangeOptions,vantage);
+		
+		// Limit to hexes with mobs on them
+		var mobHexesWithinRange = [];
+		var potentialTargets = mobs;
+		for (m in potentialTargets) {
+			if (rangeOptions.indexOf(potentialTargets[m].location) !== -1) {
+				mobHexesWithinRange.push(potentialTargets[m].location);
+			};
+		};
+		
+		rangeOptions = this.removeBlockedHexes(mobHexesWithinRange,vantage);
 		
 		var openRangeOptions = []
 		for (i in rangeOptions) {
