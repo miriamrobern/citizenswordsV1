@@ -416,7 +416,6 @@ var view = {
 	},
 	
 	attackAnimate: function(mob,hex) {
-		console.log(mob.location,'to',hex);
 		var startCoords = {x:undefined,y:mob.location.y};
 		if (mob.location.y % 2 == 0) {
 			startCoords.x = mob.location.x + 0.5;
@@ -429,7 +428,6 @@ var view = {
 		} else {
 			destinationCoords.x = hex.x;
 		};
-		console.log(startCoords,destinationCoords);
 		
 		var direction = {x:destinationCoords.x-startCoords.x,y:destinationCoords.y-startCoords.y};
 		var biggest = Math.max(Math.abs(direction.x),Math.abs(direction.y));
@@ -438,6 +436,77 @@ var view = {
 		view.transformMob(mob,direction.x,direction.y,0,1);
 		
 		var andBack = setTimeout(view.transformMob.bind(this,mob,0,0,0,1),250);
+	},
+	
+	beamAnimate: function(start,destination,imgSrc) {
+		
+		var beamDiv = document.createElement('div');
+		beamDiv.className = 'beamDiv';
+		document.getElementById('mapMobDiv').appendChild(beamDiv);
+		
+		var beamImg = document.createElement('img');
+		beamImg.className = 'beamImg';
+		beamImg.src = imgSrc;
+		beamDiv.appendChild(beamImg);
+		
+		// Positioning Beam Start
+		var startHexPosition = document.getElementById('hex_'+start.x+'_'+start.y).getBoundingClientRect();
+		var destinationHexPosition = document.getElementById('hex_'+destination.x+'_'+destination.y).getBoundingClientRect();
+		var mapPosition = document.getElementById('mapMobDiv').getBoundingClientRect();
+		
+		var beamPosition = {}
+		beamPosition.top = startHexPosition.top - mapPosition.top;
+		beamPosition.bottom = startHexPosition.bottom - mapPosition.bottom;
+		beamPosition.left = startHexPosition.left - mapPosition.left;
+		beamPosition.right = startHexPosition.right - mapPosition.right;
+		beamPosition.height = startHexPosition.height;
+		beamPosition.width = startHexPosition.width;
+		
+		// Translate px to vw
+		for (d in beamPosition) {
+			beamPosition[d] = beamPosition[d] * (100 / document.documentElement.clientWidth);
+		};
+		
+		beamPosition.top += 0.5;
+		beamPosition.left += 2;
+		
+		beamDiv.style.top = beamPosition.top + "vw";
+		beamDiv.style.left = beamPosition.left + "vw";
+		beamDiv.style.bottom = beamPosition.bottom + "vw";
+		beamDiv.style.right = beamPosition.right + "vw";
+		
+		// Rotation of Beam Div
+		var startCoords = {x:start.x,y:start.y}
+		var destinationCoords = {x:destination.x,y:destination.y}
+		if (startCoords.y % 2 == 0) {startCoords.x += 0.5};
+		if (destinationCoords.y % 2 == 0) {destinationCoords.x += 0.5};
+		var ratio = (destinationCoords.x - startCoords.x) / (destinationCoords.y - startCoords.y);
+		var degrees;
+		if (ratio !== Infinity) {
+			degrees = Math.atan(ratio) * 180 / Math.PI;
+			if (destination.y > start.y) {
+				degrees = 90 - degrees;
+			} else {
+				degrees = 270 - degrees;
+			}
+		} else {
+			degrees = 0;
+		};
+		
+		// Scaling Beam Div
+		var length = 4 * Math.pow(Math.pow(destination.x-start.x,2) + Math.pow(destination.y-start.y,2),0.5);
+		var srcWidth = 300;
+		srcWidth = srcWidth * (100/document.documentElement.clientWidth);
+		length = length/srcWidth;
+		console.log(length);
+		
+		beamDiv.style.transform = 'rotate('+degrees+'deg) scaleX('+length+')';
+		
+		var timedEvent = setTimeout(view.clearBeam.bind(this,beamDiv),500);
+	},
+	
+	clearBeam: function(div) {
+		div.parentNode.removeChild(div);
 	},
 	
 	displayDialogue: function(text,name,bust,bustPosition) {

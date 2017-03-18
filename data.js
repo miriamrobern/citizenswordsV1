@@ -66,9 +66,11 @@
  		targetHostiles: true,
  		targetTeam: false,
  		range: 10,
+ 		projectileImg: 'img/rainbow.png',
  		execute: function(attacker,defender) {
  			game.simpleAttack(attacker,'focus',defender,'armor',true,[dataWounds.fire,dataWounds.fear])
  			view.attackAnimate(attacker,defender.location);
+ 			view.beamAnimate(attacker.location,defender.location,'img/rainbow.png');
  		},
  	},
  

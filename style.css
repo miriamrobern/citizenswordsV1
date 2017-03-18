@@ -57,13 +57,23 @@ body {
 	}
 
 .mobDiv {
-	z-index: 3;
+	z-index: 4;
 	position: absolute;
 	transition: all .2s;
 	}
 
 .mobImg {
 	height: 100%;
+	}
+
+.beamDiv {
+	z-index: 3;
+	position: absolute;
+	border: 2px solid purple;
+	}
+
+.beamImg {
+	transition: all .2s;
 	}
 	
 .fogTile {

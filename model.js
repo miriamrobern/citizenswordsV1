@@ -473,8 +473,7 @@ function Mob(id,x,y) {
 	};
 	
 	this.takeWound = function(wound) {
-		console.log('taking a wound: ',wound);
-		
+			
 		// jiggle
 		view.jiggleMob(this);
 		
