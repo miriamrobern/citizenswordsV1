@@ -18,7 +18,12 @@
 		
 		<div id='mainMenuDiv'>
 		
+			<h4 id='titleHead'>Citizen Swords against the Ogre King</h4>
+		
 			<button onclick = 'handlers.loadLevel("hellhoundCave")'>New Game</button>
+			<button disabled>Save Game</button>
+			<button disabled>Load Game</button>
+			<button disabled>Options</button>
 		
 		</div>
 		
@@ -35,7 +40,7 @@
 		</div>
 		
 		<div id='buttonRowDiv'>
-			<button id='endTurnButton' disabled onclick='handlers.endTurn()'>End Turn</button>
+			<button id='endTurnButton' onclick='handlers.endTurn()'>End Turn</button>
 		</div>
 		
 		<div id ='focusMobDiv'>
@@ -47,6 +52,155 @@
 		</div>
 		
 		<div id='companyHQDiv'>
+		
+			<h1 id='companyHeadquartersHead'>Company Headquarters</h1>
+			
+			<div id='HQTabsDiv'>
+			
+				<div id='rumorsTabDiv' class='tabDiv' onclick='handlers.switchTab("rumorsDiv")'>
+					<h4>News & Rumors</h4>
+				</div>
+			
+				<div id='rosterTabDiv' class='tabDiv' onclick='handlers.switchTab("rosterDiv")'>
+					<h4>Roster</h4>
+				</div>
+			
+				<div id='provisioningTabDiv' class='tabDiv' onclick='handlers.switchTab("provisioningDiv")'>
+					<h4>Provisioning</h4>
+				</div>
+			
+				<div id='adventuresTabDiv' class='tabDiv' onclick='handlers.switchTab("adventuresDiv")'>
+					<h4>Adventures</h4>
+				</div>
+			
+			</div>
+			
+			<div id='HQWrapperDiv'>
+			
+				<div id='rumorsDiv' class='HQPaneDiv'>
+			
+					<h2>News and Rumors</h2>
+				
+					<div id='newsListDiv' class='HQPaneSelectDiv'>
+						<ul id='newsList' class='HQList'>
+							<li class='HQItem newsItem'>Sewer Spies</li>
+							<li class='HQItem newsItem'>Missing Guildmaster</li>
+							<li class='HQItem newsItem'>Wall Reconstruction</li>
+							<li class='HQItem newsItem'>The Curious Case of Mister Charles Orcsmasher, esquire</li>
+						</ul>
+					</div>
+				
+					<div id='newsDetailsDiv' class='HQPaneBigDiv'>
+						<h2>Sewer Spies</h2>
+						<p>The Ogre King's spies have infiltrated the sewers, or at least, so say the street urchins who've been displaced.</p>
+						<p>Certainly <em>something</em> is down there, but it's doubtful these guttersnipes would recognize a loyalist saboteur if they burned down the walls shouting "Long live the King!"</p>
+						<button>Investigate</button>
+					</div>
+			
+				</div>
+			
+				<div id = 'rosterDiv' class='HQPaneDiv'>
+			
+					<h2>Roster</h2>
+				
+					<div id='rosterListDiv' class='HQPaneSelectDiv'>
+						<ul id='rosterList' class='HQList'>
+							<li class="HQItem rosterItem">Daisy Moucau</li>
+							<li class='HQItem rosterItem'>Mx. Stout</li>
+							<li class='HQItem rosterItem'>Hellpuppy</li>
+						</ul>
+					</div>
+					<div id='rosterDetailsDiv'>
+						<div id='rosterPortraitDiv'>
+							<img id='rosterPortraitImg' />
+							<div id='rosterEquipArmorDiv' class='rosterEquipDiv'>Empty</div>
+							<div id='rosterEquipRightDiv' class='rosterEquipDiv'>Empty</div>
+							<div id='rosterEquipLeftDiv' class='rosterEquipDiv'>Empty</div>
+							<div id='rosterEquipItem0Div' class='rosterEquipDiv'>Empty</div>
+							<div id='rosterEquipItem1Div' class='rosterEquipDiv'>Empty</div>
+							<div id='rosterEquipItem2Div' class='rosterEquipDiv'>Empty</div>
+						</div>
+						<div id='rosterStats'>
+							<div id='rosterStatsMove' class='rosterStatDiv'><span id='rosterStatMoveSpan'>X</span> Move</div>
+							<div id='rosterStatsStrength' class='rosterStatDiv'><span id='rosterStatStrengthSpan'>X</span> Strength</div>
+							<div id='rosterStatsFocus' class='rosterStatDiv'><span id='rosterStatFocusSpan'>X</span> Focus</div>
+						</div>
+						<div id='rosterManeuvers'>
+							<div id='rosterManeuversListDiv'>
+								<ul id='rosterManeuversList'>
+								</ul>
+							</div>
+						</div>
+					</div>
+					<div id='armoryDiv'>
+						<h3 class="rosterHead">Armory</h3>
+						<ul id='armoryList'>
+							<li class='HQItem rosterItem'>Bastard Sword</li>
+							<li class='HQItem rosterItem'>Warhammer</li>
+							<li class='HQItem rosterItem'>Chainmail</li>
+							<li class='HQItem rosterItem'>Restraints</li>
+							<li class='HQItem rosterItem'>Rations</li>
+						</ul>
+					</div>
+					<div id='trainingDiv'>
+						<h3 class="rosterHead">Training</h3>
+						<ul id='trainingList'>
+							<li class='HQItem rosterItem'>+1 Move</li>
+							<li class='HQItem rosterItem'>+1 Strength</li>
+							<li class='HQItem rosterItem'>+1 Focus</li>
+							<li class='HQItem rosterItem'>First Aid</li>
+							<li class='HQItem rosterItem'>Cleave</li>
+						</ul>
+					</div>
+			
+				</div>
+			
+				<div id='provisioningDiv' class='HQPaneDiv'>
+			
+					<h2>Provisioning</h2>
+					
+					<div id='provisioningListDiv' class='HQPaneSelectDiv'>
+						<ul class='HQList'>
+							<li class='HQItem provisioningItem'>Orktown Market</li>
+							<li class='HQItem provisioningItem'>Alfar Downs</li>
+							<li class='HQItem provisioningItem'>City Militia Armory</li>
+							<li class='HQItem provisioningItem'>Oloin's Dwarven Smithy</li>
+						</ul>
+					</div>
+					
+					<div id='provisioningDetailsDiv' class='HQPaneBigDiv'>
+					</div>
+				
+				</div>
+			
+				<div id='adventuresDiv' class='HQPaneDiv'>
+			
+					<h2>Adventures</h2>
+				
+					<div id = 'adventuresSelectDiv' class='HQPaneSelectDiv'>
+						<ul class='HQList'>
+							<li class='HQItem adventuresItem'>Hellhound Cave (completed)</li>
+							<li class='HQItem adventuresItem'>Shadydale Plantation Rescue</li>
+							<li class='HQItem adventuresItem'>Royal Vault under Gryphonscry Mountain</li>
+							<li class='HQItem adventuresItem'>The Keep at Elvenstrike Pass</li>
+						</ul>
+					</div>
+					<div id="adventuresDetailsDiv" class='HQPaneBigDiv'>
+						<div id='adventuresTextDiv'>
+							<h2>The Royal Vault under Gryphonscry Mountain</h2>
+							<p>When the war was at its direst, the Ogre King hid away his riches and treasures in secret vaults throughout the kingdom.</p>
+							<p>One of those vaults has been identified: a series of caverns beneath Gryphonscry Mountain.  
+							A cabal of loyalist Sovereign cultists are said to guard the cache, which is also worryingly close to a Deeps community.</p>
+							<p>Still, the prize is tempting.  What treasures – lucrative or magical – might lurk down there?</p>
+						</div>
+						<div id="adventuresButtonsDiv">
+							<button disabled>Sally Forth!</button>
+						</div>
+					</div>
+			
+				</div>
+			
+			</div>
 		
 		</div>
 		
@@ -61,6 +215,7 @@
 				<div id='dialogueTextDiv'></div>
 				
 				<div id='dialogueCloseDiv'>
+					<button id='dialogueReturnButton' hidden>Return Home</button>
 					<button id='dialogueContinueButton' hidden>Continue</button>
 					<button id='dialogueCloseButton' onclick='handlers.hideDialogueDiv()'>Close</button>
 				</div>

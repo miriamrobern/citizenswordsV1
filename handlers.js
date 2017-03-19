@@ -1,25 +1,16 @@
 var handlers = {
 
 	loadLevel: function(level) {
+		
+		view.clearLevel();
+		view.switchToLevelMode();
 	
 		level = dataLevels[level];
-		
-		document.getElementById('mapGridDiv').innerHTML = '';
-		document.getElementById('mapMobDiv').innerHTML = '';
-		
-		document.getElementById('buttonRowDiv').style.display = 'block';
-		document.getElementById('focusMobDiv').style.display = 'block';	
-		document.getElementById('mapDiv').style.display = 'block';
-		
-		document.getElementById('focusMobImg').src = '';
-		document.getElementById('focusMobDetailsDiv').innerHTML = '';
-		
 		game.loadLevel(level);
-			
-		document.getElementById('endTurnButton').disabled = false;
 		
 		view.displayMap();
 	},
+	
 	
 	hexMouseOver: function(x,y,style) {
 		view.mouseOverTile(x,y,style);
@@ -115,6 +106,25 @@ var handlers = {
 		view.drawHexRange(view.focus.range,'open');
 		view.focus.range = undefined;
 		view.focus.maneuver = undefined;
+	},
+	
+	returnHome: function() {
+		console.log('return to Pileus');
+		view.switchToHeadquartersMode();
+	},
+	
+	switchTab: function(tab) {
+		document.getElementById('rumorsDiv').style.display = 'none';
+		document.getElementById('rosterDiv').style.display = 'none';
+		document.getElementById('provisioningDiv').style.display = 'none';
+		document.getElementById('adventuresDiv').style.display = 'none';
+		
+		document.getElementById(tab).style.display = 'block';
+		
+	},
+	
+	displayHeroInRoster: function(index) {
+		view.displayHeroInRoster(index);
 	},
 
 

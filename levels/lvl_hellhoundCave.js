@@ -184,6 +184,7 @@ var hellhoundCave = {
  		puppy2: function(mobIndex) {
  			view.displayDialogue("Gasp!  Aren't you just the cutest little puppy?  Yes you are!  YES YOU ARE!!!<br />That's it, I'm taking you home!",mobs[mobIndex].name,mobs[mobIndex].img,"left");
  			mobs[2].player = true;
+ 			heroes.push(mobs[2]);
  			document.getElementById('dialogueContinueButton').style.display = "none";
  			document.getElementById('dialogueCloseButton').style.display = "inline";
  		},
@@ -197,6 +198,16 @@ var hellhoundCave = {
  			mobs[3].move(map.hexes[92]);
  			mobs[3].ai = ai.basic;
  			mobs[4].ai = ai.basic;
+ 		},
+ 		
+ 		home: function() {
+ 			if (this.id === "puppy") {
+ 				view.displayDialogue("Look at him go!",mobs[0].name,mobs[0].img,"left");
+				document.getElementById('dialogueCloseButton').style.display = "none";
+				document.getElementById('dialogueContinueButton').style.display = "none";
+				document.getElementById('dialogueReturnButton').style.display = "inline";
+ 				document.getElementById('dialogueReturnButton').setAttribute('onclick','handlers.returnHome()');
+ 			};
  		},
  	},
  

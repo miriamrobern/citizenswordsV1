@@ -135,6 +135,8 @@
  					if (target.wounds[s][w].penalty === -1) {
  						target.wounds[s].splice(w,1);
  						woundCount++;
+ 						target.stats.move = 0;
+ 						enactor.stats.move = 1;
  					};
  				};
  			};
@@ -246,55 +248,33 @@
  
  };
  
+ var dataItems = {
  
- var heroes = [
- 
- 	{
- 		name: "Daisy Moucau",
- 		id: "daisy",
- 		img: 'img/minotaur.png',
- 		stats: {
- 			morale: 100,
- 			move: 4,
- 			moveMax: 4,
- 			strength: 4,
- 			strengthMax: 4,
- 			focus: 3,
- 			focusMax: 3,
- 			armor: 2,
- 		},
- 		maneuvers: [
- 			dataManeuvers.lunge,
- 			dataManeuvers.overhead,
- 			dataManeuvers.defensiveStance,
- 			dataManeuvers.exhort,
- 		],
+ 	firstAidKit: {
+ 		name: "First Aid Kit",
  	},
  
- 	{
- 		name: "Mx. Stout",
- 		id: "stout",
- 		img: 'img/dwarf.png',
- 		stats: {
- 			morale: 100,
- 			move: 3,
- 			moveMax: 3,
- 			strength: 3,
- 			strengthMax: 3,
- 			focus: 5,
- 			focusMax: 5,
- 			armor: 4,
- 		},
- 		maneuvers: [
- 			dataManeuvers.hack,
- 			dataManeuvers.shieldSlam,
- 			dataManeuvers.arcaneBeam,
- 			dataManeuvers.trance,
- 			dataManeuvers.firstAid,
- 		],
+ 	mothersSword: {
+ 		name: "Mother's Sword",
  	},
  	
- ];
+ 	scrapArmor: {
+ 		name: "Scrap Armor",
+ 	},
+ 	
+ 	simpleAxe: {
+ 		name: "Simple Axe",
+ 	},
+ 	
+ 	simpleShield: {
+ 		name: "Simple Shield",
+ 	},
+ 	
+ 	mysticalSwordOfLegend: {
+ 		name: "Mystical Sword of Legend which also Sings, Probably",
+ 	},
+ 
+ };
  
  var dataMobs = {
  
@@ -354,3 +334,77 @@
  
  };
  
+ 
+ var heroes = [
+ 
+ 	{
+ 		name: "Daisy Moucau",
+ 		id: "daisy",
+ 		img: 'img/minotaur.png',
+ 		stats: {
+ 			morale: 100,
+ 			move: 4,
+ 			moveMax: 4,
+ 			strength: 4,
+ 			strengthMax: 4,
+ 			focus: 3,
+ 			focusMax: 3,
+ 			armor: 2,
+ 		},
+ 		maneuvers: [
+ 			dataManeuvers.lunge,
+ 			dataManeuvers.overhead,
+ 			dataManeuvers.defensiveStance,
+ 			dataManeuvers.exhort,
+ 		],
+ 		equipment: {
+ 			armor: undefined,
+ 			right: dataItems.mothersSword,
+ 			left: dataItems.mothersSword,
+ 			item0: undefined,
+ 			item1: undefined,
+ 			item2: undefined,
+ 		},
+ 	},
+ 
+ 	{
+ 		name: "Mx. Stout",
+ 		id: "stout",
+ 		img: 'img/eleanor.png',
+ 		stats: {
+ 			morale: 100,
+ 			move: 3,
+ 			moveMax: 3,
+ 			strength: 3,
+ 			strengthMax: 3,
+ 			focus: 5,
+ 			focusMax: 5,
+ 			armor: 4,
+ 		},
+ 		maneuvers: [
+ 			dataManeuvers.hack,
+ 			dataManeuvers.shieldSlam,
+ 			dataManeuvers.arcaneBeam,
+ 			dataManeuvers.trance,
+ 			dataManeuvers.firstAid,
+ 		],
+ 		equipment: {
+ 			armor: dataItems.scrapArmor,
+ 			right: dataItems.simpleAxe,
+ 			left: dataItems.simpleShield,
+ 			item0: dataItems.firstAidKit,
+ 			item1: undefined,
+ 			item2: undefined,
+ 		},
+ 	},
+ 	
+ ];
+
+ var company = {
+ 
+ 	armory: [
+ 		dataItems.scrapArmor,
+ 		dataItems.mysticalSwordOfLegend,
+ 	],
+ 
+ };

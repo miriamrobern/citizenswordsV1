@@ -1,11 +1,23 @@
 body {
 	font-family: sans-serif;
-	cursor: default;
-	text-align: center;
+	padding-top: 5vw;
 	}
 
 #mainMenuDiv {
-	text-align: left;
+	background-color: maroon;
+	color: white;
+	height: 3vw;
+	text-align: center;
+	padding-top: 1vw;
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	}
+
+#titleHead {
+	display: inline;
+	padding-right: 15vw;
 	}
 	
 #mapDiv {
@@ -14,7 +26,8 @@ body {
 	width: 90vw;
 	height: 50vw;
 	position: relative;
-	overflow: scroll;
+	overflow: auto;
+	display: none;
 	}
 	
 .mapOverlay {
@@ -120,7 +133,7 @@ body {
 	margin-right: auto;
 	width: 75vw;
 	height: 25vw;
-	overflow-y:scroll;
+	overflow-y:auto;
 	text-align: left;
 	display: none;
 	}
@@ -241,6 +254,355 @@ body {
 .focusDotSpan {
 	color: darkblue;
 	font-size: 0.6em;
+	}
+
+/* Company Headquarters Stuff */
+
+#companyHQDiv {
+/* 	display: none; */
+	padding-left: 5vw;
+	padding-right: 5vw;
+	float: left;
+	width: 90%;
+	}
+
+.tabDiv {
+	float: left;
+	height: 6vh;
+	padding-left: 2vw;
+	padding-right: 2vw;
+	margin-right: 2vw;
+	margin-left: 1vw;
+	border-radius: 10px 10px 0px 0px;
+	}
+
+.tabDiv h3 {
+	padding-bottom: 0;
+	}
+
+#rumorsTabDiv {
+	background-color: wheat;
+	border-left: 0.5vw outset goldenrod;
+	border-top: 0.5vw outset goldenrod;
+	border-right: 0.5vw outset goldenrod;
+	}
+
+#rosterTabDiv {
+	background-color: steelblue;
+	border-left: 0.5vw outset darkblue;
+	border-top: 0.5vw outset darkblue;
+	border-right: 0.5vw outset darkblue;
+	}
+
+#provisioningTabDiv {
+	background-color: lavender;
+	border-left: 0.5vw outset purple;
+	border-top: 0.5vw outset purple;
+	border-right: 0.5vw outset purple;
+	}
+
+#adventuresTabDiv {
+	background-color: seagreen;
+	border-left: 0.5vw outset darkgreen;
+	border-top: 0.5vw outset darkgreen;
+	border-right: 0.5vw outset darkgreen;
+	}
+
+#HQWrapperDiv {
+	clear:both;
+	}
+
+.HQPaneDiv {
+	padding-left: 2vw;
+	padding-right: 2vw;
+	padding-bottom: 2vw;
+	float: left;
+	}
+
+.HQPaneSelectDiv {
+	float:left;
+	width: 12vw;
+	height: 60vh;
+	margin-right: 2vw;
+	overflow-y: auto;
+	}
+
+.HQList {
+	list-style-type: none;
+	margin: 0;
+	padding: 0;
+	}
+
+.HQItem {
+	padding: 0.5vw;
+	font-size: 0.9em;
+	}
+
+.HQPaneBigDiv {
+	float:left;
+	width: 60vw;
+	height: 60vh;
+	padding-left: 2vw;
+	padding-right: 2vw;
+	overflow-y: auto;
+	}
+
+#rumorsDiv {
+	background-color: wheat;
+	border: 0.5vw outset goldenrod;
+	}
+
+#newsListDiv {
+	border: 0.5vw inset goldenrod;
+	}
+	
+#newsList {
+	}
+
+.newsItem {
+	}
+
+.newsItem:nth-child(odd) {
+	background-color: goldenrod;
+	border: 0.25vw outset darkgoldenrod;
+	}
+
+.newsItem:nth-child(even) {
+	background-color: papayawhip;
+	border: 0.25vw outset peru;
+	}
+
+#newsDetailsDiv {
+	border: 0.5vw inset goldenrod;
+	}
+
+#rosterDiv {
+	background-color: steelblue;
+	border: 0.5vw outset darkblue;
+	display: none;
+	}
+
+.rosterHead {
+	text-align: center;
+	}
+
+#rosterListDiv {
+	border: 0.5vw inset darkblue;
+	}
+
+#rosterList {
+	}
+
+.rosterItem {
+	}
+
+.rosterItem:nth-child(odd) {
+	background-color: lightsteelblue;
+	border: 0.25vw outset steelblue;
+	}
+
+.rosterItem:nth-child(even) {
+	background-color: lightblue;
+	border: 0.25vw outset navy;
+	}
+	
+#rosterDetailsDiv {
+	float: left;
+	width: 44vw;
+	height: 60vh;
+	margin-right: 2vw;
+	border: 0.5vw inset darkblue;
+	background-color: lightblue;
+	position: relative;
+	}
+
+.rosterEquipDiv {
+	border: 3px solid darkred;
+	width: 14vw;
+	margin: 1vw;
+	padding-top: 0.5vw;
+	padding-bottom: 0.5vw;
+	text-align: center;
+	font-size: 0.8em;
+	background-color: rgba(255, 255, 255, 0.4);
+	}
+
+#rosterPortraitDiv {
+	height: 35vh;
+	text-align: center;
+	}
+
+#rosterPortraitImg {
+	height: 35vh;
+	}
+
+#rosterEquipArmorDiv {
+	position: absolute;
+	top: 16vh;
+	left: 15vw;
+	}
+
+#rosterEquipRightDiv {
+	position: absolute;
+	top: 8vh;
+	left: 8vw;
+	}
+
+#rosterEquipLeftDiv {
+	position: absolute;
+	top: 8vh;
+	left: 22vw;
+	}
+
+#rosterEquipItem0Div {
+	position: absolute;
+	top: 25vh;
+	left: 0vw;
+	}
+
+#rosterEquipItem1Div {
+	position: absolute;
+	top: 25vh;
+	left: 14vw;
+	}
+
+#rosterEquipItem2Div {
+	position: absolute;
+	top: 25vh;
+	left: 28vw;
+	}
+
+#rosterStats {
+	float: left;
+	width: 100%;
+	}
+
+.rosterStatDiv {
+	float: left;
+	padding: 0.5vw;
+	width: 20%;
+	margin-left: 8%;
+	text-align: center;
+	}
+
+#rosterStatsMove {
+	color: yellow;
+	background-color: goldenrod;
+	border: 2px solid yellow;
+	}
+	
+#rosterStatsStrength {
+	color: lavender;
+	background-color: purple;
+	border: 2px solid lavender;
+	}
+
+#rosterStatsFocus {
+	color: lightblue;
+	background-color: darkslateblue;
+	border: 2px solid lightblue;
+	}
+
+#rosterManeuvers {
+	width: 100%;
+	padding-top: 5vh;
+	}
+
+#rosterManeuversListDiv {
+	width: 40%;
+	}
+
+#rosterManeuversDetailsDiv {
+	
+	}
+	
+#armoryDiv {
+	float: left;
+	width: 15vw;
+	height: 60vh;
+	margin-right: 2vw;
+	border: 0.5vw inset darkblue;
+	background-color: lightblue;
+	}
+
+#armoryList {
+	list-style-type: none;
+	margin: 0;
+	padding: 0;
+	}
+	
+#trainingDiv {
+	float: left;
+	width: 15vw;
+	height: 60vh;
+	border: 0.5vw inset darkblue;
+	background-color: lightblue;
+	display: none;
+	}
+
+#trainingList {
+	list-style-type: none;
+	margin: 0;
+	padding: 0;
+	}
+
+#provisioningDiv {
+	background-color: lavender;
+	border: 0.5vw outset purple;
+	display: none;
+	}
+	
+#provisioningListDiv {
+	border: 0.5vw inset purple;
+	}
+
+#provisioningDetailsDiv {
+	border: 0.5vw inset purple;
+	}
+
+.provisioningItem {
+	}
+
+.provisioningItem:nth-child(odd) {
+	background-color: violet;
+	border: 0.25vw outset darkviolet;
+	}
+
+.provisioningItem:nth-child(even) {
+	background-color: mediumorchid;
+	border: 0.25vw outset orchid;
+	}
+
+#adventuresDiv {
+	background-color: seagreen;
+	border: 0.5vw outset darkgreen;
+	display: none;
+	}
+
+#adventuresSelectDiv {
+	border: 0.5vw inset darkgreen;
+	}
+
+#adventuresDetailsDiv {
+	border: 0.5vw inset darkgreen;
+	background-color: lightgreen;
+	}
+
+#adventuresButtonsDiv {
+	text-align: right;
+	}
+	
+.adventuresItem {
+	}
+
+.adventuresItem:nth-child(odd) {
+	background-color: olive;
+	border: 0.25vw outset darkolivegreen;
+	}
+
+.adventuresItem:nth-child(even) {
+	background-color: yellowgreen;
+	border: 0.25vw outset greenyellow;
 	}
 
 /* Dialogue Pop Up */
