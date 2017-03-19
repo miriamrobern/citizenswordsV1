@@ -14,8 +14,8 @@ var game = {
 		view.displayFog();
 		
 		// Mobs
-		for (i in level.startLocations) {
-			var newMob = new Mob(heroes[i],level.startLocations[i].x,level.startLocations[i].y,heroes[i].id);
+		for (mob=0;mob<Math.min(level.startLocations.length,heroes.length);mob++) {
+			var newMob = new Mob(heroes[mob],level.startLocations[mob].x,level.startLocations[mob].y,heroes[mob].id);
 			newMob.look(newMob.location);
 		};
 	
@@ -119,7 +119,7 @@ var game = {
 };
 
 function Map(level) {
-	if (level == undefined) {level = firstLevel};
+	if (level == undefined) {level = hellhoundCave};
 	
 	// Blank Map
 	var hexes = [];

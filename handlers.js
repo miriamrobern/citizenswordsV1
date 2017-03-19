@@ -1,8 +1,8 @@
 var handlers = {
 
-	newGame: function() {
+	loadLevel: function(level) {
 	
-		var level = firstLevel;
+		level = dataLevels[level];
 		
 		document.getElementById('mapGridDiv').innerHTML = '';
 		document.getElementById('mapMobDiv').innerHTML = '';
@@ -10,6 +10,9 @@ var handlers = {
 		document.getElementById('buttonRowDiv').style.display = 'block';
 		document.getElementById('focusMobDiv').style.display = 'block';	
 		document.getElementById('mapDiv').style.display = 'block';
+		
+		document.getElementById('focusMobImg').src = '';
+		document.getElementById('focusMobDetailsDiv').innerHTML = '';
 		
 		game.loadLevel(level);
 			
