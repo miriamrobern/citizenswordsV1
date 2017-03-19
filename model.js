@@ -103,20 +103,11 @@ var game = {
 			toDefend += Math.random()*0.9 + 0.1;
 		};
 		
-		var woundType;
 		if (toHit > toDefend) {
 			console.log('wounded: ',toHit,' vs ',toDefend);
-			var woundLevel = Math.floor(toHit/toDefend)-1;
-			if (wound.names.length > woundLevel) {
-				woundName = wound.names[woundLevel];
-			} else {
-				console.log(wound);
-				woundName = wound.names[wound.names.length-1];
-			};
-			woundPenalty = -1 * (1+woundLevel);
-			console.log(attacker.name,'inflicts a',woundName,'on',defender.name);
-			defender.takeWound({type:wound,name:woundName,stat:wound.stat,penalty:woundPenalty});
-			result = woundType;
+			var penalty = Math.floor(toHit/toDefend)-1;
+			defender.takeWound(wound,penalty);
+			result = wound;
 		} else {
 			console.log('defend: ',toHit,' vs ',toDefend);
 			result = false;
@@ -483,19 +474,32 @@ function Mob(type,x,y,id,name) {
 		};
 	};
 	
-	this.takeWound = function(wound) {
+	this.takeWound = function(woundType,penalty) {
 			
 		// jiggle
 		view.jiggleMob(this);
 		
 		// add wound
-		this.wounds[wound.stat].push(wound);
+		console.log(woundType,penalty);
+		var woundExists = false;
+		for (i in this.wounds[woundType.stat]) {
+			if (this.wounds[woundType.stat][i].type == woundType) {
+				woundExists = true;
+				this.wounds[woundType.stat][i].penalty -= penalty;
+				this.wounds[woundType.stat][i].name = woundType.names[(this.wounds[woundType.stat][i].penalty * -1)-1];
+				if (this.wounds[woundType.stat][i].name == undefined) {
+					this.wounds[woundType.stat][i].name = woundType.names[woundType.names.length-1];
+				};
+			};
+		};
+		if (!woundExists) {
+			var woundName = woundType.names[penalty-1];
+			this.wounds[woundType.stat].push({name:woundName,type:woundType,penalty:(penalty*-1)});
+		};
 		
 		// adjust morale
-		var moraleHit = 200 * wound.penalty / (this.stats.moveMax + this.stats.strengthMax + this.stats.focusMax);
+		var moraleHit = -200 * penalty / (this.stats.moveMax + this.stats.strengthMax + this.stats.focusMax);
 		this.adjustMorale(moraleHit);
-		
-		view.displayFocusMob();
 	};
 	
 	this.adjustMorale = function(gain) {
@@ -510,5 +514,7 @@ function Mob(type,x,y,id,name) {
 			this.state = "defeated";
 			view.defeatMob(this);
 		};
+		
+		view.displayFocusMob();
 	};
 };
