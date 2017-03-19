@@ -336,6 +336,14 @@ var view = {
 					focusMobManeuverButton.className = 'focusMobManeuverButton';
 					var num = parseInt(i)+1;
 					focusMobManeuverButton.innerHTML = num + '. ' + mob.maneuvers[i].name + ' ';
+					
+					// add dots for maneuver costs
+					for (s in mob.maneuvers[i].cost) {
+						for (c=0;c<mob.maneuvers[i].cost[s];c++) {
+							focusMobManeuverButton.innerHTML += '<span class='+s+'DotSpan>&#9679;</span>';
+						};
+					};
+					
 					focusMobManeuverButton.setAttribute('onclick','handlers.selectManeuver("'+mob.maneuvers[i].id+'",focusMobManeuverButton'+i+')');
 					var afford = false;
 					for (c in mob.maneuvers[i].cost) {

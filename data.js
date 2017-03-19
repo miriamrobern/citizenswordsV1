@@ -61,7 +61,7 @@
  		name: "Arcane Beam",
  		id: 'arcaneBeam',
  		img: '',
- 		cost: {focus:1,move:1},
+ 		cost: {move:1,focus:1},
  		target: true,
  		targetHostiles: true,
  		targetTeam: false,
@@ -212,6 +212,7 @@
  
  	{
  		name: "Daisy Moucau",
+ 		id: "daisy",
  		img: 'img/minotaur.png',
  		stats: {
  			morale: 100,
@@ -232,6 +233,7 @@
  
  	{
  		name: "Mx. Stout",
+ 		id: "stout",
  		img: 'img/dwarf.png',
  		stats: {
  			morale: 100,

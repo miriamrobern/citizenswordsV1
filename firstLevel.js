@@ -97,21 +97,23 @@ var firstLevel = {
  		{
 			x:10,
 			y:2,
-			id:dataMobs.hellhound,
+			type:dataMobs.hellhound,
+			id: "puppy",
+			name: "Puppy",
 			ai: 'dormant',
  		},
  		
  		{
 			x:7,
 			y:9,
-			id:dataMobs.rat,
+			type:dataMobs.rat,
 			ai: 'dormant',
  		},
  		
  		{
 			x:8,
 			y:9,
-			id:dataMobs.rat,
+			type:dataMobs.rat,
 			ai: 'dormant',
  		},
  	],

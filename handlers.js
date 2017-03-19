@@ -7,6 +7,10 @@ var handlers = {
 		document.getElementById('mapGridDiv').innerHTML = '';
 		document.getElementById('mapMobDiv').innerHTML = '';
 		
+		document.getElementById('mapDiv').style.display = 'block';
+		document.getElementById('buttonRowDiv').style.display = 'block';
+		document.getElementById('focusMobDiv').style.display = 'block';
+		
 		game.loadLevel(level);
 			
 		document.getElementById('endTurnButton').disabled = false;

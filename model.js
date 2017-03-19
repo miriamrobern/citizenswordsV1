@@ -15,12 +15,12 @@ var game = {
 		
 		// Mobs
 		for (i in level.startLocations) {
-			var newMob = new Mob(heroes[i],level.startLocations[i].x,level.startLocations[i].y);
+			var newMob = new Mob(heroes[i],level.startLocations[i].x,level.startLocations[i].y,heroes[i].id);
 			newMob.look(newMob.location);
 		};
 	
 		for (i in level.mobs) {
-			var newMob = new Mob(level.mobs[i].id,level.mobs[i].x,level.mobs[i].y);
+			var newMob = new Mob(level.mobs[i].type,level.mobs[i].x,level.mobs[i].y,level.mobs[i].id,level.mobs[i].name);
 			if (level.mobs[i].ai !== undefined) {
 				newMob.ai = ai[level.mobs[i].ai];
 			};
@@ -232,7 +232,7 @@ function Hex(x,y,type) {
 	
 };
 
-function Mob(id,x,y) {
+function Mob(type,x,y,id,name) {
 
 	for (h in map.hexes) {
 		if (map.hexes[h].x === x && map.hexes[h].y === y) {
@@ -240,26 +240,37 @@ function Mob(id,x,y) {
 		}
 	};
 	
-	this.name = id.name;
-	this.img = id.img;
+	if (id == undefined) {
+		this.id = 'Generic ' + type.name + " " + x + "_" + y;
+	} else {
+		this.id = id;
+	};
+	
+	if (name == undefined) {
+		this.name = type.name;
+	} else {
+		this.name = name;
+	};	
+
+	this.img = type.img;
 	
 	this.stats = {};
-	for (s in id.stats) {
-		this.stats[s] = id.stats[s];
+	for (s in type.stats) {
+		this.stats[s] = type.stats[s];
 	};
 	
-	if (id.wounds == undefined) {
+	if (type.wounds == undefined) {
 		this.wounds = {move:[],strength:[],focus:[]};
 	} else {
-		this.wounds = id.wounds;
+		this.wounds = type.wounds;
 	};
 	
-	this.maneuvers = id.maneuvers;
+	this.maneuvers = type.maneuvers;
 	
-	if (id.ai == undefined) {
+	if (type.ai == undefined) {
 		this.player = true;
 	} else {
-		this.ai = ai[id.ai];
+		this.ai = ai[type.ai];
 	};
 	
 	mobs.push(this);
