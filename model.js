@@ -105,7 +105,7 @@ var game = {
 		
 		if (toHit > toDefend) {
 			console.log('wounded: ',toHit,' vs ',toDefend);
-			var penalty = Math.floor(toHit/toDefend)-1;
+			var penalty = Math.ceil(toHit/toDefend);
 			defender.takeWound(wound,penalty);
 			result = wound;
 		} else {

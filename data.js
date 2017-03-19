@@ -3,7 +3,7 @@
  var dataWounds = {
  
  	bite: {
- 		names: ["Bitten"],
+ 		names: ["Bite","Bitten","Savaged","Mauled","Chewed Up"],
  		stat: "strength",
  	},
  
@@ -116,6 +116,32 @@
  			enactor.adjustMorale(-1 * moraleCost);
  			view.attackAnimate(enactor,target.location);
  			view.bounceMob(target);
+ 		},
+ 	},
+ 	
+ 	firstAid: {
+ 		name: "First Aid",
+ 		id: 'firstAid',
+ 		img: '',
+ 		cost: {move:1,focus:1},
+ 		target: true,
+ 		targetHostiles: false,
+ 		targetTeam: true,
+ 		range: 1,
+ 		execute: function(enactor,target) {
+ 			var woundCount = 0;
+ 			for (s in target.wounds) {
+ 				for (w in target.wounds[s]) {
+ 					if (target.wounds[s][w].penalty === -1) {
+ 						target.wounds[s].splice(w,1);
+ 						woundCount++;
+ 					};
+ 				};
+ 			};
+ 			view.attackAnimate(enactor,target.location);
+ 			if (woundCount > 0) {
+				view.bounceMob(target);
+ 			};
  		},
  	},
  
@@ -264,6 +290,7 @@
  			dataManeuvers.shieldSlam,
  			dataManeuvers.arcaneBeam,
  			dataManeuvers.trance,
+ 			dataManeuvers.firstAid,
  		],
  	},
  	
