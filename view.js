@@ -506,7 +506,6 @@ var view = {
 		var srcWidth = 300;
 		srcWidth = srcWidth * (100/document.documentElement.clientWidth);
 		length = length/srcWidth;
-		console.log(length);
 		
 		beamDiv.style.transform = 'rotate('+degrees+'deg) scaleX('+length+')';
 		

@@ -92,7 +92,7 @@ var game = {
 		
 		var toHit = 0;
 		for (i=0;i<attacker.stats[attackStat];i++) {
-			toHit += Math.random();
+			toHit += Math.random()*0.9 + 0.1;
 		};
 
 		var toDefend = 0;
@@ -100,7 +100,7 @@ var game = {
 		var activeDefense = 0;
 		if (dodge) {activeDefense = defender.stats.move;};
 		for (i=0;i<passiveDefense+activeDefense;i++) {
-			toDefend += Math.random();
+			toDefend += Math.random()*0.9 + 0.1;
 		};
 		
 		var woundType;

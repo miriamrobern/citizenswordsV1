@@ -15,7 +15,6 @@ body {
 	height: 50vw;
 	position: relative;
 	overflow: scroll;
-	display: none;
 	}
 	
 .mapOverlay {

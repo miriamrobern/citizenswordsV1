@@ -166,13 +166,26 @@ var firstLevel = {
  		noHellhound: function() {
  			view.displayDialogue("You know, it was probably those rats terrorizing the locals.  I bet there isn't even a hellhound in this cave at all!",this.name,this.img,"left");
  			this.location.event = undefined;
- 			mobs[2].player = true;
  		},
  		
  		puppy: function() {
- 			view.displayDialogue("Aren't you just the cutest little puppy?  Yes you are!  YES YOU ARE!!!<br />That's it, I'm taking you home!",this.name,this.img,"left");
+ 			view.displayDialogue("Growl?  >snurfle<  Woof.","Terrifying Hellhound... Puppy",mobs[2].img,"right");
  			this.location.event = undefined;
+ 			document.getElementById('dialogueCloseButton').style.display = "none";
+ 			document.getElementById('dialogueContinueButton').style.display = "inline";
+ 			for (i in mobs) {
+ 				if (mobs[i] === this) {
+ 					mobIndex = i;
+ 				};
+ 			};
+ 			document.getElementById('dialogueContinueButton').setAttribute('onclick','map.events.puppy2('+mobIndex+')');
+ 		},
+ 		
+ 		puppy2: function(mobIndex) {
+ 			view.displayDialogue("Gasp!  Aren't you just the cutest little puppy?  Yes you are!  YES YOU ARE!!!<br />That's it, I'm taking you home!",mobs[mobIndex].name,mobs[mobIndex].img,"left");
  			mobs[2].player = true;
+ 			document.getElementById('dialogueContinueButton').style.display = "none";
+ 			document.getElementById('dialogueCloseButton').style.display = "inline";
  		},
  		
  		rats: function() {

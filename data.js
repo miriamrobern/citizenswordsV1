@@ -89,6 +89,18 @@
  		},
  	},
  	
+ 	defensiveStance: {
+ 		name: "Defensive Stance",
+ 		id: 'defensiveStance',
+ 		img: '',
+ 		cost: {move:1},
+ 		target: false,
+ 		range: 0,
+ 		execute: function() {
+ 			view.focus.mob.stats.strength = Math.min(view.focus.mob.stats.strength+2,view.focus.mob.stats.strengthMax);
+ 		},
+ 	},
+ 	
  	exhort: {
  		name: "Exhort",
  		id: 'exhort',
@@ -141,13 +153,14 @@
  		name: "Overhead Strike",
  		id: 'overhead',
  		img: '',
- 		cost: {move:1,strength:3},
+ 		cost: {move:1,strength:2},
  		target: true,
  		targetHostiles: true,
  		targetTeam: false,
  		range: 1,
  		execute: function(attacker,defender) {
- 			game.simpleAttack(attacker,'strength',defender,'armor',true,[dataWounds.sharp,dataWounds.fear])
+ 			game.simpleAttack(attacker,'strength',defender,'armor',true,[dataWounds.sharp])
+ 			game.simpleAttack(attacker,'strength',defender,'armor',true,[dataWounds.fear])
  			view.attackAnimate(attacker,defender.location);
  		},
  	},
@@ -227,6 +240,7 @@
  		maneuvers: [
  			dataManeuvers.lunge,
  			dataManeuvers.overhead,
+ 			dataManeuvers.defensiveStance,
  			dataManeuvers.exhort,
  		],
  	},
