@@ -109,7 +109,6 @@ var handlers = {
 	},
 	
 	returnHome: function() {
-		console.log('return to Pileus');
 		game.archiveHeroes();
 		view.switchToHeadquartersMode();
 	},
@@ -131,14 +130,27 @@ var handlers = {
 	
 	// Moving Roster Items
 	
-	pickupItem: function(event) {
-		event.srcElement.className = 'HQItem rosterItem divBoat';
-		document.body.appendChild(event.srcElement);
-		view.focus.divBoat = event.srcElement;
+	pickupItem: function(e) {
+		if (e.srcElement.nodeName === "DIV") {
+			var slot = e.srcElement.parentElement.id.slice(11);
+			slot = slot.substring(0,slot.length-3).toLowerCase();
+			view.focus.item = view.focus.hero.equipment[slot];
+			view.focus.hero.equipment[slot] = undefined;
+			view.focus.hero.refreshManeuvers();
+		} else {
+			var item = company.armory[e.srcElement.id.slice(10)];
+			view.focus.item = item;
+			company.armory.splice(item,1);
+		};
+		view.disableHighlight(e);
+		e.srcElement.className = 'HQItem rosterItem divBoat';
+		document.body.appendChild(e.srcElement);
+		view.focus.divBoat = e.srcElement;
 		window.addEventListener('mousemove',handlers.moveItem,true);
 	},
 	
 	moveItem: function(e) {
+		view.disableHighlight(e);
 		var divBoatX = e.clientX + 5;
 		var divBoatY = e.clientY + 5;
 		view.focus.divBoat.style.top = divBoatY + 'px';
@@ -151,17 +163,22 @@ var handlers = {
 			view.focus.divBoat.className = 'HQItem rosterItem';
 			view.focus.slot.innerHTML = '';
 			view.focus.slot.appendChild(view.focus.divBoat);
-			var item = view.focus.divBoat.id.slice(10);
+			
 			var slot = view.focus.slot.id.slice(11);
 			slot = slot.substring(0,slot.length-3).toLowerCase();
-			item = company.armory[item];
-			console.log(item,slot);
-			company.armory.splice(item,1);
-			view.focus.hero.equip(item,slot);
+			
+			view.focus.hero.equip(view.focus.item,slot);
+			
 			view.focus.divBoat = undefined;
+			
 		} else if (view.focus.divBoat !== undefined) {
 			view.focus.divBoat.className = 'HQItem rosterItem';
 			document.getElementById('armoryList').appendChild(view.focus.divBoat);
+			
+			// add item to armory
+			company.armory.push(view.focus.item);
+			view.refreshArmory();
+			
 			view.focus.divBoat = undefined;
 		};
 	},

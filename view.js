@@ -588,7 +588,6 @@ var view = {
 		for (m in hero.maneuvers) {
 			var newManeuver = document.createElement('li');
 			var num = parseInt(m)+1;
-			console.log(hero.maneuvers[m]);
 			newManeuver.innerHTML = num + ". " + hero.maneuvers[m].name;
 			newManeuver.className = 'focusMobManeuverButton';
 			document.getElementById('rosterManeuversList').appendChild(newManeuver);
@@ -606,6 +605,7 @@ var view = {
 			if ( hero.equipment[e] !== undefined) {
 				newItem.innerHTML = hero.equipment[e].name;
 				newItem.className = 'HQItem rosterItem';
+				newItem.addEventListener('mousedown',handlers.pickupItem.bind(this),false);
 				var slot = "rosterEquip" + e.charAt(0).toUpperCase() + e.slice(1) + "Div";
 				document.getElementById(slot).innerHTML = '';
 				document.getElementById(slot).appendChild(newItem);
@@ -623,6 +623,14 @@ var view = {
 	unfocusSlot: function(div) {
 		document.getElementById(div).style.outline = '';
 		view.focus.slot = undefined;
+	},
+	
+	disableHighlight: function(e) {
+		if (e.stopPropagation) e.stopPropagation();
+		if (e.preventDefault) e.preventDefault();
+		e.cancelBubble = true;
+		e.returnValue = false;
+		return false;
 	},
 	
 	displayDialogue: function(text,name,bust,bustPosition) {

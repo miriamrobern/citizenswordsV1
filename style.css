@@ -259,7 +259,7 @@ body {
 /* Company Headquarters Stuff */
 
 #companyHQDiv {
-/* 	display: none; */
+	display: none;
 	padding-left: 5vw;
 	padding-right: 5vw;
 	float: left;
