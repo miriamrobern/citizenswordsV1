@@ -140,7 +140,7 @@ var handlers = {
 		} else {
 			var item = company.armory[e.srcElement.id.slice(10)];
 			view.focus.item = item;
-			company.armory.splice(item,1);
+			company.armory.splice(company.armory.indexOf(item),1);
 		};
 		view.disableHighlight(e);
 		e.srcElement.className = 'HQItem rosterItem divBoat';

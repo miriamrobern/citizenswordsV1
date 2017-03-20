@@ -271,6 +271,7 @@
  	scrapArmor: {
  		name: "Scrap Armor",
  		slot: ['armor'],
+ 		passiveDefense: 1,
  	},
  	
  	simpleAxe: {
@@ -286,6 +287,14 @@
  		slot: ['left','right'],
  		maneuvers: [
  			dataManeuvers.shieldSlam,
+ 		],
+ 	},
+ 	
+ 	initiateSpellbook: {
+ 		name: "Initiate's Spellbook",
+ 		slot:['left','right'],
+ 		maneuvers: [
+ 			dataManeuvers.quickTrance,
  		],
  	},
  	
@@ -416,7 +425,6 @@
  		},
  		maneuvers: [
  			dataManeuvers.hack,
- 			dataManeuvers.shieldSlam,
  			dataManeuvers.arcaneBeam,
  			dataManeuvers.quickTrance,
  			dataManeuvers.firstAid,
@@ -424,7 +432,7 @@
  		equipment: {
  			armor: dataItems.scrapArmor,
  			right: dataItems.simpleAxe,
- 			left: dataItems.simpleShield,
+ 			left: dataItems.initiateSpellbook,
  			item0: dataItems.firstAidKit,
  			item1: undefined,
  			item2: undefined,
@@ -432,7 +440,6 @@
  		skills: {
  			maneuvers: [
 				dataManeuvers.arcaneBeam,
-				dataManeuvers.quickTrance,
  			],
  			passives: [
  			],

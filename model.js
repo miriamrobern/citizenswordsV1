@@ -539,6 +539,11 @@ function Mob(type,x,y,id,name) {
 		this.equipment[slot] = item;
 		this.refreshManeuvers();
 		
+		// needs to change armor value
+		if (item.slot[0] === "armor") {
+			console.log('change armor value');
+		};
+		
 	};
 	
 	this.train = function(item,skill) {
