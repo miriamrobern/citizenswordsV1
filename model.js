@@ -28,6 +28,17 @@ var game = {
 
 	
 	},
+	
+	archiveHeroes: function() {
+		console.log('archiving');
+		heroes = [];
+		for (i in mobs) {
+			if (mobs[i].player) {
+				heroes.push(mobs[i]);
+			};
+		};
+		mobs = [];
+	},
 
 	checkEndTurn: function() {
 		var endTurn = true;
@@ -257,12 +268,15 @@ function Mob(type,x,y,id,name) {
 	};
 	
 	this.maneuvers = type.maneuvers;
+	this.skills = type.skills;
 	
 	if (type.ai == undefined) {
 		this.player = true;
 	} else {
 		this.ai = ai[type.ai];
 	};
+	
+	this.equipment = type.equipment;
 	
 	mobs.push(this);
 	
@@ -516,5 +530,50 @@ function Mob(type,x,y,id,name) {
 		};
 		
 		view.displayFocusMob();
+	};
+	
+	this.equip = function(item,slot) {
+		if (item == undefined) {
+			slot = [slot];
+		} else if (item.size > 1 && (slot === "left" || slot === "right") ) {
+			slot = ['left','right'];
+		} else if (item.size > 1) {
+			slot = [slot,"item1"];
+		} else {
+			slot = [slot];
+		};
+		for ( i in slot ) {
+			this.equipment[slot[i]] = item;
+		}
+		this.refreshManeuvers();
+	};
+	
+	this.train = function(item,skill) {
+	};
+	
+	this.refreshManeuvers = function() {
+	
+		var maneuvers = [];
+	
+		var maneuverSources = [];
+		maneuverSources.push(this.equipment.left);
+		if (this.equipment.left !== this.equipment.right) {
+			maneuverSources.push(this.equipment.right);
+		};
+		maneuverSources.push(this.equipment.armor);
+		maneuverSources.push(this.skills);
+		maneuverSources.push(this.equipment.item0);
+		maneuverSources.push(this.equipment.item1);
+		maneuverSources.push(this.equipment.item2);
+		
+		for (i in maneuverSources) {
+			if (maneuverSources[i] !== undefined && maneuverSources[i].maneuvers !== undefined) {
+				maneuvers = maneuvers.concat(maneuverSources[i].maneuvers);
+			};
+		};
+		
+		this.maneuvers = maneuvers;
+		view.refreshRoster();
+	
 	};
 };

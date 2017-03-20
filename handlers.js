@@ -110,6 +110,7 @@ var handlers = {
 	
 	returnHome: function() {
 		console.log('return to Pileus');
+		game.archiveHeroes();
 		view.switchToHeadquartersMode();
 	},
 	

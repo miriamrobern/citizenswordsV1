@@ -252,26 +252,51 @@
  
  	firstAidKit: {
  		name: "First Aid Kit",
+ 		slot: ['item0','item1','item2'],
+ 		maneuvers: [
+ 			dataManeuvers.firstAid,
+ 		],
  	},
  
  	mothersSword: {
  		name: "Mother's Sword",
+ 		slot: ['left','right'],
+ 		size: 2,
+ 		maneuvers: [
+ 			dataManeuvers.lunge,
+ 			dataManeuvers.overhead,
+ 		],
  	},
  	
  	scrapArmor: {
  		name: "Scrap Armor",
+ 		slot: ['armor'],
  	},
  	
  	simpleAxe: {
  		name: "Simple Axe",
+ 		slot: ['left','right'],
+ 		maneuvers: [
+ 			dataManeuvers.hack,
+ 		],
  	},
  	
  	simpleShield: {
  		name: "Simple Shield",
+ 		slot: ['left','right'],
+ 		maneuvers: [
+ 			dataManeuvers.shieldSlam,
+ 		],
  	},
  	
  	mysticalSwordOfLegend: {
  		name: "Mystical Sword of Legend which also Sings, Probably",
+ 		slot: ['left','right'],
+ 		maneuvers: [
+ 			dataManeuvers.hack,
+ 			dataManeuvers.trance,
+ 			dataManeuvers.taunt,
+ 		],
  	},
  
  };
@@ -365,6 +390,14 @@
  			item1: undefined,
  			item2: undefined,
  		},
+ 		skills: {
+ 			maneuvers: [
+				dataManeuvers.defensiveStance,
+				dataManeuvers.exhort,
+ 			],
+ 			passives: [
+ 			],
+ 		},
  	},
  
  	{
@@ -395,6 +428,14 @@
  			item0: dataItems.firstAidKit,
  			item1: undefined,
  			item2: undefined,
+ 		},
+ 		skills: {
+ 			maneuvers: [
+				dataManeuvers.arcaneBeam,
+				dataManeuvers.quickTrance,
+ 			],
+ 			passives: [
+ 			],
  		},
  	},
  	

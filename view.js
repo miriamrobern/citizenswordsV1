@@ -26,7 +26,9 @@ var view = {
 		document.getElementById('buttonRowDiv').style.display = 'none';
 		document.getElementById('focusMobDiv').style.display = 'none';	
 		document.getElementById('mapDiv').style.display = 'none';
+		
 		document.getElementById('companyHQDiv').style.display = 'block';
+		view.refreshRoster();
 	},
 
 
