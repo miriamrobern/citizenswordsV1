@@ -264,6 +264,7 @@ body {
 	padding-right: 5vw;
 	float: left;
 	width: 90%;
+	position: relative;
 	}
 
 .tabDiv {
@@ -702,3 +703,10 @@ body {
 	padding: 2.5vw;
 	text-align: right;
 	}
+	
+/* Moving Items on Roster */
+
+.divBoat {
+	position: absolute;
+	z-index: 10;
+}

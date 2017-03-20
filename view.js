@@ -556,33 +556,40 @@ var view = {
 			rosterList.appendChild(newItem);
 		};
 		
-		// Hero Display
-		view.displayHeroInRoster(0);
+		if (view.focus.hero == undefined) {view.focus.hero = heroes[0]};
+		view.displayHeroInRoster(view.focus.hero);
 		
-		// Armory
-		document.getElementById('armoryList').innerHTML = '';
-		for (i in company.armory) {
-			var newItem = document.createElement('li');
-			newItem.className = 'HQItem rosterItem';
-			newItem.innerHTML = company.armory[i].name;
-			document.getElementById('armoryList').appendChild(newItem);
-		};
+		view.refreshArmory();
 		
 		// Training
 	},
 	
-	displayHeroInRoster: function(index) {
-		console.log(heroes[index]);
-		document.getElementById('rosterPortraitImg').src = heroes[index].img;
-		document.getElementById('rosterStatMoveSpan').innerHTML = heroes[index].stats.move;
-		document.getElementById('rosterStatStrengthSpan').innerHTML = heroes[index].stats.strength;
-		document.getElementById('rosterStatFocusSpan').innerHTML = heroes[index].stats.focus;
+	refreshArmory: function() {
+		document.getElementById('armoryList').innerHTML = '';
+		for (i in company.armory) {
+			var newItem = document.createElement('li');
+			newItem.className = 'HQItem rosterItem';
+			newItem.id = 'armoryItem'+i;
+			newItem.innerHTML = company.armory[i].name;
+			newItem.addEventListener('mousedown',handlers.pickupItem.bind(this),false);
+			document.getElementById('armoryList').appendChild(newItem);
+		};
+	},
+	
+	displayHeroInRoster: function(hero) {
+		console.log(hero);
+		view.focus.hero = hero;
+		document.getElementById('rosterPortraitImg').src = hero.img;
+		document.getElementById('rosterStatMoveSpan').innerHTML = hero.stats.move;
+		document.getElementById('rosterStatStrengthSpan').innerHTML = hero.stats.strength;
+		document.getElementById('rosterStatFocusSpan').innerHTML = hero.stats.focus;
 		
 		document.getElementById('rosterManeuversList').innerHTML = '';
-		for (m in heroes[index].maneuvers) {
+		for (m in hero.maneuvers) {
 			var newManeuver = document.createElement('li');
 			var num = parseInt(m)+1;
-			newManeuver.innerHTML = num + ". " + heroes[index].maneuvers[m].name;
+			console.log(hero.maneuvers[m]);
+			newManeuver.innerHTML = num + ". " + hero.maneuvers[m].name;
 			newManeuver.className = 'focusMobManeuverButton';
 			document.getElementById('rosterManeuversList').appendChild(newManeuver);
 		};
@@ -594,16 +601,28 @@ var view = {
 		document.getElementById('rosterEquipItem0Div').innerHTML = 'Empty';
 		document.getElementById('rosterEquipItem1Div').innerHTML = 'Empty';
 		document.getElementById('rosterEquipItem2Div').innerHTML = 'Empty';
-		for (e in heroes[index].equipment) {
+		for (e in hero.equipment) {
 			var newItem = document.createElement('div');
-			if ( heroes[index].equipment[e] !== undefined) {
-				newItem.innerHTML = heroes[index].equipment[e].name;
+			if ( hero.equipment[e] !== undefined) {
+				newItem.innerHTML = hero.equipment[e].name;
 				newItem.className = 'HQItem rosterItem';
 				var slot = "rosterEquip" + e.charAt(0).toUpperCase() + e.slice(1) + "Div";
 				document.getElementById(slot).innerHTML = '';
 				document.getElementById(slot).appendChild(newItem);
 			};
 		};
+	},
+	
+	focusSlot: function(div) {
+		if (view.focus.divBoat !== undefined) {
+			view.focus.slot = document.getElementById(div);
+			view.focus.slot.style.outline = '2px solid red';
+		};
+	},
+	
+	unfocusSlot: function(div) {
+		document.getElementById(div).style.outline = '';
+		view.focus.slot = undefined;
 	},
 	
 	displayDialogue: function(text,name,bust,bustPosition) {

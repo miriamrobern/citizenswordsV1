@@ -208,6 +208,18 @@
  			view.bounceMob(target);
  		},
  	},
+ 	
+ 	quickTrance: {
+ 		name: "Quick Trance",
+ 		id: 'trance',
+ 		img: '',
+ 		cost: {move:2},
+ 		target: false,
+ 		range: 0,
+ 		execute: function() {
+ 			view.focus.mob.stats.focus = Math.min(view.focus.mob.stats.focus+4,view.focus.mob.stats.focusMax);
+ 		},
+ 	},
  
  	shieldSlam: {
  		name: "Shield Slam",
@@ -232,18 +244,6 @@
  		target: false,
  		range: 2,
  		execute: function() {},
- 	},
- 	
- 	trance: {
- 		name: "Quick Trance",
- 		id: 'trance',
- 		img: '',
- 		cost: {move:2},
- 		target: false,
- 		range: 0,
- 		execute: function() {
- 			view.focus.mob.stats.focus = Math.min(view.focus.mob.stats.focus+4,view.focus.mob.stats.focusMax);
- 		},
  	},
  
  };
@@ -294,7 +294,7 @@
  		slot: ['left','right'],
  		maneuvers: [
  			dataManeuvers.hack,
- 			dataManeuvers.trance,
+ 			dataManeuvers.quickTrance,
  			dataManeuvers.taunt,
  		],
  	},
@@ -418,7 +418,7 @@
  			dataManeuvers.hack,
  			dataManeuvers.shieldSlam,
  			dataManeuvers.arcaneBeam,
- 			dataManeuvers.trance,
+ 			dataManeuvers.quickTrance,
  			dataManeuvers.firstAid,
  		],
  		equipment: {

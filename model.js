@@ -533,16 +533,22 @@ function Mob(type,x,y,id,name) {
 	};
 	
 	this.equip = function(item,slot) {
+	
+		// Needs to take current occupants of slot and put into the armory
+	
 		if (item == undefined) {
 			slot = [slot];
 		} else if (item.size > 1 && (slot === "left" || slot === "right") ) {
 			slot = ['left','right'];
-		} else if (item.size > 1) {
+		} else if (item.size > 1 && (slot === "item0" || slot === "item2") ) {
 			slot = [slot,"item1"];
 		} else {
 			slot = [slot];
 		};
 		for ( i in slot ) {
+			if (this.equipment[slot[i]] !== undefined) {
+				company.armory.push(this.equipment[slot[i]]);
+			};
 			this.equipment[slot[i]] = item;
 		}
 		this.refreshManeuvers();
@@ -566,11 +572,16 @@ function Mob(type,x,y,id,name) {
 		maneuverSources.push(this.equipment.item1);
 		maneuverSources.push(this.equipment.item2);
 		
+		console.log('sources:',maneuverSources);
+		
 		for (i in maneuverSources) {
 			if (maneuverSources[i] !== undefined && maneuverSources[i].maneuvers !== undefined) {
 				maneuvers = maneuvers.concat(maneuverSources[i].maneuvers);
+				console.log(maneuverSources[i],maneuverSources[i].maneuvers);
 			};
 		};
+		
+		console.log('maneuvers:',maneuvers);
 		
 		this.maneuvers = maneuvers;
 		view.refreshRoster();
