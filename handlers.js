@@ -143,9 +143,17 @@ var handlers = {
 			company.armory.splice(company.armory.indexOf(item),1);
 		};
 		view.disableHighlight(e);
+		
 		e.srcElement.className = 'HQItem rosterItem divBoat';
 		document.body.appendChild(e.srcElement);
 		view.focus.divBoat = e.srcElement;
+		
+		var slot = view.focus.item.slot;
+		for (i in slot) {
+			var slotName = 'rosterEquip' + slot[i].charAt(0).toUpperCase() + slot[i].slice(1) + 'Div';
+			document.getElementById(slotName).style.borderColor = 'red';
+		}
+		
 		window.addEventListener('mousemove',handlers.moveItem,true);
 	},
 	
@@ -160,6 +168,20 @@ var handlers = {
 	dropItem: function(e) {
 		window.removeEventListener('mousemove',handlers.moveItem,true);
 		if (view.focus.divBoat !== undefined && view.focus.slot !== undefined) {
+			for (i in {rosterEquipArmorDiv:0,rosterEquipLeftDiv:0,rosterEquipRightDiv:0,rosterEquipItem0Div:0,rosterEquipItem1Div:0,rosterEquipItem2Div:0,}) {
+				document.getElementById(i).style.borderColor = 'darkblue';
+			};
+			var slotCheck = false;
+			var itemSlot = view.focus.item.slot;
+			var slotName = view.focus.slot.id;
+			for (i in itemSlot) {
+				console.log(itemSlot[i].slice(1),slotName);
+				if (slotName.indexOf(itemSlot[i].slice(1)) !== -1) {
+					slotCheck = true;
+				};
+			};
+		};
+		if (view.focus.divBoat !== undefined && view.focus.slot !== undefined && slotCheck) {
 			view.focus.divBoat.className = 'HQItem rosterItem';
 			view.focus.slot.innerHTML = '';
 			view.focus.slot.appendChild(view.focus.divBoat);
