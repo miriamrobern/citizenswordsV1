@@ -60,6 +60,7 @@
  	arcaneBeam: {
  		name: "Arcane Beam",
  		id: 'arcaneBeam',
+ 		description: 'A magical ranged attack which may burn or terrify the target.',
  		img: '',
  		cost: {move:1,focus:1},
  		target: true,
@@ -77,6 +78,7 @@
  	bite: {
  		name: "Bite",
  		id: 'bite',
+ 		description: 'Teeth!  Rahr!',
  		img: '',
  		cost: {move:1},
  		target: true,
@@ -92,18 +94,20 @@
  	defensiveStance: {
  		name: "Defensive Stance",
  		id: 'defensiveStance',
+ 		description: 'Converts 1 Strength into 2 Move for better defense and weaker attacks.',
  		img: '',
- 		cost: {move:1},
+ 		cost: {strength:1},
  		target: false,
  		range: 0,
  		execute: function() {
- 			view.focus.mob.stats.strength = Math.min(view.focus.mob.stats.strength+2,view.focus.mob.stats.strengthMax);
+ 			view.focus.mob.stats.move = Math.min(view.focus.mob.stats.move+2,view.focus.mob.stats.moveMax);
  		},
  	},
  	
  	exhort: {
  		name: "Exhort",
  		id: 'exhort',
+ 		description: 'Encourage a companion to fight on.  Costs a fifth of your own morale and increases theirs by twice your cost.',
  		img: '',
  		cost: {move:1,focus:1},
  		target: true,
@@ -122,6 +126,7 @@
  	firstAid: {
  		name: "First Aid",
  		id: 'firstAid',
+ 		description: 'Heals all wounds with a penalty of -1.',
  		img: '',
  		cost: {move:1,focus:1},
  		target: true,
@@ -150,6 +155,7 @@
  	hack: {
  		name: "Hack",
  		id: 'hack',
+ 		description: 'A simple hand-to-hand attack.',
  		img: '',
  		cost: {move:1,strength:1},
  		target: true,
@@ -165,6 +171,7 @@
  	lunge: {
  		name: "Lunge",
  		id: 'lunge',
+ 		description: 'A hand-to-hand attack with increased reach.',
  		img: '',
  		cost: {move:1,strength:1},
  		target: true,
@@ -180,6 +187,7 @@
  	overhead: {
  		name: "Overhead Strike",
  		id: 'overhead',
+ 		description: 'A stunning hand-to-hand attack that may injure and demoralize.',
  		img: '',
  		cost: {move:1,strength:2},
  		target: true,
@@ -196,6 +204,7 @@
  	puppyKisses: {
  		name: "Puppy Kisses",
  		id: 'puppyKisses',
+ 		description: 'Increase the morale of your people.',
  		img: '',
  		cost: {move:1,focus:1},
  		target: true,
@@ -212,6 +221,7 @@
  	quickTrance: {
  		name: "Quick Trance",
  		id: 'quickTrance',
+ 		description: 'Converts 2 Move into 4 Focus.',
  		img: '',
  		cost: {move:2},
  		target: false,
@@ -224,6 +234,7 @@
  	shieldSlam: {
  		name: "Shield Slam",
  		id: 'shieldSlam',
+ 		description: 'A simple hand-to-hand attack.  May knock back the target.',
  		img: '',
  		cost: {move:1},
  		target: true,
@@ -235,10 +246,27 @@
  			view.attackAnimate(attacker,defender.location);
  		},
  	},
+ 
+ 	slash: {
+ 		name: "Slash",
+ 		id: 'slash',
+ 		description: 'A simple hand-to-hand attack.',
+ 		img: '',
+ 		cost: {move:1,strength:1},
+ 		target: true,
+ 		targetHostiles: true,
+ 		targetTeam: false,
+ 		range: 1,
+ 		execute: function(attacker,defender) {
+ 			game.simpleAttack(attacker,'focus',defender,'armor',true,[dataWounds.sharp])
+ 			view.attackAnimate(attacker,defender.location);
+ 		},
+ 	},
  	
  	taunt: {
  		name: "Taunt",
  		id: 'taunt',
+ 		description: "I don't even know, man.",
  		img: '',
  		cost: {move:1},
  		target: false,
@@ -266,7 +294,7 @@
  		],
  	},
  	
- 	initiateRobes: {
+ 	initiatesRobes: {
  		name: "Initiate's Robes",
  		slot: ['armor'],
  		passiveDefense: 2,
@@ -286,8 +314,8 @@
  		name: "Mother's Sword",
  		slot: ['right'],
  		maneuvers: [
- 			dataManeuvers.lunge,
- 			dataManeuvers.overhead,
+ 			dataManeuvers.slash,
+ 			dataManeuvers.defensiveStance,
  		],
  	},
  	
@@ -399,16 +427,15 @@
  			strengthMax: 4,
  			focus: 3,
  			focusMax: 3,
- 			armor: 2,
+ 			armor: 3,
  		},
  		maneuvers: [
- 			dataManeuvers.lunge,
- 			dataManeuvers.overhead,
+ 			dataManeuvers.slash,
  			dataManeuvers.defensiveStance,
  			dataManeuvers.exhort,
  		],
  		equipment: {
- 			armor: undefined,
+ 			armor: dataItems.scrapArmor,
  			right: dataItems.mothersSword,
  			left: undefined,
  			item0: undefined,
@@ -417,8 +444,8 @@
  		},
  		skills: {
  			maneuvers: [
+				dataManeuvers.slash,
 				dataManeuvers.defensiveStance,
-				dataManeuvers.exhort,
  			],
  			passives: [
  			],
@@ -441,12 +468,12 @@
  		},
  		maneuvers: [
  			dataManeuvers.hack,
- 			dataManeuvers.arcaneBeam,
  			dataManeuvers.quickTrance,
+ 			dataManeuvers.arcaneBeam,
  			dataManeuvers.firstAid,
  		],
  		equipment: {
- 			armor: dataItems.scrapArmor,
+ 			armor: dataItems.initiatesRobes,
  			right: dataItems.simpleAxe,
  			left: dataItems.initiateSpellbook,
  			item0: dataItems.firstAidKit,
@@ -468,7 +495,7 @@
  
  	armory: [
  		dataItems.scrapArmor,
- 		dataItems.mysticalSwordOfLegend,
+ 		dataItems.simpleShield,
  	],
  	
  	completed: [

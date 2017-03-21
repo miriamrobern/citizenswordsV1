@@ -126,7 +126,12 @@ var handlers = {
 	
 	displayHeroInRoster: function(index) {
 		var hero = heroes[index];
+		view.refreshRosterDescription();
 		view.displayHeroInRoster(hero);
+	},
+	
+	refreshRosterManeuverDescription: function(maneuver) {
+		view.refreshRosterDescription('maneuver',maneuver);
 	},
 	
 	// Moving Roster Items

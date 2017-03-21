@@ -581,6 +581,7 @@ var view = {
 	displayHeroInRoster: function(hero) {
 		console.log(hero);
 		view.focus.hero = hero;
+		
 		document.getElementById('rosterPortraitImg').src = hero.img;
 		document.getElementById('rosterStatMoveSpan').innerHTML = hero.stats.move;
 		document.getElementById('rosterStatStrengthSpan').innerHTML = hero.stats.strength;
@@ -592,30 +593,47 @@ var view = {
 			var num = parseInt(m)+1;
 			newManeuver.innerHTML = num + ". " + hero.maneuvers[m].name;
 			newManeuver.className = 'focusMobManeuverButton';
+			newManeuver.setAttribute('onclick','handlers.refreshRosterManeuverDescription(dataManeuvers.'+hero.maneuvers[m].id+')');
 			document.getElementById('rosterManeuversList').appendChild(newManeuver);
 		};
 		
-		var emptyString = '<p class="rosterEquipEmpty">Empty</p>';
-		document.getElementById('rosterEquipArmorDiv').innerHTML = emptyString;
-		document.getElementById('rosterEquipRightDiv').innerHTML = emptyString;
-		document.getElementById('rosterEquipLeftDiv').innerHTML = emptyString;
-		document.getElementById('rosterEquipItem0Div').innerHTML = emptyString;
-		document.getElementById('rosterEquipItem1Div').innerHTML = emptyString;
-		document.getElementById('rosterEquipItem2Div').innerHTML = emptyString;
-		for (e in hero.equipment) {
-			var newItem = document.createElement('div');
-			if ( hero.equipment[e] !== undefined) {
-				newItem.innerHTML = hero.equipment[e].name;
-				if (hero.equipment[e].size === 2) {
-					newItem.className = 'HQItem rosterItemWide';
-				} else {
-					newItem.className = 'HQItem rosterItem';
+		if (hero.equipment) {
+			document.getElementById('rosterEquipArmorDiv').style.display = 'block';
+			document.getElementById('rosterEquipRightDiv').style.display = 'block';
+			document.getElementById('rosterEquipLeftDiv').style.display = 'block';
+			document.getElementById('rosterEquipItem0Div').style.display = 'block';
+			document.getElementById('rosterEquipItem1Div').style.display = 'block';
+			document.getElementById('rosterEquipItem2Div').style.display = 'block';	
+			
+			var emptyString = '<p class="rosterEquipEmpty">Empty</p>';
+			document.getElementById('rosterEquipArmorDiv').innerHTML = emptyString;
+			document.getElementById('rosterEquipRightDiv').innerHTML = emptyString;
+			document.getElementById('rosterEquipLeftDiv').innerHTML = emptyString;
+			document.getElementById('rosterEquipItem0Div').innerHTML = emptyString;
+			document.getElementById('rosterEquipItem1Div').innerHTML = emptyString;
+			document.getElementById('rosterEquipItem2Div').innerHTML = emptyString;
+			for (e in hero.equipment) {
+				var newItem = document.createElement('div');
+				if ( hero.equipment[e] !== undefined) {
+					newItem.innerHTML = hero.equipment[e].name;
+					if (hero.equipment[e].size === 2) {
+						newItem.className = 'HQItem rosterItemWide';
+					} else {
+						newItem.className = 'HQItem rosterItem';
+					};
+					newItem.addEventListener('mousedown',handlers.pickupItem.bind(this),false);
+					var slot = "rosterEquip" + e.charAt(0).toUpperCase() + e.slice(1) + "Div";
+					document.getElementById(slot).innerHTML = '';
+					document.getElementById(slot).appendChild(newItem);
 				};
-				newItem.addEventListener('mousedown',handlers.pickupItem.bind(this),false);
-				var slot = "rosterEquip" + e.charAt(0).toUpperCase() + e.slice(1) + "Div";
-				document.getElementById(slot).innerHTML = '';
-				document.getElementById(slot).appendChild(newItem);
 			};
+		} else {
+			document.getElementById('rosterEquipArmorDiv').style.display = 'none';
+			document.getElementById('rosterEquipRightDiv').style.display = 'none';
+			document.getElementById('rosterEquipLeftDiv').style.display = 'none';
+			document.getElementById('rosterEquipItem0Div').style.display = 'none';
+			document.getElementById('rosterEquipItem1Div').style.display = 'none';
+			document.getElementById('rosterEquipItem2Div').style.display = 'none';			
 		};
 	},
 	
@@ -679,12 +697,21 @@ var view = {
 		newsDetailsDiv.innerHTML += n.text;
 	},
 	
-	refreshRosterDescription: function(type) {
+	refreshRosterDescription: function(type,object) {
 		var rosterDescriptionDiv = document.getElementById('rosterDescriptionDiv');
 		rosterDescriptionDiv.innerHTML = '';
 		if (type === 'maneuver') {
+			console.log(object);
+			rosterDescriptionDiv.innerHTML += '<h4>'+object.name+'</h4>';
+			var costText = '<p class="rosterManeuverCostP">Cost: ';
+			for (c in object.cost) {
+				costText += object.cost[c] + " " + c + " ";
+			};
+			costText += '</p>';
+			rosterDescriptionDiv.innerHTML += costText;
+			rosterDescriptionDiv.innerHTML += '<p>'+object.description+'</p>';
 		} else if (type === 'item') {
-			rosterDescriptionDiv.innerHTML += '<h4>'+view.focus.item.name+'</h4>'
+			rosterDescriptionDiv.innerHTML += '<h4>'+view.focus.item.name+'</h4>';
 			if (view.focus.item.passiveDefense !== undefined) {
 				rosterDescriptionDiv.innerHTML += '<p>Provides armor of '+view.focus.item.passiveDefense+'.</p>'
 			};
@@ -693,7 +720,7 @@ var view = {
 					rosterDescriptionDiv.innerHTML += '<p>Provides the maneuver '+view.focus.item.maneuvers[i].name+'.</p>'
 				};
 			};
-		} else {
+		} else if (type === 'training') {
 		};
 	},
 	

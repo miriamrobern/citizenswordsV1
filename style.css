@@ -225,8 +225,8 @@ body {
 	text-align: left;
 	margin-bottom: .25vw;
 	width: 100%;
-	padding: .4vw;
-	font-size: .8em;
+	padding: 0.4vw;
+	font-size: 0.8em;
 	transition: all 0.25s;
 	}
 
@@ -483,8 +483,8 @@ body {
 	}
 
 #rosterStats {
-	float: left;
 	width: 100%;
+	height: 3vh;
 	}
 
 .rosterStatDiv {
@@ -514,27 +514,46 @@ body {
 	}
 
 #rosterManeuvers {
-	width: 50%;
-	float: left;
+	width: 100%;
+	height: calc(100% - 38vh);
 	}
 
 #rosterManeuversListDiv {
-	width: 100%;
+	width: 40%;
+	height: 100%;
+	float: left;
+	}
+
+#rosterManeuversList {
+	padding-left: 20%;
+	margin-top: 1vh;
 	}
 
 #rosterDescriptionDiv {
 	background-color: gray;
 	border: 1px solid #333;
-	width: 22vh;
-	height: 12vw;
+	width: 41%;
+	height: 80%;
 	float: left;
 	margin-left: 3vw;
-	margin-top: 2vh;
+	margin-top: 1vh;
+	margin-bottom: 1vh;
+	padding-top: 1vh;
 	padding-left: 1vw;
 	padding-right: 1vw;
+	padding-bottom: 1vh;
 	font-size: 0.8em;
 	}
 
+#rosterDescriptionDiv h4 {
+	margin: 0;
+	font-size: 1.2em;
+	}
+
+.rosterManeuverCostP {
+	margin-left: 2vh;
+	margin-top: 0;
+	}
 	
 #armoryDiv {
 	float: left;
