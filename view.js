@@ -670,11 +670,14 @@ var view = {
 		view.displayAdventureDescription('hellhoundCave');
 	},
 	
-	displayAdventureDescription: function(l) {
-		l = dataLevels[l];
+	displayAdventureDescription: function(level) {
+		l = dataLevels[level];
 		var adventuresTextDiv = document.getElementById('adventuresTextDiv');
 		adventuresTextDiv.innerHTML = "<h2>"+l.name+"</h2>";
 		adventuresTextDiv.innerHTML += l.description;
+		var adventuresLoadButton = document.getElementById('adventuresLoadButton');
+		adventuresLoadButton.setAttribute('onclick','handlers.loadLevel('+level+')');
+		adventuresLoadButton.disabled = false;
 	},
 	
 	refreshNews: function() {

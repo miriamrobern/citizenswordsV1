@@ -2,10 +2,11 @@ var handlers = {
 
 	loadLevel: function(level) {
 		
+		console.log(level);
+		
 		view.clearLevel();
 		view.switchToLevelMode();
 	
-		level = dataLevels[level];
 		game.loadLevel(level);
 		
 		view.displayMap();

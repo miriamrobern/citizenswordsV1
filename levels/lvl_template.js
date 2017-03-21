@@ -3,7 +3,7 @@ var returnToPileus = {
  	sizeX: 22,
  	sizeY: 12,
  	
- 	background: 'img/returnToPileus.png',
+ 	background: 'img/rainbow.png',
  	
  	startLocations: [
  		{x:1,y:1},
