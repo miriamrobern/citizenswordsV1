@@ -515,17 +515,27 @@ body {
 	}
 
 #rosterManeuvers {
-	width: 100%;
-	padding-top: 5vh;
+	width: 50%;
+	float: left;
 	}
 
 #rosterManeuversListDiv {
-	width: 40%;
+	width: 100%;
 	}
 
-#rosterManeuversDetailsDiv {
-	
+#rosterDescriptionDiv {
+	background-color: gray;
+	border: 1px solid #333;
+	width: 22vh;
+	height: 12vw;
+	float: left;
+	margin-left: 3vw;
+	margin-top: 2vh;
+	padding-left: 1vw;
+	padding-right: 1vw;
+	font-size: 0.8em;
 	}
+
 	
 #armoryDiv {
 	float: left;
@@ -719,4 +729,15 @@ body {
 .divBoat {
 	position: absolute;
 	z-index: 10;
+	width: 14vw;
+	text-align: center;
+	list-style-type: none;
+}
+
+.divBoatWide {
+	position: absolute;
+	z-index: 10;
+	width: 27vw;
+	text-align: center;
+	list-style-type: none;
 }

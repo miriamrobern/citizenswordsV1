@@ -637,6 +637,24 @@ var view = {
 		return false;
 	},
 	
+	refreshRosterDescription: function(type) {
+		var rosterDescriptionDiv = document.getElementById('rosterDescriptionDiv');
+		rosterDescriptionDiv.innerHTML = '';
+		if (type === 'maneuver') {
+		} else if (type === 'item') {
+			rosterDescriptionDiv.innerHTML += '<h4>'+view.focus.item.name+'</h4>'
+			if (view.focus.item.passiveDefense !== undefined) {
+				rosterDescriptionDiv.innerHTML += '<p>Provides armor of '+view.focus.item.passiveDefense+'.</p>'
+			};
+			if (view.focus.item.maneuvers !== undefined) {
+				for (i in view.focus.item.maneuvers) {
+					rosterDescriptionDiv.innerHTML += '<p>Provides the maneuver '+view.focus.item.maneuvers[i].name+'.</p>'
+				};
+			};
+		} else {
+		};
+	},
+	
 	displayDialogue: function(text,name,bust,bustPosition) {
 	
 		handlers.hideDialogueDiv();

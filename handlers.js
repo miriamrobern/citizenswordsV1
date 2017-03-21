@@ -144,7 +144,11 @@ var handlers = {
 		};
 		view.disableHighlight(e);
 		
-		e.srcElement.className = 'HQItem rosterItem divBoat';
+		if (view.focus.item.size === 2) {
+			e.srcElement.className = 'HQItem rosterItem divBoatWide';
+		} else {
+			e.srcElement.className = 'HQItem rosterItem divBoat';
+		};
 		document.body.appendChild(e.srcElement);
 		view.focus.divBoat = e.srcElement;
 		
@@ -155,6 +159,7 @@ var handlers = {
 		}
 		
 		window.addEventListener('mousemove',handlers.moveItem,true);
+		view.refreshRosterDescription('item');
 	},
 	
 	moveItem: function(e) {
@@ -177,7 +182,6 @@ var handlers = {
 			var itemSlot = view.focus.item.slot;
 			var slotName = view.focus.slot.id;
 			for (i in itemSlot) {
-				console.log(itemSlot[i].slice(1),slotName);
 				if (slotName.indexOf(itemSlot[i].slice(1)) !== -1) {
 					slotCheck = true;
 				};
@@ -204,6 +208,7 @@ var handlers = {
 			view.refreshArmory();
 			
 			view.focus.divBoat = undefined;
+			view.refreshRosterDescription('clear');
 		};
 	},
 

@@ -532,7 +532,6 @@ function Mob(type,x,y,id,name) {
 	};
 	
 	this.equip = function(item,slot) {
-		console.log(item,slot);
 		if (this.equipment[slot] !== undefined) {
 			company.armory.push(this.equipment[slot]);
 		};

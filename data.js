@@ -257,10 +257,24 @@
  			dataManeuvers.firstAid,
  		],
  	},
+ 	
+ 	initiateSpellbook: {
+ 		name: "Initiate's Spellbook",
+ 		slot:['left','right'],
+ 		maneuvers: [
+ 			dataManeuvers.quickTrance,
+ 		],
+ 	},
+ 	
+ 	initiateRobes: {
+ 		name: "Initiate's Robes',
+ 		slot: ['armor'],
+ 		passiveDefense: 2,
+ 	},
  
  	mothersSword: {
  		name: "Mother's Sword",
- 		slot: ['left','right'],
+ 		slot: ['right'],
  		size: 2,
  		maneuvers: [
  			dataManeuvers.lunge,
@@ -272,6 +286,7 @@
  		name: "Scrap Armor",
  		slot: ['armor'],
  		passiveDefense: 1,
+ 		penalty: {move:1,focus:1},
  	},
  	
  	simpleAxe: {
@@ -287,14 +302,6 @@
  		slot: ['left','right'],
  		maneuvers: [
  			dataManeuvers.shieldSlam,
- 		],
- 	},
- 	
- 	initiateSpellbook: {
- 		name: "Initiate's Spellbook",
- 		slot:['left','right'],
- 		maneuvers: [
- 			dataManeuvers.quickTrance,
  		],
  	},
  	
