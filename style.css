@@ -60,7 +60,6 @@ body {
 
 .mapTile {
 	position: absolute;
-/* 	border: 1px dashed blue; */
 	}
 
 .tileCanvas {
@@ -678,8 +677,8 @@ body {
 	}
 
 .dialogueBustImg {
-	width: 10vw;
-	height: 10vw;
+	max-width: 10vw;
+	max-height: 10vw;
 	border: 5px solid green;
 	background: white;
 	}

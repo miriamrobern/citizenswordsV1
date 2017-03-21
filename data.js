@@ -211,7 +211,7 @@
  	
  	quickTrance: {
  		name: "Quick Trance",
- 		id: 'trance',
+ 		id: 'quickTrance',
  		img: '',
  		cost: {move:2},
  		target: false,

@@ -126,7 +126,7 @@ var view = {
 			
 			var newHexCoords = document.createElement('p');
 			newHexCoords.className = 'hexCoords';
-			newHexCoords.innerHTML = "(" + map.hexes[i].x + "," + map.hexes[i].y + ")";
+			newHexCoords.innerHTML = "(" + map.hexes[i].x + "," + map.hexes[i].y + ")<br>Hex "+i;
 			newHexDiv.appendChild(newHexCoords);
 			
 			map.hexes[i].div = newHexDiv;
@@ -700,9 +700,14 @@ var view = {
 	displayDialogue: function(text,name,bust,bustPosition) {
 	
 		handlers.hideDialogueDiv();
+		document.getElementById('dialogueReturnButton').style.display = "none";
+		document.getElementById('dialogueContinueButton').style.display = "none";
+		document.getElementById('dialogueCloseButton').style.display = "inline";
+		
+		document.getElementById('dialogueTextDiv').innerHTML = '';
 
-		if (text !== undefined) {
-			document.getElementById('dialogueTextDiv').innerHTML = "<span class='dialogueNameSpan'>"+name+": </span>";
+		if (name !== undefined) {
+			document.getElementById('dialogueTextDiv').innerHTML += "<span class='dialogueNameSpan'>"+name+": </span>";
 		}
 		
 		document.getElementById('dialogueTextDiv').innerHTML += text;
@@ -724,5 +729,26 @@ var view = {
 		}
 		
 		handlers.showDialogueDiv();
+	},
+	
+	nextEvent: function(event,arg1,arg2,arg3,arg4,arg5) {
+		document.getElementById('dialogueCloseButton').style.display = "none";
+		document.getElementById('dialogueContinueButton').style.display = "inline";
+		
+		var onclick = 'map.events.'+event+'(';
+		if (arg1) {onclick += arg1}
+		if (arg2) {onclick += ",",arg2}
+		if (arg3) {onclick += ",",arg3}
+		if (arg4) {onclick += ",",arg4}
+		if (arg5) {onclick += ",",arg5}
+		onclick += ')';
+		document.getElementById('dialogueContinueButton').setAttribute('onclick',onclick);
+
+	},
+	
+	setupReturn: function() {
+		document.getElementById('dialogueCloseButton').style.display = "none";
+		document.getElementById('dialogueContinueButton').style.display = "none";
+		document.getElementById('dialogueReturnButton').style.display = "inline";
 	},
 }

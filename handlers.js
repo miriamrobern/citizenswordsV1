@@ -110,6 +110,7 @@ var handlers = {
 	
 	returnHome: function() {
 		game.archiveHeroes();
+		handlers.hideDialogueDiv();
 		view.switchToHeadquartersMode();
 	},
 	
