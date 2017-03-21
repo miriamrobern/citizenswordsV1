@@ -394,7 +394,7 @@
  		equipment: {
  			armor: undefined,
  			right: dataItems.mothersSword,
- 			left: dataItems.mothersSword,
+ 			left: undefined,
  			item0: undefined,
  			item1: undefined,
  			item2: undefined,

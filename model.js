@@ -536,6 +536,22 @@ function Mob(type,x,y,id,name) {
 		if (this.equipment[slot] !== undefined) {
 			company.armory.push(this.equipment[slot]);
 		};
+		if (item.size === 2 && slot === 'right') {
+			if (this.equipment.left !== undefined) {
+				company.armory.push(this.equipment.left);
+			}
+			this.equipment.left = undefined;
+		} else if (item.size === 2 && slot === 'item0') {
+			if (this.equipment.item1 !== undefined) {
+				company.armory.push(this.equipment.item1);
+			}
+			this.equipment.item1 = undefined;
+		} else if (item.size === 2 && slot === 'item1') {
+			if (this.equipment.item2 !== undefined) {
+				company.armory.push(this.equipment.item2);
+			}
+			this.equipment.item2 = undefined;
+		};
 		this.equipment[slot] = item;
 		this.refreshManeuvers();
 		

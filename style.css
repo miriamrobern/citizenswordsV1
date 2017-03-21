@@ -397,6 +397,13 @@ body {
 .rosterItem {
 	}
 
+.rosterItemWide {
+	width: 26.75vw;
+	background-color: lightsteelblue;
+	border: 0.25vw outset steelblue;
+	z-index: 10;
+	}
+
 .rosterItem:nth-child(odd) {
 	background-color: lightsteelblue;
 	border: 0.25vw outset steelblue;
@@ -418,11 +425,9 @@ body {
 	}
 
 .rosterEquipDiv {
-	border: 3px solid darkred;
+	border: 3px solid darkblue;
 	width: 14vw;
 	margin: 1vw;
-	padding-top: 0.5vw;
-	padding-bottom: 0.5vw;
 	text-align: center;
 	font-size: 0.8em;
 	background-color: rgba(255, 255, 255, 0.4);
@@ -473,6 +478,11 @@ body {
 	left: 28vw;
 	}
 
+.rosterEquipEmpty {
+	margin: 0.5vw;
+	color: gray;
+	}
+
 #rosterStats {
 	float: left;
 	width: 100%;
@@ -519,7 +529,7 @@ body {
 	
 #armoryDiv {
 	float: left;
-	width: 15vw;
+	width: 14vw;
 	height: 60vh;
 	margin-right: 2vw;
 	border: 0.5vw inset darkblue;

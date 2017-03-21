@@ -593,18 +593,22 @@ var view = {
 			document.getElementById('rosterManeuversList').appendChild(newManeuver);
 		};
 		
-		
-		document.getElementById('rosterEquipArmorDiv').innerHTML = 'Empty';
-		document.getElementById('rosterEquipRightDiv').innerHTML = 'Empty';
-		document.getElementById('rosterEquipLeftDiv').innerHTML = 'Empty';
-		document.getElementById('rosterEquipItem0Div').innerHTML = 'Empty';
-		document.getElementById('rosterEquipItem1Div').innerHTML = 'Empty';
-		document.getElementById('rosterEquipItem2Div').innerHTML = 'Empty';
+		var emptyString = '<p class="rosterEquipEmpty">Empty</p>';
+		document.getElementById('rosterEquipArmorDiv').innerHTML = emptyString;
+		document.getElementById('rosterEquipRightDiv').innerHTML = emptyString;
+		document.getElementById('rosterEquipLeftDiv').innerHTML = emptyString;
+		document.getElementById('rosterEquipItem0Div').innerHTML = emptyString;
+		document.getElementById('rosterEquipItem1Div').innerHTML = emptyString;
+		document.getElementById('rosterEquipItem2Div').innerHTML = emptyString;
 		for (e in hero.equipment) {
 			var newItem = document.createElement('div');
 			if ( hero.equipment[e] !== undefined) {
 				newItem.innerHTML = hero.equipment[e].name;
-				newItem.className = 'HQItem rosterItem';
+				if (hero.equipment[e].size === 2) {
+					newItem.className = 'HQItem rosterItemWide';
+				} else {
+					newItem.className = 'HQItem rosterItem';
+				};
 				newItem.addEventListener('mousedown',handlers.pickupItem.bind(this),false);
 				var slot = "rosterEquip" + e.charAt(0).toUpperCase() + e.slice(1) + "Div";
 				document.getElementById(slot).innerHTML = '';
