@@ -1,4 +1,7 @@
 var hellhoundCave = {
+	
+	name: "Hellhound Cave",
+	description: "Placeholder!",
  
  	sizeX: 12,
  	sizeY: 11,

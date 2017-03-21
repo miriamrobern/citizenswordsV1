@@ -28,7 +28,9 @@ var view = {
 		document.getElementById('mapDiv').style.display = 'none';
 		
 		document.getElementById('companyHQDiv').style.display = 'block';
+		view.refreshNews();
 		view.refreshRoster();
+		view.refreshAdventures();
 	},
 
 
@@ -635,6 +637,46 @@ var view = {
 		e.cancelBubble = true;
 		e.returnValue = false;
 		return false;
+	},
+	
+	refreshAdventures: function() {
+		var adventuresSelectList = document.getElementById('adventuresSelectList');
+		adventuresSelectList.innerHTML = '';
+		for (l in dataLevels) {
+			var newItem = document.createElement('li');
+			newItem.innerHTML = dataLevels[l].name;
+			newItem.className='HQItem adventuresItem';
+			newItem.setAttribute('onclick','view.displayAdventureDescription("'+l+'")');
+			adventuresSelectList.appendChild(newItem);
+		};
+		view.displayAdventureDescription('hellhoundCave');
+	},
+	
+	displayAdventureDescription: function(l) {
+		l = dataLevels[l];
+		var adventuresTextDiv = document.getElementById('adventuresTextDiv');
+		adventuresTextDiv.innerHTML = "<h2>"+l.name+"</h2>";
+		adventuresTextDiv.innerHTML += l.description;
+	},
+	
+	refreshNews: function() {
+		var newsList = document.getElementById('newsList');
+		newsList.innerHTML = '';
+		for (n in dataNews) {
+			var newItem = document.createElement('li');
+			newItem.innerHTML = dataNews[n].name;
+			newItem.className = 'HQItem newsItem';
+			newItem.setAttribute('onclick','view.displayNewsItem("'+n+'")');
+			newsList.appendChild(newItem);
+		};
+		view.displayNewsItem('newsRevolution');
+	},
+	
+	displayNewsItem: function(n) {
+		n = dataNews[n];
+		var newsDetailsDiv = document.getElementById('newsDetailsDiv');
+		newsDetailsDiv.innerHTML = "<h2>"+n.name+"</h2>";
+		newsDetailsDiv.innerHTML += n.text;
 	},
 	
 	refreshRosterDescription: function(type) {

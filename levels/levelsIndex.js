@@ -1,4 +1,7 @@
  var dataLevels = {
  	hellhoundCave: hellhoundCave,
- 	returnToPileus: returnToPileus,
+ 	theCityRevolts: theCityRevolts,
+ 	shadyvale: shadyvale,
+ 	gryphonscry: gryphonscry,
+ 	elvishKeep: elvishKeep,
  };

@@ -267,15 +267,24 @@
  	},
  	
  	initiateRobes: {
- 		name: "Initiate's Robes',
+ 		name: "Initiate's Robes",
  		slot: ['armor'],
  		passiveDefense: 2,
+ 	},
+ 
+ 	daisySword: {
+ 		name: "Daisy's Sword",
+ 		slot: ['right'],
+ 		size: 2,
+ 		maneuvers: [
+ 			dataManeuvers.lunge,
+ 			dataManeuvers.overhead,
+ 		],
  	},
  
  	mothersSword: {
  		name: "Mother's Sword",
  		slot: ['right'],
- 		size: 2,
  		maneuvers: [
  			dataManeuvers.lunge,
  			dataManeuvers.overhead,
@@ -460,6 +469,9 @@
  	armory: [
  		dataItems.scrapArmor,
  		dataItems.mysticalSwordOfLegend,
+ 	],
+ 	
+ 	completed: [
  	],
  
  };
