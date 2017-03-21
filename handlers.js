@@ -167,10 +167,12 @@ var handlers = {
 	
 	dropItem: function(e) {
 		window.removeEventListener('mousemove',handlers.moveItem,true);
-		if (view.focus.divBoat !== undefined && view.focus.slot !== undefined) {
+		if (view.focus.divBoat !== undefined) {
 			for (i in {rosterEquipArmorDiv:0,rosterEquipLeftDiv:0,rosterEquipRightDiv:0,rosterEquipItem0Div:0,rosterEquipItem1Div:0,rosterEquipItem2Div:0,}) {
 				document.getElementById(i).style.borderColor = 'darkblue';
 			};
+		};
+		if (view.focus.divBoat !== undefined && view.focus.slot !== undefined) {
 			var slotCheck = false;
 			var itemSlot = view.focus.item.slot;
 			var slotName = view.focus.slot.id;
