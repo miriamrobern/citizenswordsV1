@@ -416,9 +416,9 @@
  var heroes = [
  
  	{
- 		name: "Daisy Moucau",
- 		id: "daisy",
- 		img: 'img/minotaur.png',
+ 		name: "Eleanor",
+ 		id: "p1",
+ 		img: 'img/eleanor.png',
  		stats: {
  			morale: 100,
  			move: 4,
@@ -455,7 +455,7 @@
  	{
  		name: "Mx. Stout",
  		id: "stout",
- 		img: 'img/eleanor.png',
+ 		img: 'img/gnome.png',
  		stats: {
  			morale: 100,
  			move: 3,

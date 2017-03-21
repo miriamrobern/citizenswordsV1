@@ -569,9 +569,9 @@ function Mob(type,x,y,id,name) {
 		var maneuvers = [];
 	
 		var maneuverSources = [];
-		maneuverSources.push(this.equipment.left);
+		maneuverSources.push(this.equipment.right);
 		if (this.equipment.left !== this.equipment.right) {
-			maneuverSources.push(this.equipment.right);
+			maneuverSources.push(this.equipment.left);
 		};
 		maneuverSources.push(this.equipment.armor);
 		maneuverSources.push(this.skills);
