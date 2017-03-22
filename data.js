@@ -394,8 +394,8 @@
  		],
  	},
  
- 	giant: {
- 		name: "Giant",
+ 	beulahHill: {
+ 		name: "Beulah Hill",
  		img: "img/giant.png",
  		ai: 'basic',
  		stats: {
@@ -404,6 +404,116 @@
  			moveMax: 1,
  			strength: 1,
  			strengthMax: 1,
+ 			focus: 2,
+ 			focusMax: 2,
+ 			armor: 2,
+ 		},
+ 	},
+ 	
+ 	daisy: {
+ 		name: "Daisy Moucau",
+ 		img: "img/minotaur.png",
+ 		ai: "basic",
+ 		stats: {
+ 			morale: 100,
+ 			move: 3,
+ 			moveMax: 3,
+ 			strength: 5,
+ 			strengthMax: 5,
+ 			focus: 2,
+ 			focusMax: 2,
+ 			armor: 4,
+ 		},
+ 		maneuvers: [
+ 			dataManeuvers.lunge,
+ 			dataManeuvers.overhead,
+ 		],
+ 		equipment: {
+ 			left: dataItems.daisySword,
+ 			armor: dataItems.scrapArmor,
+ 		},
+ 	},
+ 
+ 	elderBock: {
+ 		name: "Elder Bock",
+ 		img: "img/dwarf.png",
+ 		ai: 'basic',
+ 		stats: {
+ 			morale: 100,
+ 			move: 2,
+ 			moveMax: 2,
+ 			strength: 1,
+ 			strengthMax: 1,
+ 			focus: 2,
+ 			focusMax: 2,
+ 			armor: 2,
+ 		},
+ 	},
+ 	
+ 	guildmasterMoucau: {
+ 		name: "Guildmaster Moucau",
+ 		img: "img/guildmasterMoucau.png",
+ 		ai: 'basic',
+ 		stats: {
+ 			morale: 100,
+ 			move: 5,
+ 			moveMax: 5,
+ 			strength: 2,
+ 			strengthMax: 2,
+ 			focus: 2,
+ 			focusMax: 2,
+ 			armor: 2,
+ 		},
+ 	},
+ 	
+ 	looter: {
+ 		name: "Looter",
+ 		img: "img/centaur.png",
+ 		ai: 'basic',
+ 		stats: {
+ 			morale: 100,
+ 			move: 3,
+ 			moveMax: 3,
+ 			strength: 3,
+ 			strengthMax: 3,
+ 			focus: 1,
+ 			focusMax: 1,
+ 			armor: 2,
+ 		},
+ 		maneuvers: [
+ 			dataManeuvers.slash,
+ 		],
+ 	},
+ 	
+ 	assassin: {
+ 		name: "Assassin",
+ 		img: "img/assassin.png",
+ 		ai: 'basic',
+ 		stats: {
+ 			morale: 100,
+ 			move: 2,
+ 			moveMax: 2,
+ 			strength: 3,
+ 			strengthMax: 3,
+ 			focus: 3,
+ 			focusMax: 3,
+ 			armor: 3,
+ 		},
+ 		maneuvers: [
+ 			dataManeuvers.slash,
+ 		],
+ 	},
+ 	
+ 	motherSkullgoblet: {
+ 		name: "Mother Skullgoblet",
+ 		img: "img/motherSkullgoblet.png",
+ 		ai: 'basic',
+ 		stats: {
+ 			morale: 100,
+ 			move: 1,
+ 			moveMax: 1,
+ 			strength: 5,
+ 			strengthMax: 5,
  			focus: 2,
  			focusMax: 2,
  			armor: 2,
@@ -418,6 +528,7 @@
  	{
  		name: "Eleanor",
  		id: "p1",
+ 		race: "point",
  		img: 'img/eleanor.png',
  		stats: {
  			morale: 100,
@@ -456,6 +567,7 @@
  		name: "Mx. Stout",
  		id: "stout",
  		img: 'img/gnome.png',
+ 		race: "halfbreed",
  		stats: {
  			morale: 100,
  			move: 3,
@@ -500,5 +612,8 @@
  	
  	completed: [
  	],
+ 	
+ 	deeds: {
+ 	},
  
  };

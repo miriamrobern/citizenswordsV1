@@ -29,6 +29,12 @@ var game = {
 	
 	},
 	
+	findMob: function(id) {
+		for (mob in mobs) {
+			if (mobs[mob].id === id) {return mobs[mob]};
+		}
+	},
+	
 	archiveHeroes: function() {
 		heroes = [];
 		for (i in mobs) {
@@ -50,6 +56,13 @@ var game = {
 	},
 	
 	endTurn: function() {
+
+		// Refresh Stats for AI Mobs
+		for (i in mobs) {
+			if (!mobs[i].player) {
+				game.refreshStats(mobs[i]);
+			};
+		};
 	
 		for (i in mobs) {
 			if (!mobs[i].player && mobs[i].stats.morale > 0) {
@@ -57,40 +70,47 @@ var game = {
 			};
 		};
 	
-		// Refresh Move
+		// Refresh Stats for Player Mobs
 		for (i in mobs) {
-		
-			var adjustedStrengthMax = mobs[i].stats.strengthMax;
-			for (w in mobs[i].wounds.strength) {
-				adjustedStrengthMax += mobs[i].wounds.strength[w].penalty;
+			if (mobs[i].player) {
+				game.refreshStats(mobs[i]);
 			};
-			if (mobs[i].stats.strength < adjustedStrengthMax) {
-				mobs[i].stats.strength++;
-			};
-			
-			var adjustedFocusMax = mobs[i].stats.focusMax;
-			for (w in mobs[i].wounds.focus) {
-				adjustedFocusMax += mobs[i].wounds.focus[w].penalty;
-			};
-			if (mobs[i].stats.focus < adjustedFocusMax) {
-				mobs[i].stats.focus = Math.min(adjustedFocusMax,mobs[i].stats.focus + mobs[i].stats.move);
-			};
-			
-			var adjustedMoveMax = mobs[i].stats.moveMax;
-			for (w in mobs[i].wounds.move) {
-				adjustedMoveMax += mobs[i].wounds.move[w].penalty;
-			};
-			if (mobs[i].stats.move < adjustedMoveMax) {
-				mobs[i].stats.move = adjustedMoveMax;
-			};
-			
-			if (mobs[i].stats.morale <= 0) {
-				mobs[i].stats.move = 0;
-			};
-			
-			view.displayFocusMob(view.focus.mob);
 		};
 	
+	},
+	
+	refreshStats: function(mob) {
+		var adjustedStrengthMax = mob.stats.strengthMax;
+		for (w in mob.wounds.strength) {
+			adjustedStrengthMax += mob.wounds.strength[w].penalty;
+		};
+		if (mob.stats.strength < adjustedStrengthMax) {
+			mob.stats.strength++;
+		};
+		
+		var adjustedFocusMax = mob.stats.focusMax;
+		for (w in mob.wounds.focus) {
+			adjustedFocusMax += mob.wounds.focus[w].penalty;
+		};
+		if (mob.stats.focus < adjustedFocusMax) {
+			mob.stats.focus = Math.min(adjustedFocusMax,mob.stats.focus + mob.stats.move);
+		};
+		
+		var adjustedMoveMax = mob.stats.moveMax;
+		for (w in mob.wounds.move) {
+			adjustedMoveMax += mob.wounds.move[w].penalty;
+		};
+		if (mob.stats.move < adjustedMoveMax) {
+			mob.stats.move = adjustedMoveMax;
+		};
+		
+		if (mob.stats.morale <= 0) {
+			mob.stats.move = 0;
+		};
+		
+		if (view.focus.mob === mob) {
+			view.displayFocusMob();
+		};
 	},
 	
 	simpleAttack: function(attacker,attackStat,defender,defenseStat,dodge,wounds) {
@@ -218,6 +238,16 @@ function Map(level) {
 	};
 		
 	
+	// Map Functions
+	
+	this.findHex = function(x,y) {
+		for (i in this.hexes) {
+			if (this.hexes[i].x === x && this.hexes[i].y === y) {
+				return this.hexes[i];
+			};
+		};
+	};
+	
 	// End Map
 };
 
@@ -231,6 +261,7 @@ function Hex(x,y,type) {
 	
 	this.adjacent = [];
 	
+	// End Hex
 };
 
 function Mob(type,x,y,id,name) {
@@ -254,6 +285,10 @@ function Mob(type,x,y,id,name) {
 	};	
 
 	this.img = type.img;
+	
+	if (type.race !== undefined) {
+		this.race = type.race;
+	};
 	
 	this.stats = {};
 	for (s in type.stats) {
@@ -493,7 +528,6 @@ function Mob(type,x,y,id,name) {
 		view.jiggleMob(this);
 		
 		// add wound
-		console.log(woundType,penalty);
 		var woundExists = false;
 		for (i in this.wounds[woundType.stat]) {
 			if (this.wounds[woundType.stat][i].type == woundType) {
@@ -589,4 +623,6 @@ function Mob(type,x,y,id,name) {
 		view.refreshRoster();
 	
 	};
+	
+	// End Mob
 };

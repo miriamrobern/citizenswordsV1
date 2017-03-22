@@ -201,7 +201,7 @@ var view = {
 			draw.strokeStyle = 'lightgreen';
 			draw.lineWidth = 4;
 		} else {
-			draw.strokeStyle = 'lightblue';
+			draw.strokeStyle = 'rgba(255,255,255,0)';
 			draw.lineWidth = 0.5;
 		};
 		draw.stroke();
