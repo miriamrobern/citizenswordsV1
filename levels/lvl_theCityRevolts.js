@@ -375,17 +375,18 @@ var theCityRevolts = {
  			var looter1 = game.findMob('looter1');
  			var epithet = this.race;
  			if (this.race === "point") {
- 				epithet = "Point";
+ 				epithet = "pointy";
  			} else {
- 				epithet = "Point-Lover";
+ 				epithet = "point-lover";
  			};
  			view.displayDialogue("Stay out of our way, "+epithet+"!  This city's going to burn, and we're getting ours while we can.  You should, too!",looter1.name,looter1.img,"left");
- 			view.nextEvent('stopThief2',this);
+ 			view.nextEvent('stopThief2');
  			this.location.event = undefined;
+ 			document.getElementById('mapBackgroundImg').src='img/theCityRevolts2.png';
  		},
  		
- 		stopThief2: function(mob) {
- 			view.displayDialogue("This is my neighborhood, punk.  You're not going to steal from Mother Skullgoblet on my watch!",this.name,this.img,"right");
+ 		stopThief2: function() {
+ 			view.displayDialogue("This is my neighborhood, punk.  You're not going to steal from Mother Skullgoblet on my watch!",view.focus.mob.name,view.focus.mob.img,"right");
  			map.findHex(8,10).event = theCityRevolts.events.thankYou;
  		},
  		
