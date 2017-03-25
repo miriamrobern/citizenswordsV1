@@ -288,14 +288,17 @@ var view = {
 		};
 		
 		// Nose
+		
+		var nostrilShadow = 0.1 * ( face.nostrilHeight - 2 )
+		
 		newPath = document.createElementNS('http://www.w3.org/2000/svg',"path");
-		newPath.setAttribute("fill",face.skinColor);
+		newPath.setAttribute("fill","rgba(0,0,0,"+nostrilShadow+")");
 		newPath.setAttribute("stroke","#000000");
 		newPath.setAttribute("stroke-width","2");
 		newPath.setAttribute("stroke-linecap","round");
 		
 		otherNewPath = document.createElementNS('http://www.w3.org/2000/svg',"path");
-		otherNewPath.setAttribute("fill",face.skinColor);
+		otherNewPath.setAttribute("fill","rgba(0,0,0,"+nostrilShadow+")");
 		otherNewPath.setAttribute("stroke","#000000");
 		otherNewPath.setAttribute("stroke-width","2");
 		otherNewPath.setAttribute("stroke-linecap","round");
@@ -312,10 +315,10 @@ var view = {
 		// to right outside nostril
 		x = -1 * face.noseWidth * 0.4;
 		y = -1 * face.nostrilHeight/2;
-		c1x = -1;
-		c1y = -1;
+		c1x = -1 * face.noseWidth * 0.2;
+		c1y = -1 * face.nostrilHeight * 0.25;
 		c2x = x;
-		c2y = y;
+		c2y = y + face.nostrilHeight * 0.25;
 		path += ' c '+c1x+','+c1y+' '+c2x+','+c2y+' '+x+','+y;
 		x *= -1;
 		c1x *= -1;
@@ -326,7 +329,7 @@ var view = {
 		x = face.noseWidth * 0.6;
 		y = -1 * face.nostrilHeight/2;
 		c1x = 0;
-		c1y = 0;
+		c1y = face.nostrilHeight * -0.25;
 		c2x = x-face.noseWidth * 0.2;
 		c2y = y;
 		path += ' c '+c1x+','+c1y+' '+c2x+','+c2y+' '+x+','+y;
