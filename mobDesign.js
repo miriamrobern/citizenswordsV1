@@ -222,7 +222,7 @@ var view = {
 			newPath.setAttribute("stroke-width","3");
 
 			var otherNewPath = document.createElementNS('http://www.w3.org/2000/svg',"path");
-			otherNewPath.setAttribute("fill",face.skinColor);
+			otherNewPath.setAttribute("fill",'none');
 			otherNewPath.setAttribute("stroke",'#000000');
 			otherNewPath.setAttribute("stroke-width","1");
 			otherNewPath.setAttribute("stroke-linecap","round");
@@ -247,10 +247,9 @@ var view = {
 			if (face.eyeDistance + face.eyeSize > 25 && i == 1) {
 				strokePath += ' c '+c1x+','+c1y+' '+c2x+','+c2y+' '+x+','+y;
 			} else {
-				sX = cx - face.eyeSize;
+				var sX = cx - face.eyeSize;
 				strokePath = 'm '+sX+','+cy
 			}
-
 			
 			if (i == 0) {
 				c1y = face.insideEyelidCurve;
@@ -283,11 +282,33 @@ var view = {
 			
 			otherNewPath.setAttributeNS(null,'d',strokePath);
 			svg.appendChild(otherNewPath);
-			
-			
+						
 		};
 		
 		// Nose
+		
+		newPath = document.createElementNS('http://www.w3.org/2000/svg',"path");
+		newPath.setAttribute("fill",face.noseColor);
+		newPath.setAttribute("stroke","none");
+
+		// start at right inside nostril
+		x = 100 - face.noseWidth * 0.8;
+		y = 25 + eyeline + face.noseHeight * face.chinHeight / 100;
+		path = 'm '+x+','+y;
+
+		// to right outside nostril
+		x = -1 * face.noseWidth * 0.4;
+		y = -1 * face.nostrilHeight/2;
+		c1x = -1 * face.noseWidth * 0.2;
+		c1y = -1 * face.nostrilHeight * 0.25;
+		c2x = x;
+		c2y = y + face.nostrilHeight * 0.25;
+		path += ' c '+c1x+','+c1y+' '+c2x+','+c2y+' '+x+','+y;
+		
+		newPath.setAttributeNS(null,"d",path);
+		svg.appendChild(newPath);		
+		
+		// Nostrils
 		
 		var nostrilShadow = 0.1 * ( face.nostrilHeight - 2 )
 		
@@ -360,7 +381,7 @@ var view = {
 		// Bottom of Septum
 		if (face.noseSize > 1) {
 			newPath = document.createElementNS('http://www.w3.org/2000/svg',"path");
-			newPath.setAttribute("fill",face.skinColor);
+			newPath.setAttribute("fill","none");
 			newPath.setAttribute("stroke","#000000");
 			newPath.setAttribute("stroke-width","2");
 			newPath.setAttribute("stroke-linecap","round");
@@ -387,13 +408,13 @@ var view = {
 		// Top of Nose Crease
 		if (face.noseSize > 2) {
 			newPath = document.createElementNS('http://www.w3.org/2000/svg',"path");
-			newPath.setAttribute("fill",face.skinColor);
+			newPath.setAttribute("fill","none");
 			newPath.setAttribute("stroke","#000000");
 			newPath.setAttribute("stroke-width","2");
 			newPath.setAttribute("stroke-linecap","round");
 			
 			otherNewPath = document.createElementNS('http://www.w3.org/2000/svg',"path");
-			otherNewPath.setAttribute("fill",face.skinColor);
+			otherNewPath.setAttribute("fill","none");
 			otherNewPath.setAttribute("stroke","#000000");
 			otherNewPath.setAttribute("stroke-width","2");
 			otherNewPath.setAttribute("stroke-linecap","round");
@@ -432,13 +453,13 @@ var view = {
 		// Bottom of Nose Crease
 		if (face.noseSize > 3) {
 			newPath = document.createElementNS('http://www.w3.org/2000/svg',"path");
-			newPath.setAttribute("fill",face.skinColor);
+			newPath.setAttribute("fill","none");
 			newPath.setAttribute("stroke","#000000");
 			newPath.setAttribute("stroke-width","2");
 			newPath.setAttribute("stroke-linecap","round");
 			
 			otherNewPath = document.createElementNS('http://www.w3.org/2000/svg',"path");
-			otherNewPath.setAttribute("fill",face.skinColor);
+			otherNewPath.setAttribute("fill","none");
 			otherNewPath.setAttribute("stroke","#000000");
 			otherNewPath.setAttribute("stroke-width","2");
 			otherNewPath.setAttribute("stroke-linecap","round");
@@ -477,7 +498,7 @@ var view = {
 		// Top of Nose Point
 		if (face.noseSize > 4) {
 			newPath = document.createElementNS('http://www.w3.org/2000/svg',"path");
-			newPath.setAttribute("fill",face.skinColor);
+			newPath.setAttribute("fill","none");
 			newPath.setAttribute("stroke","#000000");
 			newPath.setAttribute("stroke-width","2");
 			newPath.setAttribute("stroke-linecap","round");
