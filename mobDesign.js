@@ -32,6 +32,12 @@ var faceData = {
 	earPoint: 0,
 	earPosition: 0,
 	earSize: 0,
+	hairColor: 0,
+	hairLength: 0,
+	hairHeight: 0,
+	bangsLength: 0,
+	bangsWidth: 0,
+	hairCurl: 0,
 	
 };
 
@@ -59,9 +65,9 @@ var handlers = {
 			if (i.indexOf('olor') == -1) {
 				slider.value = ( Math.random() * (parseInt(slider.max) - parseInt(slider.min)) << 0 ) + parseInt(slider.min);
 			} else {
-				var red = Math.random() * 255 << 0;
-				var green = Math.random() * 255 << 0;
-				var blue = Math.random() * 255 << 0;
+				var red = Math.random() * 255 * 0.8 << 0;
+				var green = Math.random() * 255 * 0.8 << 0;
+				var blue = Math.random() * Math.min(red,green) * 0.8 << 0;
 				slider.value = "#" + ("0" + red.toString(16)).substr(-2) + ("0" + green.toString(16)).substr(-2) + ("0" + blue.toString(16)).substr(-2);
 			};
 		};
@@ -81,9 +87,103 @@ var view = {
 		var faceDiv = document.getElementById('faceDiv')
 		faceDiv.innerHTML = '';
 		faceDiv.appendChild(svg);
+		
+		// Hair in Back
+		if (face.hairLength > 0) {
+			var newPath = document.createElementNS('http://www.w3.org/2000/svg',"path");
+			newPath.setAttribute("fill",face.hairColor);
+			newPath.setAttribute("stroke","#000000");
+			newPath.setAttribute("stroke-width","3");
+			newPath.setAttribute("stroke-linecap","round");
+
+			// start 
+			var x = 100;
+			var y = 20;
+			var path = 'm '+x+','+y;
+			
+			console.log('---');
+			
+			var stepX = (25 + 2 * face.templeWidth) / face.hairCurl;
+			var stepY = 0;
+			for (i=0;i<face.hairCurl;i++) {
+				x = stepX;
+				y = (10 - face.hairHeight)/10 * ( 0.03 * Math.pow((stepX * (i+1)),2) - 0.03 * Math.pow((stepX * (i)),2) ) + (i % 3) - 1;
+				c1x = 25 / face.hairCurl;
+				c1y = 0;
+				c2x = x;
+				c2y = y;
+				path += ' c '+c1x+','+c1y+' '+c2x+','+c2y+' '+x+','+y;
+			}
+			
+			stepX = 0.2 * face.hairLength / (face.hairCurl * 3);
+			stepY = (face.hairLength + eyeline) / (face.hairCurl * 3);
+			for (i=0;i<face.hairCurl*3;i++) {
+				x = stepX + (i % 3) - 1;
+				y = stepY;
+				c1x = 0;
+				c1y = 0;
+				c2x = x;
+				c2y = y;
+				path += ' c '+c1x+','+c1y+' '+c2x+','+c2y+' '+x+','+y;
+			}
+			
+			stepX = (-25 - 2 * face.templeWidth - 0.2 * face.hairLength) / face.hairCurl;
+			stepY = 0 / face.hairCurl;
+			for (i=0;i<face.hairCurl;i++) {
+				x = stepX;
+				y = stepY + (i % 3) - 1;
+				c1x = 0;
+				c1y = 0;
+				c2x = x;
+				c2y = y;
+				path += ' c '+c1x+','+c1y+' '+c2x+','+c2y+' '+x+','+y;
+			}
+			
+			stepX = (-25 - 2 * face.templeWidth - 0.2 * face.hairLength) / face.hairCurl;
+			stepY = 0 / face.hairCurl;
+			for (i=0;i<face.hairCurl;i++) {
+				x = stepX;
+				y = stepY + ((face.hairCurl - i) % 3) - 1;
+				c1x = 0;
+				c1y = 0;
+				c2x = x;
+				c2y = y;
+				path += ' c '+c1x+','+c1y+' '+c2x+','+c2y+' '+x+','+y;
+			}
+			
+			stepX = 0.2 * face.hairLength / (face.hairCurl * 3);
+			stepY = (face.hairLength + eyeline) / (face.hairCurl * -3);
+			for (i=0;i<face.hairCurl*3;i++) {
+				x = stepX + ((i+2) % 3) - 1;
+				y = stepY;
+				c1x = 0;
+				c1y = 0;
+				c2x = x;
+				c2y = y;
+				path += ' c '+c1x+','+c1y+' '+c2x+','+c2y+' '+x+','+y;
+			}
+
+			stepX = (25 + 2 * face.templeWidth) / face.hairCurl;
+			stepY = 0;
+			for (i=0;i<face.hairCurl;i++) {
+				x = stepX;
+				y = (10 - face.hairHeight)/10 * -1 * ( 0.03 * Math.pow((stepX * (face.hairCurl - i)),2) - 0.03 * Math.pow((stepX * (face.hairCurl - i-1)),2) ) + ((i+1) % 3) - 1;
+				console.log(Math.round(x),Math.round(y));
+				c1x = 0;
+				c1y = 0;
+				c2x = x - 25/face.hairCurl;
+				c2y = y;
+				if (i === face.hairCurl -1) {c2x = x - 25/face.hairCurl};
+				path += ' c '+c1x+','+c1y+' '+c2x+','+c2y+' '+x+','+y;
+			}
+		
+			path += 'z';
+			newPath.setAttributeNS(null,"d",path);
+			svg.appendChild(newPath);
+		};
 	
 		// Ear Backs
-		var newPath = document.createElementNS('http://www.w3.org/2000/svg',"path");
+		newPath = document.createElementNS('http://www.w3.org/2000/svg',"path");
 		newPath.setAttribute("fill",face.earColor);
 		newPath.setAttribute("stroke","#000000");
 		newPath.setAttribute("stroke-width","3");
@@ -96,9 +196,9 @@ var view = {
 		otherNewPath.setAttribute("stroke-linecap","round");
 
 		// start 
-		var x = 75;
-		var y = 25 + eyeline - face.earSize - face.earPosition;
-		var path = 'm '+x+','+y;
+		x = 75;
+		y = 25 + eyeline - face.earSize - face.earPosition;
+		path = 'm '+x+','+y;
 		
 		x = 125;
 		var otherPath = 'm '+x+','+y;
@@ -887,7 +987,5 @@ var view = {
 			svg.appendChild(newPath);		
 			
 		};
-		
-		
 	},
 };

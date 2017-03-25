@@ -1,9 +1,15 @@
 
 
-#faceDiv {
+.faceDiv {
 	height: 500px;
 	width: 500px;
 	border: 3px solid black;
+	float: left;
+	margin-right: 20px;
+}
+
+#controlsDiv {
+	clear: both;
 }
 
 .controlsSectionDiv {
@@ -12,11 +18,11 @@
 }
 
 input {
-	width: 100px;
+	width: 50px;
 }
 
 select {
-	width: 100px;
+	width: 50px;
 }
 
 svg {
