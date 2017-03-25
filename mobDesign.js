@@ -26,6 +26,7 @@ var faceData = {
 	mouthWidth: 0,
 	lipSize: 0,
 	smile: 0,
+	mouthOpen: 0,
 	teeth: 0,
 	earColor: '#000',
 	earPoint: 0,
@@ -577,29 +578,83 @@ var view = {
 			svg.appendChild(newPath);			
 		};
 		
-		// Mouth (renders before/under nose)
+		// Top Half of Mouth (renders before/under nose)
 		
-		// Lips
+		// Teeth Backdrop
+		newPath = document.createElementNS('http://www.w3.org/2000/svg',"path");
+		newPath.setAttribute("stroke","#000000");
+		newPath.setAttribute("stroke-width","1");
+		newPath.setAttribute("stroke-linecap","round");
+		
+		if (face.teeth > 0) {
+			newPath.setAttribute('fill','#FFFFFF');
+		} else {
+			newPath.setAttribute('fill','#000000');
+		};
+		
+		// Start at Right Side
+		x = 100 - face.mouthWidth;
+		y = 25 + eyeline - face.smile + (100 + face.noseHeight)/2 * face.chinHeight / 100;
+		path = 'm '+x+','+y;
+
+		// to top of smile / bottom of top lip
+		x = face.mouthWidth;
+		y = face.smile;
+		c1x = 0;
+		c1y = 0;
+		c2x = x-face.mouthWidth * 0.5;
+		c2y = y;
+		path += ' c '+c1x+','+c1y+' '+c2x+','+c2y+' '+x+','+y;
+
+		// to left
+		x = face.mouthWidth;
+		y = -1 * face.smile;
+		c1x = face.mouthWidth * 0.5;
+		c1y = 0;
+		c2x = x;
+		c2y = y;
+		path += ' c '+c1x+','+c1y+' '+c2x+','+c2y+' '+x+','+y;
+
+		// to middle bottom
+		x = -1 * face.mouthWidth;
+		y = face.smile+face.mouthOpen;
+		c1x = 0;
+		c1y = 0;
+		c2x = x+face.mouthWidth * 0.5;
+		c2y = y;
+		path += ' c '+c1x+','+c1y+' '+c2x+','+c2y+' '+x+','+y;
+
+		// to right side
+		x = -1 * face.mouthWidth;
+		y = -1 * (face.smile+face.mouthOpen);
+		c1x = -1 * face.mouthWidth * 0.5;
+		c1y = 0;
+		c2x = x;
+		c2y = y;
+		path += ' c '+c1x+','+c1y+' '+c2x+','+c2y+' '+x+','+y;
+		
+		newPath.setAttributeNS(null,"d",path);
+		svg.appendChild(newPath);
+		
+		// Top Lip
 		newPath = document.createElementNS('http://www.w3.org/2000/svg',"path");
 		newPath.setAttribute('fill',face.lipColor);
 		newPath.setAttribute("stroke","#000000");
 		newPath.setAttribute("stroke-width","1");
 		newPath.setAttribute("stroke-linecap","round");
 		
-		var curve = face.mouthWidth * 0.4;
-
 		// Start at Right Side
-		x = 100 - face.mouthWidth * 1.2;
+		x = 100 - face.mouthWidth;
 		y = 25 + eyeline - face.smile + (100 + face.noseHeight)/2 * face.chinHeight / 100;
 		path = 'm '+x+','+y;
 
 		// to right top of cupid's bow
-		x = face.mouthWidth;
+		x = face.mouthWidth * 0.8;
 		y = face.smile-face.lipSize;
 		c1x = 0;
 		c1y = 0;
-		c2x = x-curve-face.lipSize;
-		c2y = y+face.lipSize/2;
+		c2x = x-face.lipSize;
+		c2y = y;
 		path += ' c '+c1x+','+c1y+' '+c2x+','+c2y+' '+x+','+y;
 
 		// to bottom of cupid's bow
@@ -621,78 +676,27 @@ var view = {
 		path += ' c '+c1x+','+c1y+' '+c2x+','+c2y+' '+x+','+y;
 
 		// to left
-		x = face.mouthWidth;
+		x = face.mouthWidth * 0.8;
 		y = -1 * (face.smile - face.lipSize);
-		c1x = curve+face.lipSize;
-		c1y = 0.5 * face.lipSize;
+		c1x = face.lipSize;
+		c1y = 0;
 		c2x = x;
 		c2y = y;
 		path += ' c '+c1x+','+c1y+' '+c2x+','+c2y+' '+x+','+y;
 
 		// to middle bottom
-		x = -1 * face.mouthWidth * 1.2;
-		y = face.smile+face.teeth+face.lipSize;
-		c1x = 0;
-		c1y = 0;
-		c2x = x+curve+face.lipSize;
-		c2y = y;
-		path += ' c '+c1x+','+c1y+' '+c2x+','+c2y+' '+x+','+y;
-
-		// to right side
-		x = -1 * face.mouthWidth * 1.2;
-		y = -1 * (face.smile + face.teeth + face.lipSize);
-		c1x = -1 * curve - face.lipSize;
-		c1y = 0;
-		c2x = x;
-		c2y = y;
-		path += ' c '+c1x+','+c1y+' '+c2x+','+c2y+' '+x+','+y;
-		
-		newPath.setAttributeNS(null,"d",path);
-		svg.appendChild(newPath);
-		
-		// Teeth / Smile
-		newPath = document.createElementNS('http://www.w3.org/2000/svg',"path");
-		newPath.setAttribute('fill','#ffffff');
-		newPath.setAttribute("stroke","#000000");
-		newPath.setAttribute("stroke-width","1");
-		newPath.setAttribute("stroke-linecap","round");
-
-		// Start at Right Side
-		x = 100 - face.mouthWidth;
-		y = 25 + eyeline - face.smile + (100 + face.noseHeight)/2 * face.chinHeight / 100;
-		path = 'm '+x+','+y;
-
-		// to middle top
-		x = face.mouthWidth;
+		x = -1 * face.mouthWidth;
 		y = face.smile;
 		c1x = 0;
 		c1y = 0;
-		c2x = x - curve;
-		c2y = y;
-		path += ' c '+c1x+','+c1y+' '+c2x+','+c2y+' '+x+','+y;
-
-		// to left
-		x = face.mouthWidth;
-		y = -1 * face.smile;
-		c1x = curve;
-		c1y = 0;
-		c2x = x;
-		c2y = y;
-		path += ' c '+c1x+','+c1y+' '+c2x+','+c2y+' '+x+','+y;
-
-		// to middle bottom
-		x = -1 * face.mouthWidth;
-		y = face.smile+face.teeth;
-		c1x = 0;
-		c1y = 0;
-		c2x = x+curve;
+		c2x = x+face.mouthWidth * 0.5;
 		c2y = y;
 		path += ' c '+c1x+','+c1y+' '+c2x+','+c2y+' '+x+','+y;
 
 		// to right side
 		x = -1 * face.mouthWidth;
-		y = -1 * (face.smile + face.teeth);
-		c1x = -1 * curve;
+		y = -1 * face.smile;
+		c1x = -1 * face.mouthWidth * 0.5;
 		c1y = 0;
 		c2x = x;
 		c2y = y;
@@ -997,6 +1001,59 @@ var view = {
 			svg.appendChild(newPath);		
 			
 		};
+		
+		// Tusks Go Here
+		
+		// Bottom Lip
+		newPath = document.createElementNS('http://www.w3.org/2000/svg',"path");
+		newPath.setAttribute('fill',face.lipColor);
+		newPath.setAttribute("stroke","#000000");
+		newPath.setAttribute("stroke-width","1");
+		newPath.setAttribute("stroke-linecap","round");
+		
+		// Start at Right Side
+		x = 100 - face.mouthWidth;
+		y = 25 + eyeline - face.smile + (100 + face.noseHeight)/2 * face.chinHeight / 100;
+		path = 'm '+x+','+y;
+
+		// to top of bottom lip
+		x = face.mouthWidth;
+		y = face.smile+face.mouthOpen;
+		c1x = 0;
+		c1y = 0;
+		c2x = x-face.mouthWidth * 0.5;
+		c2y = y;
+		path += ' c '+c1x+','+c1y+' '+c2x+','+c2y+' '+x+','+y;
+
+		// to left
+		x = face.mouthWidth;
+		y = -1 * (face.smile+face.mouthOpen);
+		c1x = face.mouthWidth * 0.5;
+		c1y = 0;
+		c2x = x;
+		c2y = y;
+		path += ' c '+c1x+','+c1y+' '+c2x+','+c2y+' '+x+','+y;
+
+		// to middle bottom
+		x = -1 * face.mouthWidth;
+		y = face.smile+face.mouthOpen+face.lipSize;
+		c1x = 0;
+		c1y = 0;
+		c2x = x+face.mouthWidth * 0.5;
+		c2y = y;
+		path += ' c '+c1x+','+c1y+' '+c2x+','+c2y+' '+x+','+y;
+
+		// to right side
+		x = -1 * face.mouthWidth;
+		y = -1 * (face.smile+face.mouthOpen+face.lipSize);
+		c1x = -1 * face.mouthWidth * 0.5;
+		c1y = 0;
+		c2x = x;
+		c2y = y;
+		path += ' c '+c1x+','+c1y+' '+c2x+','+c2y+' '+x+','+y;
+		
+		newPath.setAttributeNS(null,"d",path);
+		svg.appendChild(newPath);
 
 		// Bangs
 		if (face.bangsLength > 0) {
