@@ -19,10 +19,12 @@
 
 input {
 	width: 50px;
+	margin-right: 5px;
 }
 
 select {
 	width: 50px;
+	margin-right: 5px;
 }
 
 svg {

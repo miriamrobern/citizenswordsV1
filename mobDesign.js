@@ -81,6 +81,7 @@ var view = {
 	drawFace: function(face) {
 
 		var eyeline = 33;
+		var muzzle = false;
 
 		var svg = document.createElementNS('http://www.w3.org/2000/svg','svg');
 		svg.setAttribute('viewBox','0 0 200 200');
@@ -389,64 +390,6 @@ var view = {
 		newPath.setAttributeNS(null,"d",path);
 		svg.appendChild(newPath);
 		
-		// Muzzle
-		
-		if (face.noseHeight > 60) {
-			
-			var newPath = document.createElementNS('http://www.w3.org/2000/svg',"path");
-			newPath.setAttribute("fill",face.noseColor);
-			newPath.setAttribute("stroke",'#000000');
-			newPath.setAttribute("stroke-width","3");
-			
-			// Start under right nose
-			var muzzleWidth = Math.max(face.noseWidth * 2,face.mouthWidth * 1.5);
-			x = 100 - muzzleWidth;
-			y = 22 + eyeline + face.noseHeight * face.chinHeight / 100;
-			var muzzleLength = Math.max((25 + eyeline + face.chinHeight) - y,20);
-
-			path = 'm '+x+','+y;
-
-			// to muzzle chin
-			x = muzzleWidth;
-			y = muzzleLength;
-			c1x = 0;
-			c1y = muzzleLength;
-			c2x = x;
-			c2y = y;
-			path += ' c '+c1x+','+c1y+' '+c2x+','+c2y+' '+x+','+y;
-
-			// back under nose
-			x = muzzleWidth;
-			y = -1 * muzzleLength;
-			c1x = 0;
-			c1y = 0;
-			c2x = x;
-			c2y = y+muzzleLength;
-			path += ' c '+c1x+','+c1y+' '+c2x+','+c2y+' '+x+','+y;
-
-			// to top of muzzle
-			x = -1 * muzzleWidth;
-			y = -2 * face.nostrilHeight;
-			c1x = 0;
-			c1y = muzzleLength * -0.25;
-			c2x = x + muzzleWidth * 0.5;
-			c2y = y;
-			path += ' c '+c1x+','+c1y+' '+c2x+','+c2y+' '+x+','+y;
-
-			// back to under right nose
-			x = -1 * muzzleWidth;
-			y = 2 * face.nostrilHeight;
-			c1x = muzzleWidth * -0.5;
-			c1y = 0;
-			c2x = x;
-			c2y = y - muzzleLength * 0.25;
-			path += ' c '+c1x+','+c1y+' '+c2x+','+c2y+' '+x+','+y;
-			
-			path += 'z';
-			
-			newPath.setAttributeNS(null,"d",path);
-			svg.appendChild(newPath);			
-		};
 
 		// Eyes
 		for (i in [0,1]) {
@@ -571,6 +514,67 @@ var view = {
 			otherNewPath.setAttributeNS(null,'d',strokePath);
 			svg.appendChild(otherNewPath);
 						
+		};
+		
+		// Muzzle
+		
+		if (face.noseHeight > 60) {
+		
+			muzzle = true;
+			
+			var newPath = document.createElementNS('http://www.w3.org/2000/svg',"path");
+			newPath.setAttribute("fill",face.noseColor);
+			newPath.setAttribute("stroke",'#000000');
+			newPath.setAttribute("stroke-width","3");
+			
+			// Start under right nose
+			var muzzleWidth = Math.max(face.noseWidth * 2,face.mouthWidth * 1.5);
+			x = 100 - muzzleWidth;
+			y = 22 + eyeline + face.noseHeight * face.chinHeight / 100;
+			var muzzleLength = Math.max((25 + eyeline + face.chinHeight) - y,20);
+
+			path = 'm '+x+','+y;
+
+			// to muzzle chin
+			x = muzzleWidth;
+			y = muzzleLength;
+			c1x = 0;
+			c1y = muzzleLength;
+			c2x = x;
+			c2y = y;
+			path += ' c '+c1x+','+c1y+' '+c2x+','+c2y+' '+x+','+y;
+
+			// back under nose
+			x = muzzleWidth;
+			y = -1 * muzzleLength;
+			c1x = 0;
+			c1y = 0;
+			c2x = x;
+			c2y = y+muzzleLength;
+			path += ' c '+c1x+','+c1y+' '+c2x+','+c2y+' '+x+','+y;
+
+			// to top of muzzle
+			x = -1 * muzzleWidth;
+			y = -2 * face.nostrilHeight;
+			c1x = 0;
+			c1y = muzzleLength * -0.25;
+			c2x = x + muzzleWidth * 0.5;
+			c2y = y;
+			path += ' c '+c1x+','+c1y+' '+c2x+','+c2y+' '+x+','+y;
+
+			// back to under right nose
+			x = -1 * muzzleWidth;
+			y = 2 * face.nostrilHeight;
+			c1x = muzzleWidth * -0.5;
+			c1y = 0;
+			c2x = x;
+			c2y = y - muzzleLength * 0.25;
+			path += ' c '+c1x+','+c1y+' '+c2x+','+c2y+' '+x+','+y;
+			
+			path += 'z';
+			
+			newPath.setAttributeNS(null,"d",path);
+			svg.appendChild(newPath);			
 		};
 		
 		// Mouth (renders before/under nose)
@@ -728,47 +732,49 @@ var view = {
 		};
 		
 		// Nose Background
-		newPath = document.createElementNS('http://www.w3.org/2000/svg',"path");
-		newPath.setAttribute("fill",face.noseColor);
-		newPath.setAttribute("stroke","none");
+		if (!muzzle) {
+			newPath = document.createElementNS('http://www.w3.org/2000/svg',"path");
+			newPath.setAttribute("fill",face.noseColor);
+			newPath.setAttribute("stroke","none");
 
-		// start at right inside nostril
-		x = 100 - face.noseWidth * 1.2;
-		y = 25 + eyeline + face.noseHeight * face.chinHeight / 100;
-		path = 'm '+x+','+y;
+			// start at right inside nostril
+			x = 100 - face.noseWidth * 1.2;
+			y = 25 + eyeline + face.noseHeight * face.chinHeight / 100;
+			path = 'm '+x+','+y;
 
-		// to right top nose crease
-		x = -0.1 * face.noseWidth;
-		y = -1.8 * face.nostrilHeight;
-		c1x = -1 * face.noseWidth;
-		c1y = 0;
-		c2x = x - face.noseWidth * 0.2;
-		c2y = y;
-		path += ' c '+c1x+','+c1y+' '+c2x+','+c2y+' '+x+','+y;
+			// to right top nose crease
+			x = -0.1 * face.noseWidth;
+			y = -1.8 * face.nostrilHeight;
+			c1x = -1 * face.noseWidth;
+			c1y = 0;
+			c2x = x - face.noseWidth * 0.2;
+			c2y = y;
+			path += ' c '+c1x+','+c1y+' '+c2x+','+c2y+' '+x+','+y;
 
-		// to left top nose crease
-		x = 2.6 * face.noseWidth;
-		y = 0;
-		c1x = 0;
-		c1y = -0.5 * face.nostrilHeight;
-		c2x = x;
-		c2y = -0.5 * face.nostrilHeight;
-		path += ' c '+c1x+','+c1y+' '+c2x+','+c2y+' '+x+','+y;
+			// to left top nose crease
+			x = 2.6 * face.noseWidth;
+			y = 0;
+			c1x = 0;
+			c1y = -0.5 * face.nostrilHeight;
+			c2x = x;
+			c2y = -0.5 * face.nostrilHeight;
+			path += ' c '+c1x+','+c1y+' '+c2x+','+c2y+' '+x+','+y;
 		
-		newPath.setAttributeNS(null,"d",path);
-		svg.appendChild(newPath);	
+			newPath.setAttributeNS(null,"d",path);
+			svg.appendChild(newPath);	
 
-		// to left bottom nose crease
-		x = 0;
-		y = 1.8 * face.nostrilHeight;
-		c1x = face.noseWidth * 0.2;
-		c1y = 0;
-		c2x = x + face.noseWidth;
-		c2y = y;
-		path += ' c '+c1x+','+c1y+' '+c2x+','+c2y+' '+x+','+y;
+			// to left bottom nose crease
+			x = 0;
+			y = 1.8 * face.nostrilHeight;
+			c1x = face.noseWidth * 0.2;
+			c1y = 0;
+			c2x = x + face.noseWidth;
+			c2y = y;
+			path += ' c '+c1x+','+c1y+' '+c2x+','+c2y+' '+x+','+y;
 		
-		newPath.setAttributeNS(null,"d",path);
-		svg.appendChild(newPath);		
+			newPath.setAttributeNS(null,"d",path);
+			svg.appendChild(newPath);	
+		};	
 		
 		// Nostrils
 		
@@ -999,12 +1005,12 @@ var view = {
 			var path = 'm '+x+','+y;
 			
 			// to right temple
-			var stepX = (25 + 2 * face.templeWidth) / face.hairCurl;
+			var stepX = face.bangsWidth/100 * (25 + 2 * face.templeWidth) / face.hairCurl;
 			var stepY = 0;
 			for (i=0;i<face.hairCurl;i++) {
 				x = stepX;
 				y = (10 - face.hairHeight)/10 * ( 0.03 * Math.pow((stepX * (i+1)),2) - 0.03 * Math.pow((stepX * (i)),2) ) + (i % 3) - 1;
-				c1x = 25 / face.hairCurl;
+				c1x =  face.bangsWidth/100 * 25 / face.hairCurl;
 				c1y = 0;
 				c2x = x;
 				c2y = y;
@@ -1025,7 +1031,7 @@ var view = {
 			}
 			
 			// to center bottom of bangs
-			stepX = (-25 - 2 * face.templeWidth) / face.hairCurl;
+			stepX = face.bangsWidth/100 * (-25 - 2 * face.templeWidth) / face.hairCurl;
 			stepY = face.bangsCurve / face.hairCurl;
 			for (i=0;i<face.hairCurl;i++) {
 				x = stepX;
@@ -1038,7 +1044,7 @@ var view = {
 			}
 			
 			// to left bottom of bangs
-			stepX = (-25 - 2 * face.templeWidth) / face.hairCurl;
+			stepX = face.bangsWidth/100 * (-25 - 2 * face.templeWidth) / face.hairCurl;
 			stepY = -1 * face.bangsCurve / face.hairCurl;
 			for (i=0;i<face.hairCurl;i++) {
 				x = stepX;
@@ -1064,16 +1070,15 @@ var view = {
 			}
 			
 			// back to top
-			stepX = (25 + 2 * face.templeWidth) / face.hairCurl;
+			stepX = face.bangsWidth/100 * (25 + 2 * face.templeWidth) / face.hairCurl;
 			stepY = 0;
 			for (i=0;i<face.hairCurl;i++) {
 				x = stepX;
 				y = (10 - face.hairHeight)/10 * -1 * ( 0.03 * Math.pow((stepX * (face.hairCurl - i)),2) - 0.03 * Math.pow((stepX * (face.hairCurl - i-1)),2) ) + ((i+1) % 3) - 1;
 				c1x = 0;
 				c1y = 0;
-				c2x = x - 25/face.hairCurl;
+				c2x = x -  face.bangsWidth/100 * 25/face.hairCurl;
 				c2y = y;
-				if (i === face.hairCurl -1) {c2x = x - 25/face.hairCurl};
 				path += ' c '+c1x+','+c1y+' '+c2x+','+c2y+' '+x+','+y;
 			}
 		
