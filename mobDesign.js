@@ -1002,7 +1002,81 @@ var view = {
 			
 		};
 		
-		// Tusks Go Here
+		// Tusks
+		if (face.teeth > 1) {
+			newPath = document.createElementNS('http://www.w3.org/2000/svg',"path");
+			newPath.setAttribute('fill','#f5f7bb');
+			newPath.setAttribute("stroke","#000000");
+			newPath.setAttribute("stroke-width","1");
+			newPath.setAttribute("stroke-linecap","round");
+			
+			otherNewPath = document.createElementNS('http://www.w3.org/2000/svg',"path");
+			otherNewPath.setAttribute('fill','#f5f7bb');
+			otherNewPath.setAttribute("stroke","#000000");
+			otherNewPath.setAttribute("stroke-width","1");
+			otherNewPath.setAttribute("stroke-linecap","round");
+			
+			var tuskSize = Math.floor((face.teeth - 1) / 3);
+			console.log(face.teeth % 3);
+		
+			// Start at Right Side
+			x = 100 - face.mouthWidth * 0.8;
+			y = 25 + eyeline - face.smile + (100 + face.noseHeight)/2 * face.chinHeight / 100;
+			if (face.smile > 0) {y += face.smile * 0.8};
+			path = 'm '+x+','+y;
+			
+			x = 100 + face.mouthWidth * 0.8;
+			otherPath = 'm '+x+','+y;
+
+			// to top of tusk
+			x = -1 * tuskSize;
+			y = -5 * tuskSize;
+			c1x = 0;
+			c1y = 0;
+			c2x = x;
+			c2y = y + tuskSize * 3;
+			path += ' c '+c1x+','+c1y+' '+c2x+','+c2y+' '+x+','+y;
+			x *= -1;
+			c1x *= -1;
+			c2x *= -1;
+			otherPath += ' c '+c1x+','+c1y+' '+c2x+','+c2y+' '+x+','+y;
+
+			// to bottom of tusk
+			x = 2;
+			y = 0;
+			c1x = 0;
+			c1y = 0;
+			c2x = x;
+			c2y = y;
+			path += ' c '+c1x+','+c1y+' '+c2x+','+c2y+' '+x+','+y;
+			x *= -1;
+			c1x *= -1;
+			c2x *= -1;
+			otherPath += ' c '+c1x+','+c1y+' '+c2x+','+c2y+' '+x+','+y;
+
+			// to bottom of tusk
+			x = tuskSize + face.mouthWidth * 0.4;
+			y = 5 * tuskSize + (face.smile + face.mouthOpen) * 0.4;
+			c1x = 0;
+			c1y = tuskSize * 2;
+			c2x = x;
+			c2y = y;
+			path += ' c '+c1x+','+c1y+' '+c2x+','+c2y+' '+x+','+y;
+			x *= -1;
+			c1x *= -1;
+			c2x *= -1;
+			otherPath += ' c '+c1x+','+c1y+' '+c2x+','+c2y+' '+x+','+y;
+		
+			newPath.setAttributeNS(null,"d",path);
+			otherNewPath.setAttributeNS(null,"d",otherPath);
+			
+			if (face.teeth % 3 == 0 || face.teeth % 3 == 1) {
+				svg.appendChild(newPath);
+			};
+			if (face.teeth % 3 == 0 || face.teeth % 3 == 2) {
+				svg.appendChild(otherNewPath);
+			};
+		};
 		
 		// Bottom Lip
 		newPath = document.createElementNS('http://www.w3.org/2000/svg',"path");
