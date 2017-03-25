@@ -88,12 +88,20 @@ var view = {
 		newPath.setAttribute("stroke","#000000");
 		newPath.setAttribute("stroke-width","3");
 		newPath.setAttribute("stroke-linecap","round");
+		
+		var otherNewPath = document.createElementNS('http://www.w3.org/2000/svg',"path");
+		otherNewPath.setAttribute("fill",face.earColor);
+		otherNewPath.setAttribute("stroke","#000000");
+		otherNewPath.setAttribute("stroke-width","3");
+		otherNewPath.setAttribute("stroke-linecap","round");
 
 		// start 
-		x = 75;
-		y = 25 + eyeline - face.earSize - face.earPosition;
-
-		path = 'm '+x+','+y;
+		var x = 75;
+		var y = 25 + eyeline - face.earSize - face.earPosition;
+		var path = 'm '+x+','+y;
+		
+		x = 125;
+		var otherPath = 'm '+x+','+y;
 
 		// to top of ear
 		x = -2 * face.earSize - face.earPoint;
@@ -103,6 +111,10 @@ var view = {
 		c2x = x+(20-face.earPoint);
 		c2y = y;
 		path += ' c '+c1x+','+c1y+' '+c2x+','+c2y+' '+x+','+y;
+		x *= -1;
+		c1x *= -1;
+		c2x *= -1;
+		otherPath += ' c '+c1x+','+c1y+' '+c2x+','+c2y+' '+x+','+y;
 
 		// to bottom of ear
 		x = face.earPoint/10 * face.earSize + face.earPoint;
@@ -112,6 +124,10 @@ var view = {
 		c2x = x-10+face.earPoint/2;
 		c2y = y;
 		path += ' c '+c1x+','+c1y+' '+c2x+','+c2y+' '+x+','+y;
+		x *= -1;
+		c1x *= -1;
+		c2x *= -1;
+		otherPath += ' c '+c1x+','+c1y+' '+c2x+','+c2y+' '+x+','+y;
 
 		// to skull
 		x = 2 * face.earSize - face.earPoint/10 * face.earSize;
@@ -121,24 +137,39 @@ var view = {
 		c2x = x;
 		c2y = y;
 		path += ' c '+c1x+','+c1y+' '+c2x+','+c2y+' '+x+','+y;
-
+		x *= -1;
+		c1x *= -1;
+		c2x *= -1;
+		otherPath += ' c '+c1x+','+c1y+' '+c2x+','+c2y+' '+x+','+y;
 	
 		path += 'z';
 		newPath.setAttributeNS(null,"d",path);
 		svg.appendChild(newPath);
 	
+		otherPath += 'z';
+		otherNewPath.setAttributeNS(null,"d",otherPath);
+		svg.appendChild(otherNewPath);
+	
 		// Ear Tops
-		var newPath = document.createElementNS('http://www.w3.org/2000/svg',"path");
+		newPath = document.createElementNS('http://www.w3.org/2000/svg',"path");
 		newPath.setAttribute("fill",face.skinColor);
 		newPath.setAttribute("stroke","#000000");
 		newPath.setAttribute("stroke-width","3");
 		newPath.setAttribute("stroke-linecap","round");
+		
+		var otherNewPath = document.createElementNS('http://www.w3.org/2000/svg',"path");
+		otherNewPath.setAttribute("fill",face.skinColor);
+		otherNewPath.setAttribute("stroke","#000000");
+		otherNewPath.setAttribute("stroke-width","3");
+		otherNewPath.setAttribute("stroke-linecap","round");
 
 		// start 
-		var x = 75;
-		var y = 25 + eyeline - face.earSize - face.earPosition;
-
-		var path = 'm '+x+','+y;
+		x = 75;
+		y = 25 + eyeline - face.earSize - face.earPosition;
+		path = 'm '+x+','+y;
+		
+		x = 125;
+		otherPath = 'm '+x+','+y;
 
 		// to top of ear
 		x = -2 * face.earSize - face.earPoint;
@@ -148,6 +179,10 @@ var view = {
 		c2x = x + (20-face.earPoint);
 		c2y = y;
 		path += ' c '+c1x+','+c1y+' '+c2x+','+c2y+' '+x+','+y;
+		x *= -1;
+		c1x *= -1;
+		c2x *= -1;
+		otherPath += ' c '+c1x+','+c1y+' '+c2x+','+c2y+' '+x+','+y;
 
 		// back to skull
 		x = 2 * face.earSize + face.earPoint;
@@ -157,10 +192,18 @@ var view = {
 		c2x = x;
 		c2y = y;
 		path += ' c '+c1x+','+c1y+' '+c2x+','+c2y+' '+x+','+y;
+		x *= -1;
+		c1x *= -1;
+		c2x *= -1;
+		otherPath += ' c '+c1x+','+c1y+' '+c2x+','+c2y+' '+x+','+y;
 	
 		path += 'z';
 		newPath.setAttributeNS(null,"d",path);
 		svg.appendChild(newPath);
+	
+		otherPath += 'z';
+		otherNewPath.setAttributeNS(null,"d",otherPath);
+		svg.appendChild(otherNewPath);
 	
 		// Head Shape
 		newPath = document.createElementNS('http://www.w3.org/2000/svg',"path");
