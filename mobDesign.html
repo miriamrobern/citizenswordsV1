@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<title>Character Designer</title>
+		<link rel="stylesheet" href="mobDesign.css">
+		<script src="mobDesign.js"></script>
+	</head>
+	
+	<div id='faceDiv'> &nbsp;</div>
+	
+	<button onclick='handlers.randomizeFace()'>Randomize</button>
+	
+	<div id='controlsDiv'>
+	
+		<div class='controlsSectionDiv'>
+			<h3>Head Shape</h3>
+			<p><input id='skinColorInput' type = 'color' value = '#aaaaaa' onchange = 'handlers.updateFace()'  />Skin Color</p>
+			<p><input id= 'templePositionInput' type = 'range' min='5' max='20' value = '10' onchange = 'handlers.updateFace()' />Temple Position</p>
+			<p><input id= 'templeWidthInput' type = 'range' min='0' max='5' value = '3' onchange = 'handlers.updateFace()' />Temple Width</p>
+			<p><input id= 'templeHeightInput' type = 'range' min='2' max='10' value = '3' onchange = 'handlers.updateFace()' />Temple Height</p>
+			<p><input id= 'cheekbonePositionInput' type = 'range' min='5' max='30' value = '10' onchange = 'handlers.updateFace()' />Cheekbone Position</p>
+			<p><input id= 'cheekboneWidthInput' type = 'range' min='0' max='7' value = '5' onchange = 'handlers.updateFace()' />Cheekbone Width</p>
+			<p><input id= 'cheekboneHeightInput' type = 'range' min='2' max='10' value = '5' onchange = 'handlers.updateFace()' />Cheekbone Height</p>
+			<p><input id= 'chinHeightInput' type = 'range' min='30' max='66' value = '50' onchange = 'handlers.updateFace()' />Chin Height</p>
+			<p><input id= 'chinWidthInput' type = 'range' min='0' max='25' value = '12' onchange = 'handlers.updateFace()' />Chin Width</p>
+		</div>
+		
+		<div class='controlsSectionDiv'>
+			<h3>Eyes</h3>
+			<p><input id='eyeColorInput' type = 'color' value = '#00FF00' onchange = 'handlers.updateFace()' />Eye Color</p>
+			<p><input id= 'eyeSizeInput' type = 'range' min='5' max='10' step='0.25' value = '7.5' onchange = 'handlers.updateFace()' />Eye Size</p>
+			<p><input id= 'eyeDistanceInput' type = 'range' min='9' max='25' value = '12' onchange = 'handlers.updateFace()' />Eye Distance</p>
+			<p><input id= 'insideEyelidCurveInput' type = 'range' min='-10' max='10' value = '2' onchange = 'handlers.updateFace()' />Inside Eyelid Curve</p>
+			<p><input id= 'outsideEyelidCurveInput' type = 'range' min='-10' max='10' value = '2' onchange = 'handlers.updateFace()' />Outside Eyelid Curve</p>
+			<p><input id= 'lowerEyelidInput' disabled type = 'range' min='0' max='10' value = '5' onchange = 'handlers.updateFace()' />Lower Eyelid Position</p>
+		</div>
+		
+		<div class='controlsSectionDiv'>
+			<h3>Nose</h3>
+			<p><input id='noseColorInput' type = 'color' value = '#00FF00' onchange = 'handlers.updateFace()' />Nose Color</p>
+			<p><input id= 'noseHeightInput' type = 'range' min='0' max='100' value = '50' onchange = 'handlers.updateFace()' />Nose Height</p>
+			<p><input id= 'noseSizeInput' type = 'range' min='1' max='5' value = '2' onchange = 'handlers.updateFace()' />Nose Size</p>
+			<p><input id= 'noseWidthInput' type = 'range' min='4' max='20' value = '7.5' onchange = 'handlers.updateFace()' />Nose Width</p>
+			<p><input id= 'nostrilHeightInput' type = 'range' min='2' max='10' value = '7.5' onchange = 'handlers.updateFace()' />Nostril Height</p>
+			<p><input id= 'noseBumpInput' type = 'range' min='0' max='20' value = '10' onchange = 'handlers.updateFace()' />Nose Bump</p>
+			<p><input id= 'snoutSizeInput' type = 'range' min='-10' max='10' value = '0' onchange = 'handlers.updateFace()' />Snout Size</p>
+		
+		</div>
+		
+		
+	</div>
+
+</html>
