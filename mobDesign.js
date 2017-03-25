@@ -24,7 +24,6 @@ var faceData = {
 	noseBump: 0,
 	lipColor: '#000',
 	mouthWidth: 0,
-	mouthPosition: 0,
 	lipSize: 0,
 	smile: 0,
 	teeth: 0,
@@ -82,6 +81,7 @@ var view = {
 
 		var eyeline = 33;
 		var muzzle = false;
+		var noseStroke = false;
 
 		var svg = document.createElementNS('http://www.w3.org/2000/svg','svg');
 		svg.setAttribute('viewBox','0 0 200 200');
@@ -590,7 +590,7 @@ var view = {
 
 		// Start at Right Side
 		x = 100 - face.mouthWidth * 1.2;
-		y = 25 + eyeline + face.mouthPosition + (100 + face.noseHeight)/2 * face.chinHeight / 100;
+		y = 25 + eyeline - face.smile + (100 + face.noseHeight)/2 * face.chinHeight / 100;
 		path = 'm '+x+','+y;
 
 		// to right top of cupid's bow
@@ -598,7 +598,7 @@ var view = {
 		y = face.smile-face.lipSize;
 		c1x = 0;
 		c1y = 0;
-		c2x = x-curve;
+		c2x = x-curve-face.lipSize;
 		c2y = y+face.lipSize/2;
 		path += ' c '+c1x+','+c1y+' '+c2x+','+c2y+' '+x+','+y;
 
@@ -623,7 +623,7 @@ var view = {
 		// to left
 		x = face.mouthWidth;
 		y = -1 * (face.smile - face.lipSize);
-		c1x = curve;
+		c1x = curve+face.lipSize;
 		c1y = 0.5 * face.lipSize;
 		c2x = x;
 		c2y = y;
@@ -634,14 +634,14 @@ var view = {
 		y = face.smile+face.teeth+face.lipSize;
 		c1x = 0;
 		c1y = 0;
-		c2x = x+curve;
+		c2x = x+curve+face.lipSize;
 		c2y = y;
 		path += ' c '+c1x+','+c1y+' '+c2x+','+c2y+' '+x+','+y;
 
 		// to right side
 		x = -1 * face.mouthWidth * 1.2;
 		y = -1 * (face.smile + face.teeth + face.lipSize);
-		c1x = -1 * curve;
+		c1x = -1 * curve - face.lipSize;
 		c1y = 0;
 		c2x = x;
 		c2y = y;
@@ -659,7 +659,7 @@ var view = {
 
 		// Start at Right Side
 		x = 100 - face.mouthWidth;
-		y = 25 + eyeline + face.mouthPosition + (100 + face.noseHeight)/2 * face.chinHeight / 100;
+		y = 25 + eyeline - face.smile + (100 + face.noseHeight)/2 * face.chinHeight / 100;
 		path = 'm '+x+','+y;
 
 		// to middle top
@@ -735,7 +735,14 @@ var view = {
 		if (!muzzle) {
 			newPath = document.createElementNS('http://www.w3.org/2000/svg',"path");
 			newPath.setAttribute("fill",face.noseColor);
-			newPath.setAttribute("stroke","none");
+			
+			if (face.noseHeight*face.chinHeight/100 - face.nostrilHeight*2 - face.eyeSize > 0) {
+				newPath.setAttribute("stroke","none");
+			} else {
+				newPath.setAttribute("stroke","#000000");
+				newPath.setAttribute("stroke-width","2");
+				noseStroke = true;
+			};
 
 			// start at right inside nostril
 			x = 100 - face.noseWidth * 1.2;
@@ -874,7 +881,7 @@ var view = {
 		};
 		
 		// Top of Nose Crease
-		if (face.noseSize > 2) {
+		if (face.noseSize > 2 && !noseStroke) {
 			newPath = document.createElementNS('http://www.w3.org/2000/svg',"path");
 			newPath.setAttribute("fill","none");
 			newPath.setAttribute("stroke","#000000");
@@ -919,7 +926,7 @@ var view = {
 		};
 		
 		// Bottom of Nose Crease
-		if (face.noseSize > 3) {
+		if (face.noseSize > 3 && !noseStroke) {
 			newPath = document.createElementNS('http://www.w3.org/2000/svg',"path");
 			newPath.setAttribute("fill","none");
 			newPath.setAttribute("stroke","#000000");
