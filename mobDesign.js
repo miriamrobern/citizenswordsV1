@@ -66,12 +66,17 @@ var handlers = {
 			if (i.indexOf('olor') == -1) {
 				slider.value = ( Math.random() * (parseInt(slider.max) - parseInt(slider.min)) << 0 ) + parseInt(slider.min);
 			} else {
-				var red = Math.random() * 255 * 0.8 << 0;
-				var green = Math.random() * 255 * 0.8 << 0;
-				var blue = Math.random() * Math.min(red,green) * 0.8 << 0;
+				var red = Math.random() * 255 << 0;
+				var green = Math.random() * 255  << 0;
+				var blue = Math.random() * 255 << 0;
 				slider.value = "#" + ("0" + red.toString(16)).substr(-2) + ("0" + green.toString(16)).substr(-2) + ("0" + blue.toString(16)).substr(-2);
 			};
 		};
+		handlers.updateFace();
+	},
+	
+	matchToSkinColor: function(input) {
+		document.getElementById(input).value = document.getElementById('skinColorInput').value;
 		handlers.updateFace();
 	},
 };
@@ -180,6 +185,50 @@ var view = {
 			newPath.setAttributeNS(null,"d",path);
 			svg.appendChild(newPath);
 		};
+		
+		// Body
+		newPath = document.createElementNS('http://www.w3.org/2000/svg',"path");
+		newPath.setAttribute("fill",'#666666');
+		newPath.setAttribute("stroke","#000000");
+		newPath.setAttribute("stroke-width","3");
+		newPath.setAttribute("stroke-linecap","round");
+
+		// start 
+		x = 40;
+		y = 300;
+		path = 'm '+x+','+y;
+
+		// to right shoulder
+		x = 0;
+		y = -160;
+		c1x = 0;
+		c1y = 0;
+		c2x = x;
+		c2y = y;
+		path += ' c '+c1x+','+c1y+' '+c2x+','+c2y+' '+x+','+y;
+
+		// to left shoulder
+		x = 120;
+		y = 0;
+		c1x = 0;
+		c1y = -60;
+		c2x = x;
+		c2y = y-60;
+		path += ' c '+c1x+','+c1y+' '+c2x+','+c2y+' '+x+','+y;
+
+		// to bottom shoulder
+		x = 0;
+		y = 160;
+		c1x = 0;
+		c1y = 0;
+		c2x = x;
+		c2y = y;
+		path += ' c '+c1x+','+c1y+' '+c2x+','+c2y+' '+x+','+y;
+	
+		path += 'z';
+		newPath.setAttributeNS(null,"d",path);
+		svg.appendChild(newPath);
+		
 	
 		// Ear Backs
 		newPath = document.createElementNS('http://www.w3.org/2000/svg',"path");
@@ -1041,11 +1090,11 @@ var view = {
 			c2x *= -1;
 			otherPath += ' c '+c1x+','+c1y+' '+c2x+','+c2y+' '+x+','+y;
 
-			// to bottom of tusk
+			// blunted end
 			x = 2;
 			y = 0;
 			c1x = 0;
-			c1y = 0;
+			c1y = -2;
 			c2x = x;
 			c2y = y;
 			path += ' c '+c1x+','+c1y+' '+c2x+','+c2y+' '+x+','+y;

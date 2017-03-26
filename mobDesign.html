@@ -25,7 +25,7 @@
 			<p><input id= 'cheekboneWidthInput' type = 'range' min='0' max='7' value = '5' onchange = 'handlers.updateFace()' />Cheekbone Width</p>
 			<p><input id= 'cheekboneHeightInput' type = 'range' min='2' max='10' value = '5' onchange = 'handlers.updateFace()' />Cheekbone Height</p>
 			<p><input id= 'chinHeightInput' type = 'range' min='40' max='66' value = '50' onchange = 'handlers.updateFace()' />Chin Height</p>
-			<p><input id= 'chinWidthInput' type = 'range' min='5' max='25' value = '12' onchange = 'handlers.updateFace()' />Chin Width</p>
+			<p><input id= 'chinWidthInput' type = 'range' min='10' max='40' value = '12' onchange = 'handlers.updateFace()' />Chin Width</p>
 		</div>
 		
 		<div class='controlsSectionDiv'>
@@ -41,12 +41,12 @@
 		<div class='controlsSectionDiv'>
 			<h3>Nose</h3>
 			<p><input id='noseColorInput' type = 'color' value = '#00FF00' onchange = 'handlers.updateFace()' />Nose Color</p>
-			<p><input id= 'noseHeightInput' type = 'range' min='20' max='95' value = '50' onchange = 'handlers.updateFace()' />Nose Height</p>
+			<p><input id= 'noseHeightInput' type = 'range' min='20' max='90' value = '50' onchange = 'handlers.updateFace()' />Nose Height</p>
 			<p><input id= 'noseSizeInput' type = 'range' min='1' max='5' value = '2' onchange = 'handlers.updateFace()' />Nose Size</p>
 			<p><input id= 'noseWidthInput' type = 'range' min='4' max='10' value = '7.5' onchange = 'handlers.updateFace()' />Nose Width</p>
 			<p><input id= 'nostrilHeightInput' type = 'range' min='2' max='15' value = '7.5' onchange = 'handlers.updateFace()' />Nostril Height</p>
 			<p><input id= 'noseBumpInput' type = 'range' min='-10' max='10' value = '10' onchange = 'handlers.updateFace()' />Nose Bump</p>
-			<p><button disabled>Match to Skin Color</button></p>
+			<p><button onclick='handlers.matchToSkinColor("noseColorInput")'>Match to Skin Color</button></p>
 		</div>
 		
 		<div class='controlsSectionDiv'>
@@ -57,6 +57,7 @@
 			<p><input id= 'smileInput' type = 'range' min='-7' max='7' value = '7.5' onchange = 'handlers.updateFace()' />Smile</p>
 			<p><input id= 'mouthOpenInput' type = 'range' min='0' max='10' value = '7.5' onchange = 'handlers.updateFace()' />Open</p>
 			<p><input id= 'teethInput' type = 'range' min='0' max='20' value = '7.5' onchange = 'handlers.updateFace()' />Teeth</p>
+			<p><button onclick='handlers.matchToSkinColor("lipColorInput")'>Match to Skin Color</button></p>
 		
 		</div>
 		
@@ -66,6 +67,7 @@
 			<p><input id= 'earPointInput' type = 'range' min='0' max='20' value = '5' onchange = 'handlers.updateFace()' />Point</p>
 			<p><input id= 'earPositionInput' type = 'range' min='-7' max='20' value = '0' onchange = 'handlers.updateFace()' />Ears Position</p>
 			<p><input id= 'earSizeInput' type = 'range' min='2' max='6' step = '0.5' value = '5' onchange = 'handlers.updateFace()' />Ears Size</p>
+			<p><button onclick='handlers.matchToSkinColor("earColorInput")'>Match to Skin Color</button></p>
 		
 		</div>
 		
