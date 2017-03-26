@@ -619,15 +619,9 @@ var view = {
 			otherNewPath.setAttribute("stroke",'#000000');
 			otherNewPath.setAttribute("stroke-width","1");
 			otherNewPath.setAttribute("stroke-linecap","round");
-
-			var anotherNewPath = document.createElementNS('http://www.w3.org/2000/svg',"path");
-			anotherNewPath.setAttribute("fill",'none');
-			anotherNewPath.setAttribute("stroke",face.hairColor);
-			anotherNewPath.setAttribute("stroke-width",face.browSize);
-			anotherNewPath.setAttribute("stroke-linecap","round");
 			
 			x = cx;
-			y = cy - face.eyeSize;
+			y = cy - face.eyeSize - 1;
 			path = 'm '+x+','+y;
 			
 			var strokePath = '';
@@ -644,14 +638,12 @@ var view = {
 			path += ' c '+c1x+','+c1y+' '+c2x+','+c2y+' '+x+','+y;
 			
 			var sX = cx - face.eyeSize;
+			var sY = cy - 1;
 			if (face.eyeDistance + face.eyeSize > 25 && i == 1) {
 				strokePath += ' c '+c1x+','+c1y+' '+c2x+','+c2y+' '+x+','+y;
 			} else {
-				strokePath = 'm '+sX+','+cy
+				strokePath = 'm '+sX+','+sY
 			}
-			
-			cy -= 10;
-			var browPath = 'm '+sX+','+cy;
 			
 			if (i == 0) {
 				c1y = face.insideEyelidCurve * -1;
@@ -666,7 +658,6 @@ var view = {
 			c2x = 1.5 * face.eyeSize;
 			path += ' c '+c1x+','+c1y+' '+c2x+','+c2y+' '+x+','+y;
 			strokePath += ' c '+c1x+','+c1y+' '+c2x+','+c2y+' '+x+','+y;
-			browPath += ' c '+c1x+','+c1y+' '+c2x+','+c2y+' '+x+','+y;
 			
 			x = -1 * face.eyeSize;
 			y = -1 * face.eyeSize;
@@ -685,10 +676,6 @@ var view = {
 			
 			otherNewPath.setAttributeNS(null,'d',strokePath);
 			svg.appendChild(otherNewPath);
-		
-//			Old Eyebrow	
-// 			anotherNewPath.setAttributeNS(null,'d',browPath);
-// 			svg.appendChild(anotherNewPath);
 			
 			// Lower Eyelid
 			var newPath = document.createElementNS('http://www.w3.org/2000/svg',"path");
@@ -703,7 +690,7 @@ var view = {
 			otherNewPath.setAttribute("stroke-linecap","round");
 			
 			x = cx;
-			y = 25 + eyeline + face.eyeSize;
+			y = 25 + eyeline + face.eyeSize + 1;
 			path = 'm '+x+','+y;
 			
 			var strokePath = '';
@@ -720,10 +707,10 @@ var view = {
 			path += ' c '+c1x+','+c1y+' '+c2x+','+c2y+' '+x+','+y;
 			
 			var sX = cx - face.eyeSize;
+			var sY = 25 + eyeline + 1;
 			if (face.eyeDistance + face.eyeSize > 25 && i == 1) {
 				strokePath += ' c '+c1x+','+c1y+' '+c2x+','+c2y+' '+x+','+y;
 			} else {
-				var sY = 25 + eyeline
 				strokePath = 'm '+sX+','+sY
 			}
 			
