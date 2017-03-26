@@ -76,14 +76,19 @@ var handlers = {
 		
 		// Brown Eumelanin
 		var brownEumelanin = 100 - document.getElementById('brownEumelaninInput').value;
-// 		skinRed *= 0.2 * brownEumelanin / 100;
-// 		skinGreen *= 0.2 * brownEumelanin / 100;
 		skinBlue *= brownEumelanin / 100;
 
 		// Pink Pheomelanin
 		var pinkPheomelanin = 100 - document.getElementById('pinkPheomelaninInput').value;
 		skinGreen *= pinkPheomelanin / 100;
 		skinBlue *= pinkPheomelanin / 100;
+
+		// Green Keratin
+		var greenKeratin = document.getElementById('greenKeratinInput').value;
+		var greenDiff = greenKeratin/100 * (255 - skinGreen)
+		skinGreen += greenDiff;
+		skinRed = Math.max(0,skinRed - greenDiff);
+		skinBlue = Math.max(0,skinBlue - greenDiff);
 		
 		console.log('pigments',100-blackEumelanin,100-brownEumelanin,100-pinkPheomelanin);
 		console.log('RGB',Math.round(skinRed),Math.round(skinGreen),Math.round(skinBlue));
@@ -139,7 +144,6 @@ var handlers = {
 			var earRed = skinRed + (255-skinRed)*earShading/100;
 			var earGreen = skinGreen + (255-skinGreen)*earShading/100;
 			var earBlue = skinBlue + (255-skinBlue)*earShading/100;
-			console.log('ear',earRed,earGreen,earBlue);
 		};
 		var earPinkness = parseInt(document.getElementById('earPinknessInput').value);
 		if (earPinkness > 0) {
