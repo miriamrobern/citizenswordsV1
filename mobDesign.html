@@ -10,8 +10,8 @@
 	<body onload='handlers.randomizeFace()'>
 	
 		<div id='faceDiv' class='faceDiv'> &nbsp;</div>
-	
-	<!-- 	<div id='faceCloseDiv' class='faceDiv'> &nbsp;</div> -->
+		
+		<button onclick='handlers.randomizeFace()'>Randomize</button>
 
 		<div class='controlsSectionDiv'>
 			<h3>Coloring</h3>
@@ -32,8 +32,6 @@
 			<p><input id= 'earShadingInput' type = 'range' min='-90' max='90' value = '0' onchange = 'handlers.updateColoring()' />Inner Ear Shading</p>
 			<p><input id= 'earPinknessInput' type = 'range' min='-90' max='90' value = '0' onchange = 'handlers.updateColoring()' />Inner Ear Pinkness</p>
 		</div>
-		
-		<button onclick='handlers.randomizeFace()'>Randomize</button>
 	
 		<div id='controlsDiv'>
 	
@@ -52,11 +50,13 @@
 			<div class='controlsSectionDiv'>
 				<h3>Eyes</h3>
 				<p><input id= 'eyeSizeInput' type = 'range' min='6' max='10' step='0.25' value = '7.5' onchange = 'handlers.updateFace()' />Eye Size</p>
-				<p><input id= 'browSizeInput' type = 'range' min='0' max='5' step='0.25' value = '7.5' onchange = 'handlers.updateFace()' />Brow Size</p>
 				<p><input id= 'eyeDistanceInput' type = 'range' min='9' max='25' value = '12' onchange = 'handlers.updateFace()' />Eye Distance</p>
-				<p><input id= 'insideEyelidCurveInput' type = 'range' min='2' max='5' value = '2' onchange = 'handlers.updateFace()' />Inside Eyelid Curve</p>
+				<p><input id= 'insideEyelidCurveInput' type = 'range' min='-2' max='5' value = '2' onchange = 'handlers.updateFace()' />Inside Eyelid Curve</p>
 				<p><input id= 'outsideEyelidCurveInput' type = 'range' min='2' max='8' value = '2' onchange = 'handlers.updateFace()' />Outside Eyelid Curve</p>
 				<p><input id= 'lowerEyelidCurveInput' type = 'range' min='4' max='7' value = '2' onchange = 'handlers.updateFace()' />Lower Eyelid Curve</p>
+				<p><input id= 'browSizeInput' type = 'range' min='0' max='5' step='0.25' value = '7.5' onchange = 'handlers.updateFace()' />Brow Size</p>
+				<p><input id= 'leftBrowTiltInput' type = 'range' min='-4' max='5' step='0.25' value = '7.5' onchange = 'handlers.updateFace()' />Left Brow Tilt</p>
+				<p><input id= 'rightBrowTiltInput' type = 'range' min='-4' max='5' step='0.25' value = '7.5' onchange = 'handlers.updateFace()' />Right Brow Tilt</p>
 			</div>
 		
 			<div class='controlsSectionDiv'>
@@ -70,11 +70,13 @@
 		
 			<div class='controlsSectionDiv'>
 				<h3>Mouth</h3>
-				<p><input id= 'mouthWidthInput' type = 'range' min='8' max='15' value = '5' onchange = 'handlers.updateFace()' />Mouth Width</p>
+				<p><input id= 'mouthWidthInput' type = 'range' min='10' max='15' value = '5' onchange = 'handlers.updateFace()' />Mouth Width</p>
 				<p><input id= 'lipSizeInput' type = 'range' min='1' max='7' value = '5' onchange = 'handlers.updateFace()' />Lip Size</p>
 				<p><input id= 'smileInput' type = 'range' min='-7' max='7' value = '7.5' onchange = 'handlers.updateFace()' />Smile</p>
-				<p><input id= 'mouthOpenInput' type = 'range' min='0' max='10' value = '7.5' onchange = 'handlers.updateFace()' />Open</p>
-				<p><input id= 'teethInput' type = 'range' min='0' max='20' value = '7.5' onchange = 'handlers.updateFace()' />Teeth</p>
+				<p><input id= 'mouthOpenInput' type = 'range' min='0' max='5' value = '7.5' onchange = 'handlers.updateFace()' />Open</p>
+				<p><input id= 'teethInput' type = 'range' min='0' max='4' value = '7.5' onchange = 'handlers.updateFace()' />Teeth</p>
+				<p><input id= 'leftTuskInput' type = 'range' min='-2' max='2' value = '7.5' onchange = 'handlers.updateFace()' />Left Tusk</p>
+				<p><input id= 'rightTuskInput' type = 'range' min='-2' max='2' value = '7.5' onchange = 'handlers.updateFace()' />Right Tusk</p>
 		
 			</div>
 		

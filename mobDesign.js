@@ -14,6 +14,8 @@ var faceData = {
 	eyeDistance: 0,
 	eyeSize: 0,
 	browSize: 0,
+	leftBrowTilt: 0,
+	rightBrowTilt: 0,
 	insideEyelidCurve: 0,
 	outsideEyelidCurve: 0,
 	lowerEyelidCurve: 0,
@@ -29,6 +31,8 @@ var faceData = {
 	smile: 0,
 	mouthOpen: 0,
 	teeth: 0,
+	leftTusk: 0,
+	rightTusk: 0,
 	earColor: '#000',
 	earPoint: 0,
 	earPosition: 0,
@@ -162,7 +166,7 @@ var handlers = {
 			var slider = document.getElementById(i+"Input");
 			if (i.indexOf('olor') == -1) {
 				console.log(i);
-				slider.value = ( Math.random() * (parseInt(slider.max) - parseInt(slider.min)) << 0 ) + parseInt(slider.min);
+				slider.value = 1 + ( Math.random() * (parseInt(slider.max) - parseInt(slider.min)) << 0 ) + parseInt(slider.min);
 			} else {
 				var red = Math.random() * 255 << 0;
 				var green = Math.random() * 255  << 0;
@@ -748,6 +752,54 @@ var view = {
 			
 			otherNewPath.setAttributeNS(null,'d',strokePath);
 			svg.appendChild(otherNewPath);
+			
+			// Eyebrows
+			var newPath = document.createElementNS('http://www.w3.org/2000/svg',"path");
+			newPath.setAttribute("fill",face.hairColor);
+			newPath.setAttribute("stroke",'#000000');
+			newPath.setAttribute("stroke-width","1");
+			
+			var tilt = face.leftBrowTilt;
+			if (i == 1) {tilt = face.rightBrowTilt;};
+			
+			// Start
+			x = cx + face.eyeSize;
+			y = 25 + eyeline - face.eyeSize;
+			if (i == 1) {x = cx - face.eyeSize};
+			path = 'm '+x+','+y;
+
+			// in
+			x = -2 * face.eyeSize;
+			y = face.eyeSize/4;
+			c1x = 0;
+			c1y = -4;
+			c2x = x + face.eyeSize/4;
+			c2y = y - tilt;
+			if (i == 1) {x *= -1; c1x *= -1; c2x *= -1;};
+			path += ' c '+c1x+','+c1y+' '+c2x+','+c2y+' '+x+','+y;
+
+			// up
+			x = 0;
+			y = -1 * face.browSize;
+			c1x = -2;
+			c1y = 0;
+			c2x = x-2;
+			c2y = y;
+			if (i == 1) {x *= -1; c1x *= -1; c2x *= -1;};
+			path += ' c '+c1x+','+c1y+' '+c2x+','+c2y+' '+x+','+y;
+
+			// back
+			x = 2 * face.eyeSize;
+			y = face.browSize - face.eyeSize/4;
+			c1x = face.eyeSize/4;
+			c1y = -1 * tilt;
+			c2x = x;
+			c2y = y-4;
+			if (i == 1) {x *= -1; c1x *= -1; c2x *= -1;};
+			path += ' c '+c1x+','+c1y+' '+c2x+','+c2y+' '+x+','+y;
+			
+			newPath.setAttributeNS(null,"d",path);
+			svg.appendChild(newPath);
 									
 		};
 		
@@ -950,13 +1002,13 @@ var view = {
 			newPath.setAttribute("stroke-linecap","round");
 
 			// start at right side
-			x = 100 - face.noseWidth * 0.6;
+			x = 100 - face.noseWidth;
 			y = 25 + eyeline + face.noseHeight * face.chinHeight / 100;
 			y -= face.nostrilHeight * 2;
 			path = 'm '+x+','+y;
 			
 			// to left side
-			x = face.noseWidth * 1.2;
+			x = face.noseWidth * 2;
 			y = 0;
 			c1x = 0;
 			c1y = -1 * face.noseBump * face.noseHeight / 25;
@@ -1237,7 +1289,7 @@ var view = {
 		};
 		
 		// Tusks
-		if (face.teeth > 1) {
+		if (face.leftTusk > 0 || face.rightTusk > 0) {
 			newPath = document.createElementNS('http://www.w3.org/2000/svg',"path");
 			newPath.setAttribute('fill','#f5f7bb');
 			newPath.setAttribute("stroke","#000000");
@@ -1250,7 +1302,7 @@ var view = {
 			otherNewPath.setAttribute("stroke-width","1");
 			otherNewPath.setAttribute("stroke-linecap","round");
 			
-			var tuskSize = Math.floor((face.teeth - 1) / 3);
+			var tuskSize = face.teeth;
 		
 			// Start at Right Side
 			x = 100 - face.mouthWidth * 0.8;
@@ -1268,10 +1320,13 @@ var view = {
 			c1y = 0;
 			c2x = x;
 			c2y = y + tuskSize * 3;
+			if (face.leftTusk === 2) {x *= 0.5;c1x *= 0.5;c2x *= 0.5;y *= 0.5;c1y *= 0.5;c2y *= 0.5;};
 			path += ' c '+c1x+','+c1y+' '+c2x+','+c2y+' '+x+','+y;
+			if (face.leftTusk === 2) {x *= 2;c1x *= 2;c2x *= 2;y *= 2;c1y *= 2;c2y *= 2;};
 			x *= -1;
 			c1x *= -1;
 			c2x *= -1;
+			if (face.rightTusk === 2) {x *= 0.5;c1x *= 0.5;c2x *= 0.5;y *= 0.5;c1y *= 0.5;c2y *= 0.5;};
 			otherPath += ' c '+c1x+','+c1y+' '+c2x+','+c2y+' '+x+','+y;
 
 			// blunted end
@@ -1281,10 +1336,12 @@ var view = {
 			c1y = -2;
 			c2x = x;
 			c2y = y;
+			if (face.leftTusk === 2) {x = face.mouthWidth * 0.3;};
 			path += ' c '+c1x+','+c1y+' '+c2x+','+c2y+' '+x+','+y;
-			x *= -1;
+			x = -2;
 			c1x *= -1;
 			c2x *= -1;
+			if (face.rightTusk === 2) {x = face.mouthWidth * -0.3;};
 			otherPath += ' c '+c1x+','+c1y+' '+c2x+','+c2y+' '+x+','+y;
 
 			// to bottom of tusk
@@ -1294,19 +1351,22 @@ var view = {
 			c1y = tuskSize * 2;
 			c2x = x;
 			c2y = y;
+			if (face.leftTusk === 2) {x *= 0.5;c1x *= 0.5;c2x *= 0.5;y *= 0.5;c1y *= 0.5;c2y *= 0.5;};
 			path += ' c '+c1x+','+c1y+' '+c2x+','+c2y+' '+x+','+y;
+			if (face.leftTusk === 2) {x *= 2;c1x *= 2;c2x *= 2;y *= 2;c1y *= 2;c2y *= 2;};
 			x *= -1;
 			c1x *= -1;
 			c2x *= -1;
+			if (face.rightTusk === 2) {x *= 0.5;c1x *= 0.5;c2x *= 0.5;y *= 0.5;c1y *= 0.5;c2y *= 0.5;};
 			otherPath += ' c '+c1x+','+c1y+' '+c2x+','+c2y+' '+x+','+y;
 		
 			newPath.setAttributeNS(null,"d",path);
 			otherNewPath.setAttributeNS(null,"d",otherPath);
 			
-			if (face.teeth % 3 == 0 || face.teeth % 3 == 1) {
+			if (face.leftTusk > 0) {
 				svg.appendChild(newPath);
 			};
-			if (face.teeth % 3 == 0 || face.teeth % 3 == 2) {
+			if (face.rightTusk > 0) {
 				svg.appendChild(otherNewPath);
 			};
 		};
