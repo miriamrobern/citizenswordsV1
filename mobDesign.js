@@ -13,9 +13,11 @@ var faceData = {
 	eyeColor: '#000',
 	eyeDistance: 0,
 	eyeSize: 0,
+	pupilSize: 0,
+	browSize: 0,
 	insideEyelidCurve: 0,
 	outsideEyelidCurve: 0,
-	lowerEyelid: 0,
+	lowerEyelidCurve: 0,
 	noseColor: '#000',
 	noseHeight: 0,
 	noseSize: 0,
@@ -39,6 +41,7 @@ var faceData = {
 	bangsCurve: 0,
 	bangsWidth: 0,
 	hairCurl: 0,
+	forelocks: 0,
 	
 };
 
@@ -60,10 +63,102 @@ var handlers = {
 		view.drawFace(face);
 	},
 	
+	updateColoring: function() {
+		
+		var skinRed = 255;
+		var skinGreen = 237;
+		var skinBlue = 220;
+		
+		// Black Eumelanin
+		var blackEumelanin = 100 - document.getElementById('blackEumelaninInput').value;
+		skinRed *= blackEumelanin / 100;
+		skinGreen *= blackEumelanin / 100;
+		skinBlue *= blackEumelanin / 100;
+		
+		// Brown Eumelanin
+		var brownEumelanin = 100 - document.getElementById('brownEumelaninInput').value;
+// 		skinRed *= 0.2 * brownEumelanin / 100;
+// 		skinGreen *= 0.2 * brownEumelanin / 100;
+		skinBlue *= brownEumelanin / 100;
+
+		// Pink Pheomelanin
+		var pinkPheomelanin = 100 - document.getElementById('pinkPheomelaninInput').value;
+		skinGreen *= pinkPheomelanin / 100;
+		skinBlue *= pinkPheomelanin / 100;
+		
+		console.log('pigments',100-blackEumelanin,100-brownEumelanin,100-pinkPheomelanin);
+		console.log('RGB',Math.round(skinRed),Math.round(skinGreen),Math.round(skinBlue));
+		
+		var skinColor = "#" + ("0" + Math.round(skinRed).toString(16)).substr(-2) + ("0" + Math.round(skinGreen).toString(16)).substr(-2) + ("0" + Math.round(skinBlue).toString(16)).substr(-2);
+		document.getElementById('skinColorInput').value = skinColor;
+		
+		var noseShading = parseInt(document.getElementById('noseShadingInput').value);
+		var targetShade = 255;
+		if (noseShading < 0) {
+			var noseRed = skinRed * (100 + noseShading)/100;
+			var noseGreen = skinGreen * (100 + noseShading)/100;
+			var noseBlue = skinBlue * (100 + noseShading)/100;
+		} else {		
+			var noseRed = skinRed + (255-skinRed)*noseShading/100;
+			var noseGreen = skinGreen + (255-skinGreen)*noseShading/100;
+			var noseBlue = skinBlue + (255-skinBlue)*noseShading/100;
+		};
+		var nosePinkness = parseInt(document.getElementById('nosePinknessInput').value);
+		if (nosePinkness > 0) {
+			noseGreen *= (100 - nosePinkness)/100;
+			noseBlue *= (100 - nosePinkness)/100;
+		};
+		var noseColor= "#" + ("0" + Math.round(noseRed).toString(16)).substr(-2) + ("0" + Math.round(noseGreen).toString(16)).substr(-2) + ("0" + Math.round(noseBlue).toString(16)).substr(-2);
+		document.getElementById('noseColorInput').value = noseColor;
+		
+		var lipShading = parseInt(document.getElementById('lipShadingInput').value);
+		var targetShade = 255;
+		if (lipShading < 0) {
+			var lipRed = skinRed * (100 + lipShading)/100;
+			var lipGreen = skinGreen * (100 + lipShading)/100;
+			var lipBlue = skinBlue * (100 + lipShading)/100;
+		} else {		
+			var lipRed = skinRed + (255-skinRed)*lipShading/100;
+			var lipGreen = skinGreen + (255-skinGreen)*lipShading/100;
+			var lipBlue = skinBlue + (255-skinBlue)*lipShading/100;
+		};
+		var lipPinkness = parseInt(document.getElementById('lipPinknessInput').value);
+		if (lipPinkness > 0) {
+			lipGreen *= (100 - lipPinkness)/100;
+			lipBlue *= (100 - lipPinkness)/100;
+		};
+		var lipColor= "#" + ("0" + Math.round(lipRed).toString(16)).substr(-2) + ("0" + Math.round(lipGreen).toString(16)).substr(-2) + ("0" + Math.round(lipBlue).toString(16)).substr(-2);
+		document.getElementById('lipColorInput').value = lipColor;
+		
+		var earShading = parseInt(document.getElementById('earShadingInput').value);
+		var targetShade = 255;
+		if (earShading < 0) {
+			var earRed = skinRed * (100 + earShading)/100;
+			var earGreen = skinGreen * (100 + earShading)/100;
+			var earBlue = skinBlue * (100 + earShading)/100;
+		} else {		
+			var earRed = skinRed + (255-skinRed)*earShading/100;
+			var earGreen = skinGreen + (255-skinGreen)*earShading/100;
+			var earBlue = skinBlue + (255-skinBlue)*earShading/100;
+			console.log('ear',earRed,earGreen,earBlue);
+		};
+		var earPinkness = parseInt(document.getElementById('earPinknessInput').value);
+		if (earPinkness > 0) {
+			earGreen *= (100 - earPinkness)/100;
+			earBlue *= (100 - earPinkness)/100;
+		};
+		var earColor= "#" + ("0" + Math.round(earRed).toString(16)).substr(-2) + ("0" + Math.round(earGreen).toString(16)).substr(-2) + ("0" + Math.round(earBlue).toString(16)).substr(-2);
+		document.getElementById('earColorInput').value = earColor;
+		
+		
+		handlers.updateFace();
+	},
+	
 	randomizeFace: function() {
 		for (i in faceData) {
 			var slider = document.getElementById(i+"Input");
 			if (i.indexOf('olor') == -1) {
+				console.log(i);
 				slider.value = ( Math.random() * (parseInt(slider.max) - parseInt(slider.min)) << 0 ) + parseInt(slider.min);
 			} else {
 				var red = Math.random() * 255 << 0;
@@ -72,6 +167,23 @@ var handlers = {
 				slider.value = "#" + ("0" + red.toString(16)).substr(-2) + ("0" + green.toString(16)).substr(-2) + ("0" + blue.toString(16)).substr(-2);
 			};
 		};
+		var coloringSliders = {
+			blackEumelaninInput:0,
+			brownEumelaninInput:0,
+			pinkPheomelaninInput:0,
+			greenKeratinInput:0,
+			noseShadingInput:0,
+			nosePinknessInput:0,
+			lipShadingInput:0,
+			lipPinknessInput:0,
+			earShadingInput:0,
+			earPinknessInput:0,
+			};
+		for (i in coloringSliders) {
+			slider = document.getElementById(i);
+			slider.value = ( Math.random() * (parseInt(slider.max) - parseInt(slider.min)) << 0 ) + parseInt(slider.min);
+		};
+		handlers.updateColoring();
 		handlers.updateFace();
 	},
 	
@@ -101,7 +213,7 @@ var view = {
 			var newPath = document.createElementNS('http://www.w3.org/2000/svg',"path");
 			newPath.setAttribute("fill",face.hairColor);
 			newPath.setAttribute("stroke","#000000");
-			newPath.setAttribute("stroke-width","3");
+			newPath.setAttribute("stroke-width","1");
 			newPath.setAttribute("stroke-linecap","round");
 
 			// start 
@@ -190,7 +302,7 @@ var view = {
 		newPath = document.createElementNS('http://www.w3.org/2000/svg',"path");
 		newPath.setAttribute("fill",'#666666');
 		newPath.setAttribute("stroke","#000000");
-		newPath.setAttribute("stroke-width","3");
+		newPath.setAttribute("stroke-width","1");
 		newPath.setAttribute("stroke-linecap","round");
 
 		// start 
@@ -234,13 +346,13 @@ var view = {
 		newPath = document.createElementNS('http://www.w3.org/2000/svg',"path");
 		newPath.setAttribute("fill",face.earColor);
 		newPath.setAttribute("stroke","#000000");
-		newPath.setAttribute("stroke-width","3");
+		newPath.setAttribute("stroke-width","1");
 		newPath.setAttribute("stroke-linecap","round");
 		
 		var otherNewPath = document.createElementNS('http://www.w3.org/2000/svg',"path");
 		otherNewPath.setAttribute("fill",face.earColor);
 		otherNewPath.setAttribute("stroke","#000000");
-		otherNewPath.setAttribute("stroke-width","3");
+		otherNewPath.setAttribute("stroke-width","1");
 		otherNewPath.setAttribute("stroke-linecap","round");
 
 		// start 
@@ -302,13 +414,13 @@ var view = {
 		newPath = document.createElementNS('http://www.w3.org/2000/svg',"path");
 		newPath.setAttribute("fill",face.skinColor);
 		newPath.setAttribute("stroke","#000000");
-		newPath.setAttribute("stroke-width","3");
+		newPath.setAttribute("stroke-width","1");
 		newPath.setAttribute("stroke-linecap","round");
 		
 		var otherNewPath = document.createElementNS('http://www.w3.org/2000/svg',"path");
 		otherNewPath.setAttribute("fill",face.skinColor);
 		otherNewPath.setAttribute("stroke","#000000");
-		otherNewPath.setAttribute("stroke-width","3");
+		otherNewPath.setAttribute("stroke-width","1");
 		otherNewPath.setAttribute("stroke-linecap","round");
 
 		// start 
@@ -357,7 +469,7 @@ var view = {
 		newPath = document.createElementNS('http://www.w3.org/2000/svg',"path");
 		newPath.setAttribute("fill",face.skinColor);
 		newPath.setAttribute("stroke","#000000");
-		newPath.setAttribute("stroke-width","3");
+		newPath.setAttribute("stroke-width","1");
 
 		x = 75;
 		y = 25 + eyeline;
@@ -496,7 +608,7 @@ var view = {
 			newPath.setAttribute("r",0.75);
 			svg.appendChild(newPath);
 			
-			// Eyelid
+			// Upper Eyelid
 			var newPath = document.createElementNS('http://www.w3.org/2000/svg',"path");
 			newPath.setAttribute("fill",face.skinColor);
 			newPath.setAttribute("stroke",'none');
@@ -507,6 +619,12 @@ var view = {
 			otherNewPath.setAttribute("stroke",'#000000');
 			otherNewPath.setAttribute("stroke-width","1");
 			otherNewPath.setAttribute("stroke-linecap","round");
+
+			var anotherNewPath = document.createElementNS('http://www.w3.org/2000/svg',"path");
+			anotherNewPath.setAttribute("fill",'none');
+			anotherNewPath.setAttribute("stroke",face.hairColor);
+			anotherNewPath.setAttribute("stroke-width",face.browSize);
+			anotherNewPath.setAttribute("stroke-linecap","round");
 			
 			x = cx;
 			y = cy - face.eyeSize;
@@ -525,19 +643,22 @@ var view = {
 			c2y = 0;
 			path += ' c '+c1x+','+c1y+' '+c2x+','+c2y+' '+x+','+y;
 			
+			var sX = cx - face.eyeSize;
 			if (face.eyeDistance + face.eyeSize > 25 && i == 1) {
 				strokePath += ' c '+c1x+','+c1y+' '+c2x+','+c2y+' '+x+','+y;
 			} else {
-				var sX = cx - face.eyeSize;
 				strokePath = 'm '+sX+','+cy
 			}
 			
+			cy -= 10;
+			var browPath = 'm '+sX+','+cy;
+			
 			if (i == 0) {
-				c1y = face.insideEyelidCurve;
-				c2y = face.outsideEyelidCurve;
+				c1y = face.insideEyelidCurve * -1;
+				c2y = face.outsideEyelidCurve * -1;
 			} else {
-				c1y = face.outsideEyelidCurve;
-				c2y = face.insideEyelidCurve;
+				c1y = face.outsideEyelidCurve * -1;
+				c2y = face.insideEyelidCurve * -1;
 			};
 			x = face.eyeSize * 2;
 			y = 0;
@@ -545,6 +666,7 @@ var view = {
 			c2x = 1.5 * face.eyeSize;
 			path += ' c '+c1x+','+c1y+' '+c2x+','+c2y+' '+x+','+y;
 			strokePath += ' c '+c1x+','+c1y+' '+c2x+','+c2y+' '+x+','+y;
+			browPath += ' c '+c1x+','+c1y+' '+c2x+','+c2y+' '+x+','+y;
 			
 			x = -1 * face.eyeSize;
 			y = -1 * face.eyeSize;
@@ -563,7 +685,80 @@ var view = {
 			
 			otherNewPath.setAttributeNS(null,'d',strokePath);
 			svg.appendChild(otherNewPath);
-						
+		
+//			Old Eyebrow	
+// 			anotherNewPath.setAttributeNS(null,'d',browPath);
+// 			svg.appendChild(anotherNewPath);
+			
+			// Lower Eyelid
+			var newPath = document.createElementNS('http://www.w3.org/2000/svg',"path");
+			newPath.setAttribute("fill",face.skinColor);
+			newPath.setAttribute("stroke",'none');
+			newPath.setAttribute("stroke-width","3");
+
+			var otherNewPath = document.createElementNS('http://www.w3.org/2000/svg',"path");
+			otherNewPath.setAttribute("fill",'none');
+			otherNewPath.setAttribute("stroke",'#000000');
+			otherNewPath.setAttribute("stroke-width","1");
+			otherNewPath.setAttribute("stroke-linecap","round");
+			
+			x = cx;
+			y = 25 + eyeline + face.eyeSize;
+			path = 'm '+x+','+y;
+			
+			var strokePath = '';
+			if (face.eyeDistance + face.eyeSize > 25 && i == 1) {
+				strokePath = 'm '+x+','+y;
+			}
+			
+			x = -1 * face.eyeSize;
+			y = -1 * face.eyeSize;
+			c1x = -0.8 * face.eyeSize;
+			c1y = 0;
+			c2x = -0.8 * face.eyeSize;
+			c2y = 0;
+			path += ' c '+c1x+','+c1y+' '+c2x+','+c2y+' '+x+','+y;
+			
+			var sX = cx - face.eyeSize;
+			if (face.eyeDistance + face.eyeSize > 25 && i == 1) {
+				strokePath += ' c '+c1x+','+c1y+' '+c2x+','+c2y+' '+x+','+y;
+			} else {
+				var sY = 25 + eyeline
+				strokePath = 'm '+sX+','+sY
+			}
+			
+			if (i == 0) {
+				c1y = face.lowerEyelidCurve;
+				c2y = face.lowerEyelidCurve;
+			} else {
+				c1y = face.lowerEyelidCurve;
+				c2y = face.lowerEyelidCurve;
+			};
+			x = face.eyeSize * 2;
+			y = 0;
+			c1x = 0.5 * face.eyeSize;
+			c2x = 1.5 * face.eyeSize;
+			path += ' c '+c1x+','+c1y+' '+c2x+','+c2y+' '+x+','+y;
+			strokePath += ' c '+c1x+','+c1y+' '+c2x+','+c2y+' '+x+','+y;
+			
+			x = -1 * face.eyeSize;
+			y = face.eyeSize;
+			c1x = 0;
+			c1y = 0.8 * face.eyeSize;
+			c2x = 0;
+			c2y = 0.8 * face.eyeSize;
+			path += ' c '+c1x+','+c1y+' '+c2x+','+c2y+' '+x+','+y;
+			
+			if (face.eyeDistance + face.eyeSize > 25 && i == 0) {
+				strokePath += ' c '+c1x+','+c1y+' '+c2x+','+c2y+' '+x+','+y;
+			}
+			
+			newPath.setAttributeNS(null,"d",path);
+			svg.appendChild(newPath);
+			
+			otherNewPath.setAttributeNS(null,'d',strokePath);
+			svg.appendChild(otherNewPath);
+									
 		};
 		
 		// Muzzle
@@ -575,7 +770,7 @@ var view = {
 			var newPath = document.createElementNS('http://www.w3.org/2000/svg',"path");
 			newPath.setAttribute("fill",face.noseColor);
 			newPath.setAttribute("stroke",'#000000');
-			newPath.setAttribute("stroke-width","3");
+			newPath.setAttribute("stroke-width","1");
 			
 			// Start under right nose
 			var muzzleWidth = Math.max(face.noseWidth * 2,face.mouthWidth * 1.5);
@@ -761,7 +956,7 @@ var view = {
 			newPath = document.createElementNS('http://www.w3.org/2000/svg',"path");
 			newPath.setAttribute("fill",face.noseColor);
 			newPath.setAttribute("stroke","#000000");
-			newPath.setAttribute("stroke-width","2");
+			newPath.setAttribute("stroke-width","1");
 			newPath.setAttribute("stroke-linecap","round");
 
 			// start at right side
@@ -793,7 +988,7 @@ var view = {
 				newPath.setAttribute("stroke","none");
 			} else {
 				newPath.setAttribute("stroke","#000000");
-				newPath.setAttribute("stroke-width","2");
+				newPath.setAttribute("stroke-width","1");
 				noseStroke = true;
 			};
 
@@ -1066,7 +1261,6 @@ var view = {
 			otherNewPath.setAttribute("stroke-linecap","round");
 			
 			var tuskSize = Math.floor((face.teeth - 1) / 3);
-			console.log(face.teeth % 3);
 		
 			// Start at Right Side
 			x = 100 - face.mouthWidth * 0.8;
@@ -1183,7 +1377,7 @@ var view = {
 			var newPath = document.createElementNS('http://www.w3.org/2000/svg',"path");
 			newPath.setAttribute("fill",face.hairColor);
 			newPath.setAttribute("stroke","#000000");
-			newPath.setAttribute("stroke-width","3");
+			newPath.setAttribute("stroke-width","1");
 			newPath.setAttribute("stroke-linecap","round");
 
 			// start 
