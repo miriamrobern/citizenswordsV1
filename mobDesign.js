@@ -13,7 +13,6 @@ var faceData = {
 	eyeColor: '#000',
 	eyeDistance: 0,
 	eyeSize: 0,
-	pupilSize: 0,
 	browSize: 0,
 	insideEyelidCurve: 0,
 	outsideEyelidCurve: 0,
@@ -646,11 +645,11 @@ var view = {
 			}
 			
 			if (i == 0) {
-				c1y = face.insideEyelidCurve * -1;
-				c2y = face.outsideEyelidCurve * -1;
+				c1y = -1 * face.insideEyelidCurve * face.eyeSize/10;
+				c2y = -1 * face.outsideEyelidCurve * face.eyeSize/10;
 			} else {
-				c1y = face.outsideEyelidCurve * -1;
-				c2y = face.insideEyelidCurve * -1;
+				c1y = -1 * face.outsideEyelidCurve * face.eyeSize/10;
+				c2y = -1 * face.insideEyelidCurve * face.eyeSize/10;
 			};
 			x = face.eyeSize * 2;
 			y = 0;
@@ -715,11 +714,11 @@ var view = {
 			}
 			
 			if (i == 0) {
-				c1y = face.lowerEyelidCurve;
-				c2y = face.lowerEyelidCurve;
+				c1y = face.lowerEyelidCurve * face.eyeSize/10;
+				c2y = face.lowerEyelidCurve * face.eyeSize/10;
 			} else {
-				c1y = face.lowerEyelidCurve;
-				c2y = face.lowerEyelidCurve;
+				c1y = face.lowerEyelidCurve * face.eyeSize/10;
+				c2y = face.lowerEyelidCurve * face.eyeSize/10;
 			};
 			x = face.eyeSize * 2;
 			y = 0;
