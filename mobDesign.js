@@ -583,7 +583,101 @@ var view = {
 		path += 'z';
 		newPath.setAttributeNS(null,"d",path);
 		svg.appendChild(newPath);
+		
+		// Top-of-Head Hair
+		if (face.hairLength > 0) {
+			var newPath = document.createElementNS('http://www.w3.org/2000/svg',"path");
+			newPath.setAttribute("fill",face.hairColor);
+			newPath.setAttribute("stroke","none");
+			
+			otherNewPath = document.createElementNS('http://www.w3.org/2000/svg',"path");
+			otherNewPath.setAttribute('fill','none');
+			otherNewPath.setAttribute("stroke","#000000");
+			otherNewPath.setAttribute("stroke-width","1");
+			otherNewPath.setAttribute("stroke-linecap","round");
 
+			// start 
+			var x = 100;
+			var y = 21;
+			var path = 'm '+x+','+y;
+			
+			var totalY = y;
+			
+			// to right temple
+			var stepX = (25 + face.templeWidth) / face.hairCurl;
+			var stepY = 0;
+			for (i=0;i<face.hairCurl;i++) {
+				x = stepX;
+				y = templeClearance * ( 0.03 * Math.pow((stepX * (i+1)),2) - 0.03 * Math.pow((stepX * (i)),2) ) + (i % 3) - 1;
+				c1x = 25 / face.hairCurl;
+				c1y = 0;
+				c2x = x;
+				c2y = y;
+				path += ' c '+c1x+','+c1y+' '+c2x+','+c2y+' '+x+','+y;
+				totalY += y;
+			}
+			
+			x = 100 + 25 + face.templeWidth;
+			y = totalY;
+			otherPath = 'm '+x+','+y;
+						
+			// to center bottom of bangs
+			stepX = (-25 - face.templeWidth) / face.hairCurl;
+			stepY = -1 * (totalY - 25) / face.hairCurl;
+			for (i=0;i<face.hairCurl;i++) {
+				x = stepX;
+				y = stepY + (i % 3) - 1;
+				c1x = 0;
+				c1y = 0;
+				c2x = x;
+				c2y = y;
+				path += ' c '+c1x+','+c1y+' '+c2x+','+c2y+' '+x+','+y;
+				otherPath += ' c '+c1x+','+c1y+' '+c2x+','+c2y+' '+x+','+y;
+			}
+			
+			if (face.hairCurl % 3 === 1) {
+				path += ' v2';
+				otherPath += ' v2';
+			} else if (face.hairCurl % 3 === 0) {
+				path += ' v-1';
+				otherPath += ' v-1';
+			};
+			
+			// to left bottom of bangs
+			stepX = (-25 - face.templeWidth) / face.hairCurl;
+			stepY = (totalY - 25) / face.hairCurl;
+			for (i=0;i<face.hairCurl;i++) {
+				x = stepX;
+				y = stepY + ((face.hairCurl - i) % 3) - 1;
+				c1x = 0;
+				c1y = 0;
+				c2x = x;
+				c2y = y;
+				path += ' c '+c1x+','+c1y+' '+c2x+','+c2y+' '+x+','+y;
+				otherPath += ' c '+c1x+','+c1y+' '+c2x+','+c2y+' '+x+','+y;
+			}
+
+			stepX = (25 + face.templeWidth) / face.hairCurl;
+			stepY = 0;
+			for (i=0;i<face.hairCurl;i++) {
+				x = stepX;
+				y =  -1 * templeClearance * ( 0.03 * Math.pow((stepX * (face.hairCurl - i)),2) - 0.03 * Math.pow((stepX * (face.hairCurl - i-1)),2) ) + ((i+1) % 3) - 1;
+				c1x = 0;
+				c1y = 0;
+				c2x = x - 25/face.hairCurl;
+				c2y = y;
+				path += ' c '+c1x+','+c1y+' '+c2x+','+c2y+' '+x+','+y;
+			}
+		
+			path += 'z';
+			newPath.setAttributeNS(null,"d",path);
+			svg.appendChild(newPath);
+		
+			otherNewPath.setAttributeNS(null,"d",otherPath);
+			svg.appendChild(otherNewPath);
+		};
+		
+		
 		// Horns
 		if (face.horns > 0) {
 			newPath = document.createElementNS('http://www.w3.org/2000/svg',"path");
@@ -1571,98 +1665,7 @@ var view = {
 		newPath.setAttributeNS(null,"d",path);
 		svg.appendChild(newPath);
 		
-		// Top-of-Head Hair
-		if (face.hairLength > 0) {
-			var newPath = document.createElementNS('http://www.w3.org/2000/svg',"path");
-			newPath.setAttribute("fill",face.hairColor);
-			newPath.setAttribute("stroke","none");
-			
-			otherNewPath = document.createElementNS('http://www.w3.org/2000/svg',"path");
-			otherNewPath.setAttribute('fill','none');
-			otherNewPath.setAttribute("stroke","#000000");
-			otherNewPath.setAttribute("stroke-width","1");
-			otherNewPath.setAttribute("stroke-linecap","round");
 
-			// start 
-			var x = 100;
-			var y = 21;
-			var path = 'm '+x+','+y;
-			
-			var totalY = y;
-			
-			// to right temple
-			var stepX = (25 + face.templeWidth) / face.hairCurl;
-			var stepY = 0;
-			for (i=0;i<face.hairCurl;i++) {
-				x = stepX;
-				y = templeClearance * ( 0.03 * Math.pow((stepX * (i+1)),2) - 0.03 * Math.pow((stepX * (i)),2) ) + (i % 3) - 1;
-				c1x = 25 / face.hairCurl;
-				c1y = 0;
-				c2x = x;
-				c2y = y;
-				path += ' c '+c1x+','+c1y+' '+c2x+','+c2y+' '+x+','+y;
-				totalY += y;
-			}
-			
-			x = 100 + 25 + face.templeWidth;
-			y = totalY;
-			otherPath = 'm '+x+','+y;
-						
-			// to center bottom of bangs
-			stepX = (-25 - face.templeWidth) / face.hairCurl;
-			stepY = -1 * (totalY - 25) / face.hairCurl;
-			for (i=0;i<face.hairCurl;i++) {
-				x = stepX;
-				y = stepY + (i % 3) - 1;
-				c1x = 0;
-				c1y = 0;
-				c2x = x;
-				c2y = y;
-				path += ' c '+c1x+','+c1y+' '+c2x+','+c2y+' '+x+','+y;
-				otherPath += ' c '+c1x+','+c1y+' '+c2x+','+c2y+' '+x+','+y;
-			}
-			
-			if (face.hairCurl % 3 === 1) {
-				path += ' v2';
-				otherPath += ' v2';
-			} else if (face.hairCurl % 3 === 0) {
-				path += ' v-1';
-				otherPath += ' v-1';
-			};
-			
-			// to left bottom of bangs
-			stepX = (-25 - face.templeWidth) / face.hairCurl;
-			stepY = (totalY - 25) / face.hairCurl;
-			for (i=0;i<face.hairCurl;i++) {
-				x = stepX;
-				y = stepY + ((face.hairCurl - i) % 3) - 1;
-				c1x = 0;
-				c1y = 0;
-				c2x = x;
-				c2y = y;
-				path += ' c '+c1x+','+c1y+' '+c2x+','+c2y+' '+x+','+y;
-				otherPath += ' c '+c1x+','+c1y+' '+c2x+','+c2y+' '+x+','+y;
-			}
-
-			stepX = (25 + face.templeWidth) / face.hairCurl;
-			stepY = 0;
-			for (i=0;i<face.hairCurl;i++) {
-				x = stepX;
-				y =  -1 * templeClearance * ( 0.03 * Math.pow((stepX * (face.hairCurl - i)),2) - 0.03 * Math.pow((stepX * (face.hairCurl - i-1)),2) ) + ((i+1) % 3) - 1;
-				c1x = 0;
-				c1y = 0;
-				c2x = x - 25/face.hairCurl;
-				c2y = y;
-				path += ' c '+c1x+','+c1y+' '+c2x+','+c2y+' '+x+','+y;
-			}
-		
-			path += 'z';
-			newPath.setAttributeNS(null,"d",path);
-			svg.appendChild(newPath);
-		
-			otherNewPath.setAttributeNS(null,"d",otherPath);
-			svg.appendChild(otherNewPath);
-		};
 
 
 
