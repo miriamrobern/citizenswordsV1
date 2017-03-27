@@ -34,17 +34,14 @@ var faceData = {
 	leftTusk: 0,
 	rightTusk: 0,
 	earColor: '#000',
-	earPoint: 0,
-	earPosition: 0,
 	earSize: 0,
+	earDip: 0,
+	earTilt: 0,
+	earWidth: 0,
+	earLobe: 0,
 	hairColor: 0,
 	hairLength: 0,
-	hairHeight: 0,
-	bangsLength: 0,
-	bangsCurve: 0,
-	bangsWidth: 0,
 	hairCurl: 0,
-	forelocks: 0,
 	
 };
 
@@ -222,17 +219,20 @@ var view = {
 			newPath.setAttribute("stroke","#000000");
 			newPath.setAttribute("stroke-width","1");
 			newPath.setAttribute("stroke-linecap","round");
+			
+			var templeClearance = faceData.templePosition / -30 + 7 / 6;
 
 			// start 
 			var x = 100;
 			var y = 20;
 			var path = 'm '+x+','+y;
-						
-			var stepX = (25 + 2 * face.templeWidth) / face.hairCurl;
+			
+			// to above temple	
+			var stepX = (25 + face.templeWidth) / face.hairCurl;
 			var stepY = 0;
 			for (i=0;i<face.hairCurl;i++) {
 				x = stepX;
-				y = (10 - face.hairHeight)/10 * ( 0.03 * Math.pow((stepX * (i+1)),2) - 0.03 * Math.pow((stepX * (i)),2) ) + (i % 3) - 1;
+				y = templeClearance * ( 0.03 * Math.pow((stepX * (i+1)),2) - 0.03 * Math.pow((stepX * (i)),2) ) + (i % 3) - 1;
 				c1x = 25 / face.hairCurl;
 				c1y = 0;
 				c2x = x;
@@ -240,6 +240,7 @@ var view = {
 				path += ' c '+c1x+','+c1y+' '+c2x+','+c2y+' '+x+','+y;
 			}
 			
+			// to bottom left
 			stepX = 0.2 * face.hairLength / (face.hairCurl * 3);
 			stepY = (face.hairLength + eyeline) / (face.hairCurl * 3);
 			for (i=0;i<face.hairCurl*3;i++) {
@@ -252,7 +253,8 @@ var view = {
 				path += ' c '+c1x+','+c1y+' '+c2x+','+c2y+' '+x+','+y;
 			}
 			
-			stepX = (-25 - 2 * face.templeWidth - 0.2 * face.hairLength) / face.hairCurl;
+			// to center bottom
+			stepX = (-25 - face.templeWidth - 0.2 * face.hairLength) / face.hairCurl;
 			stepY = 0 / face.hairCurl;
 			for (i=0;i<face.hairCurl;i++) {
 				x = stepX;
@@ -264,7 +266,14 @@ var view = {
 				path += ' c '+c1x+','+c1y+' '+c2x+','+c2y+' '+x+','+y;
 			}
 			
-			stepX = (-25 - 2 * face.templeWidth - 0.2 * face.hairLength) / face.hairCurl;
+			if (face.hairCurl % 3 === 1) {
+				path += ' v2';
+			} else if (face.hairCurl % 3 === 0) {
+				path += ' v-1';
+			};
+			
+			// to bottom right
+			stepX = (-25 - face.templeWidth - 0.2 * face.hairLength) / face.hairCurl;
 			stepY = 0 / face.hairCurl;
 			for (i=0;i<face.hairCurl;i++) {
 				x = stepX;
@@ -276,6 +285,7 @@ var view = {
 				path += ' c '+c1x+','+c1y+' '+c2x+','+c2y+' '+x+','+y;
 			}
 			
+			// to above right temple
 			stepX = 0.2 * face.hairLength / (face.hairCurl * 3);
 			stepY = (face.hairLength + eyeline) / (face.hairCurl * -3);
 			for (i=0;i<face.hairCurl*3;i++) {
@@ -288,11 +298,12 @@ var view = {
 				path += ' c '+c1x+','+c1y+' '+c2x+','+c2y+' '+x+','+y;
 			}
 
-			stepX = (25 + 2 * face.templeWidth) / face.hairCurl;
+			// to center top
+			stepX = (25 + face.templeWidth) / face.hairCurl;
 			stepY = 0;
 			for (i=0;i<face.hairCurl;i++) {
 				x = stepX;
-				y = (10 - face.hairHeight)/10 * -1 * ( 0.03 * Math.pow((stepX * (face.hairCurl - i)),2) - 0.03 * Math.pow((stepX * (face.hairCurl - i-1)),2) ) + ((i+1) % 3) - 1;
+				y =  -1 * templeClearance * ( 0.03 * Math.pow((stepX * (face.hairCurl - i)),2) - 0.03 * Math.pow((stepX * (face.hairCurl - i-1)),2) ) + ((i+1) % 3) - 1;
 				c1x = 0;
 				c1y = 0;
 				c2x = x - 25/face.hairCurl;
@@ -363,19 +374,45 @@ var view = {
 		otherNewPath.setAttribute("stroke-linecap","round");
 
 		// start 
-		x = 75;
-		y = 25 + eyeline - face.earSize - face.earPosition;
+		x = 80;
+		y = 25 + eyeline;
 		path = 'm '+x+','+y;
 		
-		x = 125;
+		x = 120;
 		var otherPath = 'm '+x+','+y;
 
-		// to top of ear
-		x = -2 * face.earSize - face.earPoint;
-		y = -3 * face.earSize;
+		// to tip of ear
+		x = 0 - face.earSize;
+		y = face.earDip;
+		c1x = 0 - face.earSize;
+		c1y = 0 - face.earSize;
+		c2x = x;
+		c2y = y;
+		path += ' c '+c1x+','+c1y+' '+c2x+','+c2y+' '+x+','+y;
+		x *= -1;
+		c1x *= -1;
+		c2x *= -1;
+		otherPath += ' c '+c1x+','+c1y+' '+c2x+','+c2y+' '+x+','+y;
+
+		// to outside of ear
+		x = face.earSize * face.earWidth / -100;
+		y = 0 - face.earDip;
 		c1x = 0;
 		c1y = 0;
-		c2x = x+(20-face.earPoint);
+		c2x = x - face.earTilt;
+		c2y = y-face.earSize/3;
+		path += ' c '+c1x+','+c1y+' '+c2x+','+c2y+' '+x+','+y;
+		x *= -1;
+		c1x *= -1;
+		c2x *= -1;
+		otherPath += ' c '+c1x+','+c1y+' '+c2x+','+c2y+' '+x+','+y;
+
+		// to lobe of ear
+		x = (face.earSize - face.earSize * face.earWidth / -100) / 2;
+		y = face.earLobe;
+		c1x = face.earTilt;
+		c1y = face.earSize/3;
+		c2x = x-face.earLobe/3;
 		c2y = y;
 		path += ' c '+c1x+','+c1y+' '+c2x+','+c2y+' '+x+','+y;
 		x *= -1;
@@ -383,23 +420,10 @@ var view = {
 		c2x *= -1;
 		otherPath += ' c '+c1x+','+c1y+' '+c2x+','+c2y+' '+x+','+y;
 
-		// to bottom of ear
-		x = face.earPoint/10 * face.earSize + face.earPoint;
-		y = 7 * face.earSize;
-		c1x = face.earPoint/2-10;
-		c1y = 0;
-		c2x = x-10+face.earPoint/2;
-		c2y = y;
-		path += ' c '+c1x+','+c1y+' '+c2x+','+c2y+' '+x+','+y;
-		x *= -1;
-		c1x *= -1;
-		c2x *= -1;
-		otherPath += ' c '+c1x+','+c1y+' '+c2x+','+c2y+' '+x+','+y;
-
-		// to skull
-		x = 2 * face.earSize - face.earPoint/10 * face.earSize;
-		y = -3 * face.earSize;
-		c1x = face.earSize;
+		// to base of ear
+		x = (face.earSize - face.earSize * face.earWidth / -100) / 2;
+		y = 0 - face.earLobe;
+		c1x = face.earLobe/3;
 		c1y = 0;
 		c2x = x;
 		c2y = y;
@@ -408,7 +432,7 @@ var view = {
 		c1x *= -1;
 		c2x *= -1;
 		otherPath += ' c '+c1x+','+c1y+' '+c2x+','+c2y+' '+x+','+y;
-	
+		
 		path += 'z';
 		newPath.setAttributeNS(null,"d",path);
 		svg.appendChild(newPath);
@@ -431,19 +455,19 @@ var view = {
 		otherNewPath.setAttribute("stroke-linecap","round");
 
 		// start 
-		x = 75;
-		y = 25 + eyeline - face.earSize - face.earPosition;
+		x = 80;
+		y = 25 + eyeline;
 		path = 'm '+x+','+y;
 		
-		x = 125;
-		otherPath = 'm '+x+','+y;
+		x = 120;
+		var otherPath = 'm '+x+','+y;
 
-		// to top of ear
-		x = -2 * face.earSize - face.earPoint;
-		y = -3 * face.earSize;
-		c1x = 0;
-		c1y = 0;
-		c2x = x + (20-face.earPoint);
+		// to tip of ear
+		x = 0 - face.earSize;
+		y = face.earDip;
+		c1x = 0 - face.earSize;
+		c1y = 0 - face.earSize;
+		c2x = x;
 		c2y = y;
 		path += ' c '+c1x+','+c1y+' '+c2x+','+c2y+' '+x+','+y;
 		x *= -1;
@@ -452,12 +476,12 @@ var view = {
 		otherPath += ' c '+c1x+','+c1y+' '+c2x+','+c2y+' '+x+','+y;
 
 		// back to skull
-		x = 2 * face.earSize + face.earPoint;
-		y = face.earSize * 5;
-		c1x = 20 - face.earPoint;
-		c1y = face.earSize;
-		c2x = x;
-		c2y = y;
+		x = face.earSize - 5;
+		y = 0 - face.earDip + 5;
+		c1x = 0;
+		c1y = 0;
+		c2x = x - face.earSize;
+		c2y = y - face.earSize;
 		path += ' c '+c1x+','+c1y+' '+c2x+','+c2y+' '+x+','+y;
 		x *= -1;
 		c1x *= -1;
@@ -1003,7 +1027,7 @@ var view = {
 
 			// start at right side
 			x = 100 - face.noseWidth;
-			y = 25 + eyeline + face.noseHeight * face.chinHeight / 100;
+			y = 25 + eyeline + face.noseHeight * face.chinHeight / 100 + face.nostrilHeight * 0.5;
 			y -= face.nostrilHeight * 2;
 			path = 'm '+x+','+y;
 			
@@ -1422,48 +1446,46 @@ var view = {
 		newPath.setAttributeNS(null,"d",path);
 		svg.appendChild(newPath);
 
-		// Bangs
-		if (face.bangsLength > 0) {
+		// Top-of-Head Hair
+		if (face.hairLength > 0) {
 			var newPath = document.createElementNS('http://www.w3.org/2000/svg',"path");
 			newPath.setAttribute("fill",face.hairColor);
-			newPath.setAttribute("stroke","#000000");
-			newPath.setAttribute("stroke-width","1");
-			newPath.setAttribute("stroke-linecap","round");
+			newPath.setAttribute("stroke","none");
+			
+			otherNewPath = document.createElementNS('http://www.w3.org/2000/svg',"path");
+			otherNewPath.setAttribute('fill','none');
+			otherNewPath.setAttribute("stroke","#000000");
+			otherNewPath.setAttribute("stroke-width","1");
+			otherNewPath.setAttribute("stroke-linecap","round");
 
 			// start 
 			var x = 100;
-			var y = 20;
+			var y = 21;
 			var path = 'm '+x+','+y;
 			
+			var totalY = y;
+			
 			// to right temple
-			var stepX = face.bangsWidth/100 * (25 + 2 * face.templeWidth) / face.hairCurl;
+			var stepX = (25 + face.templeWidth) / face.hairCurl;
 			var stepY = 0;
 			for (i=0;i<face.hairCurl;i++) {
 				x = stepX;
-				y = (10 - face.hairHeight)/10 * ( 0.03 * Math.pow((stepX * (i+1)),2) - 0.03 * Math.pow((stepX * (i)),2) ) + (i % 3) - 1;
-				c1x =  face.bangsWidth/100 * 25 / face.hairCurl;
+				y = templeClearance * ( 0.03 * Math.pow((stepX * (i+1)),2) - 0.03 * Math.pow((stepX * (i)),2) ) + (i % 3) - 1;
+				c1x = 25 / face.hairCurl;
 				c1y = 0;
 				c2x = x;
 				c2y = y;
 				path += ' c '+c1x+','+c1y+' '+c2x+','+c2y+' '+x+','+y;
+				totalY += y;
 			}
 			
-			// to right bottom of bangs
-			stepX = 0 / face.hairCurl;
-			stepY = (eyeline * face.bangsLength / 100) / face.hairCurl;
-			for (i=0;i<face.hairCurl;i++) {
-				x = stepX + (i % 3) - 1;
-				y = stepY;
-				c1x = 0;
-				c1y = 0;
-				c2x = x;
-				c2y = y;
-				path += ' c '+c1x+','+c1y+' '+c2x+','+c2y+' '+x+','+y;
-			}
-			
+			x = 100 + 25 + face.templeWidth;
+			y = totalY;
+			otherPath = 'm '+x+','+y;
+						
 			// to center bottom of bangs
-			stepX = face.bangsWidth/100 * (-25 - 2 * face.templeWidth) / face.hairCurl;
-			stepY = face.bangsCurve / face.hairCurl;
+			stepX = (-25 - face.templeWidth) / face.hairCurl;
+			stepY = -1 * (totalY - 25) / face.hairCurl;
 			for (i=0;i<face.hairCurl;i++) {
 				x = stepX;
 				y = stepY + (i % 3) - 1;
@@ -1472,11 +1494,20 @@ var view = {
 				c2x = x;
 				c2y = y;
 				path += ' c '+c1x+','+c1y+' '+c2x+','+c2y+' '+x+','+y;
+				otherPath += ' c '+c1x+','+c1y+' '+c2x+','+c2y+' '+x+','+y;
 			}
 			
+			if (face.hairCurl % 3 === 1) {
+				path += ' v2';
+				otherPath += ' v2';
+			} else if (face.hairCurl % 3 === 0) {
+				path += ' v-1';
+				otherPath += ' v-1';
+			};
+			
 			// to left bottom of bangs
-			stepX = face.bangsWidth/100 * (-25 - 2 * face.templeWidth) / face.hairCurl;
-			stepY = -1 * face.bangsCurve / face.hairCurl;
+			stepX = (-25 - face.templeWidth) / face.hairCurl;
+			stepY = (totalY - 25) / face.hairCurl;
 			for (i=0;i<face.hairCurl;i++) {
 				x = stepX;
 				y = stepY + ((face.hairCurl - i) % 3) - 1;
@@ -1485,30 +1516,17 @@ var view = {
 				c2x = x;
 				c2y = y;
 				path += ' c '+c1x+','+c1y+' '+c2x+','+c2y+' '+x+','+y;
+				otherPath += ' c '+c1x+','+c1y+' '+c2x+','+c2y+' '+x+','+y;
 			}
-			
-			// to left temple
-			stepX = 0 / face.hairCurl;
-			stepY = (eyeline * face.bangsLength / 100) / face.hairCurl * -1;
-			for (i=0;i<face.hairCurl;i++) {
-				x = stepX + ((i+2) % 3) - 1;
-				y = stepY;
-				c1x = 0;
-				c1y = 0;
-				c2x = x;
-				c2y = y;
-				path += ' c '+c1x+','+c1y+' '+c2x+','+c2y+' '+x+','+y;
-			}
-			
-			// back to top
-			stepX = face.bangsWidth/100 * (25 + 2 * face.templeWidth) / face.hairCurl;
+
+			stepX = (25 + face.templeWidth) / face.hairCurl;
 			stepY = 0;
 			for (i=0;i<face.hairCurl;i++) {
 				x = stepX;
-				y = (10 - face.hairHeight)/10 * -1 * ( 0.03 * Math.pow((stepX * (face.hairCurl - i)),2) - 0.03 * Math.pow((stepX * (face.hairCurl - i-1)),2) ) + ((i+1) % 3) - 1;
+				y =  -1 * templeClearance * ( 0.03 * Math.pow((stepX * (face.hairCurl - i)),2) - 0.03 * Math.pow((stepX * (face.hairCurl - i-1)),2) ) + ((i+1) % 3) - 1;
 				c1x = 0;
 				c1y = 0;
-				c2x = x -  face.bangsWidth/100 * 25/face.hairCurl;
+				c2x = x - 25/face.hairCurl;
 				c2y = y;
 				path += ' c '+c1x+','+c1y+' '+c2x+','+c2y+' '+x+','+y;
 			}
@@ -1516,6 +1534,9 @@ var view = {
 			path += 'z';
 			newPath.setAttributeNS(null,"d",path);
 			svg.appendChild(newPath);
+		
+			otherNewPath.setAttributeNS(null,"d",otherPath);
+			svg.appendChild(otherNewPath);
 		};
 
 

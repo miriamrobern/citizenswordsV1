@@ -40,7 +40,7 @@
 				<p><input id= 'templePositionInput' type = 'range' min='5' max='20' value = '10' onchange = 'handlers.updateFace()' />Temple Position</p>
 				<p><input id= 'templeWidthInput' type = 'range' min='0' max='5' value = '3' onchange = 'handlers.updateFace()' />Temple Width</p>
 				<p><input id= 'templeHeightInput' type = 'range' min='2' max='10' value = '3' onchange = 'handlers.updateFace()' />Temple Height</p>
-				<p><input id= 'cheekbonePositionInput' type = 'range' min='5' max='30' value = '10' onchange = 'handlers.updateFace()' />Cheekbone Position</p>
+				<p><input id= 'cheekbonePositionInput' type = 'range' min='5' max='20' value = '10' onchange = 'handlers.updateFace()' />Cheekbone Position</p>
 				<p><input id= 'cheekboneWidthInput' type = 'range' min='0' max='7' value = '5' onchange = 'handlers.updateFace()' />Cheekbone Width</p>
 				<p><input id= 'cheekboneHeightInput' type = 'range' min='2' max='10' value = '5' onchange = 'handlers.updateFace()' />Cheekbone Height</p>
 				<p><input id= 'chinHeightInput' type = 'range' min='40' max='66' value = '50' onchange = 'handlers.updateFace()' />Chin Height</p>
@@ -57,9 +57,11 @@
 				<p><input id= 'browSizeInput' type = 'range' min='0' max='5' step='0.25' value = '7.5' onchange = 'handlers.updateFace()' />Brow Size</p>
 				<p><input id= 'leftBrowTiltInput' type = 'range' min='-4' max='5' step='0.25' value = '7.5' onchange = 'handlers.updateFace()' />Left Brow Tilt</p>
 				<p><input id= 'rightBrowTiltInput' type = 'range' min='-4' max='5' step='0.25' value = '7.5' onchange = 'handlers.updateFace()' />Right Brow Tilt</p>
+<!-- 
 			</div>
 		
 			<div class='controlsSectionDiv'>
+ -->
 				<h3>Nose</h3>
 				<p><input id= 'noseHeightInput' type = 'range' min='20' max='90' value = '50' onchange = 'handlers.updateFace()' />Nose Height</p>
 				<p><input id= 'noseSizeInput' type = 'range' min='1' max='5' value = '2' onchange = 'handlers.updateFace()' />Nose Size</p>
@@ -76,29 +78,26 @@
 				<p><input id= 'mouthOpenInput' type = 'range' min='0' max='5' value = '7.5' onchange = 'handlers.updateFace()' />Open</p>
 				<p><input id= 'teethInput' type = 'range' min='0' max='4' value = '7.5' onchange = 'handlers.updateFace()' />Teeth</p>
 				<p><input id= 'leftTuskInput' type = 'range' min='-2' max='2' value = '7.5' onchange = 'handlers.updateFace()' />Left Tusk</p>
-				<p><input id= 'rightTuskInput' type = 'range' min='-2' max='2' value = '7.5' onchange = 'handlers.updateFace()' />Right Tusk</p>
-		
+				<p><input id= 'rightTuskInput' type = 'range' min='-2' max='2' value = '7.5' onchange = 'handlers.updateFace()' />Right Tusk</p>	
+<!-- 
 			</div>
-		
+			
 			<div class='controlsSectionDiv'>
+ -->
 				<h3>Ears</h3>
-				<p><input id= 'earPointInput' type = 'range' min='0' max='20' value = '5' onchange = 'handlers.updateFace()' />Point</p>
-				<p><input id= 'earPositionInput' type = 'range' min='-7' max='20' value = '0' onchange = 'handlers.updateFace()' />Ears Position</p>
-				<p><input id= 'earSizeInput' type = 'range' min='2' max='6' step = '0.5' value = '5' onchange = 'handlers.updateFace()' />Ears Size</p>
-		
+				<p><input id= 'earSizeInput' type = 'range' min='4' max='20' value = '0' onchange = 'handlers.updateFace()' />Ear Size</p>
+				<p><input id= 'earDipInput' type = 'range' min='-20' max='-2' step = '0.5' value = '5' onchange = 'handlers.updateFace()' />Ear Dip</p>
+				<p><input id= 'earTiltInput' type = 'range' min='-10' max='10' step = '0.5' value = '5' onchange = 'handlers.updateFace()' />Ear Tilt</p>
+				<p><input id= 'earWidthInput' type = 'range' min='-50' max='50' step = '0.5' value = '5' onchange = 'handlers.updateFace()' />Ear Width</p>
+				<p><input id= 'earLobeInput' type = 'range' min='4' max='15' step = '0.5' value = '5' onchange = 'handlers.updateFace()' />Lobe</p>	
 			</div>
 		
 			<div class='controlsSectionDiv'>
 				<h3>Hair</h3>
 				<p><input id= 'hairCurlInput' type = 'range' min='1' max='20' step = '0.5' value = '5' onchange = 'handlers.updateFace()' />Hair Curl</p>
 				<p><input id= 'hairLengthInput' type = 'range' min='0' max='100' value = '50' onchange = 'handlers.updateFace()' />Hair Length</p>
-				<p><input id= 'hairHeightInput' type = 'range' min='0' max='10' value = '50' onchange = 'handlers.updateFace()' />Hair Height</p>
-				<p><input id= 'bangsLengthInput' type = 'range' min='0' max='100' value = '0' onchange = 'handlers.updateFace()' />Bangs Length</p>
-				<p><input id= 'bangsCurveInput' type = 'range' min='-10' max='10' value = '0' onchange = 'handlers.updateFace()' />Bangs Curve</p>
-				<p><input id= 'bangsWidthInput' type = 'range' min='10' max='100' value = '0' onchange = 'handlers.updateFace()' />BangsWidth</p>
-				<p><input id= 'forelocksInput' type = 'range' min='10' max='100' value = '0' onchange = 'handlers.updateFace()' />Forelocks</p>
-		
 			</div>
+		
 		
 		
 		</div>
