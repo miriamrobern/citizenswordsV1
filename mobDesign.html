@@ -24,13 +24,13 @@
 			<p><input id='hairColorInput' type = 'color' value = '#ffffff' onchange = 'handlers.updateFace()' />Hair Color</p>
 			<p><input disabled hidden id='noseColorInput' type = 'color' value = '#00FF00' onchange = 'handlers.updateFace()' /></p>
 			<p><input id= 'noseShadingInput' type = 'range' min='-90' max='90' value = '0' onchange = 'handlers.updateColoring()' />Nose Shading</p>
-			<p><input id= 'nosePinknessInput' type = 'range' min='-90' max='90' value = '0' onchange = 'handlers.updateColoring()' />Nose Pinkness</p>
+			<p><input id= 'nosePinknessInput' type = 'range' min='-50' max='50' value = '0' onchange = 'handlers.updateColoring()' />Nose Pinkness</p>
 			<p><input disabled hidden id='lipColorInput' type = 'color' value = '#00FF00' onchange = 'handlers.updateFace()' /></p>
 			<p><input id= 'lipShadingInput' type = 'range' min='-90' max='90' value = '0' onchange = 'handlers.updateColoring()' />Lip Shading</p>
-			<p><input id= 'lipPinknessInput' type = 'range' min='-90' max='90' value = '0' onchange = 'handlers.updateColoring()' />Lip Pinkness</p>
+			<p><input id= 'lipPinknessInput' type = 'range' min='-50' max='50' value = '0' onchange = 'handlers.updateColoring()' />Lip Pinkness</p>
 			<p><input disabled hidden id='earColorInput' type = 'color' value = '#00FF00' onchange = 'handlers.updateFace()' /></p>
 			<p><input id= 'earShadingInput' type = 'range' min='-90' max='90' value = '0' onchange = 'handlers.updateColoring()' />Inner Ear Shading</p>
-			<p><input id= 'earPinknessInput' type = 'range' min='-90' max='90' value = '0' onchange = 'handlers.updateColoring()' />Inner Ear Pinkness</p>
+			<p><input id= 'earPinknessInput' type = 'range' min='-50' max='50' value = '0' onchange = 'handlers.updateColoring()' />Inner Ear Pinkness</p>
 		</div>
 	
 		<div id='controlsDiv'>
@@ -94,8 +94,15 @@
 		
 			<div class='controlsSectionDiv'>
 				<h3>Hair</h3>
-				<p><input id= 'hairCurlInput' type = 'range' min='1' max='20' step = '0.5' value = '5' onchange = 'handlers.updateFace()' />Hair Curl</p>
 				<p><input id= 'hairLengthInput' type = 'range' min='0' max='100' value = '50' onchange = 'handlers.updateFace()' />Hair Length</p>
+				<p><input id= 'hairCurlInput' type = 'range' min='1' max='20' step = '0.5' value = '5' onchange = 'handlers.updateFace()' />Hair Curl</p>
+				<p><input id= 'hairBangsInput' type = 'range' min='2' max='8' value = '50' onchange = 'handlers.updateFace()' />Bangs</p>
+				<p><input id= 'hairBangsLengthInput' type = 'range' min='-10' max='30' value = '50' onchange = 'handlers.updateFace()' />Bangs Length</p>
+				<p><input id= 'hairPartInput' type = 'range' min='-10' max='10' value = '5' onchange = 'handlers.updateFace()' />Hair Part</p>
+				<p><input id= 'hairSweepInput' type = 'range' min='0' max='11' value = '50' onchange = 'handlers.updateFace()' />Bangs Sweep</p>
+				<p><input id= 'topHairHeightInput' type = 'range' min='0' max='11' value = '50' onchange = 'handlers.updateFace()' />Top Hair Height</p>
+				<p><input id= 'topHairBaseInput' type = 'range' min='2' max='25' value = '50' onchange = 'handlers.updateFace()' />Top Hair Base</p>
+				<p><input id= 'topHairWidthInput' type = 'range' min='0' max='30' value = '50' onchange = 'handlers.updateFace()' />Top Hair Width</p>
 				<p><input id= 'hornsInput' type = 'range' min='-10' max='10' value = '0' onchange = 'handlers.updateFace()' />Horns</p>
 			</div>
 		
