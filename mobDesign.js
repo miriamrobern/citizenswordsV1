@@ -765,6 +765,12 @@ var view = {
 				path += ' c '+c1x+','+c1y+' '+c2x+','+c2y+' '+x+','+y;
 				otherPath += ' c '+c1x+','+c1y+' '+c2x+','+c2y+' '+x+','+y;
 			}
+			
+			if (face.hairCurl % 3 === 1) {
+				path += ' v2';
+			} else if (face.hairCurl % 3 === 0) {
+				path += ' v-1';
+			};
 						
 			// back to bottom right
 			stepX = ( face.topHairBase * -1 ) / face.hairCurl;
@@ -1639,7 +1645,7 @@ var view = {
 		};
 		
 		// Tusks
-		if (face.leftTusk > 0 || face.rightTusk > 0) {
+		if ((face.teeth > 0 && face.leftTusk > 0) || (face.teeth > 0 && face.rightTusk > 0)) {
 			newPath = document.createElementNS('http://www.w3.org/2000/svg',"path");
 			newPath.setAttribute('fill','#f5f7bb');
 			newPath.setAttribute("stroke","#000000");
@@ -1656,8 +1662,7 @@ var view = {
 		
 			// Start at Right Side
 			x = 100 - face.mouthWidth * 0.8;
-			y = 25 + eyeline - face.smile + (100 + face.noseHeight)/2 * face.chinHeight / 100;
-			if (face.smile > 0) {y += face.smile * 0.8};
+			y = 25.5 + eyeline - face.smile * 0.6 + (100 + face.noseHeight)/2 * face.chinHeight / 100;
 			path = 'm '+x+','+y;
 			
 			x = 100 + face.mouthWidth * 0.8;
@@ -1681,7 +1686,7 @@ var view = {
 
 			// blunted end
 			x = 2;
-			y = 0;
+			y = -1;
 			c1x = 0;
 			c1y = -2;
 			c2x = x;
@@ -1696,18 +1701,18 @@ var view = {
 
 			// to bottom of tusk
 			x = tuskSize + face.mouthWidth * 0.4;
-			y = 5 * tuskSize + (face.smile + face.mouthOpen) * 0.4;
+			y = 5 * tuskSize + (face.smile + face.mouthOpen) * 0.6;
 			c1x = 0;
 			c1y = tuskSize * 2;
 			c2x = x;
 			c2y = y;
-			if (face.leftTusk === 2) {x *= 0.5;c1x *= 0.5;c2x *= 0.5;y *= 0.5;c1y *= 0.5;c2y *= 0.5;};
+			if (face.leftTusk === 2) {x *= 0.5;c1x *= 0.5;c2x *= 0.5;y *= 0.6;c1y *= 0.5;c2y *= 0.5;};
 			path += ' c '+c1x+','+c1y+' '+c2x+','+c2y+' '+x+','+y;
-			if (face.leftTusk === 2) {x *= 2;c1x *= 2;c2x *= 2;y *= 2;c1y *= 2;c2y *= 2;};
+			if (face.leftTusk === 2) {x *= 2;c1x *= 2;c2x *= 2;y /= 0.6;c1y *= 2;c2y *= 2;};
 			x *= -1;
 			c1x *= -1;
 			c2x *= -1;
-			if (face.rightTusk === 2) {x *= 0.5;c1x *= 0.5;c2x *= 0.5;y *= 0.5;c1y *= 0.5;c2y *= 0.5;};
+			if (face.rightTusk === 2) {x *= 0.5;c1x *= 0.5;c2x *= 0.5;y *= 0.6;c1y *= 0.5;c2y *= 0.5;};
 			otherPath += ' c '+c1x+','+c1y+' '+c2x+','+c2y+' '+x+','+y;
 		
 			newPath.setAttributeNS(null,"d",path);
