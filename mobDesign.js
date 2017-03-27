@@ -42,6 +42,7 @@ var faceData = {
 	hairColor: 0,
 	hairLength: 0,
 	hairCurl: 0,
+	horns: 0,
 	
 };
 
@@ -582,6 +583,130 @@ var view = {
 		path += 'z';
 		newPath.setAttributeNS(null,"d",path);
 		svg.appendChild(newPath);
+
+		// Horns
+		if (face.horns > 0) {
+			newPath = document.createElementNS('http://www.w3.org/2000/svg',"path");
+			newPath.setAttribute("fill",face.skinColor);
+			newPath.setAttribute("stroke","#000000");
+			newPath.setAttribute("stroke-width","1");
+			newPath.setAttribute("stroke-linecap","round");
+			
+			otherNewPath = document.createElementNS('http://www.w3.org/2000/svg',"path");
+			otherNewPath.setAttribute("fill",face.skinColor);
+			otherNewPath.setAttribute("stroke","#000000");
+			otherNewPath.setAttribute("stroke-width","1");
+			otherNewPath.setAttribute("stroke-linecap","round");
+
+			// start above top of horn
+			x = 85;
+			y = 37 - face.templePosition * 0.5;
+			path = 'm '+x+','+y;
+			
+			x = 115;
+			otherPath = 'm '+x+','+y;
+
+			// out beyond horn base
+			x = -8;
+			y = 4 + 0.5 * face.horns;
+			c1x = -8;
+			c1y = 0;
+			c2x = x;
+			c2y = y;
+			path += ' c '+c1x+','+c1y+' '+c2x+','+c2y+' '+x+','+y;
+			x *= -1;
+			c1x *= -1;
+			c2x *= -1;
+			otherPath += ' c '+c1x+','+c1y+' '+c2x+','+c2y+' '+x+','+y;
+
+			// to below horn base
+			x = 8;
+			y = 4 + 0.5 * face.horns;
+			c1x = 0;
+			c1y = 0;
+			c2x = x-8;
+			c2y = y;
+			path += ' c '+c1x+','+c1y+' '+c2x+','+c2y+' '+x+','+y;
+			x *= -1;
+			c1x *= -1;
+			c2x *= -1;
+			otherPath += ' c '+c1x+','+c1y+' '+c2x+','+c2y+' '+x+','+y;
+		
+			newPath.setAttributeNS(null,"d",path);
+			svg.appendChild(newPath);
+		
+			otherNewPath.setAttributeNS(null,"d",otherPath);
+			svg.appendChild(otherNewPath);
+			
+			
+			newPath = document.createElementNS('http://www.w3.org/2000/svg',"path");
+			newPath.setAttribute("fill",'#eeeebb');
+			newPath.setAttribute("stroke","#000000");
+			newPath.setAttribute("stroke-width","1");
+			newPath.setAttribute("stroke-linecap","round");
+			
+			otherNewPath = document.createElementNS('http://www.w3.org/2000/svg',"path");
+			otherNewPath.setAttribute("fill",'#eeeebb');
+			otherNewPath.setAttribute("stroke","#000000");
+			otherNewPath.setAttribute("stroke-width","1");
+			otherNewPath.setAttribute("stroke-linecap","round");
+
+			// start at top
+			x = 80;
+			y = 40 - face.templePosition * 0.5;
+			path = 'm '+x+','+y;
+			
+			x = 120;
+			otherPath = 'm '+x+','+y;
+
+			// to tip
+			x = -5 * face.horns;
+			y = -2 * face.horns;
+			c1x = 0 - face.horns;
+			c1y = 0;
+			c2x = x + 0.25 * face.horns * face.horns;
+			c2y = y - face.horns;
+			path += ' c '+c1x+','+c1y+' '+c2x+','+c2y+' '+x+','+y;
+			x *= -1;
+			c1x *= -1;
+			c2x *= -1;
+			otherPath += ' c '+c1x+','+c1y+' '+c2x+','+c2y+' '+x+','+y;
+
+			// to base
+			x = 5 * face.horns;
+			y = 2.5 * face.horns + 5;
+			c1x = 0.25 * face.horns * face.horns;
+			c1y = 0;
+			c2x = x - face.horns;
+			c2y = y;
+			path += ' c '+c1x+','+c1y+' '+c2x+','+c2y+' '+x+','+y;
+			x *= -1;
+			c1x *= -1;
+			c2x *= -1;
+			otherPath += ' c '+c1x+','+c1y+' '+c2x+','+c2y+' '+x+','+y;
+
+			// back to top base
+			x = 0;
+			y = -0.5 * face.horns - 5;
+			c1x = 0;
+			c1y = 0;
+			c2x = x;
+			c2y = y;
+			path += ' c '+c1x+','+c1y+' '+c2x+','+c2y+' '+x+','+y;
+			x *= -1;
+			c1x *= -1;
+			c2x *= -1;
+			otherPath += ' c '+c1x+','+c1y+' '+c2x+','+c2y+' '+x+','+y;
+		
+			path += 'z';
+			newPath.setAttributeNS(null,"d",path);
+			svg.appendChild(newPath);
+		
+			otherPath += 'z';
+			otherNewPath.setAttributeNS(null,"d",otherPath);
+			svg.appendChild(otherNewPath);
+		};
+
 		
 
 		// Eyes
@@ -1445,7 +1570,7 @@ var view = {
 		
 		newPath.setAttributeNS(null,"d",path);
 		svg.appendChild(newPath);
-
+		
 		// Top-of-Head Hair
 		if (face.hairLength > 0) {
 			var newPath = document.createElementNS('http://www.w3.org/2000/svg',"path");
