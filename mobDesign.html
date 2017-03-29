@@ -4,6 +4,7 @@
 	<head>
 		<title>Character Designer</title>
 		<link rel="stylesheet" href="mobDesign.css">
+		<script src="data.js"></script>
 		<script src="mobDesign.js"></script>
 	</head>
 	
@@ -11,12 +12,51 @@
 	
 	<div id = 'wrapper'>
 		<div id = 'leftDiv'>
-			<div id='faceDiv' class='faceDiv'> &nbsp;</div>
 		
-			<button onclick='handlers.randomizeFace()'>Randomize</button>
+			<div id='faceDiv' class='faceDiv'> &nbsp;</div>
+			
+			<div>
+				<p>
+					Name:
+					<input type='text'></input>
+					<select>
+						<option disabled selected>Pronouns</option>
+						<option>Herself</option>
+						<option>Himself</option>
+						<option>Themself</option>
+						<option>Emself</option>
+						<option>Cirself</option>
+						<option>Ferself</option>
+					</select>
+				</p>
+			</div>
+			
+			<div>
+				<div id='classWork' class='characterClass' onclick='handlers.selectClass("work")'>
+					<h3>Work</h3>
+					<p class='classDesc'>An apprentice unafraid of hard work and dressed accordingly.</p>
+					<p><button onclick='handlers.selectClass("work")'>Select Work</button></p>
+				</div>
+				<div id='classFight' class='characterClass' onclick='handlers.selectClass("fight")'>
+					<h3>Fight</h3>
+					<p class='classDesc'>A street tough in armor cobbled together from scraps.</p>
+					<p><button onclick='handlers.selectClass("fight")'>Select Fight</button></p>
+				</div>
+				<div id='classPray' class='characterClass' onclick='handlers.selectClass("pray")'>
+					<h3>Pray</h3>
+					<p class='classDesc'>An initiate to the priesthood in the robes of your order.</p>
+					<p><button onclick='handlers.selectClass("pray")'>Select Pray</button></p>
+				</div>
+			</div>
+			
+			<div>
+				<button disabled>Confirm</button>
+			</div>
 		</div>
 
 		<div id='rightDiv'>
+		
+			<button onclick='handlers.randomizeFace()'>Randomize</button>
 
 			<div class='controlsSectionDiv'>
 				<h3>Coloring</h3>
@@ -108,9 +148,30 @@
 			<div class='controlsSectionDiv'>
 				<h3>Body</h3>
 				<p><input id= 'shouldersInput' type = 'range' min='30' max='40' value = '50' oninput = 'handlers.updateFace()' />Shoulders</p>
-				<p><input id= 'bustInput' type = 'range' min='0' max='30' value = '50' oninput = 'handlers.updateFace()' />Bust</p>
+				<p><input id= 'bustInput' type = 'range' min='0' max='32' value = '70' oninput = 'handlers.updateFace()' />Bust</p>
 				<p><input id= 'bellyInput' type = 'range' min='15' max='25' value = '50' oninput = 'handlers.updateFace()' />Belly</p>
 				<p><input id= 'hipsInput' type = 'range' min='15' max='20' value = '50' oninput = 'handlers.updateFace()' />Hips</p>
+				<p><input disabled id= 'hindquartersInput' type = 'range' min='0' max='1' value = '0' oninput = 'handlers.updateFace()' />Hindquarters</p>
+			</div>
+		
+			<div class='controlsSectionDiv'>
+				<h3>Typical Features</h3>
+				<p>Use these buttons to bring your character's features closer to the typical features of various fantasy ethnicities.  Mix and match to represent mixed heritages.</p>
+				<p><button disabled onclick = 'handlers.typicalFeatures("dwarven")'>Typical Dwarven Features</button></p>
+				<p><button disabled onclick = 'handlers.typicalFeatures("elvish")'>Typical Elvish Features</button></p>
+				<p><button disabled onclick = 'handlers.typicalFeatures("faunic")'>Typical Faunic Features</button></p>
+				<p><button disabled onclick = 'handlers.typicalFeatures("gigantic")'>Typical Gigantic Features</button></p>
+				<p><button disabled onclick = 'handlers.typicalFeatures("gnollish")'>Typical Gnollish Features</button></p>
+				<p><button disabled onclick = 'handlers.typicalFeatures("gnomish")'>Typical Gnomish Features</button></p>
+				<p><button disabled onclick = 'handlers.typicalFeatures("goblin")'>Typical Goblin Features</button></p>
+				<p><button disabled onclick = 'handlers.typicalFeatures("halfling")'>Typical Halfling Features</button></p>
+				<p><button disabled onclick = 'handlers.typicalFeatures("kobold")'>Typical Kobold Features</button></p>
+				<p><button disabled onclick = 'handlers.typicalFeatures("minotaur")'>Typical Minotaur Features</button></p>
+				<p><button disabled onclick = 'handlers.typicalFeatures("orcish")'>Typical Orcish Features</button></p>
+				<p><button disabled onclick = 'handlers.typicalFeatures("trollish")'>Typical Trollish Features</button></p>
+				<p><button disabled onclick = 'handlers.typicalFeatures("satyric")'>Typical Satyric Features</button>
+				<hr />
+				<p><button disabled onclick = 'handlers.typicalFeatures("elvish")'>Typical Centaur Features</button></p>
 			</div>
 		
 		</div>

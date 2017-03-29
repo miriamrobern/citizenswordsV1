@@ -1,4 +1,7 @@
-
+body {
+	font-family: sans-serif;
+	}
+	
 .wrapper {
 	margin-left: 5vw;
 	margin-right: 5vw;
@@ -9,6 +12,7 @@
 	margin-left: 5vw;
 	margin-right: 5vw;
 	margin-top: 10vh;
+	text-align: center;
 }
 
 .faceDiv {
@@ -35,4 +39,31 @@ input {
 
 button {
 	margin-top: 10px;
+}
+
+.characterClass {
+	float: left;
+	width: 10vw;
+	margin: 1vw;
+	padding-left: 0.5vw;
+	padding-right: 0.5vw;
+}
+
+#classWork {
+	border: 0.5vw outset gold;
+	background-color: #ffff55;
+}
+
+#classFight {
+	border: 0.5vw outset red;
+	background-color: pink;
+}
+
+#classPray {
+	border: 0.5vw outset blue;
+	background-color: lightblue;
+}
+
+.classDesc {
+	font-size: 0.8em;
 }

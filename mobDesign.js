@@ -1,67 +1,79 @@
 
-var faceData = {
+var p1 = {
+	faceData: {
+		skinColor: '#000',
+		templePosition: 0,
+		templeWidth: 0,
+		templeHeight: 0,
+		cheekbonePosition: 0,
+		cheekboneWidth: 0,
+		cheekboneHeight: 0,
+		chinHeight: 0,
+		chinWidth: 0,
+		eyeColor: '#000',
+		eyeDistance: 0,
+		eyeSize: 0,
+		browSize: 0,
+		leftBrowTilt: 0,
+		rightBrowTilt: 0,
+		insideEyelidCurve: 0,
+		outsideEyelidCurve: 0,
+		lowerEyelidCurve: 0,
+		noseColor: '#000',
+		noseHeight: 0,
+		noseSize: 0,
+		noseWidth: 0,
+		nostrilHeight: 0,
+		noseBump: 0,
+		lipColor: '#000',
+		mouthWidth: 0,
+		lipSize: 0,
+		smile: 0,
+		mouthOpen: 0,
+		teeth: 0,
+		leftTusk: 0,
+		rightTusk: 0,
+		earColor: '#000',
+		earSize: 0,
+		earDip: 0,
+		earTilt: 0,
+		earWidth: 0,
+		earLobe: 0,
+		hairColor: 0,
+		hairLength: 0,
+		hairCurl: 0,
+		hairPart: 0,
+		hairBangs: 0,
+		hairBangsLength: 0,
+		hairSweep: 0,
+		topHairHeight: 0,
+		topHairBase: 0,
+		topHairWidth: 0,
+		horns: 0,
+		shoulders: 0,
+		bust: 0,
+		belly: 0,
+		hips: 0,
+	},
+	
 
-	skinColor: '#000',
-	templePosition: 0,
-	templeWidth: 0,
-	templeHeight: 0,
-	cheekbonePosition: 0,
-	cheekboneWidth: 0,
-	cheekboneHeight: 0,
-	chinHeight: 0,
-	chinWidth: 0,
-	eyeColor: '#000',
-	eyeDistance: 0,
-	eyeSize: 0,
-	browSize: 0,
-	leftBrowTilt: 0,
-	rightBrowTilt: 0,
-	insideEyelidCurve: 0,
-	outsideEyelidCurve: 0,
-	lowerEyelidCurve: 0,
-	noseColor: '#000',
-	noseHeight: 0,
-	noseSize: 0,
-	noseWidth: 0,
-	nostrilHeight: 0,
-	noseBump: 0,
-	lipColor: '#000',
-	mouthWidth: 0,
-	lipSize: 0,
-	smile: 0,
-	mouthOpen: 0,
-	teeth: 0,
-	leftTusk: 0,
-	rightTusk: 0,
-	earColor: '#000',
-	earSize: 0,
-	earDip: 0,
-	earTilt: 0,
-	earWidth: 0,
-	earLobe: 0,
-	hairColor: 0,
-	hairLength: 0,
-	hairCurl: 0,
-	hairPart: 0,
-	hairBangs: 0,
-	hairBangsLength: 0,
-	hairSweep: 0,
-	topHairHeight: 0,
-	topHairBase: 0,
-	topHairWidth: 0,
-	horns: 0,
-	shoulders: 0,
-	bust: 0,
-	belly: 0,
-	hips: 0,
+	equipment: {
+		armor: dataItems.roughspun,
+		right: dataItems.mothersSword,
+		left: undefined,
+		item0: undefined,
+		item1: undefined,
+		item2: undefined,
+	},
 	
 };
 
 var handlers = {
 
-	updateFace: function(face) {
-	
-		face = faceData;
+	updateFace: function(mob) {
+		if (mob == undefined) {mob = p1};
+		
+		face = mob.faceData;
 	
 		var value;
 		for (i in face) {
@@ -72,7 +84,7 @@ var handlers = {
 			face[i] = value;
 		};
 	
-		view.drawFace(face);
+		view.drawMob(p1);
 	},
 	
 	updateColoring: function() {
@@ -167,11 +179,11 @@ var handlers = {
 		document.getElementById('earColorInput').value = earColor;
 		
 		
-		handlers.updateFace();
+		handlers.updateFace(p1);
 	},
 	
 	randomizeFace: function() {
-		for (i in faceData) {
+		for (i in p1.faceData) {
 			var slider = document.getElementById(i+"Input");
 			if (i.indexOf('olor') == -1) {
 				slider.value = 1 + ( Math.random() * (parseInt(slider.max) - parseInt(slider.min)) << 0 ) + parseInt(slider.min);
@@ -199,19 +211,45 @@ var handlers = {
 			slider.value = ( Math.random() * (parseInt(slider.max) - parseInt(slider.min)) << 0 ) + parseInt(slider.min);
 		};
 		handlers.updateColoring();
-		handlers.updateFace();
+		handlers.updateFace(p1);
 	},
 	
 	matchToSkinColor: function(input) {
 		document.getElementById(input).value = document.getElementById('skinColorInput').value;
 		handlers.updateFace();
 	},
+	
+	typicalFeatures: function() {
+	},
+	
+	selectClass: function(className) {
+		document.getElementById('classWork').style.borderStyle = 'outset';
+		document.getElementById('classFight').style.borderStyle = 'outset';
+		document.getElementById('classPray').style.borderStyle = 'outset';
+		
+		if (className === "work") {
+			p1.equipment.armor = dataItems.roughspun;
+			p1.equipment.left = undefined;
+			document.getElementById('classWork').style.borderStyle = 'inset';
+		} else if (className === "fight") {
+			p1.equipment.armor = dataItems.scrapArmor;
+			p1.equipment.left = dataItems.scrapShield;
+			document.getElementById('classFight').style.borderStyle = 'inset';
+		} else if (className === "pray") {
+			p1.equipment.armor = dataItems.initiatesRobes;
+			p1.equipment.left = dataItems.initiatesSpellbook;
+			document.getElementById('classPray').style.borderStyle = 'inset';
+		};
+		
+		view.drawMob(p1);
+	},
 };
 
 var view = {
 
-	drawFace: function(face) {
+	drawMob: function(mob) {
 
+		var face = mob.faceData;
 		var eyeline = 33;
 		var neck = 90;
 		var muzzle = false;
@@ -224,6 +262,16 @@ var view = {
 		faceDiv.innerHTML = '';
 		faceDiv.appendChild(svg);
 		
+		// Shadow
+		var shadow = document.createElementNS('http://www.w3.org/2000/svg',"ellipse");
+			shadow.setAttribute("fill",'#000000');
+			shadow.setAttribute("opacity",0.2);
+			shadow.setAttribute("cx",100);
+			shadow.setAttribute("cy",95 + neck);
+			shadow.setAttribute("rx",face.shoulders * 1.3);
+			shadow.setAttribute("ry",13);
+		svg.appendChild(shadow);
+		
 		// Hair in Back
 		if (face.hairLength > 0) {
 			var newPath = document.createElementNS('http://www.w3.org/2000/svg',"path");
@@ -232,7 +280,7 @@ var view = {
 			newPath.setAttribute("stroke-width","1");
 			newPath.setAttribute("stroke-linecap","round");
 			
-			var templeClearance = faceData.templePosition / -30 + 7 / 6;
+			var templeClearance = face.templePosition / -30 + 7 / 6;
 
 			// start 
 			var x = 100;
@@ -331,6 +379,7 @@ var view = {
 		// Body
 		var bodyGroup = document.createElementNS('http://www.w3.org/2000/svg',"g");
 		bodyGroup.id = 'bodyGroup';
+		bodyGroup.setAttribute("fill",face.skinColor);
 		svg.appendChild(bodyGroup);
 		
 		// Arms
@@ -346,19 +395,19 @@ var view = {
 		var armWidth = 10;
 		var upperArmLength = 30;
 		
-		newPath = document.createElementNS('http://www.w3.org/2000/svg',"path");
-		newPath.id = 'rightArm';
-		newPath.setAttribute("fill",face.skinColor);
-		newPath.setAttribute("stroke","#000000");
-		newPath.setAttribute("stroke-width","1");
-		newPath.setAttribute("stroke-linecap","round");
+		rightUpperArmPath = document.createElementNS('http://www.w3.org/2000/svg',"path");
+		rightUpperArmPath.id = 'rightArm';
+		rightUpperArmPath.setAttribute("fill",face.skinColor);
+		rightUpperArmPath.setAttribute("stroke","#000000");
+		rightUpperArmPath.setAttribute("stroke-width","1");
+		rightUpperArmPath.setAttribute("stroke-linecap","round");
 		
-		otherNewPath = document.createElementNS('http://www.w3.org/2000/svg',"path");
-		otherNewPath.id = 'leftArm';
-		otherNewPath.setAttribute("fill",face.skinColor);
-		otherNewPath.setAttribute("stroke","#000000");
-		otherNewPath.setAttribute("stroke-width","1");
-		otherNewPath.setAttribute("stroke-linecap","round");
+		leftUpperArmPath = document.createElementNS('http://www.w3.org/2000/svg',"path");
+		leftUpperArmPath.id = 'leftArm';
+		leftUpperArmPath.setAttribute("fill",face.skinColor);
+		leftUpperArmPath.setAttribute("stroke","#000000");
+		leftUpperArmPath.setAttribute("stroke-width","1");
+		leftUpperArmPath.setAttribute("stroke-linecap","round");
 
 		// start 
 		x = 100 - face.shoulders + armWidth * 0.5;
@@ -465,12 +514,12 @@ var view = {
 		otherPath += ' c '+c1x+','+c1y+' '+c2x+','+c2y+' '+x+','+y;
 	
 		path += ' z';
-		newPath.setAttributeNS(null,"d",path);
-		rightArmGroup.appendChild(newPath);
+		rightUpperArmPath.setAttributeNS(null,"d",path);
+		rightArmGroup.appendChild(rightUpperArmPath);
 	
 		otherPath += ' z';
-		otherNewPath.setAttributeNS(null,"d",otherPath);
-		leftArmGroup.appendChild(otherNewPath);
+		leftUpperArmPath.setAttributeNS(null,"d",otherPath);
+		leftArmGroup.appendChild(leftUpperArmPath);
 		
 		// Forearms
 		var rightForearmGroup = document.createElementNS('http://www.w3.org/2000/svg',"g");
@@ -481,19 +530,19 @@ var view = {
 		leftForearmGroup.id = 'leftForearmGroup';
 		leftArmGroup.appendChild(leftForearmGroup);
 		
-		newPath = document.createElementNS('http://www.w3.org/2000/svg',"path");
-		newPath.id = 'rightForearm';
-		newPath.setAttribute("fill",face.skinColor);
-		newPath.setAttribute("stroke","#000000");
-		newPath.setAttribute("stroke-width","1");
-		newPath.setAttribute("stroke-linecap","round");
+		var rightLowerArmPath = document.createElementNS('http://www.w3.org/2000/svg',"path");
+		rightLowerArmPath.id = 'rightForearm';
+		rightLowerArmPath.setAttribute("fill",face.skinColor);
+		rightLowerArmPath.setAttribute("stroke","#000000");
+		rightLowerArmPath.setAttribute("stroke-width","1");
+		rightLowerArmPath.setAttribute("stroke-linecap","round");
 		
-		otherNewPath = document.createElementNS('http://www.w3.org/2000/svg',"path");
-		otherNewPath.id = 'leftForearm';
-		otherNewPath.setAttribute("fill",face.skinColor);
-		otherNewPath.setAttribute("stroke","#000000");
-		otherNewPath.setAttribute("stroke-width","1");
-		otherNewPath.setAttribute("stroke-linecap","round");
+		var leftLowerArmPath = document.createElementNS('http://www.w3.org/2000/svg',"path");
+		leftLowerArmPath.id = 'leftForearm';
+		leftLowerArmPath.setAttribute("fill",face.skinColor);
+		leftLowerArmPath.setAttribute("stroke","#000000");
+		leftLowerArmPath.setAttribute("stroke-width","1");
+		leftLowerArmPath.setAttribute("stroke-linecap","round");
 
 		// start 
 		x = 100 + armWidth * 0.5 - face.shoulders ;
@@ -604,26 +653,26 @@ var view = {
 		c2x *= -1;
 		otherPath += ' c '+c1x+','+c1y+' '+c2x+','+c2y+' '+x+','+y;
 	
-		newPath.setAttributeNS(null,"d",path);
-		rightForearmGroup.appendChild(newPath);
+		rightLowerArmPath.setAttributeNS(null,"d",path);
+		rightForearmGroup.appendChild(rightLowerArmPath);
 	
-		otherNewPath.setAttributeNS(null,"d",otherPath);
-		leftForearmGroup.appendChild(otherNewPath);
+		leftLowerArmPath.setAttributeNS(null,"d",otherPath);
+		leftForearmGroup.appendChild(leftLowerArmPath);
 				
 		// Legs
-		newPath = document.createElementNS('http://www.w3.org/2000/svg',"path");
-		newPath.id = 'rightLeg';
-		newPath.setAttribute("fill",face.skinColor);
-		newPath.setAttribute("stroke","#000000");
-		newPath.setAttribute("stroke-width","1");
-		newPath.setAttribute("stroke-linecap","round");
+		var rightLegPath = document.createElementNS('http://www.w3.org/2000/svg',"path");
+		rightLegPath.id = 'rightLeg';
+		rightLegPath.setAttribute("fill",face.skinColor);
+		rightLegPath.setAttribute("stroke","#000000");
+		rightLegPath.setAttribute("stroke-width","1");
+		rightLegPath.setAttribute("stroke-linecap","round");
 		
-		otherNewPath = document.createElementNS('http://www.w3.org/2000/svg',"path");
-		otherNewPath.id = 'leftLeg';
-		otherNewPath.setAttribute("fill",face.skinColor);
-		otherNewPath.setAttribute("stroke","#000000");
-		otherNewPath.setAttribute("stroke-width","1");
-		otherNewPath.setAttribute("stroke-linecap","round");
+		var leftLegPath = document.createElementNS('http://www.w3.org/2000/svg',"path");
+		leftLegPath.id = 'leftLeg';
+		leftLegPath.setAttribute("fill",face.skinColor);
+		leftLegPath.setAttribute("stroke","#000000");
+		leftLegPath.setAttribute("stroke-width","1");
+		leftLegPath.setAttribute("stroke-linecap","round");
 
 		// start at crotch (behind body)
 		x = 100 ;
@@ -722,19 +771,20 @@ var view = {
 		c2x *= -1;
 		otherPath += ' c '+c1x+','+c1y+' '+c2x+','+c2y+' '+x+','+y;
 	
-		newPath.setAttributeNS(null,"d",path);
-		bodyGroup.appendChild(newPath);
+		rightLegPath.setAttributeNS(null,"d",path);
+		bodyGroup.appendChild(rightLegPath);
 	
-		otherNewPath.setAttributeNS(null,"d",otherPath);
-		bodyGroup.appendChild(otherNewPath);
+		leftLegPath.setAttributeNS(null,"d",otherPath);
+		bodyGroup.appendChild(leftLegPath);
 		
 		// Torso
 		
-		newPath = document.createElementNS('http://www.w3.org/2000/svg',"path");
-		newPath.setAttribute("fill",face.skinColor);
-		newPath.setAttribute("stroke","#000000");
-		newPath.setAttribute("stroke-width","1");
-		newPath.setAttribute("stroke-linecap","round");
+		var torsoPath = document.createElementNS('http://www.w3.org/2000/svg',"path");
+		torsoPath.id = 'torso';
+		torsoPath.setAttribute("fill",'inherit');
+		torsoPath.setAttribute("stroke","#000000");
+		torsoPath.setAttribute("stroke-width","1");
+		torsoPath.setAttribute("stroke-linecap","round");
 
 		// start 
 		x = 100;
@@ -832,22 +882,25 @@ var view = {
 		path += ' c '+c1x+','+c1y+' '+c2x+','+c2y+' '+x+','+y;
 	
 		path += 'z';
-		newPath.setAttributeNS(null,"d",path);
-		bodyGroup.appendChild(newPath);
+		torsoPath.setAttributeNS(null,"d",path);
+		bodyGroup.appendChild(torsoPath);
 		
 		// Bust
+		var rightBreastPath = document.createElementNS('http://www.w3.org/2000/svg',"path");
+		rightBreastPath.id = 'rightBreast';
+		var leftBreastPath = document.createElementNS('http://www.w3.org/2000/svg',"path");
+		leftBreastPath.id = 'leftBreast';
 		if (face.bust > 10) {
-			newPath = document.createElementNS('http://www.w3.org/2000/svg',"path");
-			newPath.setAttribute("fill",face.skinColor);
-			newPath.setAttribute("stroke","#000000");
-			newPath.setAttribute("stroke-width","1");
-			newPath.setAttribute("stroke-linecap","round");
+			
+			rightBreastPath.setAttribute("fill",'inherit');
+			rightBreastPath.setAttribute("stroke","#000000");
+			rightBreastPath.setAttribute("stroke-width","1");
+			rightBreastPath.setAttribute("stroke-linecap","round");
 		
-			var otherNewPath = document.createElementNS('http://www.w3.org/2000/svg',"path");
-			otherNewPath.setAttribute("fill",face.skinColor);
-			otherNewPath.setAttribute("stroke","#000000");
-			otherNewPath.setAttribute("stroke-width","1");
-			otherNewPath.setAttribute("stroke-linecap","round");
+			leftBreastPath.setAttribute("fill",'inherit');
+			leftBreastPath.setAttribute("stroke","#000000");
+			leftBreastPath.setAttribute("stroke-width","1");
+			leftBreastPath.setAttribute("stroke-linecap","round");
 
 			var startX = Math.max(face.bust * 0.5 , face.shoulders * 0.7);
 
@@ -906,15 +959,21 @@ var view = {
 			c2x *= -1;
 			otherPath += ' c '+c1x+','+c1y+' '+c2x+','+c2y+' '+x+','+y;
 		
-			newPath.setAttributeNS(null,"d",path);
-			bodyGroup.appendChild(newPath);
+			rightBreastPath.setAttributeNS(null,"d",path);
+			bodyGroup.appendChild(rightBreastPath);
 		
-			otherNewPath.setAttributeNS(null,"d",otherPath);
-			bodyGroup.appendChild(otherNewPath);
+			leftBreastPath.setAttributeNS(null,"d",otherPath);
+			bodyGroup.appendChild(leftBreastPath);
 		};
 		
+		var clothingGroup = document.createElementNS('http://www.w3.org/2000/svg',"g");
+		clothingGroup.id = 'clothingGroup';
+		bodyGroup.appendChild(clothingGroup);
 		
 		// At End of Body Section, Add Shading Group
+		var bodyShadingGroup = document.createElementNS('http://www.w3.org/2000/svg',"g");
+		bodyShadingGroup.id = 'bodyShadingGroup';
+		bodyGroup.appendChild(bodyShadingGroup);
 			
 		// Ear Backs
 		newPath = document.createElementNS('http://www.w3.org/2000/svg',"path");
@@ -2832,8 +2891,69 @@ var view = {
 		
 		
 		
+		// Clothing & Equipment
+		var armor = mob.equipment.armor
 		
+		var armorColoring = armor.simpleColoring;
 		
-		// End Draw Face
+		if (armorColoring !== undefined) {
+			if (armorColoring.torso !== undefined) {
+				if (armorColoring.torso.fill !== undefined) {
+					torsoPath.setAttribute("fill",armorColoring.torso.fill);
+					rightBreastPath.setAttribute("fill",armorColoring.torso.fill);
+					leftBreastPath.setAttribute("fill",armorColoring.torso.fill);
+		// 			belly.setAttribute("fill",armorColoring.torso.fill);
+				};
+				if (armorColoring.torso.stroke !== undefined) {
+					torsoPath.setAttribute("stroke",armorColoring.torso.stroke);
+					rightBreastPath.setAttribute("stroke",armorColoring.torso.stroke);
+					leftBreastPath.setAttribute("stroke",armorColoring.torso.stroke);
+		// 			belly.setAttribute("stroke",armorColoring.torso.stroke);
+				};
+			};
+		
+			if (armorColoring.upperArms !== undefined) {
+				if (armorColoring.upperArms.fill !== undefined) {
+					rightUpperArmPath.setAttribute("fill",armorColoring.upperArms.fill);
+					leftUpperArmPath.setAttribute("fill",armorColoring.upperArms.fill);
+				};
+				if (armorColoring.upperArms.stroke !== undefined) {
+					rightUpperArmPath.setAttribute("stroke",armorColoring.upperArms.stroke);
+					leftUpperArmPath.setAttribute("stroke",armorColoring.upperArms.stroke);
+				};
+			};
+		
+			if (armorColoring.lowerArms !== undefined) {
+				if (armorColoring.lowerArms.fill !== undefined) {
+					rightLowerArmPath.setAttribute("fill",armorColoring.lowerArms.fill);
+					leftLowerArmPath.setAttribute("fill",armorColoring.lowerArms.fill);
+				};
+				if (armorColoring.lowerArms.stroke !== undefined) {
+					rightLowerArmPath.setAttribute("stroke",armorColoring.lowerArms.stroke);
+					leftLowerArmPath.setAttribute("stroke",armorColoring.lowerArms.stroke);
+				};
+			};
+		
+			if (armorColoring.legs !== undefined) {
+				if (armorColoring.legs.fill !== undefined) {
+					rightLegPath.setAttribute("fill",armorColoring.legs.fill);
+					leftLegPath.setAttribute("fill",armorColoring.legs.fill);
+				};
+				if (armorColoring.legs.stroke !== undefined) {
+					rightLegPath.setAttribute("stroke",armorColoring.legs.stroke);
+					leftLegPath.setAttribute("stroke",armorColoring.legs.stroke);
+				};
+			};
+		};
+		
+		if (armor.svgNodes !== undefined) {
+			var armorSVGNodes = armor.svgNodes(mob,{eyeline:eyeline,neck:neck});
+			clothingGroup.appendChild(armorSVGNodes);
+		};
+		
+		// Animation		
+		// document.getElementById('rightArmGroup').setAttributeNS(null,'transform','rotate(60 '+document.getElementById('rightShoulderPivot').cx.animVal.value+' '+document.getElementById('rightShoulderPivot').cy.animVal.value+')');
+		
+		// End Draw Mob
 	},
 };
