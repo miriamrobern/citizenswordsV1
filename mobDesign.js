@@ -50,6 +50,10 @@ var faceData = {
 	topHairBase: 0,
 	topHairWidth: 0,
 	horns: 0,
+	shoulders: 0,
+	bust: 0,
+	belly: 0,
+	hips: 0,
 	
 };
 
@@ -209,6 +213,7 @@ var view = {
 	drawFace: function(face) {
 
 		var eyeline = 33;
+		var neck = 90;
 		var muzzle = false;
 		var noseStroke = false;
 
@@ -324,49 +329,591 @@ var view = {
 		};
 		
 		// Body
+		var bodyGroup = document.createElementNS('http://www.w3.org/2000/svg',"g");
+		bodyGroup.id = 'bodyGroup';
+		svg.appendChild(bodyGroup);
+		
+		// Arms
+		
+		var rightArmGroup = document.createElementNS('http://www.w3.org/2000/svg',"g");
+		rightArmGroup.id = 'rightArmGroup';
+		bodyGroup.appendChild(rightArmGroup);
+		
+		var leftArmGroup = document.createElementNS('http://www.w3.org/2000/svg',"g");
+		leftArmGroup.id = 'leftArmGroup';
+		bodyGroup.appendChild(leftArmGroup);
+		
+		var armWidth = 10;
+		var upperArmLength = 30;
+		
 		newPath = document.createElementNS('http://www.w3.org/2000/svg',"path");
-		newPath.setAttribute("fill",'#666666');
+		newPath.id = 'rightArm';
+		newPath.setAttribute("fill",face.skinColor);
+		newPath.setAttribute("stroke","#000000");
+		newPath.setAttribute("stroke-width","1");
+		newPath.setAttribute("stroke-linecap","round");
+		
+		otherNewPath = document.createElementNS('http://www.w3.org/2000/svg',"path");
+		otherNewPath.id = 'leftArm';
+		otherNewPath.setAttribute("fill",face.skinColor);
+		otherNewPath.setAttribute("stroke","#000000");
+		otherNewPath.setAttribute("stroke-width","1");
+		otherNewPath.setAttribute("stroke-linecap","round");
+
+		// start 
+		x = 100 - face.shoulders + armWidth * 0.5;
+		y = neck + 5;
+		var pivotPoint = document.createElementNS('http://www.w3.org/2000/svg',"circle");
+			pivotPoint.id = 'rightShoulderPivot';
+			pivotPoint.setAttribute("fill","none");
+			pivotPoint.setAttribute("stroke",'none');
+			pivotPoint.setAttribute("cx",x);
+			pivotPoint.setAttribute("cy",y + armWidth * 0.5);
+			pivotPoint.setAttribute("r",0);
+			rightArmGroup.appendChild(pivotPoint);
+		path = 'm '+x+','+y;
+		rightArmGroup.setAttributeNS(null,'transform','translate(0) rotate(30 '+pivotPoint.cx.animVal.value+' '+pivotPoint.cy.animVal.value+')');
+		
+		x = 100 + face.shoulders - armWidth * 0.5;
+		pivotPoint = document.createElementNS('http://www.w3.org/2000/svg',"circle");
+			pivotPoint.id = 'leftShoulderPivot';
+			pivotPoint.setAttribute("fill","none");
+			pivotPoint.setAttribute("stroke",'none');
+			pivotPoint.setAttribute("cx",x);
+			pivotPoint.setAttribute("cy",y + armWidth * 0.5);
+			pivotPoint.setAttribute("r",0);
+			rightArmGroup.appendChild(pivotPoint);
+		otherPath = 'm '+x+','+y;
+		leftArmGroup.setAttributeNS(null,'transform','translate(0) rotate(-30 '+pivotPoint.cx.animVal.value+' '+pivotPoint.cy.animVal.value+')');
+
+		// to outside shoulder
+		x = -0.5 * armWidth;
+		y = 0.5 * armWidth;
+		c1x = -0.3 * armWidth;
+		c1y = 0;
+		c2x = x;
+		c2y = y;
+		path += ' c '+c1x+','+c1y+' '+c2x+','+c2y+' '+x+','+y;
+		x *= -1;
+		c1x *= -1;
+		c2x *= -1;
+		otherPath += ' c '+c1x+','+c1y+' '+c2x+','+c2y+' '+x+','+y;
+
+		// to outside elbow
+		x = 0;
+		y = upperArmLength;
+		c1x = -5;
+		c1y = 10;
+		c2x = x+2;
+		c2y = y-10;
+		path += ' c '+c1x+','+c1y+' '+c2x+','+c2y+' '+x+','+y;
+		x *= -1;
+		c1x *= -1;
+		c2x *= -1;
+		otherPath += ' c '+c1x+','+c1y+' '+c2x+','+c2y+' '+x+','+y;
+
+		// to elbow end
+		x = armWidth * 0.5;
+		y = armWidth * 0.5;
+		c1x = 0;
+		c1y = armWidth * 0.2;
+		c2x = x - armWidth * 0.2;
+		c2y = y;
+		path += ' c '+c1x+','+c1y+' '+c2x+','+c2y+' '+x+','+y;
+		x *= -1;
+		c1x *= -1;
+		c2x *= -1;
+		otherPath += ' c '+c1x+','+c1y+' '+c2x+','+c2y+' '+x+','+y;
+
+		// to inside elbow
+		x = armWidth * 0.5;
+		y = armWidth * -0.5;
+		c1x = armWidth * 0.2;
+		c1y = 0;
+		c2x = x;
+		c2y = y + armWidth * 0.2;
+		path += ' c '+c1x+','+c1y+' '+c2x+','+c2y+' '+x+','+y;
+		x *= -1;
+		c1x *= -1;
+		c2x *= -1;
+		otherPath += ' c '+c1x+','+c1y+' '+c2x+','+c2y+' '+x+','+y;
+
+		// to inside shoulder
+		x = 0;
+		y = -1 * upperArmLength;
+		c1x = 0 - armWidth * 0.2;
+		c1y = 0 - armWidth * 0.7;
+		c2x = x + armWidth * 0.2;
+		c2y = y + armWidth * 0.5;
+		path += ' c '+c1x+','+c1y+' '+c2x+','+c2y+' '+x+','+y;
+		x *= -1;
+		c1x *= -1;
+		c2x *= -1;
+		otherPath += ' c '+c1x+','+c1y+' '+c2x+','+c2y+' '+x+','+y;
+
+		// to top of shoulder
+		x = -0.5 * armWidth;
+		y = -0.5 * armWidth;
+		c1x = 0;
+		c1y = 0;
+		c2x = x;
+		c2y = y;
+		path += ' c '+c1x+','+c1y+' '+c2x+','+c2y+' '+x+','+y;
+		x *= -1;
+		c1x *= -1;
+		c2x *= -1;
+		otherPath += ' c '+c1x+','+c1y+' '+c2x+','+c2y+' '+x+','+y;
+	
+		path += ' z';
+		newPath.setAttributeNS(null,"d",path);
+		rightArmGroup.appendChild(newPath);
+	
+		otherPath += ' z';
+		otherNewPath.setAttributeNS(null,"d",otherPath);
+		leftArmGroup.appendChild(otherNewPath);
+		
+		// Forearms
+		var rightForearmGroup = document.createElementNS('http://www.w3.org/2000/svg',"g");
+		rightForearmGroup.id = 'rightForearmGroup';
+		rightArmGroup.appendChild(rightForearmGroup);
+		
+		var leftForearmGroup = document.createElementNS('http://www.w3.org/2000/svg',"g");
+		leftForearmGroup.id = 'leftForearmGroup';
+		leftArmGroup.appendChild(leftForearmGroup);
+		
+		newPath = document.createElementNS('http://www.w3.org/2000/svg',"path");
+		newPath.id = 'rightForearm';
+		newPath.setAttribute("fill",face.skinColor);
+		newPath.setAttribute("stroke","#000000");
+		newPath.setAttribute("stroke-width","1");
+		newPath.setAttribute("stroke-linecap","round");
+		
+		otherNewPath = document.createElementNS('http://www.w3.org/2000/svg',"path");
+		otherNewPath.id = 'leftForearm';
+		otherNewPath.setAttribute("fill",face.skinColor);
+		otherNewPath.setAttribute("stroke","#000000");
+		otherNewPath.setAttribute("stroke-width","1");
+		otherNewPath.setAttribute("stroke-linecap","round");
+
+		// start 
+		x = 100 + armWidth * 0.5 - face.shoulders ;
+		y = neck + 5 + upperArmLength;
+		pivotPoint = document.createElementNS('http://www.w3.org/2000/svg',"circle");
+			pivotPoint.id = 'rightElbowPivot';
+			pivotPoint.setAttribute("fill","none");
+			pivotPoint.setAttribute("stroke",'none');
+			pivotPoint.setAttribute("cx",x);
+			pivotPoint.setAttribute("cy",y + armWidth * 0.5);
+			pivotPoint.setAttribute("r",0);
+			rightArmGroup.appendChild(pivotPoint);
+		newPath.setAttributeNS(null,'transform','rotate(-50 '+pivotPoint.cx.animVal.value+' '+pivotPoint.cy.animVal.value+')');
+		pivotPoint = document.createElementNS('http://www.w3.org/2000/svg',"circle");
+			pivotPoint.id = 'rightWristPivot';
+			pivotPoint.setAttribute("fill","none");
+			pivotPoint.setAttribute("stroke",'none');
+			pivotPoint.setAttribute("cx",x);
+			pivotPoint.setAttribute("cy",y + armWidth * 0.5 + 20);
+			pivotPoint.setAttribute("r",0);
+			rightForearmGroup.appendChild(pivotPoint);
+		path = 'm '+x+','+y;
+		
+		x = 100 - armWidth * 0.5 + face.shoulders ;
+		pivotPoint = document.createElementNS('http://www.w3.org/2000/svg',"circle");
+			pivotPoint.id = 'leftShoulderPivot';
+			pivotPoint.setAttribute("fill","none");
+			pivotPoint.setAttribute("stroke",'none');
+			pivotPoint.setAttribute("cx",x);
+			pivotPoint.setAttribute("cy",y + armWidth * 0.5);
+			pivotPoint.setAttribute("r",0);
+			rightArmGroup.appendChild(pivotPoint);
+		otherNewPath.setAttributeNS(null,'transform','rotate(50 '+pivotPoint.cx.animVal.value+' '+pivotPoint.cy.animVal.value+')');
+		pivotPoint = document.createElementNS('http://www.w3.org/2000/svg',"circle");
+			pivotPoint.id = 'leftWristPivot';
+			pivotPoint.setAttribute("fill","none");
+			pivotPoint.setAttribute("stroke",'none');
+			pivotPoint.setAttribute("cx",x);
+			pivotPoint.setAttribute("cy",y + armWidth * 0.5 + 20);
+			pivotPoint.setAttribute("r",0);
+			leftForearmGroup.appendChild(pivotPoint);
+		otherPath = 'm '+x+','+y;
+
+		// to outside elbow
+		x = -0.5 * armWidth;
+		y = 0.5 * armWidth;
+		c1x = -0.3 * armWidth;
+		c1y = -0.2 * armWidth;
+		c2x = x;
+		c2y = y;
+		path += ' c '+c1x+','+c1y+' '+c2x+','+c2y+' '+x+','+y;
+		x *= -1;
+		c1x *= -1;
+		c2x *= -1;
+		otherPath += ' c '+c1x+','+c1y+' '+c2x+','+c2y+' '+x+','+y;
+
+		// to outside wrist
+		x = 0.2 * armWidth;
+		y = 20;
+		c1x = -0.2 * armWidth;
+		c1y = 0.5 * armWidth;
+		c2x = x;
+		c2y = y;
+		path += ' c '+c1x+','+c1y+' '+c2x+','+c2y+' '+x+','+y;
+		x *= -1;
+		c1x *= -1;
+		c2x *= -1;
+		otherPath += ' c '+c1x+','+c1y+' '+c2x+','+c2y+' '+x+','+y;
+
+		// to wrist end
+		x = armWidth * 0.3;
+		y = armWidth * 0.5;
+		c1x = 0;
+		c1y = 0;
+		c2x = x - 0.2 * armWidth;
+		c2y = y;
+		path += ' c '+c1x+','+c1y+' '+c2x+','+c2y+' '+x+','+y;
+		x *= -1;
+		c1x *= -1;
+		c2x *= -1;
+		otherPath += ' c '+c1x+','+c1y+' '+c2x+','+c2y+' '+x+','+y;
+
+		// to inside wrist
+		x = armWidth * 0.3;
+		y = armWidth * -0.5;
+		c1x = 0.2 * armWidth;
+		c1y = 0;
+		c2x = x;
+		c2y = y;
+		path += ' c '+c1x+','+c1y+' '+c2x+','+c2y+' '+x+','+y;
+		x *= -1;
+		c1x *= -1;
+		c2x *= -1;
+		otherPath += ' c '+c1x+','+c1y+' '+c2x+','+c2y+' '+x+','+y;
+
+		// to inside elbow
+		x = armWidth * 0.2;
+		y = -20;
+		c1x = 0;
+		c1y = 0;
+		c2x = x + 0.2 * armWidth;
+		c2y = y;
+		path += ' c '+c1x+','+c1y+' '+c2x+','+c2y+' '+x+','+y;
+		x *= -1;
+		c1x *= -1;
+		c2x *= -1;
+		otherPath += ' c '+c1x+','+c1y+' '+c2x+','+c2y+' '+x+','+y;
+	
+		newPath.setAttributeNS(null,"d",path);
+		rightForearmGroup.appendChild(newPath);
+	
+		otherNewPath.setAttributeNS(null,"d",otherPath);
+		leftForearmGroup.appendChild(otherNewPath);
+				
+		// Legs
+		newPath = document.createElementNS('http://www.w3.org/2000/svg',"path");
+		newPath.id = 'rightLeg';
+		newPath.setAttribute("fill",face.skinColor);
+		newPath.setAttribute("stroke","#000000");
+		newPath.setAttribute("stroke-width","1");
+		newPath.setAttribute("stroke-linecap","round");
+		
+		otherNewPath = document.createElementNS('http://www.w3.org/2000/svg',"path");
+		otherNewPath.id = 'leftLeg';
+		otherNewPath.setAttribute("fill",face.skinColor);
+		otherNewPath.setAttribute("stroke","#000000");
+		otherNewPath.setAttribute("stroke-width","1");
+		otherNewPath.setAttribute("stroke-linecap","round");
+
+		// start at crotch (behind body)
+		x = 100 ;
+		y = neck + 60;
+		path = 'm '+x+','+y;
+		otherPath = 'm '+x+','+y;
+
+		// to inside right knee
+		x = -15;
+		y = 17;
+		c1x = 0;
+		c1y = 0;
+		c2x = x;
+		c2y = y;
+		path += ' c '+c1x+','+c1y+' '+c2x+','+c2y+' '+x+','+y;
+		x *= -1;
+		c1x *= -1;
+		c2x *= -1;
+		otherPath += ' c '+c1x+','+c1y+' '+c2x+','+c2y+' '+x+','+y;
+
+		// to right heel
+		x = 5;
+		y = 18;
+		c1x = 0;
+		c1y = 0;
+		c2x = x;
+		c2y = y;
+		path += ' c '+c1x+','+c1y+' '+c2x+','+c2y+' '+x+','+y;
+		x *= -1;
+		c1x *= -1;
+		c2x *= -1;
+		otherPath += ' c '+c1x+','+c1y+' '+c2x+','+c2y+' '+x+','+y;
+
+		// to inside of right tread
+		x = -4;
+		y = 3;
+		c1x = 0;
+		c1y = 0;
+		c2x = x + 2;
+		c2y = y;
+		path += ' c '+c1x+','+c1y+' '+c2x+','+c2y+' '+x+','+y;
+		x *= -1;
+		c1x *= -1;
+		c2x *= -1;
+		otherPath += ' c '+c1x+','+c1y+' '+c2x+','+c2y+' '+x+','+y;
+
+		// to outside right foot bottom
+		x = -15;
+		y = 0;
+		c1x = 0;
+		c1y = 0;
+		c2x = x;
+		c2y = y;
+		path += ' c '+c1x+','+c1y+' '+c2x+','+c2y+' '+x+','+y;
+		x *= -1;
+		c1x *= -1;
+		c2x *= -1;
+		otherPath += ' c '+c1x+','+c1y+' '+c2x+','+c2y+' '+x+','+y;
+
+		// to top right foot
+		x = 10;
+		y = -8;
+		c1x = 0;
+		c1y = -10;
+		c2x = x;
+		c2y = y;
+		path += ' c '+c1x+','+c1y+' '+c2x+','+c2y+' '+x+','+y;
+		x *= -1;
+		c1x *= -1;
+		c2x *= -1;
+		otherPath += ' c '+c1x+','+c1y+' '+c2x+','+c2y+' '+x+','+y;
+
+		// to outside right knee
+		x = -5;
+		y = -14;
+		c1x = 0;
+		c1y = 0;
+		c2x = x;
+		c2y = y+2;
+		path += ' c '+c1x+','+c1y+' '+c2x+','+c2y+' '+x+','+y;
+		x *= -1;
+		c1x *= -1;
+		c2x *= -1;
+		otherPath += ' c '+c1x+','+c1y+' '+c2x+','+c2y+' '+x+','+y;
+
+		// to top of right leg
+		x = 15;
+		y = -20;
+		c1x = 0;
+		c1y = -4;
+		c2x = x;
+		c2y = y;
+		path += ' c '+c1x+','+c1y+' '+c2x+','+c2y+' '+x+','+y;
+		x *= -1;
+		c1x *= -1;
+		c2x *= -1;
+		otherPath += ' c '+c1x+','+c1y+' '+c2x+','+c2y+' '+x+','+y;
+	
+		newPath.setAttributeNS(null,"d",path);
+		bodyGroup.appendChild(newPath);
+	
+		otherNewPath.setAttributeNS(null,"d",otherPath);
+		bodyGroup.appendChild(otherNewPath);
+		
+		// Torso
+		
+		newPath = document.createElementNS('http://www.w3.org/2000/svg',"path");
+		newPath.setAttribute("fill",face.skinColor);
 		newPath.setAttribute("stroke","#000000");
 		newPath.setAttribute("stroke-width","1");
 		newPath.setAttribute("stroke-linecap","round");
 
 		// start 
-		x = 40;
-		y = 300;
+		x = 100;
+		y = neck;
 		path = 'm '+x+','+y;
 
 		// to right shoulder
-		x = 0;
-		y = -160;
+		x = 0 - face.shoulders;
+		y = 10;
+		c1x = -1 * face.shoulders;
+		c1y = 0;
+		c2x = x;
+		c2y = y;
+		path += ' c '+c1x+','+c1y+' '+c2x+','+c2y+' '+x+','+y;
+
+		// to right rib
+		x = face.shoulders * 0.2;
+		y = 20;
 		c1x = 0;
 		c1y = 0;
 		c2x = x;
 		c2y = y;
 		path += ' c '+c1x+','+c1y+' '+c2x+','+c2y+' '+x+','+y;
 
-		// to left shoulder
-		x = 120;
-		y = 0;
+		// to right belly
+		x = face.shoulders * 0.8 - face.belly;
+		y = 10;
 		c1x = 0;
-		c1y = -60;
+		c1y = 3;
 		c2x = x;
-		c2y = y-60;
+		c2y = y-3;
 		path += ' c '+c1x+','+c1y+' '+c2x+','+c2y+' '+x+','+y;
 
-		// to bottom shoulder
-		x = 0;
-		y = 160;
+		// to right hip
+		x = face.belly - face.hips;
+		y = 15;
+		c1x = 0;
+		c1y = face.belly / 3;
+		c2x = x;
+		c2y = y-1;
+		path += ' c '+c1x+','+c1y+' '+c2x+','+c2y+' '+x+','+y;
+
+		// to butt
+		x = face.hips;
+		y = 10;
+		c1x = 0;
+		c1y = 3;
+		c2x = x - face.hips;
+		c2y = y;
+		path += ' c '+c1x+','+c1y+' '+c2x+','+c2y+' '+x+','+y;
+
+		// to left hip
+		x = face.hips;
+		y = -10;
+		c1x = face.hips;
+		c1y = 0;
+		c2x = x;
+		c2y = y+3;
+		path += ' c '+c1x+','+c1y+' '+c2x+','+c2y+' '+x+','+y;
+
+		// to left belly
+		x = face.belly - face.hips;
+		y = -15;
+		c1x = 0;
+		c1y = -3;
+		c2x = x;
+		c2y = y+3;
+		path += ' c '+c1x+','+c1y+' '+c2x+','+c2y+' '+x+','+y;
+
+		// to left rib
+		x = face.shoulders * 0.8 - face.belly;
+		y = -10;
+		c1x = 0;
+		c1y = -3;
+		c2x = x;
+		c2y = y+3;
+		path += ' c '+c1x+','+c1y+' '+c2x+','+c2y+' '+x+','+y;
+
+		// to left shoulder
+		x = face.shoulders - face.shoulders * 0.8;
+		y = -20;
 		c1x = 0;
 		c1y = 0;
 		c2x = x;
+		c2y = y;
+		path += ' c '+c1x+','+c1y+' '+c2x+','+c2y+' '+x+','+y;
+
+		// back to start (behind head)
+		x = 0 - face.shoulders;
+		y = -10;
+		c1x = 0;
+		c1y = 0;
+		c2x = x + face.shoulders;
 		c2y = y;
 		path += ' c '+c1x+','+c1y+' '+c2x+','+c2y+' '+x+','+y;
 	
 		path += 'z';
 		newPath.setAttributeNS(null,"d",path);
-		svg.appendChild(newPath);
+		bodyGroup.appendChild(newPath);
 		
-	
+		// Bust
+		if (face.bust > 10) {
+			newPath = document.createElementNS('http://www.w3.org/2000/svg',"path");
+			newPath.setAttribute("fill",face.skinColor);
+			newPath.setAttribute("stroke","#000000");
+			newPath.setAttribute("stroke-width","1");
+			newPath.setAttribute("stroke-linecap","round");
+		
+			var otherNewPath = document.createElementNS('http://www.w3.org/2000/svg',"path");
+			otherNewPath.setAttribute("fill",face.skinColor);
+			otherNewPath.setAttribute("stroke","#000000");
+			otherNewPath.setAttribute("stroke-width","1");
+			otherNewPath.setAttribute("stroke-linecap","round");
+
+			var startX = Math.max(face.bust * 0.5 , face.shoulders * 0.7);
+
+			// start 
+			x = 100 - startX;
+			y = neck + 10;
+			path = 'm '+x+','+y;
+		
+			x = 100 + startX;
+			otherPath = 'm '+x+','+y;
+
+			// to outside of bust (if necessary)
+			if (startX-face.bust < 0) {
+				x = startX - face.bust;
+				y = face.bust * 0.4;
+				c1x = 0;
+				c1y = 0;
+				c2x = x;
+				c2y = y - face.bust * 0.2;
+				path += ' c '+c1x+','+c1y+' '+c2x+','+c2y+' '+x+','+y;
+				x *= -1;
+				c1x *= -1;
+				c2x *= -1;
+				otherPath += ' c '+c1x+','+c1y+' '+c2x+','+c2y+' '+x+','+y;
+			} else {
+				x = 100 - (face.bust + face.shoulders * 0.7)/2;
+				y = neck + face.shoulders * 0.55;
+				path = 'm '+x+','+y;
+				x = 100 + (face.bust + face.shoulders * 0.7)/2;
+				otherPath = 'm '+x+','+y;
+			};
+
+			// to bottom of bust
+			x = face.bust * 0.5;
+			y = face.bust * 0.5;
+			c1x = 0;
+			c1y = face.bust * 0.3;
+			c2x = x - face.bust * 0.33;
+			c2y = y;
+			path += ' c '+c1x+','+c1y+' '+c2x+','+c2y+' '+x+','+y;
+			x *= -1;
+			c1x *= -1;
+			c2x *= -1;
+			otherPath += ' c '+c1x+','+c1y+' '+c2x+','+c2y+' '+x+','+y;
+
+			// to inside of bust
+			x = face.bust * 0.5;
+			y = 0 - face.bust * 0.5;
+			c1x = face.bust * 0.33;
+			c1y = 0;
+			c2x = x;
+			c2y = y + face.bust * 0.3;
+			path += ' c '+c1x+','+c1y+' '+c2x+','+c2y+' '+x+','+y;
+			x *= -1;
+			c1x *= -1;
+			c2x *= -1;
+			otherPath += ' c '+c1x+','+c1y+' '+c2x+','+c2y+' '+x+','+y;
+		
+			newPath.setAttributeNS(null,"d",path);
+			bodyGroup.appendChild(newPath);
+		
+			otherNewPath.setAttributeNS(null,"d",otherPath);
+			bodyGroup.appendChild(otherNewPath);
+		};
+		
+		
+		// At End of Body Section, Add Shading Group
+			
 		// Ear Backs
 		newPath = document.createElementNS('http://www.w3.org/2000/svg',"path");
 		newPath.setAttribute("fill",face.earColor);
@@ -923,6 +1470,7 @@ var view = {
 			
 			// Eyeball
 			var newPath = document.createElementNS('http://www.w3.org/2000/svg',"circle");
+			newPath.id = 'eyeball'+i;
 			newPath.setAttribute("fill","#FFFFFF");
 			newPath.setAttribute("stroke",'none');
 			newPath.setAttribute("stroke-width","2");
