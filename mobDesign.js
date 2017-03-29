@@ -851,7 +851,7 @@ var view = {
 		c1x = 0;
 		c1y = -3;
 		c2x = x;
-		c2y = y+3;
+		c2y = y + face.belly / 3;
 		path += ' c '+c1x+','+c1y+' '+c2x+','+c2y+' '+x+','+y;
 
 		// to left rib
