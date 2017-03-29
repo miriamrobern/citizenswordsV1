@@ -9,32 +9,35 @@
 	
 	<body onload='handlers.randomizeFace()'>
 	
-		<div id='faceDiv' class='faceDiv'> &nbsp;</div>
+	<div id = 'wrapper'>
+		<div id = 'leftDiv'>
+			<div id='faceDiv' class='faceDiv'> &nbsp;</div>
 		
-		<button onclick='handlers.randomizeFace()'>Randomize</button>
-
-		<div class='controlsSectionDiv'>
-			<h3>Coloring</h3>
-			<p><input disabled hidden id='skinColorInput' type = 'color' value = '#aaaaaa' oninput = 'handlers.updateFace()'  /></p>
-			<p><input id= 'blackEumelaninInput' type = 'range' min='1' max='80' value = '10' oninput = 'handlers.updateColoring()' />Black Eumelanin</p>
-			<p><input id= 'brownEumelaninInput' type = 'range' min='1' max='90' value = '10' oninput = 'handlers.updateColoring()' />Brown Eumelanin</p>
-			<p><input id= 'pinkPheomelaninInput' type = 'range' min='1' max='90' value = '10' oninput = 'handlers.updateColoring()' />Pink Pheomelanin</p>
-			<p><input id= 'greenKeratinInput' type = 'range' min='0' max='40' value = '10' oninput = 'handlers.updateColoring()' />Green Keratin</p>
-			<p><input id='eyeColorInput' type = 'color' value = '#00FF00' oninput = 'handlers.updateFace()' />Eye Color</p>
-			<p><input id='hairColorInput' type = 'color' value = '#ffffff' oninput = 'handlers.updateFace()' />Hair Color</p>
-			<p><input disabled hidden id='noseColorInput' type = 'color' value = '#00FF00' oninput = 'handlers.updateFace()' /></p>
-			<p><input id= 'noseShadingInput' type = 'range' min='-90' max='90' value = '0' oninput = 'handlers.updateColoring()' />Nose Shading</p>
-			<p><input id= 'nosePinknessInput' type = 'range' min='-50' max='50' value = '0' oninput = 'handlers.updateColoring()' />Nose Pinkness</p>
-			<p><input disabled hidden id='lipColorInput' type = 'color' value = '#00FF00' oninput = 'handlers.updateFace()' /></p>
-			<p><input id= 'lipShadingInput' type = 'range' min='-90' max='90' value = '0' oninput = 'handlers.updateColoring()' />Lip Shading</p>
-			<p><input id= 'lipPinknessInput' type = 'range' min='-50' max='50' value = '0' oninput = 'handlers.updateColoring()' />Lip Pinkness</p>
-			<p><input disabled hidden id='earColorInput' type = 'color' value = '#00FF00' oninput = 'handlers.updateFace()' /></p>
-			<p><input id= 'earShadingInput' type = 'range' min='-90' max='90' value = '0' oninput = 'handlers.updateColoring()' />Inner Ear Shading</p>
-			<p><input id= 'earPinknessInput' type = 'range' min='-50' max='50' value = '0' oninput = 'handlers.updateColoring()' />Inner Ear Pinkness</p>
+			<button onclick='handlers.randomizeFace()'>Randomize</button>
 		</div>
-	
-		<div id='controlsDiv'>
-	
+
+		<div id='rightDiv'>
+
+			<div class='controlsSectionDiv'>
+				<h3>Coloring</h3>
+				<p><input disabled hidden id='skinColorInput' type = 'color' value = '#aaaaaa' oninput = 'handlers.updateFace()'  /></p>
+				<p><input id= 'blackEumelaninInput' type = 'range' min='1' max='80' value = '10' oninput = 'handlers.updateColoring()' />Black Eumelanin</p>
+				<p><input id= 'brownEumelaninInput' type = 'range' min='1' max='90' value = '10' oninput = 'handlers.updateColoring()' />Brown Eumelanin</p>
+				<p><input id= 'pinkPheomelaninInput' type = 'range' min='1' max='90' value = '10' oninput = 'handlers.updateColoring()' />Pink Pheomelanin</p>
+				<p><input id= 'greenKeratinInput' type = 'range' min='0' max='40' value = '10' oninput = 'handlers.updateColoring()' />Green Keratin</p>
+				<p><input id='eyeColorInput' type = 'color' value = '#00FF00' oninput = 'handlers.updateFace()' />Eye Color</p>
+				<p><input id='hairColorInput' type = 'color' value = '#ffffff' oninput = 'handlers.updateFace()' />Hair Color</p>
+				<p><input disabled hidden id='noseColorInput' type = 'color' value = '#00FF00' oninput = 'handlers.updateFace()' /></p>
+				<p><input id= 'noseShadingInput' type = 'range' min='-90' max='90' value = '0' oninput = 'handlers.updateColoring()' />Nose Shading</p>
+				<p><input id= 'nosePinknessInput' type = 'range' min='-50' max='50' value = '0' oninput = 'handlers.updateColoring()' />Nose Pinkness</p>
+				<p><input disabled hidden id='lipColorInput' type = 'color' value = '#00FF00' oninput = 'handlers.updateFace()' /></p>
+				<p><input id= 'lipShadingInput' type = 'range' min='-90' max='90' value = '0' oninput = 'handlers.updateColoring()' />Lip Shading</p>
+				<p><input id= 'lipPinknessInput' type = 'range' min='-50' max='50' value = '0' oninput = 'handlers.updateColoring()' />Lip Pinkness</p>
+				<p><input disabled hidden id='earColorInput' type = 'color' value = '#00FF00' oninput = 'handlers.updateFace()' /></p>
+				<p><input id= 'earShadingInput' type = 'range' min='-90' max='90' value = '0' oninput = 'handlers.updateColoring()' />Inner Ear Shading</p>
+				<p><input id= 'earPinknessInput' type = 'range' min='-50' max='50' value = '0' oninput = 'handlers.updateColoring()' />Inner Ear Pinkness</p>
+			</div>
+
 			<div class='controlsSectionDiv'>
 				<h3>Head Shape</h3>
 				<p><input id= 'templePositionInput' type = 'range' min='5' max='20' value = '10' oninput = 'handlers.updateFace()' />Temple Position</p>
@@ -43,7 +46,7 @@
 				<p><input id= 'cheekbonePositionInput' type = 'range' min='5' max='20' value = '10' oninput = 'handlers.updateFace()' />Cheekbone Position</p>
 				<p><input id= 'cheekboneWidthInput' type = 'range' min='0' max='7' value = '5' oninput = 'handlers.updateFace()' />Cheekbone Width</p>
 				<p><input id= 'cheekboneHeightInput' type = 'range' min='2' max='10' value = '5' oninput = 'handlers.updateFace()' />Cheekbone Height</p>
-				<p><input id= 'chinHeightInput' type = 'range' min='40' max='66' value = '50' oninput = 'handlers.updateFace()' />Chin Height</p>
+				<p><input id= 'chinHeightInput' type = 'range' min='40' max='50' value = '50' oninput = 'handlers.updateFace()' />Chin Height</p>
 				<p><input id= 'chinWidthInput' type = 'range' min='10' max='40' value = '12' oninput = 'handlers.updateFace()' />Chin Width</p>
 			</div>
 		
@@ -57,11 +60,9 @@
 				<p><input id= 'browSizeInput' type = 'range' min='0' max='5' step='0.25' value = '7.5' oninput = 'handlers.updateFace()' />Brow Size</p>
 				<p><input id= 'leftBrowTiltInput' type = 'range' min='-4' max='5' step='0.25' value = '7.5' oninput = 'handlers.updateFace()' />Left Brow Tilt</p>
 				<p><input id= 'rightBrowTiltInput' type = 'range' min='-4' max='5' step='0.25' value = '7.5' oninput = 'handlers.updateFace()' />Right Brow Tilt</p>
-<!-- 
 			</div>
 		
 			<div class='controlsSectionDiv'>
- -->
 				<h3>Nose</h3>
 				<p><input id= 'noseHeightInput' type = 'range' min='20' max='90' value = '50' oninput = 'handlers.updateFace()' />Nose Height</p>
 				<p><input id= 'noseSizeInput' type = 'range' min='1' max='5' value = '2' oninput = 'handlers.updateFace()' />Nose Size</p>
@@ -79,11 +80,9 @@
 				<p><input id= 'teethInput' type = 'range' min='0' max='4' value = '7.5' oninput = 'handlers.updateFace()' />Teeth</p>
 				<p><input id= 'leftTuskInput' type = 'range' min='-2' max='2' value = '7.5' oninput = 'handlers.updateFace()' />Left Tusk</p>
 				<p><input id= 'rightTuskInput' type = 'range' min='-2' max='2' value = '7.5' oninput = 'handlers.updateFace()' />Right Tusk</p>	
-<!-- 
 			</div>
 			
 			<div class='controlsSectionDiv'>
- -->
 				<h3>Ears</h3>
 				<p><input id= 'earSizeInput' type = 'range' min='4' max='20' value = '0' oninput = 'handlers.updateFace()' />Ear Size</p>
 				<p><input id= 'earDipInput' type = 'range' min='-20' max='-2' step = '0.5' value = '5' oninput = 'handlers.updateFace()' />Ear Dip</p>
@@ -115,6 +114,8 @@
 			</div>
 		
 		</div>
+	
+	</div>
 		
 	</body>
 

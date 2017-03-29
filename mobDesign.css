@@ -1,38 +1,38 @@
 
-
-.faceDiv {
-	height: 500px;
-	width: 500px;
-	border: 3px solid black;
-	float: left;
-	margin-right: 20px;
+.wrapper {
+	margin-left: 5vw;
+	margin-right: 5vw;
 }
 
-#controlsDiv {
-	clear: both;
+#leftDiv {
+	float: left;
+	margin-left: 5vw;
+	margin-right: 5vw;
+	margin-top: 10vh;
+}
+
+.faceDiv {
+	height: 40vw;
+	width: 40vw;
+	border: 3px solid black;
+}
+
+#rightDiv {
+	float: left;
+	height: 60vw;
+	width: 40vw;
+	margin-top: 10vh;
+	overflow: scroll;
 }
 
 .controlsSectionDiv {
-	float: left;
-	margin-right: 20px;
 }
 
 input {
-	width: 100px;
-	margin-right: 5px;
+	width: 200px;
+	margin-right: 20px;
 }
 
-select {
-	width: 50px;
-	margin-right: 5px;
+button {
+	margin-top: 10px;
 }
-
-svg {
-	width: 100%;
-	height: 100%;
-}
-
-td {
-	vertical-align: top;
-	padding-left: 20px;
-	}

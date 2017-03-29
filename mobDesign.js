@@ -506,7 +506,7 @@ var view = {
 			pivotPoint.setAttribute("cy",y + armWidth * 0.5);
 			pivotPoint.setAttribute("r",0);
 			rightArmGroup.appendChild(pivotPoint);
-		newPath.setAttributeNS(null,'transform','rotate(-50 '+pivotPoint.cx.animVal.value+' '+pivotPoint.cy.animVal.value+')');
+		rightForearmGroup.setAttributeNS(null,'transform','rotate(-50 '+pivotPoint.cx.animVal.value+' '+pivotPoint.cy.animVal.value+')');
 		pivotPoint = document.createElementNS('http://www.w3.org/2000/svg',"circle");
 			pivotPoint.id = 'rightWristPivot';
 			pivotPoint.setAttribute("fill","none");
@@ -515,18 +515,19 @@ var view = {
 			pivotPoint.setAttribute("cy",y + armWidth * 0.5 + 20);
 			pivotPoint.setAttribute("r",0);
 			rightForearmGroup.appendChild(pivotPoint);
+			var rightWristPivot = pivotPoint;
 		path = 'm '+x+','+y;
 		
 		x = 100 - armWidth * 0.5 + face.shoulders ;
 		pivotPoint = document.createElementNS('http://www.w3.org/2000/svg',"circle");
-			pivotPoint.id = 'leftShoulderPivot';
+			pivotPoint.id = 'leftElbowPivot';
 			pivotPoint.setAttribute("fill","none");
 			pivotPoint.setAttribute("stroke",'none');
 			pivotPoint.setAttribute("cx",x);
 			pivotPoint.setAttribute("cy",y + armWidth * 0.5);
 			pivotPoint.setAttribute("r",0);
 			rightArmGroup.appendChild(pivotPoint);
-		otherNewPath.setAttributeNS(null,'transform','rotate(50 '+pivotPoint.cx.animVal.value+' '+pivotPoint.cy.animVal.value+')');
+		leftForearmGroup.setAttributeNS(null,'transform','rotate(50 '+pivotPoint.cx.animVal.value+' '+pivotPoint.cy.animVal.value+')');
 		pivotPoint = document.createElementNS('http://www.w3.org/2000/svg',"circle");
 			pivotPoint.id = 'leftWristPivot';
 			pivotPoint.setAttribute("fill","none");
@@ -535,6 +536,7 @@ var view = {
 			pivotPoint.setAttribute("cy",y + armWidth * 0.5 + 20);
 			pivotPoint.setAttribute("r",0);
 			leftForearmGroup.appendChild(pivotPoint);
+			var leftWristPivot = pivotPoint;
 		otherPath = 'm '+x+','+y;
 
 		// to outside elbow
@@ -2445,8 +2447,393 @@ var view = {
 			
 			
 		};
+		
+		// Hands
+		var rightHand = document.createElementNS('http://www.w3.org/2000/svg',"g");
+		rightHand.id = 'rightHand';
+		rightForearmGroup.appendChild(rightHand);
+// 		rightHand.setAttributeNS(null,'transform','translate(0) rotate(0 '+rightWristPivot.cx.animVal.value+' '+rightWristPivot.cy.animVal.value+')');
 
+		var leftHand = document.createElementNS('http://www.w3.org/2000/svg',"g");
+		leftHand.id = 'leftHand';
+		leftForearmGroup.appendChild(leftHand);
+// 		leftHand.setAttributeNS(null,'transform','translate(0) rotate(0 '+leftWristPivot.cx.animVal.value+' '+leftWristPivot.cy.animVal.value+')');
+		
+		// Thumbs
+				
+		newPath = document.createElementNS('http://www.w3.org/2000/svg',"path");
+		newPath.setAttribute("fill",face.skinColor);
+		newPath.setAttribute("stroke","#000000");
+		newPath.setAttribute("stroke-width","1");
+		newPath.setAttribute("stroke-linecap","round");
+		
+		otherNewPath = document.createElementNS('http://www.w3.org/2000/svg',"path");
+		otherNewPath.setAttribute("fill",face.skinColor);
+		otherNewPath.setAttribute("stroke","#000000");
+		otherNewPath.setAttribute("stroke-width","1");
+		otherNewPath.setAttribute("stroke-linecap","round");
 
+		// start at bottom of thumb
+		x = 100 + armWidth * 0.5 - face.shoulders;
+		y = neck + 5 + upperArmLength + 20;
+		path = 'm '+x+','+y;
 
+		x = 100 - armWidth * 0.5 + face.shoulders;
+		otherPath = 'm '+x+','+y;
+
+		// to top of thumb
+		x = 10;
+		y = -4;
+		c1x = 0;
+		c1y = 0;
+		c2x = x-1;
+		c2y = y;
+		path += ' c '+c1x+','+c1y+' '+c2x+','+c2y+' '+x+','+y;
+		x *= -1;
+		c1x *= -1;
+		c2x *= -1;
+		otherPath += ' c '+c1x+','+c1y+' '+c2x+','+c2y+' '+x+','+y;
+
+		// to bottom of first knuckle
+		x = 5;
+		y = 3;
+		c1x = 1;
+		c1y = 0;
+		c2x = x;
+		c2y = y-1;
+		path += ' c '+c1x+','+c1y+' '+c2x+','+c2y+' '+x+','+y;
+		x *= -1;
+		c1x *= -1;
+		c2x *= -1;
+		otherPath += ' c '+c1x+','+c1y+' '+c2x+','+c2y+' '+x+','+y;
+
+		// to tip of thumb
+		x = 0;
+		y = 10;
+		c1x = 0;
+		c1y = 0;
+		c2x = x;
+		c2y = y;
+		path += ' c '+c1x+','+c1y+' '+c2x+','+c2y+' '+x+','+y;
+		x *= -1;
+		c1x *= -1;
+		c2x *= -1;
+		otherPath += ' c '+c1x+','+c1y+' '+c2x+','+c2y+' '+x+','+y;
+
+		// to pad of thumb
+		x = -5;
+		y = -2;
+		c1x = -3;
+		c1y = 0;
+		c2x = x;
+		c2y = y;
+		path += ' c '+c1x+','+c1y+' '+c2x+','+c2y+' '+x+','+y;
+		x *= -1;
+		c1x *= -1;
+		c2x *= -1;
+		otherPath += ' c '+c1x+','+c1y+' '+c2x+','+c2y+' '+x+','+y;
+			
+		newPath.setAttributeNS(null,"d",path);
+		rightHand.appendChild(newPath);
+
+		otherNewPath.setAttributeNS(null,"d",otherPath);
+		leftHand.appendChild(otherNewPath);
+		
+		// Items Here?
+		
+		// Fist Fronts
+				
+		newPath = document.createElementNS('http://www.w3.org/2000/svg',"path");
+		newPath.setAttribute("fill",face.skinColor);
+		newPath.setAttribute("stroke","#000000");
+		newPath.setAttribute("stroke-width","1");
+		newPath.setAttribute("stroke-linecap","round");
+		
+		otherNewPath = document.createElementNS('http://www.w3.org/2000/svg',"path");
+		otherNewPath.setAttribute("fill",face.skinColor);
+		otherNewPath.setAttribute("stroke","#000000");
+		otherNewPath.setAttribute("stroke-width","1");
+		otherNewPath.setAttribute("stroke-linecap","round");
+
+		// start at bottom of thumb
+		x = 100 + armWidth * 0.5 - face.shoulders;
+		y = neck + 5 + upperArmLength + 20;
+		path = 'm '+x+','+y;
+
+		x = 100 - armWidth * 0.5 + face.shoulders;
+		otherPath = 'm '+x+','+y;
+
+		// to top outside of fist
+		x = -9;
+		y = 0;
+		c1x = 0;
+		c1y = 0;
+		c2x = x;
+		c2y = y;
+		path += ' c '+c1x+','+c1y+' '+c2x+','+c2y+' '+x+','+y;
+		x *= -1;
+		c1x *= -1;
+		c2x *= -1;
+		otherPath += ' c '+c1x+','+c1y+' '+c2x+','+c2y+' '+x+','+y;
+		
+		// to bottom outside of fist
+		for (i=0;i<4;i++) {
+			// dip out for knuckle
+			x = -1;
+			y = 1;
+			c1x = 0;
+			c1y = 0;
+			c2x = x;
+			c2y = y;
+			path += ' c '+c1x+','+c1y+' '+c2x+','+c2y+' '+x+','+y;
+			x *= -1;
+			c1x *= -1;
+			c2x *= -1;
+			otherPath += ' c '+c1x+','+c1y+' '+c2x+','+c2y+' '+x+','+y;
+			// down a finger
+			x = 0;
+			y = 5;
+			c1x = 0;
+			c1y = 0;
+			c2x = x;
+			c2y = y;
+			path += ' c '+c1x+','+c1y+' '+c2x+','+c2y+' '+x+','+y;
+			x *= -1;
+			c1x *= -1;
+			c2x *= -1;
+			otherPath += ' c '+c1x+','+c1y+' '+c2x+','+c2y+' '+x+','+y;
+			// dip in for knuckle
+			x = 1;
+			y = 1;
+			c1x = 0;
+			c1y = 0;
+			c2x = x;
+			c2y = y;
+			path += ' c '+c1x+','+c1y+' '+c2x+','+c2y+' '+x+','+y;
+			x *= -1;
+			c1x *= -1;
+			c2x *= -1;
+			otherPath += ' c '+c1x+','+c1y+' '+c2x+','+c2y+' '+x+','+y;
+		}
+
+		// to bottom inside of fist
+		x = 16;
+		y = 0;
+		c1x = 0;
+		c1y = 0;
+		c2x = x;
+		c2y = y;
+		path += ' c '+c1x+','+c1y+' '+c2x+','+c2y+' '+x+','+y;
+		x *= -1;
+		c1x *= -1;
+		c2x *= -1;
+		otherPath += ' c '+c1x+','+c1y+' '+c2x+','+c2y+' '+x+','+y;
+
+		// Pinky Finger
+		// bottom corner
+		x = 1;
+		y = -1;
+		c1x = 0;
+		c1y = 0;
+		c2x = x;
+		c2y = y;
+		path += ' c '+c1x+','+c1y+' '+c2x+','+c2y+' '+x+','+y;
+		x *= -1;
+		c1x *= -1;
+		c2x *= -1;
+		otherPath += ' c '+c1x+','+c1y+' '+c2x+','+c2y+' '+x+','+y;
+
+		// up a finger
+		x = 0;
+		y = -5;
+		c1x = 0;
+		c1y = 0;
+		c2x = x;
+		c2y = y;
+		path += ' c '+c1x+','+c1y+' '+c2x+','+c2y+' '+x+','+y;
+		x *= -1;
+		c1x *= -1;
+		c2x *= -1;
+		otherPath += ' c '+c1x+','+c1y+' '+c2x+','+c2y+' '+x+','+y;
+
+		// top corner
+		x = -1;
+		y = -1;
+		c1x = 0;
+		c1y = 0;
+		c2x = x;
+		c2y = y;
+		path += ' c '+c1x+','+c1y+' '+c2x+','+c2y+' '+x+','+y;
+		x *= -1;
+		c1x *= -1;
+		c2x *= -1;
+		otherPath += ' c '+c1x+','+c1y+' '+c2x+','+c2y+' '+x+','+y;
+		
+		path += ' h -8 h 9';
+		otherPath += ' h 8 h -9';
+
+		// Ring Finger
+		// bottom corner
+		x = 1;
+		y = -1;
+		c1x = 0;
+		c1y = 0;
+		c2x = x;
+		c2y = y;
+		path += ' c '+c1x+','+c1y+' '+c2x+','+c2y+' '+x+','+y;
+		x *= -1;
+		c1x *= -1;
+		c2x *= -1;
+		otherPath += ' c '+c1x+','+c1y+' '+c2x+','+c2y+' '+x+','+y;
+
+		// up a finger
+		x = 0;
+		y = -5;
+		c1x = 0;
+		c1y = 0;
+		c2x = x;
+		c2y = y;
+		path += ' c '+c1x+','+c1y+' '+c2x+','+c2y+' '+x+','+y;
+		x *= -1;
+		c1x *= -1;
+		c2x *= -1;
+		otherPath += ' c '+c1x+','+c1y+' '+c2x+','+c2y+' '+x+','+y;
+
+		// top corner
+		x = -1;
+		y = -1;
+		c1x = 0;
+		c1y = 0;
+		c2x = x;
+		c2y = y;
+		path += ' c '+c1x+','+c1y+' '+c2x+','+c2y+' '+x+','+y;
+		x *= -1;
+		c1x *= -1;
+		c2x *= -1;
+		otherPath += ' c '+c1x+','+c1y+' '+c2x+','+c2y+' '+x+','+y;
+		
+		path += ' h -9 h 10';
+		otherPath += ' h 9 h -10';
+
+		// Middle Finger
+		// bottom corner
+		x = 1;
+		y = -1;
+		c1x = 0;
+		c1y = 0;
+		c2x = x;
+		c2y = y;
+		path += ' c '+c1x+','+c1y+' '+c2x+','+c2y+' '+x+','+y;
+		x *= -1;
+		c1x *= -1;
+		c2x *= -1;
+		otherPath += ' c '+c1x+','+c1y+' '+c2x+','+c2y+' '+x+','+y;
+
+		// up a finger
+		x = 0;
+		y = -5;
+		c1x = 0;
+		c1y = 0;
+		c2x = x;
+		c2y = y;
+		path += ' c '+c1x+','+c1y+' '+c2x+','+c2y+' '+x+','+y;
+		x *= -1;
+		c1x *= -1;
+		c2x *= -1;
+		otherPath += ' c '+c1x+','+c1y+' '+c2x+','+c2y+' '+x+','+y;
+
+		// top corner
+		x = -1;
+		y = -1;
+		c1x = 0;
+		c1y = 0;
+		c2x = x;
+		c2y = y;
+		path += ' c '+c1x+','+c1y+' '+c2x+','+c2y+' '+x+','+y;
+		x *= -1;
+		c1x *= -1;
+		c2x *= -1;
+		otherPath += ' c '+c1x+','+c1y+' '+c2x+','+c2y+' '+x+','+y;
+		
+		path += ' h -10 h 9';
+		otherPath += ' h 10 h -9';
+
+		// Index Finger
+		// bottom corner
+		x = 1;
+		y = -1;
+		c1x = 0;
+		c1y = 0;
+		c2x = x;
+		c2y = y;
+		path += ' c '+c1x+','+c1y+' '+c2x+','+c2y+' '+x+','+y;
+		x *= -1;
+		c1x *= -1;
+		c2x *= -1;
+		otherPath += ' c '+c1x+','+c1y+' '+c2x+','+c2y+' '+x+','+y;
+
+		// up a finger
+		x = 0;
+		y = -5;
+		c1x = 0;
+		c1y = 0;
+		c2x = x;
+		c2y = y;
+		path += ' c '+c1x+','+c1y+' '+c2x+','+c2y+' '+x+','+y;
+		x *= -1;
+		c1x *= -1;
+		c2x *= -1;
+		otherPath += ' c '+c1x+','+c1y+' '+c2x+','+c2y+' '+x+','+y;
+
+		// top corner
+		x = -1;
+		y = -1;
+		c1x = 0;
+		c1y = 0;
+		c2x = x;
+		c2y = y;
+		path += ' c '+c1x+','+c1y+' '+c2x+','+c2y+' '+x+','+y;
+		x *= -1;
+		c1x *= -1;
+		c2x *= -1;
+		otherPath += ' c '+c1x+','+c1y+' '+c2x+','+c2y+' '+x+','+y;
+
+		// to top  of fist
+		x = -9;
+		y = 0;
+		c1x = 0;
+		c1y = 0;
+		c2x = x;
+		c2y = y;
+		path += ' c '+c1x+','+c1y+' '+c2x+','+c2y+' '+x+','+y;
+		x *= -1;
+		c1x *= -1;
+		c2x *= -1;
+		otherPath += ' c '+c1x+','+c1y+' '+c2x+','+c2y+' '+x+','+y;
+
+		// to
+		x = 0;
+		y = 0;
+		c1x = 0;
+		c1y = 0;
+		c2x = x;
+		c2y = y;
+		path += ' c '+c1x+','+c1y+' '+c2x+','+c2y+' '+x+','+y;
+		x *= -1;
+		c1x *= -1;
+		c2x *= -1;
+		otherPath += ' c '+c1x+','+c1y+' '+c2x+','+c2y+' '+x+','+y;
+			
+		newPath.setAttributeNS(null,"d",path);
+		rightHand.appendChild(newPath);
+
+		otherNewPath.setAttributeNS(null,"d",otherPath);
+		leftHand.appendChild(otherNewPath);
+		
+		
+		
+		
+		
+		// End Draw Face
 	},
 };
