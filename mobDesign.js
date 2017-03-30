@@ -183,53 +183,35 @@ var handlers = {
 		handlers.updateFace(p1);
 	},
 	
-	randomizeFace: function() {
+	randomizeFace: function(grandparents) {
 		view.setSliders();
 		
-		// Old Code
-// 		for (i in p1.faceData) {
-// 			var slider = document.getElementById(i+"Input");
-// 			if (i.indexOf('olor') == -1) {
-// 				slider.value = 1 + ( Math.random() * (parseInt(slider.max) - parseInt(slider.min)) << 0 ) + parseInt(slider.min);
-// 			} else {
-// 				var red = Math.random() * 255 << 0;
-// 				var green = Math.random() * 255  << 0;
-// 				var blue = Math.random() * 255 << 0;
-// 				slider.value = "#" + ("0" + red.toString(16)).substr(-2) + ("0" + green.toString(16)).substr(-2) + ("0" + blue.toString(16)).substr(-2);
-// 			};
-// 		};
-// 		var coloringSliders = {
-// 			blackEumelaninInput:0,
-// 			brownEumelaninInput:0,
-// 			pinkPheomelaninInput:0,
-// 			greenKeratinInput:0,
-// 			noseShadingInput:0,
-// 			nosePinknessInput:0,
-// 			lipShadingInput:0,
-// 			lipPinknessInput:0,
-// 			earShadingInput:0,
-// 			earPinknessInput:0,
-// 			};
-// 		for (i in coloringSliders) {
-// 			slider = document.getElementById(i);
-// 			slider.value = ( Math.random() * (parseInt(slider.max) - parseInt(slider.min)) << 0 ) + parseInt(slider.min);
-// 		};
-		// End Old Code
-		
+		// Randomized Base
 		for (i in {eyeColor:0,hairColor:0}) {
 			var red = Math.random() * 255 << 0;
 			var green = Math.random() * 255  << 0;
 			var blue = Math.random() * 255 << 0;
 			document.getElementById(i+'Input').value = "#" + ("0" + red.toString(16)).substr(-2) + ("0" + green.toString(16)).substr(-2) + ("0" + blue.toString(16)).substr(-2);
 		};
-		
-		
 		for (i in dataEthnicities.min) {
 			var slider = document.getElementById(i+'Input');
 			var random = Math.random();
 			var value = random*dataEthnicities.min[i] + (1-random)*dataEthnicities.max[i];
 			slider.value = value;
 		};
+		
+		// Get Grandparents' Ethnicities
+		if (grandparents == undefined) {
+			var ethnicities = Object.keys(dataEthnicities);
+			ethnicities.splice(ethnicities.indexOf('min'),1);
+			ethnicities.splice(ethnicities.indexOf('max'),1);
+			var grandparents = [];
+			for (i=0;i<4;i++) {
+				grandparents.push(ethnicities[Math.random() * ethnicities.length << 0]);
+				ethnicities = dataEthnicities[grandparents[i]].neighbors;
+			};
+		};
+		console.log(grandparents);
 		
 		handlers.updateColoring();
 		handlers.updateFace(p1);
@@ -242,8 +224,10 @@ var handlers = {
 	
 	typicalFeatures: function(ethnicity) {
 		for (i in ethnicity) {
-			var slider = document.getElementById(i+'Input');
-			document.getElementById(i+'Input').value = (parseInt(slider.value) + ethnicity[i] ) / 2;
+			if (i !== 'neighbors') {
+				var slider = document.getElementById(i+'Input');
+				document.getElementById(i+'Input').value = (parseInt(slider.value) + ethnicity[i] ) / 2;
+			};
 		};
 		handlers.updateColoring();
 		handlers.updateFace();
@@ -946,7 +930,7 @@ var view = {
 		c1x = 0;
 		c1y = face.belly / 3;
 		c2x = x;
-		c2y = y-1;
+		c2y = y - face.hips/3;
 		path += ' c '+c1x+','+c1y+' '+c2x+','+c2y+' '+x+','+y;
 
 		// to butt
@@ -971,7 +955,7 @@ var view = {
 		x = face.belly - face.hips;
 		y = -15;
 		c1x = 0;
-		c1y = -3;
+		c1y = face.hips/-3;
 		c2x = x;
 		c2y = y + face.belly / 3;
 		path += ' c '+c1x+','+c1y+' '+c2x+','+c2y+' '+x+','+y;
@@ -3099,4 +3083,52 @@ var view = {
 		
 		// End Draw Mob
 	},
+};
+
+var faceDiffs = {
+		pinkPheomelanin:10,
+		greenKeratin:0,
+		lipPinkness:10,
+		earShading:20,
+		earPinkness:30,
+		templePosition:10,
+		templeWidth:2,
+		templeHeight:4,
+		cheekbonePosition:10,
+		chinHeight:50,
+		chinWidth:20,
+		eyeDistance:25,
+		eyeSize:10,
+		browSize:5,
+		insideEyelidCurve:5,
+		outsideEyelidCurve:8,
+		lowerEyelidCurve:7,
+		noseHeight:90,
+		noseSize:5,
+		noseWidth:10,
+		nostrilHeight:15,
+		noseBump:10,
+		mouthWidth:15,
+		lipSize:7,
+		teeth:4,
+		leftTusk:2,
+		rightTusk:2,
+		earSize:20,
+		earDip:-2,
+		earTilt:10,
+		earWidth:50,
+		earLobe:15,
+		hairCurl:20,
+		horns:10,
+		shoulders:40,
+		belly:25,
+		hips:23,
+		feet:20,
+		};
+
+var exportFaceDiffs = function() {
+	for (i in faceDiffs) {
+		faceDiffs[i] = document.getElementById(i+'Input').value;
+	};
+	console.log(JSON.stringify(faceDiffs));
 };
