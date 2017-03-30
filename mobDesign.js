@@ -54,6 +54,7 @@ var p1 = {
 		bust: 0,
 		belly: 0,
 		hips: 0,
+		feet: 0,
 	},
 	
 
@@ -719,8 +720,8 @@ var view = {
 		c2x *= -1;
 		otherPath += ' c '+c1x+','+c1y+' '+c2x+','+c2y+' '+x+','+y;
 
-		// to outside right foot bottom
-		x = -15;
+		// to outside bottom right leg
+		x = -5;
 		y = 0;
 		c1x = 0;
 		c1y = 0;
@@ -733,7 +734,7 @@ var view = {
 		otherPath += ' c '+c1x+','+c1y+' '+c2x+','+c2y+' '+x+','+y;
 
 		// to top right foot
-		x = 10;
+		x = 0;
 		y = -8;
 		c1x = 0;
 		c1y = -10;
@@ -776,6 +777,93 @@ var view = {
 	
 		leftLegPath.setAttributeNS(null,"d",otherPath);
 		bodyGroup.appendChild(leftLegPath);
+				
+		// Feet
+		var rightFootPath = document.createElementNS('http://www.w3.org/2000/svg',"path");
+		rightFootPath.id = 'rightFootPath';
+		rightFootPath.setAttribute("fill",'inherit');
+		rightFootPath.setAttribute("stroke","#000000");
+		rightFootPath.setAttribute("stroke-width","1");
+		rightFootPath.setAttribute("stroke-linecap","round");
+		
+		var leftFootPath = document.createElementNS('http://www.w3.org/2000/svg',"path");
+		leftFootPath.id = 'leftFootPath';
+		leftFootPath.setAttribute("fill",'inherit');
+		leftFootPath.setAttribute("stroke","#000000");
+		leftFootPath.setAttribute("stroke-width","1");
+		leftFootPath.setAttribute("stroke-linecap","round");
+
+		// start at crotch (behind body)
+		x = 89;
+		y = neck + 92;
+		path = 'm '+x+','+y;
+		x = 111;
+		otherPath = 'm '+x+','+y;
+		
+		// to heel
+		x = 2;
+		y = 5;
+		c1x = 0;
+		c1y = 0;
+		c2x = x;
+		c2y = y;
+		path += ' c '+c1x+','+c1y+' '+c2x+','+c2y+' '+x+','+y;
+		x *= -1;
+		c1x *= -1;
+		c2x *= -1;
+		otherPath += ' c '+c1x+','+c1y+' '+c2x+','+c2y+' '+x+','+y;
+
+		// to inside of right tread
+		x = -4;
+		y = 3;
+		c1x = 0;
+		c1y = 0;
+		c2x = x + 2;
+		c2y = y;
+		path += ' c '+c1x+','+c1y+' '+c2x+','+c2y+' '+x+','+y;
+		x *= -1;
+		c1x *= -1;
+		c2x *= -1;
+		otherPath += ' c '+c1x+','+c1y+' '+c2x+','+c2y+' '+x+','+y;
+
+		// to outside bottom right leg
+		x = -6 - face.feet;
+		y = 0;
+		c1x = 0;
+		c1y = 0;
+		c2x = x;
+		c2y = y;
+		path += ' c '+c1x+','+c1y+' '+c2x+','+c2y+' '+x+','+y;
+		x *= -1;
+		c1x *= -1;
+		c2x *= -1;
+		otherPath += ' c '+c1x+','+c1y+' '+c2x+','+c2y+' '+x+','+y;
+
+		// to top right foot
+		x = face.feet;
+		y = -8;
+		c1x = 0;
+		c1y = -10;
+		c2x = x;
+		c2y = y;
+		path += ' c '+c1x+','+c1y+' '+c2x+','+c2y+' '+x+','+y;
+		x *= -1;
+		c1x *= -1;
+		c2x *= -1;
+		otherPath += ' c '+c1x+','+c1y+' '+c2x+','+c2y+' '+x+','+y;
+		
+		if (face.feet < 5) {
+			rightFootPath.setAttribute("fill",'#555555');
+			leftFootPath.setAttribute("fill",'#666666');
+			path += ' z';
+			otherPath += ' z';
+		};
+	
+		rightFootPath.setAttributeNS(null,"d",path);
+		bodyGroup.appendChild(rightFootPath);
+	
+		leftFootPath.setAttributeNS(null,"d",otherPath);
+		bodyGroup.appendChild(leftFootPath);
 		
 		// Torso
 		
@@ -2911,14 +2999,14 @@ var view = {
 				};
 			};
 		
-			if (armorColoring.breasts !== undefined) {
-				if (armorColoring.breasts.fill !== undefined) {
-					rightBreastPath.setAttribute("fill",armorColoring.breasts.fill);
-					leftBreastPath.setAttribute("fill",armorColoring.breasts.fill);
+			if (armorColoring.bust !== undefined) {
+				if (armorColoring.bust.fill !== undefined) {
+					rightBreastPath.setAttribute("fill",armorColoring.bust.fill);
+					leftBreastPath.setAttribute("fill",armorColoring.bust.fill);
 				};
-				if (armorColoring.breasts.stroke !== undefined) {
-					rightBreastPath.setAttribute("stroke",armorColoring.breasts.stroke);
-					leftBreastPath.setAttribute("stroke",armorColoring.breasts.stroke);
+				if (armorColoring.bust.stroke !== undefined) {
+					rightBreastPath.setAttribute("stroke",armorColoring.bust.stroke);
+					leftBreastPath.setAttribute("stroke",armorColoring.bust.stroke);
 				};
 			};
 		
@@ -2952,6 +3040,17 @@ var view = {
 				if (armorColoring.legs.stroke !== undefined) {
 					rightLegPath.setAttribute("stroke",armorColoring.legs.stroke);
 					leftLegPath.setAttribute("stroke",armorColoring.legs.stroke);
+				};
+			};
+		
+			if (armorColoring.feet !== undefined) {
+				if (armorColoring.feet.fill !== undefined) {
+					rightLegPath.setAttribute("fill",armorColoring.feet.fill);
+					leftLegPath.setAttribute("fill",armorColoring.feet.fill);
+				};
+				if (armorColoring.feet.stroke !== undefined) {
+					rightLegPath.setAttribute("stroke",armorColoring.feet.stroke);
+					leftLegPath.setAttribute("stroke",armorColoring.feet.stroke);
 				};
 			};
 		};
