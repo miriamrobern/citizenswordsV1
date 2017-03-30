@@ -1,4 +1,188 @@
+var dataEthnicities = {
 
+	min: {
+		blackEumelanin:1,
+		brownEumelanin:1,
+		pinkPheomelanin:1,
+		greenKeratin:0,
+		noseShading:-90,
+		nosePinkness:0,
+		lipShading:-90,
+		lipPinkness:0,
+		earShading:-90,
+		earPinkness:0,
+		templePosition:5,
+		templeWidth:0,
+		templeHeight:2,
+		cheekbonePosition:5,
+		cheekboneWidth:0,
+		cheekboneHeight:2,
+		chinHeight:40,
+		chinWidth:10,
+		eyeDistance:9,
+		eyeSize:6,
+		browSize:0,
+		insideEyelidCurve:-2,
+		outsideEyelidCurve:2,
+		lowerEyelidCurve:4,
+		noseHeight:20,
+		noseSize:1,
+		noseWidth:4,
+		nostrilHeight:1,
+		noseBump:-10,
+		mouthWidth:10,
+		lipSize:1,
+		teeth:0,
+		leftTusk:0,
+		rightTusk:0,
+		earSize:4,
+		earDip:-20,
+		earTilt:-10,
+		earWidth:-50,
+		earLobe:4,
+		hairCurl:1,
+		horns:0,
+		shoulders:30,
+		belly:15,
+		hips:15,
+		feet:0,
+		
+		leftBrowTilt: -4,
+		rightBrowTilt: -4,
+		smile: -7,
+		mouthOpen: 0,
+		hairLength: 0,
+		hairPart: -10,
+		hairBangs: 2,
+		hairBangsLength: 0,
+		hairSweep: 0,
+		topHairHeight: 0,
+		topHairBase: 2,
+		topHairWidth: 0,
+		bust: 0,
+		},
+	max: {
+		blackEumelanin:80,
+		brownEumelanin:90,
+		pinkPheomelanin:90,
+		greenKeratin:40,
+		noseShading:90,
+		nosePinkness:50,
+		lipShading:90,
+		lipPinkness:50,
+		earShading:90,
+		earPinkness:50,
+		templePosition:20,
+		templeWidth:5,
+		templeHeight:10,
+		cheekbonePosition:20,
+		cheekboneWidth:7,
+		cheekboneHeight:10,
+		chinHeight:50,
+		chinWidth:40,
+		eyeDistance:25,
+		eyeSize:10,
+		browSize:5,
+		insideEyelidCurve:5,
+		outsideEyelidCurve:8,
+		lowerEyelidCurve:7,
+		noseHeight:90,
+		noseSize:5,
+		noseWidth:10,
+		nostrilHeight:15,
+		noseBump:10,
+		mouthWidth:15,
+		lipSize:7,
+		teeth:4,
+		leftTusk:2,
+		rightTusk:2,
+		earSize:20,
+		earDip:-2,
+		earTilt:10,
+		earWidth:50,
+		earLobe:15,
+		hairCurl:20,
+		horns:10,
+		shoulders:40,
+		belly:25,
+		hips:23,
+		feet:20,
+		
+		leftBrowTilt: 5,
+		rightBrowTilt: 5,
+		smile: 7,
+		mouthOpen: 5,
+		hairLength: 80,
+		hairPart: 10,
+		hairBangs: 8,
+		hairBangsLength: 30,
+		hairSweep: 11,
+		topHairHeight: 11,
+		topHairBase: 25,
+		topHairWidth: 30,
+		bust: 32,
+		},
+	
+	centaur: {},
+	dwarven: {},
+	elvish: {},
+	faunic: {},
+	gigantic: {},
+	gnollish: {},
+	gnomish: {},
+	goblin: {},
+	halfling: {
+		pinkPheomelanin:0,
+		greenKeratin:0,
+		noseShading:0,
+		nosePinkness:0,
+		lipShading:0,
+		lipPinkness:0,
+		earShading:0,
+		earPinkness:0,
+		templePosition:13,
+		templeWidth:2,
+		templeHeight:6,
+		cheekbonePosition:13,
+		cheekboneWidth:4,
+		cheekboneHeight:6,
+		chinHeight:45,
+		chinWidth:25,
+		eyeDistance:17,
+		eyeSize:8,
+		browSize:2,
+		insideEyelidCurve:1,
+		outsideEyelidCurve:5,
+		lowerEyelidCurve:6,
+		noseHeight:56,
+		noseSize:3,
+		noseWidth:7,
+		nostrilHeight:8,
+		noseBump:0,
+		mouthWidth:13,
+		lipSize:4,
+		teeth:2,
+		leftTusk:-2,
+		rightTusk:-2,
+		earSize:12,
+		earDip:-11,
+		earTilt:0,
+		earWidth:-2,
+		earLobe:9,
+		hairCurl:10,
+		horns:1,
+		shoulders:35,
+		belly:20,
+		hips:17,
+		feet:10,
+		},
+	kobold: {},
+	minotaur: {},
+	orcish: {},
+	trollish: {},
+	satyric: {},
+
+};
  
  var dataWounds = {
  
@@ -298,6 +482,224 @@
  		name: "Initiate's Robes",
  		slot: ['armor'],
  		passiveDefense: 2,
+ 		simpleColoring: {
+ 			torso: {fill:'beige'},
+ 			upperArms: {fill:'beige'},
+ 			lowerArms: {fill:'beige'},
+ 			legs: {fill:'beige'},
+ 		},
+ 		svgNodes: function(mob,bodyConstants) {
+ 			var svgNodes = document.createElementNS('http://www.w3.org/2000/svg',"g");
+ 			
+			// Robe Bottom
+ 			var robePath = document.createElementNS('http://www.w3.org/2000/svg',"path");
+			robePath.setAttribute("fill",'beige');
+			robePath.setAttribute("stroke","#000000");
+			robePath.setAttribute("stroke-width","1");
+			robePath.setAttribute("stroke-linecap","round");
+			
+			// start right hip
+			x = 100 - mob.faceData.hips;
+			y = bodyConstants.neck + 53;
+			var path = 'm '+x+','+y;
+			
+			// to right knee
+			x = -27 + mob.faceData.hips;
+			y = 20;
+			c1x = 0;
+			c1y = 0;
+			c2x = x;
+			c2y = y-3;
+			path += ' c '+c1x+','+c1y+' '+c2x+','+c2y+' '+x+','+y;
+			
+			// to fold on top of right foot
+			x = 5;
+			y = 12;
+			c1x = 0;
+			c1y = 3;
+			c2x = x;
+			c2y = y;
+			path += ' c '+c1x+','+c1y+' '+c2x+','+c2y+' '+x+','+y;
+			
+			path += ' l 3,2 l -3,-2';
+			
+			// to outside of fold
+			x = -2;
+			y = 4;
+			c1x = -3;
+			c1y = -2;
+			c2x = x;
+			c2y = y;
+			path += ' c '+c1x+','+c1y+' '+c2x+','+c2y+' '+x+','+y;
+			
+			// to floor
+			x = 24;
+			y = 7;
+			c1x = 0;
+			c1y = 0;
+			c2x = x - 10;
+			c2y = y;
+			path += ' c '+c1x+','+c1y+' '+c2x+','+c2y+' '+x+','+y;
+			
+			// to top of left foot
+			x = 22;
+			y = -7;
+			c1x = 10;
+			c1y = 0;
+			c2x = x;
+			c2y = y;
+			path += ' c '+c1x+','+c1y+' '+c2x+','+c2y+' '+x+','+y;
+			
+			// to left knee
+			x = 5;
+			y = -16;
+			c1x = 0;
+			c1y = 3;
+			c2x = x;
+			c2y = y;
+			path += ' c '+c1x+','+c1y+' '+c2x+','+c2y+' '+x+','+y;
+			
+			// to left hip
+			x = -27 + mob.faceData.hips;
+			y = -18;
+			c1x = 0;
+			c1y = -3;
+			c2x = x;
+			c2y = y-10;
+			path += ' c '+c1x+','+c1y+' '+c2x+','+c2y+' '+x+','+y;
+			
+			robePath.setAttributeNS(null,"d",path);
+			svgNodes.appendChild(robePath);
+ 			
+			// Panel
+ 			var panelPath = document.createElementNS('http://www.w3.org/2000/svg',"path");
+			panelPath.setAttribute("fill",'darkblue');
+			panelPath.setAttribute("stroke","gold");
+			panelPath.setAttribute("stroke-width","3");
+			panelPath.setAttribute("stroke-linecap","round");
+			
+			// start right top
+			x = 92;
+			y = bodyConstants.neck;
+			var path = 'm '+x+','+y;
+			
+			// down to bustline
+			x = 0 - Math.max(0,mob.faceData.bust / 8);
+			y = 24;
+			c1x = 0;
+			c1y = 0;
+			c2x = x;
+			c2y = y - Math.max(0,mob.faceData.bust / 8);
+			path += ' c '+c1x+','+c1y+' '+c2x+','+c2y+' '+x+','+y;
+			
+			// down to belly
+			x = 0 + Math.max(0,mob.faceData.bust / 8) - Math.max(0,mob.faceData.belly / 8);
+			y = 20;
+			c1x = 0;
+			c1y = Math.max(0,mob.faceData.bust / 8);
+			c2x = x;
+			c2y = y;
+			path += ' c '+c1x+','+c1y+' '+c2x+','+c2y+' '+x+','+y;
+			
+			// down to floor
+			x = Math.max(0,mob.faceData.belly / 8) - 2;
+			y = 45;
+			c1x = 0;
+			c1y = 0;
+			c2x = x+2;
+			c2y = y-2;
+			path += ' c '+c1x+','+c1y+' '+c2x+','+c2y+' '+x+','+y;
+			
+			// across to left bottom
+			x = 20;
+			y = 0;
+			c1x = 0;
+			c1y = 4;
+			c2x = x;
+			c2y = y+4;
+			path += ' c '+c1x+','+c1y+' '+c2x+','+c2y+' '+x+','+y;
+			
+			// up to belly
+			x = Math.max(0,mob.faceData.belly / 8) - 2;
+			y = -45;
+			c1x = -2;
+			c1y = -2;
+			c2x = x;
+			c2y = y;
+			path += ' c '+c1x+','+c1y+' '+c2x+','+c2y+' '+x+','+y;
+			
+			// up to bustline
+			x = Math.max(0,mob.faceData.bust / 8) - Math.max(0,mob.faceData.belly / 8);
+			y = -20;
+			c1x = 0;
+			c1y = 0;
+			c2x = x;
+			c2y = y + Math.max(0,mob.faceData.bust / 8);
+			path += ' c '+c1x+','+c1y+' '+c2x+','+c2y+' '+x+','+y;
+			
+			// up to neck
+			x = 0 - Math.max(0,mob.faceData.bust / 8);
+			y = -25;
+			c1x = 0;
+			c1y = 0 - Math.max(0,mob.faceData.bust / 8);
+			c2x = x;
+			c2y = y;
+			path += ' c '+c1x+','+c1y+' '+c2x+','+c2y+' '+x+','+y;
+			
+			path += ' z';
+			panelPath.setAttributeNS(null,"d",path);
+			svgNodes.appendChild(panelPath);
+ 			
+			// Belt
+ 			var beltPath = document.createElementNS('http://www.w3.org/2000/svg',"path");
+			beltPath.setAttribute("fill",'darkblue');
+			beltPath.setAttribute("stroke","#000000");
+			beltPath.setAttribute("stroke-width","1");
+			beltPath.setAttribute("stroke-linecap","round");
+			
+			var bellyDip = 0;
+			if (mob.faceData.belly > 0) {
+				bellyDip = (mob.faceData.belly-15) * 0.7;
+			};
+			
+			// start right top
+			x = 98 - mob.faceData.hips;
+			y = bodyConstants.neck + 51;
+			var path = 'm '+x+','+y;
+			
+			// go to left top with belly dip
+			x = mob.faceData.hips * 2 + 4;
+			y = 0;
+			c1x = 0;
+			c1y = bellyDip;
+			c2x = x;
+			c2y = y+bellyDip;
+			path += ' c '+c1x+','+c1y+' '+c2x+','+c2y+' '+x+','+y;
+			
+			// go to left bottom
+			x = 0;
+			y = 4;
+			c1x = 0;
+			c1y = 0;
+			c2x = x;
+			c2y = y;
+			path += ' c '+c1x+','+c1y+' '+c2x+','+c2y+' '+x+','+y;
+			
+			// go to right bottom with belly dip
+			x = mob.faceData.hips * -2 - 4;
+			y = 2;
+			c1x = 0;
+			c1y = bellyDip;
+			c2x = x;
+			c2y = y+bellyDip;
+			path += ' c '+c1x+','+c1y+' '+c2x+','+c2y+' '+x+','+y;
+			
+			path += ' z';
+			beltPath.setAttributeNS(null,"d",path);
+			svgNodes.appendChild(beltPath);
+			 			
+ 			return svgNodes;
+ 		},
  	},
  
  	daisySword: {
@@ -319,11 +721,370 @@
  		],
  	},
  	
+ 	roughspun: {
+ 		name: "Roughspun Clothes",
+ 		slot: ['armor'],
+ 		passiveDefense: 0,
+ 		penalty: {move:0,focus:0},
+ 		simpleColoring: {
+ 			upperArms: {fill:'firebrick'},
+ 			feet: {fill:'saddlebrown'},
+ 		},
+ 		svgNodes: function(mob,bodyConstants) {
+ 			var svgNodes = document.createElementNS('http://www.w3.org/2000/svg',"g");
+ 			
+ 			// Shirt
+ 			var shirtGroup = document.createElementNS('http://www.w3.org/2000/svg',"g");
+ 			
+ 			var shirtPath = document.createElementNS('http://www.w3.org/2000/svg',"use");
+			shirtPath.setAttribute("fill",'firebrick');
+			shirtPath.setAttribute("href",'#torso');
+			shirtGroup.appendChild(shirtPath);
+ 			
+ 			var rightBreast = document.createElementNS('http://www.w3.org/2000/svg',"use");
+			rightBreast.setAttribute("fill",'firebrick');
+			rightBreast.setAttribute("href",'#rightBreast');
+			shirtGroup.appendChild(rightBreast);
+ 			
+ 			var leftBreast = document.createElementNS('http://www.w3.org/2000/svg',"use");
+			leftBreast.setAttribute("fill",'firebrick');
+			leftBreast.setAttribute("href",'#leftBreast');
+			shirtGroup.appendChild(leftBreast);
+ 			
+ 			var defs = document.createElementNS('http://www.w3.org/2000/svg',"defs");
+ 			var collarClipPath = document.createElementNS('http://www.w3.org/2000/svg',"clipPath");
+ 			var collarPath = document.createElementNS('http://www.w3.org/2000/svg',"path");
+			collarClipPath.appendChild(collarPath);
+			collarClipPath.id = 'collarClipPath';
+			defs.appendChild(collarClipPath);
+			svgNodes.appendChild(defs);
+			
+			// start right top
+			x = 100 - mob.faceData.shoulders * 0.5;
+			y = bodyConstants.neck;
+			var path = 'm '+x+','+y;
+			
+			// go to left top with dip
+			x = mob.faceData.shoulders;
+			y = 0;
+			c1x = 0;
+			c1y = 30;
+			c2x = x;
+			c2y = y + 30;
+			path += ' c '+c1x+','+c1y+' '+c2x+','+c2y+' '+x+','+y;
+			
+			var liningPath = path;
+			
+			path += 'h100 v100 h-250 v-100 z';
+			
+			collarPath.setAttributeNS(null,"d",path);
+			shirtGroup.setAttribute("clip-path","url(#collarClipPath)");
+			svgNodes.appendChild(shirtGroup);
+			
+			// Bustline
+ 			var bustline = document.createElementNS('http://www.w3.org/2000/svg',"path");
+			bustline.setAttribute("fill",'firebrick');
+			bustline.setAttribute("stroke",'none');
+			bustline.setAttribute("stroke-width","1");
+			bustline.setAttribute("stroke-linecap","round");
+						
+			// start right top
+			x = 100 - mob.faceData.bust / 2;
+			y = bodyConstants.neck + 22;
+			var depth = mob.faceData.bust / 2 + 1.5;
+			var path = 'm '+x+','+y+' v'+depth+' h'+mob.faceData.bust+' v-'+depth;
+			
+			bustline.setAttributeNS(null,"d",path);
+			svgNodes.appendChild(bustline);
+			
+ 			var collarLining = document.createElementNS('http://www.w3.org/2000/svg',"path");
+			collarLining.setAttribute("fill",'none');
+			collarLining.setAttribute("stroke",'#000000');
+			collarLining.setAttribute("stroke-width","1");
+			collarLining.setAttribute("stroke-linecap","round");
+			collarLining.setAttributeNS(null,"d",liningPath);
+			svgNodes.appendChild(collarLining);
+			
+			
+			// Shorts
+ 			var shortsPath = document.createElementNS('http://www.w3.org/2000/svg',"path");
+			shortsPath.setAttribute("fill",'tan');
+			shortsPath.setAttribute("stroke","#000000");
+			shortsPath.setAttribute("stroke-width","1");
+			shortsPath.setAttribute("stroke-linecap","round");
+			
+			var bellyDip = 0;
+			if (mob.faceData.belly > 0) {
+				bellyDip = (mob.faceData.belly-15) * 0.5;
+			};
+			
+			// start right top
+			x = 100 - mob.faceData.hips;
+			y = bodyConstants.neck + 58;
+			var path = 'm '+x+','+y;
+			
+			// go to left top with belly dip
+			x = mob.faceData.hips * 2;
+			y = 0;
+			c1x = 0;
+			c1y = bellyDip;
+			c2x = x;
+			c2y = y+bellyDip;
+			path += ' c '+c1x+','+c1y+' '+c2x+','+c2y+' '+x+','+y;
+			
+			// go to outside left knee
+			x = 25 - mob.faceData.hips;
+			y = 15;
+			c1x = 0;
+			c1y = 0;
+			c2x = x;
+			c2y = y;
+			path += ' c '+c1x+','+c1y+' '+c2x+','+c2y+' '+x+','+y;
+			
+			// go to inside left knee
+			x = -10;
+			y = 5;
+			c1x = 0;
+			c1y = 0;
+			c2x = x;
+			c2y = y;
+			path += ' c '+c1x+','+c1y+' '+c2x+','+c2y+' '+x+','+y;
+			
+			// go to crotch
+			x = -15;
+			y = -12;
+			c1x = 0;
+			c1y = 0;
+			c2x = x;
+			c2y = y;
+			path += ' c '+c1x+','+c1y+' '+c2x+','+c2y+' '+x+','+y;
+			
+			// go to inside right knee
+			x = -15;
+			y = 12;
+			c1x = 0;
+			c1y = 0;
+			c2x = x;
+			c2y = y;
+			path += ' c '+c1x+','+c1y+' '+c2x+','+c2y+' '+x+','+y;
+			
+			// go to outside right knee
+			x = -10;
+			y = -5;
+			c1x = 0;
+			c1y = 0;
+			c2x = x;
+			c2y = y;
+			path += ' c '+c1x+','+c1y+' '+c2x+','+c2y+' '+x+','+y;
+			
+			path += ' z';
+			shortsPath.setAttributeNS(null,"d",path);
+			svgNodes.appendChild(shortsPath);
+			
+			
+			// Belt
+ 			var beltPath = document.createElementNS('http://www.w3.org/2000/svg',"path");
+			beltPath.setAttribute("fill",'SaddleBrown');
+			beltPath.setAttribute("stroke","#000000");
+			beltPath.setAttribute("stroke-width","1");
+			beltPath.setAttribute("stroke-linecap","round");
+			
+			var bellyDip = 0;
+			if (mob.faceData.belly > 0) {
+				bellyDip = (mob.faceData.belly-15) * 0.5;
+			};
+			
+			// start right top
+			x = 100 - mob.faceData.hips;
+			y = bodyConstants.neck + 55;
+			var path = 'm '+x+','+y;
+			
+			// go to left top with belly dip
+			x = mob.faceData.hips * 2;
+			y = 0;
+			c1x = 0;
+			c1y = bellyDip;
+			c2x = x;
+			c2y = y+bellyDip;
+			path += ' c '+c1x+','+c1y+' '+c2x+','+c2y+' '+x+','+y;
+			
+			// go to left bottom
+			x = 0;
+			y = 3;
+			c1x = 0;
+			c1y = 0;
+			c2x = x;
+			c2y = y;
+			path += ' c '+c1x+','+c1y+' '+c2x+','+c2y+' '+x+','+y;
+			
+			// go to right bottom with belly dip
+			x = mob.faceData.hips * -2;
+			y = 0;
+			c1x = 0;
+			c1y = bellyDip;
+			c2x = x;
+			c2y = y+bellyDip;
+			path += ' c '+c1x+','+c1y+' '+c2x+','+c2y+' '+x+','+y;
+			
+			path += ' z';
+			beltPath.setAttributeNS(null,"d",path);
+			svgNodes.appendChild(beltPath);
+			 			
+ 			return svgNodes;
+ 		},
+ 	},
+ 	
  	scrapArmor: {
  		name: "Scrap Armor",
  		slot: ['armor'],
  		passiveDefense: 1,
  		penalty: {move:1,focus:1},
+ 		simpleColoring: {
+ 			bust: {fill:'none',stroke:'none'},
+ 			legs: {fill:'tan'},
+ 			feet: {fill:'darkgrey'},
+ 		},
+ 		svgNodes: function(mob,bodyConstants) {
+ 			var svgNodes = document.createElementNS('http://www.w3.org/2000/svg',"g");
+ 			
+ 			var scrapColors = ['#A0522D','#A05221','#A0452D'];
+ 			
+ 			// Skirt Straps
+ 			var startX;
+ 			var startY; 
+ 			for (i in [0,1,2]) {
+				newPath = document.createElementNS('http://www.w3.org/2000/svg',"path");
+				newPath.setAttribute("fill",scrapColors[i]);
+				newPath.setAttribute("stroke","#000000");
+				newPath.setAttribute("stroke-width","1");
+				newPath.setAttribute("stroke-linecap","round");
+			
+				otherNewPath = document.createElementNS('http://www.w3.org/2000/svg',"path");
+				otherNewPath.setAttribute("fill",scrapColors[2-i]);
+				otherNewPath.setAttribute("stroke","#000000");
+				otherNewPath.setAttribute("stroke-width","1");
+				otherNewPath.setAttribute("stroke-linecap","round");
+				
+				var startX = 100 - i * mob.faceData.hips/3;
+				var startY = bodyConstants.neck + 70 + i * mob.faceData.hips/-3 ;
+				
+				var path = 'm '+startX+','+startY;
+				path += ' l -10,10 l -3,-3 l 8,-12';
+				
+				var startX = 100 + i * mob.faceData.hips/3;
+				
+				var otherPath = 'm '+startX+','+startY;
+				otherPath += ' l 10,10 l 3,-3 l -8,-12';
+				
+				newPath.setAttributeNS(null,"d",path);
+				svgNodes.appendChild(newPath);
+				
+				otherNewPath.setAttributeNS(null,"d",otherPath);
+				svgNodes.appendChild(otherNewPath);
+
+ 			}
+ 			
+ 			// Shoulder Straps
+ 			newPath = document.createElementNS('http://www.w3.org/2000/svg',"path");
+			newPath.setAttribute("fill",scrapColors[0]);
+			newPath.setAttribute("stroke","#000000");
+			newPath.setAttribute("stroke-width","1");
+			newPath.setAttribute("stroke-linecap","round");
+			
+			var x = 100 - mob.faceData.shoulders * 0.9;
+			var y = bodyConstants.neck + 3;
+			path = 'm '+x+','+y;
+			path += 'l 10,-2 l 2,20 l -12,0 z'
+			
+			newPath.setAttributeNS(null,"d",path);
+			svgNodes.appendChild(newPath);
+			
+ 			newPath = document.createElementNS('http://www.w3.org/2000/svg',"path");
+			newPath.setAttribute("fill",scrapColors[1]);
+			newPath.setAttribute("stroke","#000000");
+			newPath.setAttribute("stroke-width","1");
+			newPath.setAttribute("stroke-linecap","round");
+			
+			var x = 100 + mob.faceData.shoulders * 0.9;
+			var y = bodyConstants.neck + 3;
+			path = 'm '+x+','+y;
+			path += 'l -10,-2 l -2,20 l 12,0 z'
+			
+			newPath.setAttributeNS(null,"d",path);
+			svgNodes.appendChild(newPath);
+ 			
+ 			var scraps = [
+ 				{x:4+mob.faceData.hips,y:15},
+ 				{x:4+mob.faceData.belly,y:10},
+ 				{x:4+mob.faceData.shoulders*0.8,y:15},
+ 				{x:4+mob.faceData.shoulders*0.9,y:10},
+ 				{x:4+mob.faceData.shoulders,y:0},
+ 			];
+ 			
+ 			var currentY = 50;
+ 			for (i=0;i<scraps.length-1;i++) {
+				
+				var startY = bodyConstants.neck + currentY + scraps[i].x;
+				
+				var color = scrapColors[i % 3];
+ 				newPath = document.createElementNS('http://www.w3.org/2000/svg',"path");
+				newPath.setAttribute("fill",color);
+				newPath.setAttribute("stroke","#000000");
+				newPath.setAttribute("stroke-width","1");
+				newPath.setAttribute("stroke-linecap","round");
+				var overstepY = scraps[i].y + scraps[i].x - scraps[i+1].y;
+				path = 'm 100,'+startY;
+				x = scraps[i].x;
+				y = scraps[i].x;
+				path += 'c 5,0 '+x+',-'+y+' '+x+',-'+y;
+				x = scraps[i+1].x - scraps[i].x;
+				y = -1 * scraps[i].y;
+				if (i < scraps.length-2) {path += 'l '+x+','+y;};
+				path += 'l -2,-2';
+				x = -1 * scraps[i+1].x - 3;
+				y = scraps[i].x + 5;
+				if (i === scraps.length-2) {y -= scraps[i].y -1;};
+				path += 'l '+x+','+y;
+				path += ' z';
+				newPath.setAttributeNS(null,"d",path);
+				svgNodes.appendChild(newPath);
+				
+				color = scrapColors[(scraps.length-i) % 3];
+ 				newPath = document.createElementNS('http://www.w3.org/2000/svg',"path");
+				newPath.setAttribute("fill",color);
+				newPath.setAttribute("stroke","#000000");
+				newPath.setAttribute("stroke-width","1");
+				newPath.setAttribute("stroke-linecap","round");
+				var overstepY = scraps[i].y + scraps[i].x - scraps[i+1].y;
+				path = 'm 100,'+startY;
+				x = -1 * scraps[i].x;
+				y = scraps[i].x;
+				path += 'c -5,0 '+x+',-'+y+' '+x+',-'+y;
+				x = scraps[i].x - scraps[i+1].x;
+				y = -1 * scraps[i].y;
+				if (i < scraps.length-2) {path += 'l '+x+','+y;};
+				path += 'l 2,-2';
+				x = scraps[i+1].x + 3;
+				y = scraps[i].x + 5;
+				if (i === scraps.length-2) {y -= scraps[i].y -1;};
+				path += 'l '+x+','+y;
+				path += ' z';
+				newPath.setAttributeNS(null,"d",path);
+				svgNodes.appendChild(newPath);
+				
+				currentY -= 15;
+ 			};
+ 			
+ 			return svgNodes;
+ 		},
+ 	},
+ 	
+ 	scrapShield: {
+ 		name: "Simple Shield",
+ 		slot: ['left','right'],
+ 		maneuvers: [
+ 			dataManeuvers.shieldSlam,
+ 		],
  	},
  	
  	simpleAxe: {
@@ -331,14 +1092,6 @@
  		slot: ['left','right'],
  		maneuvers: [
  			dataManeuvers.hack,
- 		],
- 	},
- 	
- 	simpleShield: {
- 		name: "Simple Shield",
- 		slot: ['left','right'],
- 		maneuvers: [
- 			dataManeuvers.shieldSlam,
  		],
  	},
  	
@@ -358,7 +1111,7 @@
  
  	hellhound: {
  		name: "Hellhound",
- 		img: "img/hellhound.png",
+ 		img: "img/hellpuppy.svg",
  		ai: 'basic',
  		stats: {
  			morale: 100,
@@ -377,7 +1130,7 @@
  
  	rat: {
  		name: "Rat",
- 		img: "img/rat.png",
+ 		img: "img/rat.svg",
  		ai: 'basic',
  		stats: {
  			morale: 100,
@@ -412,7 +1165,7 @@
  	
  	daisy: {
  		name: "Daisy Moucau",
- 		img: "img/minotaur.png",
+ 		img: "img/minotaur.svg",
  		ai: "basic",
  		stats: {
  			morale: 100,
@@ -529,7 +1282,7 @@
  		name: "Eleanor",
  		id: "p1",
  		race: "point",
- 		img: 'img/eleanor.png',
+ 		img: 'img/eleanor.svg',
  		stats: {
  			morale: 100,
  			move: 4,
@@ -566,7 +1319,7 @@
  	{
  		name: "Mx. Stout",
  		id: "stout",
- 		img: 'img/gnome.png',
+ 		img: 'img/stout.svg',
  		race: "halfbreed",
  		stats: {
  			morale: 100,

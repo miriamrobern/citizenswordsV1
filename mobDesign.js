@@ -184,33 +184,53 @@ var handlers = {
 	},
 	
 	randomizeFace: function() {
-		for (i in p1.faceData) {
-			var slider = document.getElementById(i+"Input");
-			if (i.indexOf('olor') == -1) {
-				slider.value = 1 + ( Math.random() * (parseInt(slider.max) - parseInt(slider.min)) << 0 ) + parseInt(slider.min);
-			} else {
-				var red = Math.random() * 255 << 0;
-				var green = Math.random() * 255  << 0;
-				var blue = Math.random() * 255 << 0;
-				slider.value = "#" + ("0" + red.toString(16)).substr(-2) + ("0" + green.toString(16)).substr(-2) + ("0" + blue.toString(16)).substr(-2);
-			};
+		view.setSliders();
+		
+		// Old Code
+// 		for (i in p1.faceData) {
+// 			var slider = document.getElementById(i+"Input");
+// 			if (i.indexOf('olor') == -1) {
+// 				slider.value = 1 + ( Math.random() * (parseInt(slider.max) - parseInt(slider.min)) << 0 ) + parseInt(slider.min);
+// 			} else {
+// 				var red = Math.random() * 255 << 0;
+// 				var green = Math.random() * 255  << 0;
+// 				var blue = Math.random() * 255 << 0;
+// 				slider.value = "#" + ("0" + red.toString(16)).substr(-2) + ("0" + green.toString(16)).substr(-2) + ("0" + blue.toString(16)).substr(-2);
+// 			};
+// 		};
+// 		var coloringSliders = {
+// 			blackEumelaninInput:0,
+// 			brownEumelaninInput:0,
+// 			pinkPheomelaninInput:0,
+// 			greenKeratinInput:0,
+// 			noseShadingInput:0,
+// 			nosePinknessInput:0,
+// 			lipShadingInput:0,
+// 			lipPinknessInput:0,
+// 			earShadingInput:0,
+// 			earPinknessInput:0,
+// 			};
+// 		for (i in coloringSliders) {
+// 			slider = document.getElementById(i);
+// 			slider.value = ( Math.random() * (parseInt(slider.max) - parseInt(slider.min)) << 0 ) + parseInt(slider.min);
+// 		};
+		// End Old Code
+		
+		for (i in {eyeColor:0,hairColor:0}) {
+			var red = Math.random() * 255 << 0;
+			var green = Math.random() * 255  << 0;
+			var blue = Math.random() * 255 << 0;
+			document.getElementById(i+'Input').value = "#" + ("0" + red.toString(16)).substr(-2) + ("0" + green.toString(16)).substr(-2) + ("0" + blue.toString(16)).substr(-2);
 		};
-		var coloringSliders = {
-			blackEumelaninInput:0,
-			brownEumelaninInput:0,
-			pinkPheomelaninInput:0,
-			greenKeratinInput:0,
-			noseShadingInput:0,
-			nosePinknessInput:0,
-			lipShadingInput:0,
-			lipPinknessInput:0,
-			earShadingInput:0,
-			earPinknessInput:0,
-			};
-		for (i in coloringSliders) {
-			slider = document.getElementById(i);
-			slider.value = ( Math.random() * (parseInt(slider.max) - parseInt(slider.min)) << 0 ) + parseInt(slider.min);
+		
+		
+		for (i in dataEthnicities.min) {
+			var slider = document.getElementById(i+'Input');
+			var random = Math.random();
+			var value = random*dataEthnicities.min[i] + (1-random)*dataEthnicities.max[i];
+			slider.value = value;
 		};
+		
 		handlers.updateColoring();
 		handlers.updateFace(p1);
 	},
@@ -220,7 +240,13 @@ var handlers = {
 		handlers.updateFace();
 	},
 	
-	typicalFeatures: function() {
+	typicalFeatures: function(ethnicity) {
+		for (i in ethnicity) {
+			var slider = document.getElementById(i+'Input');
+			document.getElementById(i+'Input').value = (parseInt(slider.value) + ethnicity[i] ) / 2;
+		};
+		handlers.updateColoring();
+		handlers.updateFace();
 	},
 	
 	selectClass: function(className) {
@@ -247,6 +273,14 @@ var handlers = {
 };
 
 var view = {
+	
+	setSliders: function() {
+		for (i in dataEthnicities.min) {
+			var slider = document.getElementById(i+'Input');
+			slider.max = dataEthnicities.max[i];
+			slider.min = dataEthnicities.min[i];
+		};
+	},
 
 	drawMob: function(mob) {
 
@@ -1380,7 +1414,7 @@ var view = {
 		};
 		
 		// Top Hair
-		if (face.topHairHeight > 0 && face.hairBangsLength < 1) {
+		if (face.topHairHeight > face.hairBangsLength / 3) {
 			newPath = document.createElementNS('http://www.w3.org/2000/svg',"path");
 			newPath.setAttribute('fill',face.hairColor);
 			newPath.setAttribute("stroke","#000000");
@@ -2075,11 +2109,11 @@ var view = {
 		};
 		
 		// Nose Background
-		if (!muzzle) {
+// 		if (!muzzle) {
 			newPath = document.createElementNS('http://www.w3.org/2000/svg',"path");
 			newPath.setAttribute("fill",face.noseColor);
 			
-			if (face.noseHeight*face.chinHeight/100 - face.nostrilHeight*2 - face.eyeSize > 0) {
+			if (face.noseHeight*face.chinHeight/100 - face.nostrilHeight*2 - face.eyeSize > 0 && !muzzle) {
 				newPath.setAttribute("stroke","none");
 			} else {
 				newPath.setAttribute("stroke","#000000");
@@ -2124,7 +2158,7 @@ var view = {
 		
 			newPath.setAttributeNS(null,"d",path);
 			svg.appendChild(newPath);	
-		};	
+// 		};	
 		
 		// Nostrils
 		
@@ -2477,7 +2511,7 @@ var view = {
 		
 		
 		// Bangs
-		if (face.hairBangsLength > 0 && face.hairLength > 0) {
+		if (face.hairBangsLength > face.topHairHeight * 3 && face.hairLength > 0) {
 		
 			newPath = document.createElementNS('http://www.w3.org/2000/svg',"path");
 			newPath.setAttribute("fill",face.hairColor);
@@ -3043,14 +3077,14 @@ var view = {
 				};
 			};
 		
-			if (armorColoring.feet !== undefined) {
+			if (armorColoring.feet !== undefined && face.feet >= 5) {
 				if (armorColoring.feet.fill !== undefined) {
-					rightLegPath.setAttribute("fill",armorColoring.feet.fill);
-					leftLegPath.setAttribute("fill",armorColoring.feet.fill);
+					rightFootPath.setAttribute("fill",armorColoring.feet.fill);
+					leftFootPath.setAttribute("fill",armorColoring.feet.fill);
 				};
 				if (armorColoring.feet.stroke !== undefined) {
-					rightLegPath.setAttribute("stroke",armorColoring.feet.stroke);
-					leftLegPath.setAttribute("stroke",armorColoring.feet.stroke);
+					rightFootPath.setAttribute("stroke",armorColoring.feet.stroke);
+					leftFootPath.setAttribute("stroke",armorColoring.feet.stroke);
 				};
 			};
 		};
