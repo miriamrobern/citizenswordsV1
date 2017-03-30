@@ -2507,7 +2507,7 @@ var view = {
 			
 		};
 		
-		// Hands
+		// Hands (Under)
 		var rightHand = document.createElementNS('http://www.w3.org/2000/svg',"g");
 		rightHand.id = 'rightHand';
 		rightForearmGroup.appendChild(rightHand);
@@ -2515,6 +2515,7 @@ var view = {
 
 		var leftHand = document.createElementNS('http://www.w3.org/2000/svg',"g");
 		leftHand.id = 'leftHand';
+		leftHand.setAttributeNS('null','z-index',100);
 		leftForearmGroup.appendChild(leftHand);
 // 		leftHand.setAttributeNS(null,'transform','translate(0) rotate(0 '+leftWristPivot.cx.animVal.value+' '+leftWristPivot.cy.animVal.value+')');
 		
@@ -2888,9 +2889,7 @@ var view = {
 
 		otherNewPath.setAttributeNS(null,"d",otherPath);
 		leftHand.appendChild(otherNewPath);
-		
-		
-		
+				
 		// Clothing & Equipment
 		var armor = mob.equipment.armor
 		
@@ -2909,6 +2908,17 @@ var view = {
 					rightBreastPath.setAttribute("stroke",armorColoring.torso.stroke);
 					leftBreastPath.setAttribute("stroke",armorColoring.torso.stroke);
 		// 			belly.setAttribute("stroke",armorColoring.torso.stroke);
+				};
+			};
+		
+			if (armorColoring.breasts !== undefined) {
+				if (armorColoring.breasts.fill !== undefined) {
+					rightBreastPath.setAttribute("fill",armorColoring.breasts.fill);
+					leftBreastPath.setAttribute("fill",armorColoring.breasts.fill);
+				};
+				if (armorColoring.breasts.stroke !== undefined) {
+					rightBreastPath.setAttribute("stroke",armorColoring.breasts.stroke);
+					leftBreastPath.setAttribute("stroke",armorColoring.breasts.stroke);
 				};
 			};
 		
