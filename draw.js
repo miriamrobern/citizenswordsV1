@@ -593,6 +593,10 @@ var draw = {
 
 		var svg = document.createElementNS('http://www.w3.org/2000/svg','svg');
 		svg.setAttribute('viewBox','0 0 200 200');
+		
+		var defs = document.createElementNS('http://www.w3.org/2000/svg','defs');
+		defs.id = 'defs';
+		svg.appendChild(defs);
 			
 		// Shadow
 		var shadow = document.createElementNS('http://www.w3.org/2000/svg',"ellipse");

@@ -773,11 +773,11 @@ var view = {
 		document.getElementById('dialogueContinueButton').style.display = "inline";
 		
 		var onclick = 'map.events.'+event+'(';
-		if (arg1) {onclick += arg1}
-		if (arg2) {onclick += ",",arg2}
-		if (arg3) {onclick += ",",arg3}
-		if (arg4) {onclick += ",",arg4}
-		if (arg5) {onclick += ",",arg5}
+		if (arg1 !== undefined) {onclick += arg1}
+		if (arg2 !== undefined) {onclick += ",",arg2}
+		if (arg3 !== undefined) {onclick += ",",arg3}
+		if (arg4 !== undefined) {onclick += ",",arg4}
+		if (arg5 !== undefined) {onclick += ",",arg5}
 		onclick += ')';
 		document.getElementById('dialogueContinueButton').setAttribute('onclick',onclick);
 
