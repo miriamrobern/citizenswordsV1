@@ -6,6 +6,7 @@ var ai = {
 	basic: function() {
 		
 		var strongestManevuer = ai.strongestManeuver(this);
+		console.log(strongestManeuver);
 		if (strongestManevuer.target !== undefined) {
 			// Perform strongest maneuver on target within maneuver range
 			strongestManevuer.maneuver.execute(this,strongestManevuer.target);
@@ -35,6 +36,7 @@ var ai = {
 	
 	strongestManeuver: function(mob) {
 
+		console.log('strongestManeuver checkin',mob);
 		var maneuverTarget;
 		var maneuverToDo;
 		for (man in mob.maneuvers) {

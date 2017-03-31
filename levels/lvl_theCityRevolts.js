@@ -350,7 +350,7 @@ var theCityRevolts = {
  		},
  		
  		guildmaster2: function() {
- 			view.displayDialogue("Quick, let's go talk to him before he takes the stage!",heroes[0].name,heroes[0].img,"left");
+ 			view.displayDialogue("Quick, let's go talk to him before he takes the stage!",heroes[0].name,heroes[0].imgBust,"left");
  		},
  		
  		cryForHelp: function() {

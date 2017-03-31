@@ -731,7 +731,6 @@ var view = {
 	
 	displayDialogue: function(text,name,bust,bustPosition) {
 	
-		console.log(bust);
 		bust.className = 'bustImg';
 	
 		handlers.hideDialogueDiv();

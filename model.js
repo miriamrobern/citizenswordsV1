@@ -20,10 +20,10 @@ var game = {
 			newMob.look(newMob.location);
 		};
 	
-		for (i in level.mobs) {
-			var newMob = new Mob(level.mobs[i].type,level.mobs[i].x,level.mobs[i].y,level.mobs[i].id,level.mobs[i].name);
-			if (level.mobs[i].ai !== undefined) {
-				newMob.ai = ai[level.mobs[i].ai];
+		for (mobIndex in level.mobs) {
+			var newMob = new Mob(level.mobs[mobIndex].type,level.mobs[mobIndex].x,level.mobs[mobIndex].y,level.mobs[mobIndex].id,level.mobs[mobIndex].name);
+			if (level.mobs[mobIndex].ai !== undefined) {
+				newMob.ai = ai[level.mobs[mobIndex].ai];
 			};
 		};
 
