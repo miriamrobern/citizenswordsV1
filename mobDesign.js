@@ -349,11 +349,77 @@ var view = {
 			shadow.setAttribute("ry",13);
 		svg.appendChild(shadow);
 		
-		// Hair in Back
+		// Groups
 		var backHairGroup = document.createElementNS('http://www.w3.org/2000/svg',"g");
 		backHairGroup.id = 'backHairGroup';
 		backHairGroup.setAttribute("fill",face.hairColor);
 		svg.appendChild(backHairGroup);
+		
+		var bodyAndClothingGroup = document.createElementNS('http://www.w3.org/2000/svg',"g");
+		bodyAndClothingGroup.id = 'bodyGroup';
+		bodyAndClothingGroup.setAttribute("fill",face.skinColor);
+		svg.appendChild(bodyAndClothingGroup);
+		
+		var bodyGroup = document.createElementNS('http://www.w3.org/2000/svg',"g");
+		bodyGroup.id = 'bodyGroup';
+		bodyGroup.setAttribute("fill",face.skinColor);
+		bodyAndClothingGroup.appendChild(bodyGroup);
+		
+		var rightArmGroup = document.createElementNS('http://www.w3.org/2000/svg',"g");
+		rightArmGroup.id = 'rightArmGroup';
+		bodyGroup.appendChild(rightArmGroup);
+		
+		var leftArmGroup = document.createElementNS('http://www.w3.org/2000/svg',"g");
+		leftArmGroup.id = 'leftArmGroup';
+		bodyGroup.appendChild(leftArmGroup);
+		
+		var rightForearmGroup = document.createElementNS('http://www.w3.org/2000/svg',"g");
+		rightForearmGroup.id = 'rightForearmGroup';
+		rightArmGroup.appendChild(rightForearmGroup);
+		
+		var leftForearmGroup = document.createElementNS('http://www.w3.org/2000/svg',"g");
+		leftForearmGroup.id = 'leftForearmGroup';
+		leftArmGroup.appendChild(leftForearmGroup);
+		
+		var clothingGroup = document.createElementNS('http://www.w3.org/2000/svg',"g");
+		clothingGroup.id = 'clothingGroup';
+		bodyAndClothingGroup.appendChild(clothingGroup);
+		
+		var bodyShadingGroup = document.createElementNS('http://www.w3.org/2000/svg',"g");
+		bodyShadingGroup.id = 'bodyShadingGroup';
+		bodyGroup.appendChild(bodyShadingGroup);
+		
+		var headGroup = document.createElementNS('http://www.w3.org/2000/svg',"g");
+		headGroup.id = 'headGroup';
+		headGroup.setAttribute("fill",face.skinColor);
+		svg.appendChild(headGroup);
+		
+		var rightArmTopGroup = document.createElementNS('http://www.w3.org/2000/svg',"g");
+		rightArmTopGroup.id = 'rightArmTopGroup';
+		bodyAndClothingGroup.appendChild(rightArmTopGroup);
+		
+		var leftArmTopGroup = document.createElementNS('http://www.w3.org/2000/svg',"g");
+		leftArmTopGroup.id = 'leftArmTopGroup';
+		bodyAndClothingGroup.appendChild(leftArmTopGroup);
+		
+		var rightForearmTopGroup = document.createElementNS('http://www.w3.org/2000/svg',"g");
+		rightForearmTopGroup.id = 'rightForearmTopGroup';
+		rightArmTopGroup.appendChild(rightForearmTopGroup);
+		
+		var leftForearmTopGroup = document.createElementNS('http://www.w3.org/2000/svg',"g");
+		leftForearmTopGroup.id = 'leftForearmTopGroup';
+		leftArmTopGroup.appendChild(leftForearmTopGroup);
+		
+		var rightHand = document.createElementNS('http://www.w3.org/2000/svg',"g");
+		rightHand.id = 'rightHand';
+		rightForearmTopGroup.appendChild(rightHand);
+
+		var leftHand = document.createElementNS('http://www.w3.org/2000/svg',"g");
+		leftHand.id = 'leftHand';
+		leftHand.setAttributeNS('null','z-index',100);
+		leftForearmTopGroup.appendChild(leftHand);
+		
+		// Hair in Back
 		
 		if (face.hairLength > 0) {
 			var newPath = document.createElementNS('http://www.w3.org/2000/svg',"path");
@@ -459,20 +525,8 @@ var view = {
 		};
 		
 		// Body
-		var bodyGroup = document.createElementNS('http://www.w3.org/2000/svg',"g");
-		bodyGroup.id = 'bodyGroup';
-		bodyGroup.setAttribute("fill",face.skinColor);
-		svg.appendChild(bodyGroup);
 		
 		// Arms
-		
-		var rightArmGroup = document.createElementNS('http://www.w3.org/2000/svg',"g");
-		rightArmGroup.id = 'rightArmGroup';
-		bodyGroup.appendChild(rightArmGroup);
-		
-		var leftArmGroup = document.createElementNS('http://www.w3.org/2000/svg',"g");
-		leftArmGroup.id = 'leftArmGroup';
-		bodyGroup.appendChild(leftArmGroup);
 		
 		var armWidth = 10;
 		var upperArmLength = 30;
@@ -494,28 +548,26 @@ var view = {
 		// start 
 		x = 100 - face.shoulders + armWidth * 0.5;
 		y = neck + 5;
-		var pivotPoint = document.createElementNS('http://www.w3.org/2000/svg',"circle");
-			pivotPoint.id = 'rightShoulderPivot';
-			pivotPoint.setAttribute("fill","none");
-			pivotPoint.setAttribute("stroke",'none');
-			pivotPoint.setAttribute("cx",x);
-			pivotPoint.setAttribute("cy",y + armWidth * 0.5);
-			pivotPoint.setAttribute("r",0);
-			rightArmGroup.appendChild(pivotPoint);
+		var rightShoulderPivot = document.createElementNS('http://www.w3.org/2000/svg',"circle");
+			rightShoulderPivot.id = 'rightShoulderPivot';
+			rightShoulderPivot.setAttribute("fill","none");
+			rightShoulderPivot.setAttribute("stroke",'none');
+			rightShoulderPivot.setAttribute("cx",x);
+			rightShoulderPivot.setAttribute("cy",y + armWidth * 0.5);
+			rightShoulderPivot.setAttribute("r",0);
+			rightArmGroup.appendChild(rightShoulderPivot);
 		path = 'm '+x+','+y;
-		rightArmGroup.setAttributeNS(null,'transform','translate(0) rotate(30 '+pivotPoint.cx.animVal.value+' '+pivotPoint.cy.animVal.value+')');
 		
 		x = 100 + face.shoulders - armWidth * 0.5;
-		pivotPoint = document.createElementNS('http://www.w3.org/2000/svg',"circle");
-			pivotPoint.id = 'leftShoulderPivot';
-			pivotPoint.setAttribute("fill","none");
-			pivotPoint.setAttribute("stroke",'none');
-			pivotPoint.setAttribute("cx",x);
-			pivotPoint.setAttribute("cy",y + armWidth * 0.5);
-			pivotPoint.setAttribute("r",0);
-			rightArmGroup.appendChild(pivotPoint);
+		var leftShoulderPivot = document.createElementNS('http://www.w3.org/2000/svg',"circle");
+			leftShoulderPivot.id = 'leftShoulderPivot';
+			leftShoulderPivot.setAttribute("fill","none");
+			leftShoulderPivot.setAttribute("stroke",'none');
+			leftShoulderPivot.setAttribute("cx",x);
+			leftShoulderPivot.setAttribute("cy",y + armWidth * 0.5);
+			leftShoulderPivot.setAttribute("r",0);
+			rightArmGroup.appendChild(leftShoulderPivot);
 		otherPath = 'm '+x+','+y;
-		leftArmGroup.setAttributeNS(null,'transform','translate(0) rotate(-30 '+pivotPoint.cx.animVal.value+' '+pivotPoint.cy.animVal.value+')');
 
 		// to outside shoulder
 		x = -0.5 * armWidth;
@@ -604,13 +656,6 @@ var view = {
 		leftArmGroup.appendChild(leftUpperArmPath);
 		
 		// Forearms
-		var rightForearmGroup = document.createElementNS('http://www.w3.org/2000/svg',"g");
-		rightForearmGroup.id = 'rightForearmGroup';
-		rightArmGroup.appendChild(rightForearmGroup);
-		
-		var leftForearmGroup = document.createElementNS('http://www.w3.org/2000/svg',"g");
-		leftForearmGroup.id = 'leftForearmGroup';
-		leftArmGroup.appendChild(leftForearmGroup);
 		
 		var rightLowerArmPath = document.createElementNS('http://www.w3.org/2000/svg',"path");
 		rightLowerArmPath.id = 'rightForearm';
@@ -629,45 +674,41 @@ var view = {
 		// start 
 		x = 100 + armWidth * 0.5 - face.shoulders ;
 		y = neck + 5 + upperArmLength;
-		pivotPoint = document.createElementNS('http://www.w3.org/2000/svg',"circle");
-			pivotPoint.id = 'rightElbowPivot';
-			pivotPoint.setAttribute("fill","none");
-			pivotPoint.setAttribute("stroke",'none');
-			pivotPoint.setAttribute("cx",x);
-			pivotPoint.setAttribute("cy",y + armWidth * 0.5);
-			pivotPoint.setAttribute("r",0);
-			rightArmGroup.appendChild(pivotPoint);
-		rightForearmGroup.setAttributeNS(null,'transform','rotate(-50 '+pivotPoint.cx.animVal.value+' '+pivotPoint.cy.animVal.value+')');
-		pivotPoint = document.createElementNS('http://www.w3.org/2000/svg',"circle");
-			pivotPoint.id = 'rightWristPivot';
-			pivotPoint.setAttribute("fill","none");
-			pivotPoint.setAttribute("stroke",'none');
-			pivotPoint.setAttribute("cx",x);
-			pivotPoint.setAttribute("cy",y + armWidth * 0.5 + 20);
-			pivotPoint.setAttribute("r",0);
-			rightForearmGroup.appendChild(pivotPoint);
-			var rightWristPivot = pivotPoint;
+		var rightElbowPivot = document.createElementNS('http://www.w3.org/2000/svg',"circle");
+			rightElbowPivot.id = 'rightElbowPivot';
+			rightElbowPivot.setAttribute("fill","none");
+			rightElbowPivot.setAttribute("stroke",'none');
+			rightElbowPivot.setAttribute("cx",x);
+			rightElbowPivot.setAttribute("cy",y + armWidth * 0.5);
+			rightElbowPivot.setAttribute("r",0);
+			rightArmGroup.appendChild(rightElbowPivot);
+		var rightWristPivot = document.createElementNS('http://www.w3.org/2000/svg',"circle");
+			rightWristPivot.id = 'rightWristPivot';
+			rightWristPivot.setAttribute("fill","none");
+			rightWristPivot.setAttribute("stroke",'none');
+			rightWristPivot.setAttribute("cx",x);
+			rightWristPivot.setAttribute("cy",y + armWidth * 0.5 + 20);
+			rightWristPivot.setAttribute("r",0);
+			rightForearmGroup.appendChild(rightWristPivot);
 		path = 'm '+x+','+y;
 		
 		x = 100 - armWidth * 0.5 + face.shoulders ;
-		pivotPoint = document.createElementNS('http://www.w3.org/2000/svg',"circle");
-			pivotPoint.id = 'leftElbowPivot';
-			pivotPoint.setAttribute("fill","none");
-			pivotPoint.setAttribute("stroke",'none');
-			pivotPoint.setAttribute("cx",x);
-			pivotPoint.setAttribute("cy",y + armWidth * 0.5);
-			pivotPoint.setAttribute("r",0);
-			rightArmGroup.appendChild(pivotPoint);
-		leftForearmGroup.setAttributeNS(null,'transform','rotate(50 '+pivotPoint.cx.animVal.value+' '+pivotPoint.cy.animVal.value+')');
-		pivotPoint = document.createElementNS('http://www.w3.org/2000/svg',"circle");
-			pivotPoint.id = 'leftWristPivot';
-			pivotPoint.setAttribute("fill","none");
-			pivotPoint.setAttribute("stroke",'none');
-			pivotPoint.setAttribute("cx",x);
-			pivotPoint.setAttribute("cy",y + armWidth * 0.5 + 20);
-			pivotPoint.setAttribute("r",0);
-			leftForearmGroup.appendChild(pivotPoint);
-			var leftWristPivot = pivotPoint;
+		var leftElbowPivot = document.createElementNS('http://www.w3.org/2000/svg',"circle");
+			leftElbowPivot.id = 'leftElbowPivot';
+			leftElbowPivot.setAttribute("fill","none");
+			leftElbowPivot.setAttribute("stroke",'none');
+			leftElbowPivot.setAttribute("cx",x);
+			leftElbowPivot.setAttribute("cy",y + armWidth * 0.5);
+			leftElbowPivot.setAttribute("r",0);
+			rightArmGroup.appendChild(leftElbowPivot);
+		var leftWristPivot = document.createElementNS('http://www.w3.org/2000/svg',"circle");
+			leftWristPivot.id = 'leftWristPivot';
+			leftWristPivot.setAttribute("fill","none");
+			leftWristPivot.setAttribute("stroke",'none');
+			leftWristPivot.setAttribute("cx",x);
+			leftWristPivot.setAttribute("cy",y + armWidth * 0.5 + 20);
+			leftWristPivot.setAttribute("r",0);
+			leftForearmGroup.appendChild(leftWristPivot);
 		otherPath = 'm '+x+','+y;
 
 		// to outside elbow
@@ -1135,20 +1176,7 @@ var view = {
 			bodyGroup.appendChild(leftBreastPath);
 		};
 		
-		var clothingGroup = document.createElementNS('http://www.w3.org/2000/svg',"g");
-		clothingGroup.id = 'clothingGroup';
-		bodyGroup.appendChild(clothingGroup);
-		
-		// At End of Body Section, Add Shading Group
-		var bodyShadingGroup = document.createElementNS('http://www.w3.org/2000/svg',"g");
-		bodyShadingGroup.id = 'bodyShadingGroup';
-		bodyGroup.appendChild(bodyShadingGroup);
-		
 		// Head
-		var headGroup = document.createElementNS('http://www.w3.org/2000/svg',"g");
-		headGroup.id = 'headGroup';
-		headGroup.setAttribute("fill",face.skinColor);
-		svg.appendChild(headGroup);
 			
 		// Ear Backs
 		newPath = document.createElementNS('http://www.w3.org/2000/svg',"path");
@@ -2680,17 +2708,7 @@ var view = {
 			
 		};
 		
-		// Hands (Under)
-		var rightHand = document.createElementNS('http://www.w3.org/2000/svg',"g");
-		rightHand.id = 'rightHand';
-		rightForearmGroup.appendChild(rightHand);
-// 		rightHand.setAttributeNS(null,'transform','translate(0) rotate(0 '+rightWristPivot.cx.animVal.value+' '+rightWristPivot.cy.animVal.value+')');
-
-		var leftHand = document.createElementNS('http://www.w3.org/2000/svg',"g");
-		leftHand.id = 'leftHand';
-		leftHand.setAttributeNS('null','z-index',100);
-		leftForearmGroup.appendChild(leftHand);
-// 		leftHand.setAttributeNS(null,'transform','translate(0) rotate(0 '+leftWristPivot.cx.animVal.value+' '+leftWristPivot.cy.animVal.value+')');
+		// Hands
 		
 		// Thumbs
 				
@@ -3146,8 +3164,98 @@ var view = {
 		};
 		
 		// Animation		
-		// document.getElementById('rightArmGroup').setAttributeNS(null,'transform','rotate(60 '+document.getElementById('rightShoulderPivot').cx.animVal.value+' '+document.getElementById('rightShoulderPivot').cy.animVal.value+')');
+
+		// Initial Pose
+		rightArmGroup.setAttributeNS(null,'transform','translate(0) rotate(30 '+rightShoulderPivot.cx.animVal.value+' '+rightShoulderPivot.cy.animVal.value+')');
+		rightArmTopGroup.setAttributeNS(null,'transform','translate(0) rotate(30 '+rightShoulderPivot.cx.animVal.value+' '+rightShoulderPivot.cy.animVal.value+')');
+
+		leftArmGroup.setAttributeNS(null,'transform','translate(0) rotate(-30 '+leftShoulderPivot.cx.animVal.value+' '+leftShoulderPivot.cy.animVal.value+')');
+		leftArmTopGroup.setAttributeNS(null,'transform','translate(0) rotate(-30 '+leftShoulderPivot.cx.animVal.value+' '+leftShoulderPivot.cy.animVal.value+')');
+
+		rightForearmGroup.setAttributeNS(null,'transform','rotate(-50 '+rightElbowPivot.cx.animVal.value+' '+rightElbowPivot.cy.animVal.value+')');
+		rightForearmTopGroup.setAttributeNS(null,'transform','rotate(-50 '+rightElbowPivot.cx.animVal.value+' '+rightElbowPivot.cy.animVal.value+')');
+
+		leftForearmGroup.setAttributeNS(null,'transform','rotate(50 '+leftElbowPivot.cx.animVal.value+' '+leftElbowPivot.cy.animVal.value+')');
+		leftForearmTopGroup.setAttributeNS(null,'transform','rotate(50 '+leftElbowPivot.cx.animVal.value+' '+leftElbowPivot.cy.animVal.value+')');
 		
+		// Test Loop
+// 		var animationLoop = document.createElementNS('http://www.w3.org/2000/svg',"animateTransform");
+// 		var animationTopLoop = document.createElementNS('http://www.w3.org/2000/svg',"animateTransform");
+// 		var animationData = [
+// 			{attribute:'attributeName',value:'transform'},
+// 			{attribute:'attributeType',value:'xml'},
+// 			{attribute:'type',value:'rotate'},
+// 			{attribute:'from',value:'25 '+rightShoulderPivot.cx.animVal.value+" "+rightShoulderPivot.cy.animVal.value},
+// 			{attribute:'to',value:'35 '+rightShoulderPivot.cx.animVal.value+" "+rightShoulderPivot.cy.animVal.value},
+// 			{attribute:'dur',value:'1s'},
+// 			{attribute:'begin',value:'0s;inAnimation.end'},
+// 			];
+// 		for (i in animationData) {
+// 			animationLoop.setAttribute(animationData[i].attribute,animationData[i].value);
+// 			animationTopLoop.setAttribute(animationData[i].attribute,animationData[i].value);
+// 		};
+// 		animationLoop.id = 'outAnimation';
+// 		rightArmGroup.appendChild(animationLoop);
+// 		rightArmTopGroup.appendChild(animationTopLoop);
+// 		
+// 		animationLoop = document.createElementNS('http://www.w3.org/2000/svg',"animateTransform");
+// 		animationTopLoop = document.createElementNS('http://www.w3.org/2000/svg',"animateTransform");
+// 		animationData = [
+// 			{attribute:'attributeName',value:'transform'},
+// 			{attribute:'attributeType',value:'xml'},
+// 			{attribute:'type',value:'rotate'},
+// 			{attribute:'from',value:'35 '+rightShoulderPivot.cx.animVal.value+" "+rightShoulderPivot.cy.animVal.value},
+// 			{attribute:'to',value:'25 '+rightShoulderPivot.cx.animVal.value+" "+rightShoulderPivot.cy.animVal.value},
+// 			{attribute:'dur',value:'1s'},
+// 			{attribute:'begin',value:'outAnimation.end'},
+// 			];
+// 		for (i in animationData) {
+// 			animationLoop.setAttribute(animationData[i].attribute,animationData[i].value);
+// 			animationTopLoop.setAttribute(animationData[i].attribute,animationData[i].value);
+// 		};
+// 		animationLoop.id = 'inAnimation';
+// 		rightArmGroup.appendChild(animationLoop);
+// 		rightArmTopGroup.appendChild(animationTopLoop);
+// 		
+// 		animationLoop = document.createElementNS('http://www.w3.org/2000/svg',"animateTransform");
+// 		animationTopLoop = document.createElementNS('http://www.w3.org/2000/svg',"animateTransform");
+// 		animationData = [
+// 			{attribute:'attributeName',value:'transform'},
+// 			{attribute:'attributeType',value:'xml'},
+// 			{attribute:'type',value:'rotate'},
+// 			{attribute:'from',value:'-45 '+rightElbowPivot.cx.animVal.value+" "+rightElbowPivot.cy.animVal.value},
+// 			{attribute:'to',value:'-65 '+rightElbowPivot.cx.animVal.value+" "+rightElbowPivot.cy.animVal.value},
+// 			{attribute:'dur',value:'1s'},
+// 			{attribute:'begin',value:'0s;inAnimationForearm.end'},
+// 			];
+// 		for (i in animationData) {
+// 			animationLoop.setAttribute(animationData[i].attribute,animationData[i].value);
+// 			animationTopLoop.setAttribute(animationData[i].attribute,animationData[i].value);
+// 		};
+// 		animationLoop.id = 'outAnimationForearm';
+// 		rightForearmGroup.appendChild(animationLoop);
+// 		rightForearmTopGroup.appendChild(animationTopLoop);
+// 		
+// 		animationLoop = document.createElementNS('http://www.w3.org/2000/svg',"animateTransform");
+// 		animationTopLoop = document.createElementNS('http://www.w3.org/2000/svg',"animateTransform");
+// 		animationData = [
+// 			{attribute:'attributeName',value:'transform'},
+// 			{attribute:'attributeType',value:'xml'},
+// 			{attribute:'type',value:'rotate'},
+// 			{attribute:'from',value:'-65 '+rightElbowPivot.cx.animVal.value+" "+rightElbowPivot.cy.animVal.value},
+// 			{attribute:'to',value:'-45 '+rightElbowPivot.cx.animVal.value+" "+rightElbowPivot.cy.animVal.value},
+// 			{attribute:'dur',value:'1s'},
+// 			{attribute:'begin',value:'outAnimationForearm.end'},
+// 			];
+// 		for (i in animationData) {
+// 			animationLoop.setAttribute(animationData[i].attribute,animationData[i].value);
+// 			animationTopLoop.setAttribute(animationData[i].attribute,animationData[i].value);
+// 		};
+// 		animationLoop.id = 'inAnimationForearm';
+// 		rightForearmGroup.appendChild(animationLoop);
+// 		rightForearmTopGroup.appendChild(animationTopLoop);
+		
+				
 		// End Draw Mob
 	},
 };
