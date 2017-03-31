@@ -209,11 +209,16 @@ var handlers = {
 			var ethnicities = Object.keys(dataEthnicities);
 			ethnicities.splice(ethnicities.indexOf('min'),1);
 			ethnicities.splice(ethnicities.indexOf('max'),1);
+			var masterEthnicities = [];
+			for (i in ethnicities) {
+				masterEthnicities[i] = ethnicities[i];
+			};
 			var heritages = [];
 			for (i=0;i<4;i++) {
 				grandparents[i].ethnicity = ethnicities[Math.random() * ethnicities.length << 0];
 				ethnicities = dataEthnicities[grandparents[i].ethnicity].neighbors;
 				ethnicities = ethnicities.concat([grandparents[i].ethnicity,grandparents[i].ethnicity,grandparents[i].ethnicity]);
+				ethnicities = ethnicities.concat(masterEthnicities[Math.random() * masterEthnicities.length << 0]);
 			};
 		} else {
 			for (i=0;i<4;i++) {
@@ -243,28 +248,43 @@ var handlers = {
 			child[f] = Math.floor(( parents[0].faceData[f] + parents[1].faceData[f] ) / 2 );
 		};
 		
+		// Add random factor to too-normalized characteristics
+		var randomizedFeatures = {blackEumelanin:0,brownEumelanin:0,bust:0};
+		for (i in randomizedFeatures) {
+			random = Math.random();
+			child[i] = (random*dataEthnicities.min[i] + (1-random)*dataEthnicities.max[i] + child[i])/2
+		};
+		
 		// Set to Sliders
 		for (i in dataEthnicities.min) {
 			var slider = document.getElementById(i+'Input');
 			slider.value = child[i];
 		};
 		
-		console.log(grandparents[0].ethnicity,grandparents[1].ethnicity,grandparents[2].ethnicity,grandparents[3].ethnicity);
+		// Display
+		heritages = [];
+		for (i in grandparents) {
+			if (heritages[grandparents[i].ethnicity] !== undefined) {
+				heritages[grandparents[i].ethnicity]++;
+			} else {
+				heritages[grandparents[i].ethnicity] = 1;
+			};
+		};
+		var heritageString = '';
+		for (i in heritages) {
+			heritageString += ['quarter','half','three-quarters','full-blooded'][heritages[i]-1] + " " +i + " ";
+		};
+		document.getElementById('heritagesSpan').innerHTML = heritageString;
 		
 		handlers.updateColoring();
 		handlers.updateFace(p1);
-	},
-	
-	matchToSkinColor: function(input) {
-		document.getElementById(input).value = document.getElementById('skinColorInput').value;
-		handlers.updateFace();
 	},
 	
 	typicalFeatures: function(ethnicity) {
 		for (i in ethnicity) {
 			if (i !== 'neighbors') {
 				var slider = document.getElementById(i+'Input');
-				document.getElementById(i+'Input').value = (parseInt(slider.value) + ethnicity[i] ) / 2;
+				document.getElementById(i+'Input').value = Math.floor((parseInt(slider.value) + parseInt(slider.value) + ethnicity[i] ) / 3);
 			};
 		};
 		handlers.updateColoring();
@@ -330,9 +350,14 @@ var view = {
 		svg.appendChild(shadow);
 		
 		// Hair in Back
+		var backHairGroup = document.createElementNS('http://www.w3.org/2000/svg',"g");
+		backHairGroup.id = 'backHairGroup';
+		backHairGroup.setAttribute("fill",face.hairColor);
+		svg.appendChild(backHairGroup);
+		
 		if (face.hairLength > 0) {
 			var newPath = document.createElementNS('http://www.w3.org/2000/svg',"path");
-			newPath.setAttribute("fill",face.hairColor);
+			newPath.setAttribute("fill",'inherit');
 			newPath.setAttribute("stroke","#000000");
 			newPath.setAttribute("stroke-width","1");
 			newPath.setAttribute("stroke-linecap","round");
@@ -430,7 +455,7 @@ var view = {
 		
 			path += 'z';
 			newPath.setAttributeNS(null,"d",path);
-			svg.appendChild(newPath);
+			backHairGroup.appendChild(newPath);
 		};
 		
 		// Body
@@ -1118,6 +1143,12 @@ var view = {
 		var bodyShadingGroup = document.createElementNS('http://www.w3.org/2000/svg',"g");
 		bodyShadingGroup.id = 'bodyShadingGroup';
 		bodyGroup.appendChild(bodyShadingGroup);
+		
+		// Head
+		var headGroup = document.createElementNS('http://www.w3.org/2000/svg',"g");
+		headGroup.id = 'headGroup';
+		headGroup.setAttribute("fill",face.skinColor);
+		svg.appendChild(headGroup);
 			
 		// Ear Backs
 		newPath = document.createElementNS('http://www.w3.org/2000/svg',"path");
@@ -1194,11 +1225,11 @@ var view = {
 		
 		path += 'z';
 		newPath.setAttributeNS(null,"d",path);
-		svg.appendChild(newPath);
+		headGroup.appendChild(newPath);
 	
 		otherPath += 'z';
 		otherNewPath.setAttributeNS(null,"d",otherPath);
-		svg.appendChild(otherNewPath);
+		headGroup.appendChild(otherNewPath);
 	
 		// Ear Tops
 		newPath = document.createElementNS('http://www.w3.org/2000/svg',"path");
@@ -1249,11 +1280,11 @@ var view = {
 	
 		path += 'z';
 		newPath.setAttributeNS(null,"d",path);
-		svg.appendChild(newPath);
+		headGroup.appendChild(newPath);
 	
 		otherPath += 'z';
 		otherNewPath.setAttributeNS(null,"d",otherPath);
-		svg.appendChild(otherNewPath);
+		headGroup.appendChild(otherNewPath);
 	
 		// Head Shape
 		newPath = document.createElementNS('http://www.w3.org/2000/svg',"path");
@@ -1340,7 +1371,7 @@ var view = {
 	
 		path += 'z';
 		newPath.setAttributeNS(null,"d",path);
-		svg.appendChild(newPath);
+		headGroup.appendChild(newPath);
 		
 		// Top-of-Head Hair
 		if (face.hairLength > 0) {
@@ -1429,10 +1460,10 @@ var view = {
 		
 			path += 'z';
 			newPath.setAttributeNS(null,"d",path);
-			svg.appendChild(newPath);
+			headGroup.appendChild(newPath);
 		
 			otherNewPath.setAttributeNS(null,"d",otherPath);
-			svg.appendChild(otherNewPath);
+			headGroup.appendChild(otherNewPath);
 		};
 		
 		// Top Hair
@@ -1539,7 +1570,7 @@ var view = {
 			}
 		
 			newPath.setAttributeNS(null,"d",path);
-			svg.appendChild(newPath);
+			headGroup.appendChild(newPath);
 		};
 		
 		
@@ -1592,10 +1623,10 @@ var view = {
 			otherPath += ' c '+c1x+','+c1y+' '+c2x+','+c2y+' '+x+','+y;
 		
 			newPath.setAttributeNS(null,"d",path);
-			svg.appendChild(newPath);
+			headGroup.appendChild(newPath);
 		
 			otherNewPath.setAttributeNS(null,"d",otherPath);
-			svg.appendChild(otherNewPath);
+			headGroup.appendChild(otherNewPath);
 			
 			
 			newPath = document.createElementNS('http://www.w3.org/2000/svg',"path");
@@ -1659,11 +1690,11 @@ var view = {
 		
 			path += 'z';
 			newPath.setAttributeNS(null,"d",path);
-			svg.appendChild(newPath);
+			headGroup.appendChild(newPath);
 		
 			otherPath += 'z';
 			otherNewPath.setAttributeNS(null,"d",otherPath);
-			svg.appendChild(otherNewPath);
+			headGroup.appendChild(otherNewPath);
 		};
 
 		
@@ -1682,7 +1713,7 @@ var view = {
 			newPath.setAttribute("cx",cx);
 			newPath.setAttribute("cy",eyeline+25);
 			newPath.setAttribute("r",face.eyeSize);
-			svg.appendChild(newPath);
+			headGroup.appendChild(newPath);
 			
 			// Iris
 			var newPath = document.createElementNS('http://www.w3.org/2000/svg',"circle");
@@ -1692,7 +1723,7 @@ var view = {
 			newPath.setAttribute("cx",cx);
 			newPath.setAttribute("cy",eyeline+25);
 			newPath.setAttribute("r",3.5);
-			svg.appendChild(newPath);
+			headGroup.appendChild(newPath);
 			
 			// Pupil
 			var newPath = document.createElementNS('http://www.w3.org/2000/svg',"circle");
@@ -1702,7 +1733,7 @@ var view = {
 			newPath.setAttribute("cx",cx);
 			newPath.setAttribute("cy",eyeline+25);
 			newPath.setAttribute("r",1.75);
-			svg.appendChild(newPath);
+			headGroup.appendChild(newPath);
 			
 			// Specular Highlight
 			var newPath = document.createElementNS('http://www.w3.org/2000/svg',"circle");
@@ -1712,7 +1743,7 @@ var view = {
 			newPath.setAttribute("cx",cx+2.5);
 			newPath.setAttribute("cy",eyeline+23);
 			newPath.setAttribute("r",1.5);
-			svg.appendChild(newPath);
+			headGroup.appendChild(newPath);
 			
 			// Specular Highlight
 			var newPath = document.createElementNS('http://www.w3.org/2000/svg',"circle");
@@ -1722,7 +1753,7 @@ var view = {
 			newPath.setAttribute("cx",cx+1);
 			newPath.setAttribute("cy",eyeline+24);
 			newPath.setAttribute("r",0.75);
-			svg.appendChild(newPath);
+			headGroup.appendChild(newPath);
 			
 			// Upper Eyelid
 			var newPath = document.createElementNS('http://www.w3.org/2000/svg',"path");
@@ -1788,10 +1819,10 @@ var view = {
 			}
 			
 			newPath.setAttributeNS(null,"d",path);
-			svg.appendChild(newPath);
+			headGroup.appendChild(newPath);
 			
 			otherNewPath.setAttributeNS(null,'d',strokePath);
-			svg.appendChild(otherNewPath);
+			headGroup.appendChild(otherNewPath);
 			
 			// Lower Eyelid
 			var newPath = document.createElementNS('http://www.w3.org/2000/svg',"path");
@@ -1857,10 +1888,10 @@ var view = {
 			}
 			
 			newPath.setAttributeNS(null,"d",path);
-			svg.appendChild(newPath);
+			headGroup.appendChild(newPath);
 			
 			otherNewPath.setAttributeNS(null,'d',strokePath);
-			svg.appendChild(otherNewPath);
+			headGroup.appendChild(otherNewPath);
 			
 			// Eyebrows
 			var newPath = document.createElementNS('http://www.w3.org/2000/svg',"path");
@@ -1908,7 +1939,7 @@ var view = {
 			path += ' c '+c1x+','+c1y+' '+c2x+','+c2y+' '+x+','+y;
 			
 			newPath.setAttributeNS(null,"d",path);
-			svg.appendChild(newPath);
+			headGroup.appendChild(newPath);
 									
 		};
 		
@@ -1970,7 +2001,7 @@ var view = {
 			path += 'z';
 			
 			newPath.setAttributeNS(null,"d",path);
-			svg.appendChild(newPath);			
+			headGroup.appendChild(newPath);			
 		};
 		
 		// Top Half of Mouth (renders before/under nose)
@@ -2029,7 +2060,7 @@ var view = {
 		path += ' c '+c1x+','+c1y+' '+c2x+','+c2y+' '+x+','+y;
 		
 		newPath.setAttributeNS(null,"d",path);
-		svg.appendChild(newPath);
+		headGroup.appendChild(newPath);
 		
 		// Top Lip
 		newPath = document.createElementNS('http://www.w3.org/2000/svg',"path");
@@ -2098,7 +2129,7 @@ var view = {
 		path += ' c '+c1x+','+c1y+' '+c2x+','+c2y+' '+x+','+y;
 		
 		newPath.setAttributeNS(null,"d",path);
-		svg.appendChild(newPath);
+		headGroup.appendChild(newPath);
 		
 		// Nose
 		
@@ -2126,61 +2157,59 @@ var view = {
 			path += ' c '+c1x+','+c1y+' '+c2x+','+c2y+' '+x+','+y;			
 			
 			newPath.setAttributeNS(null,"d",path);
-			svg.appendChild(newPath);		
+			headGroup.appendChild(newPath);		
 			
 		};
 		
 		// Nose Background
-// 		if (!muzzle) {
-			newPath = document.createElementNS('http://www.w3.org/2000/svg',"path");
-			newPath.setAttribute("fill",face.noseColor);
-			
-			if (face.noseHeight*face.chinHeight/100 - face.nostrilHeight*2 - face.eyeSize > 0 && !muzzle) {
-				newPath.setAttribute("stroke","none");
-			} else {
-				newPath.setAttribute("stroke","#000000");
-				newPath.setAttribute("stroke-width","1");
-				noseStroke = true;
-			};
-
-			// start at right inside nostril
-			x = 100 - face.noseWidth * 1.2;
-			y = 25 + eyeline + face.noseHeight * face.chinHeight / 100;
-			path = 'm '+x+','+y;
-
-			// to right top nose crease
-			x = -0.1 * face.noseWidth;
-			y = -1.8 * face.nostrilHeight;
-			c1x = -1 * face.noseWidth;
-			c1y = 0;
-			c2x = x - face.noseWidth * 0.2;
-			c2y = y;
-			path += ' c '+c1x+','+c1y+' '+c2x+','+c2y+' '+x+','+y;
-
-			// to left top nose crease
-			x = 2.6 * face.noseWidth;
-			y = 0;
-			c1x = 0;
-			c1y = -0.5 * face.nostrilHeight;
-			c2x = x;
-			c2y = -0.5 * face.nostrilHeight;
-			path += ' c '+c1x+','+c1y+' '+c2x+','+c2y+' '+x+','+y;
+		newPath = document.createElementNS('http://www.w3.org/2000/svg',"path");
+		newPath.setAttribute("fill",face.noseColor);
 		
-			newPath.setAttributeNS(null,"d",path);
-			svg.appendChild(newPath);	
+		if (face.noseHeight*face.chinHeight/100 - face.nostrilHeight*2 - face.eyeSize > 0 && !muzzle) {
+			newPath.setAttribute("stroke","none");
+		} else {
+			newPath.setAttribute("stroke","#000000");
+			newPath.setAttribute("stroke-width","1");
+			noseStroke = true;
+		};
 
-			// to left bottom nose crease
-			x = 0;
-			y = 1.8 * face.nostrilHeight;
-			c1x = face.noseWidth * 0.2;
-			c1y = 0;
-			c2x = x + face.noseWidth;
-			c2y = y;
-			path += ' c '+c1x+','+c1y+' '+c2x+','+c2y+' '+x+','+y;
-		
-			newPath.setAttributeNS(null,"d",path);
-			svg.appendChild(newPath);	
-// 		};	
+		// start at right inside nostril
+		x = 100 - face.noseWidth * 1.2;
+		y = 25 + eyeline + face.noseHeight * face.chinHeight / 100;
+		path = 'm '+x+','+y;
+
+		// to right top nose crease
+		x = -0.1 * face.noseWidth;
+		y = -1.8 * face.nostrilHeight;
+		c1x = -1 * face.noseWidth;
+		c1y = 0;
+		c2x = x - face.noseWidth * 0.2;
+		c2y = y;
+		path += ' c '+c1x+','+c1y+' '+c2x+','+c2y+' '+x+','+y;
+
+		// to left top nose crease
+		x = 2.6 * face.noseWidth;
+		y = 0;
+		c1x = 0;
+		c1y = -0.5 * face.nostrilHeight;
+		c2x = x;
+		c2y = -0.5 * face.nostrilHeight;
+		path += ' c '+c1x+','+c1y+' '+c2x+','+c2y+' '+x+','+y;
+	
+		newPath.setAttributeNS(null,"d",path);
+		svg.appendChild(newPath);	
+
+		// to left bottom nose crease
+		x = 0;
+		y = 1.8 * face.nostrilHeight;
+		c1x = face.noseWidth * 0.2;
+		c1y = 0;
+		c2x = x + face.noseWidth;
+		c2y = y;
+		path += ' c '+c1x+','+c1y+' '+c2x+','+c2y+' '+x+','+y;
+	
+		newPath.setAttributeNS(null,"d",path);
+		headGroup.appendChild(newPath);	
 		
 		// Nostrils
 		
@@ -2247,10 +2276,10 @@ var view = {
 		otherPath += ' c '+c1x+','+c1y+' '+c2x+','+c2y+' '+x+','+y;
 		
 		newPath.setAttributeNS(null,"d",path);
-		svg.appendChild(newPath);		
+		headGroup.appendChild(newPath);		
 		
 		otherNewPath.setAttributeNS(null,"d",otherPath);
-		svg.appendChild(otherNewPath);
+		headGroup.appendChild(otherNewPath);
 		
 		// Bottom of Septum
 		if (face.noseSize > 1) {
@@ -2275,7 +2304,7 @@ var view = {
 			path += ' c '+c1x+','+c1y+' '+c2x+','+c2y+' '+x+','+y;			
 			
 			newPath.setAttributeNS(null,"d",path);
-			svg.appendChild(newPath);		
+			headGroup.appendChild(newPath);		
 			
 		};
 		
@@ -2317,10 +2346,10 @@ var view = {
 			otherPath += ' c '+c1x+','+c1y+' '+c2x+','+c2y+' '+x+','+y;
 			
 			newPath.setAttributeNS(null,"d",path);
-			svg.appendChild(newPath);
+			headGroup.appendChild(newPath);
 
 			otherNewPath.setAttributeNS(null,"d",otherPath);
-			svg.appendChild(otherNewPath);
+			headGroup.appendChild(otherNewPath);
 			
 		};
 		
@@ -2362,10 +2391,10 @@ var view = {
 			otherPath += ' c '+c1x+','+c1y+' '+c2x+','+c2y+' '+x+','+y;
 			
 			newPath.setAttributeNS(null,"d",path);
-			svg.appendChild(newPath);
+			headGroup.appendChild(newPath);
 
 			otherNewPath.setAttributeNS(null,"d",otherPath);
-			svg.appendChild(otherNewPath);
+			headGroup.appendChild(otherNewPath);
 			
 		};
 		
@@ -2393,7 +2422,7 @@ var view = {
 			path += ' c '+c1x+','+c1y+' '+c2x+','+c2y+' '+x+','+y;			
 			
 			newPath.setAttributeNS(null,"d",path);
-			svg.appendChild(newPath);		
+			headGroup.appendChild(newPath);		
 			
 		};
 		
@@ -2472,10 +2501,10 @@ var view = {
 			otherNewPath.setAttributeNS(null,"d",otherPath);
 			
 			if (face.leftTusk > 0) {
-				svg.appendChild(newPath);
+				headGroup.appendChild(newPath);
 			};
 			if (face.rightTusk > 0) {
-				svg.appendChild(otherNewPath);
+				headGroup.appendChild(otherNewPath);
 			};
 		};
 		
@@ -2528,7 +2557,7 @@ var view = {
 		path += ' c '+c1x+','+c1y+' '+c2x+','+c2y+' '+x+','+y;
 		
 		newPath.setAttributeNS(null,"d",path);
-		svg.appendChild(newPath);
+		headGroup.appendChild(newPath);
 		
 		
 		
@@ -2566,7 +2595,7 @@ var view = {
 			path += ' c '+c1x+','+c1y+' '+c2x+','+c2y+' '+x+','+y;
 			
 			newPath.setAttributeNS(null,"d",path);
-			svg.appendChild(newPath);
+			headGroup.appendChild(newPath);
 			
 			newPath = document.createElementNS('http://www.w3.org/2000/svg',"path");
 			newPath.setAttribute("fill",face.hairColor);
@@ -2643,10 +2672,10 @@ var view = {
 			otherPath += ' c '+c1x+','+c1y+' '+c2x+','+c2y+' '+x+','+y;
 			
 			newPath.setAttributeNS(null,"d",path);
-			svg.appendChild(newPath);
+			headGroup.appendChild(newPath);
 
 			otherNewPath.setAttributeNS(null,"d",otherPath);
-			svg.appendChild(otherNewPath);
+			headGroup.appendChild(otherNewPath);
 			
 			
 		};

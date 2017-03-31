@@ -686,7 +686,7 @@ var dataEthnicities = {
  		penalty: {move:0,focus:0},
  		simpleColoring: {
  			upperArms: {fill:'firebrick'},
- 			feet: {fill:'saddlebrown'},
+ 			feet: {fill:'saddlebrown',stroke:'#000000'},
  		},
  		svgNodes: function(mob,bodyConstants) {
  			var svgNodes = document.createElementNS('http://www.w3.org/2000/svg',"g");
@@ -898,9 +898,10 @@ var dataEthnicities = {
  		passiveDefense: 1,
  		penalty: {move:1,focus:1},
  		simpleColoring: {
+ 			upperArms: {fill:'tan'},
  			bust: {fill:'none',stroke:'none'},
  			legs: {fill:'tan'},
- 			feet: {fill:'darkgrey'},
+ 			feet: {fill:'darkgrey',stroke:'#000000'},
  		},
  		svgNodes: function(mob,bodyConstants) {
  			var svgNodes = document.createElementNS('http://www.w3.org/2000/svg',"g");
@@ -972,10 +973,10 @@ var dataEthnicities = {
 			svgNodes.appendChild(newPath);
  			
  			var scraps = [
- 				{x:4+mob.faceData.hips,y:15},
- 				{x:4+mob.faceData.belly,y:10},
- 				{x:4+mob.faceData.shoulders*0.8,y:15},
- 				{x:4+mob.faceData.shoulders*0.9,y:10},
+ 				{x:4+mob.faceData.hips,y:15,c1x:mob.faceData.hips/4},
+ 				{x:4+mob.faceData.belly,y:10,c1x:mob.faceData.belly/2},
+ 				{x:4+mob.faceData.shoulders*0.8,y:15,c1x:mob.faceData.bust/2},
+ 				{x:4+mob.faceData.shoulders*0.9,y:10,c1x:mob.faceData.bust/3},
  				{x:4+mob.faceData.shoulders,y:0},
  			];
  			
@@ -994,7 +995,8 @@ var dataEthnicities = {
 				path = 'm 100,'+startY;
 				x = scraps[i].x;
 				y = scraps[i].x;
-				path += 'c 5,0 '+x+',-'+y+' '+x+',-'+y;
+				var c2y = y + scraps[1].c1x;
+				path += 'c '+scraps[i].c1x+',0 '+x+',-'+y+' '+x+',-'+y;
 				x = scraps[i+1].x - scraps[i].x;
 				y = -1 * scraps[i].y;
 				if (i < scraps.length-2) {path += 'l '+x+','+y;};
@@ -1017,7 +1019,7 @@ var dataEthnicities = {
 				path = 'm 100,'+startY;
 				x = -1 * scraps[i].x;
 				y = scraps[i].x;
-				path += 'c -5,0 '+x+',-'+y+' '+x+',-'+y;
+				path += 'c -'+scraps[i].c1x+',0 '+x+',-'+y+' '+x+',-'+y;
 				x = scraps[i].x - scraps[i+1].x;
 				y = -1 * scraps[i].y;
 				if (i < scraps.length-2) {path += 'l '+x+','+y;};

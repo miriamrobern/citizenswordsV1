@@ -32,6 +32,7 @@
 			</div>
 			
 			<div>
+				<h2>Choose Your Class</h2>
 				<div id='classWork' class='characterClass' onclick='handlers.selectClass("work")'>
 					<h3>Work</h3>
 					<p class='classDesc'>An apprentice unafraid of hard work and dressed accordingly.</p>
@@ -55,26 +56,27 @@
 		</div>
 
 		<div id='rightDiv'>
-		
+			<h2>Customize your Appearance</h2>
 			<button onclick='handlers.randomizeFace()'>Randomize</button>
-			<hr />
-			Debug Buttons
-			<button onclick = 'handlers.typicalFeatures(dataEthnicities.centaur)'>Typical Centaur Features</button>
-			<button onclick = 'handlers.typicalFeatures(dataEthnicities.dwarven)'>Typical Dwarven Features</button>
-			<button onclick = 'handlers.typicalFeatures(dataEthnicities.elvish)'>Typical Elvish Features</button>
-			<button onclick = 'handlers.typicalFeatures(dataEthnicities.faunic)'>Typical Faunic Features</button>
-			<button onclick = 'handlers.typicalFeatures(dataEthnicities.gigantic)'>Typical Gigantic Features</button>
-			<button onclick = 'handlers.typicalFeatures(dataEthnicities.gnollish)'>Typical Gnollish Features</button>
-			<button onclick = 'handlers.typicalFeatures(dataEthnicities.gnomish)'>Typical Gnomish Features</button>
-			<button onclick = 'handlers.typicalFeatures(dataEthnicities.goblin)'>Typical Goblin Features</button>
-			<button onclick = 'handlers.typicalFeatures(dataEthnicities.halfling)'>Typical Halfling Features</button>
-			<button onclick = 'handlers.typicalFeatures(dataEthnicities.kobold)'>Typical Kobold Features</button>
-			<button onclick = 'handlers.typicalFeatures(dataEthnicities.minotaur)'>Typical Minotaur Features</button>
-			<button onclick = 'handlers.typicalFeatures(dataEthnicities.ogrish)'>Typical Ogrish Features</button>
-			<button onclick = 'handlers.typicalFeatures(dataEthnicities.orcish)'>Typical Orcish Features</button>
-			<button onclick = 'handlers.typicalFeatures(dataEthnicities.trollish)'>Typical Trollish Features</button>
-			<button onclick = 'handlers.typicalFeatures(dataEthnicities.satyric)'>Typical Satyric Features</button>
-			<hr />
+			<div class='debug'><div class='debugInside'>
+				Debug Buttons
+				<button onclick = 'handlers.typicalFeatures(dataEthnicities.centaur)'>Typical Centaur Features</button>
+				<button onclick = 'handlers.typicalFeatures(dataEthnicities.dwarven)'>Typical Dwarven Features</button>
+				<button onclick = 'handlers.typicalFeatures(dataEthnicities.elvish)'>Typical Elvish Features</button>
+				<button onclick = 'handlers.typicalFeatures(dataEthnicities.faunic)'>Typical Faunic Features</button>
+				<button onclick = 'handlers.typicalFeatures(dataEthnicities.gigantic)'>Typical Gigantic Features</button>
+				<button onclick = 'handlers.typicalFeatures(dataEthnicities.gnollish)'>Typical Gnollish Features</button>
+				<button onclick = 'handlers.typicalFeatures(dataEthnicities.gnomish)'>Typical Gnomish Features</button>
+				<button onclick = 'handlers.typicalFeatures(dataEthnicities.goblin)'>Typical Goblin Features</button>
+				<button onclick = 'handlers.typicalFeatures(dataEthnicities.halfling)'>Typical Halfling Features</button>
+				<button onclick = 'handlers.typicalFeatures(dataEthnicities.kobold)'>Typical Kobold Features</button>
+				<button onclick = 'handlers.typicalFeatures(dataEthnicities.minotaur)'>Typical Minotaur Features</button>
+				<button onclick = 'handlers.typicalFeatures(dataEthnicities.ogrish)'>Typical Ogrish Features</button>
+				<button onclick = 'handlers.typicalFeatures(dataEthnicities.orcish)'>Typical Orcish Features</button>
+				<button onclick = 'handlers.typicalFeatures(dataEthnicities.trollish)'>Typical Trollish Features</button>
+				<button onclick = 'handlers.typicalFeatures(dataEthnicities.satyric)'>Typical Satyric Features</button>
+				<span id='heritagesSpan'></span>
+			</div></div>
 
 			<div class='controlsSectionDiv'>
 				<h3>Coloring</h3>
