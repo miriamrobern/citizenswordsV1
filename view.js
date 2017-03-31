@@ -17,6 +17,7 @@ var view = {
 		document.getElementById('focusMobDiv').style.display = 'block';	
 		document.getElementById('mapDiv').style.display = 'block';
 		document.getElementById('companyHQDiv').style.display = 'none';
+		document.getElementById('characterCreationDiv').style.display = 'none';
 		
 		document.getElementById('focusMobImg').src = '';
 		document.getElementById('focusMobDetailsDiv').innerHTML = '';
@@ -26,6 +27,7 @@ var view = {
 		document.getElementById('buttonRowDiv').style.display = 'none';
 		document.getElementById('focusMobDiv').style.display = 'none';	
 		document.getElementById('mapDiv').style.display = 'none';
+		document.getElementById('characterCreationDiv').style.display = 'none';
 		
 		document.getElementById('companyHQDiv').style.display = 'block';
 		view.refreshNews();
@@ -781,4 +783,30 @@ var view = {
 		document.getElementById('dialogueContinueButton').style.display = "none";
 		document.getElementById('dialogueReturnButton').style.display = "inline";
 	},
+	
+// 	Character Creation
+	setSliders: function() {
+		for (i in dataEthnicities.min) {
+			var slider = document.getElementById(i+'Input');
+			slider.max = dataEthnicities.max[i];
+			slider.min = dataEthnicities.min[i];
+		};
+	},
+	
+	updateFaceDiv: function(mobSVG) {
+		var faceDiv = document.getElementById('faceDiv')
+		faceDiv.innerHTML = '';
+		faceDiv.appendChild(mobSVG);
+	},
+	
+	enableConfirmButton: function() {
+		var name = document.getElementById('nameInput').value;
+		var pronouns = document.getElementById('pronounsInput').value;
+		if (name !== undefined && name !== '' && pronouns !== 'Pronouns') {
+			document.getElementById('characterCreationConfirmButton').disabled = false;
+		} else {
+			document.getElementById('characterCreationConfirmButton').disabled = true;
+		};
+	},
+
 }

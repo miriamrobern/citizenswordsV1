@@ -16,6 +16,7 @@ var game = {
 		// Mobs
 		for (mob=0;mob<Math.min(level.startLocations.length,heroes.length);mob++) {
 			var newMob = new Mob(heroes[mob],level.startLocations[mob].x,level.startLocations[mob].y,heroes[mob].id);
+			newMob.player = true;
 			newMob.look(newMob.location);
 		};
 	

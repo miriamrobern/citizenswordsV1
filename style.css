@@ -3,6 +3,25 @@ body {
 	padding-top: 5vw;
 	}
 
+.debug {
+	border: 2px solid black;
+	background: repeating-linear-gradient(
+		45deg,
+		orange,
+		yellow 20px,
+  		black 20px,
+  		black 40px
+		);
+	display: none;
+	}
+	
+.debugInside {
+	background-color: white;
+	border: 2px solid black;
+	margin: 10px;
+	padding: 10px;
+	}
+
 #mainMenuDiv {
 	background-color: maroon;
 	color: white;
@@ -19,6 +38,11 @@ body {
 	display: inline;
 	padding-right: 15vw;
 	}
+	
+	
+
+
+/* Levels */
 	
 #mapDiv {
 	margin-left: auto;
@@ -254,6 +278,11 @@ body {
 	color: darkblue;
 	font-size: 0.6em;
 	}
+
+
+
+
+
 
 /* Company Headquarters Stuff */
 
@@ -643,6 +672,29 @@ body {
 	background-color: yellowgreen;
 	border: 0.25vw outset greenyellow;
 	}
+	
+/* Moving Items on Roster */
+
+.divBoat {
+	position: absolute;
+	z-index: 10;
+	width: 14vw;
+	text-align: center;
+	list-style-type: none;
+}
+
+.divBoatWide {
+	position: absolute;
+	z-index: 10;
+	width: 27vw;
+	text-align: center;
+	list-style-type: none;
+}
+
+
+
+
+
 
 /* Dialogue Pop Up */
 
@@ -742,20 +794,81 @@ body {
 	text-align: right;
 	}
 	
-/* Moving Items on Roster */
+	
+	
+	
+/* Character Creation */
 
-.divBoat {
-	position: absolute;
-	z-index: 10;
-	width: 14vw;
-	text-align: center;
-	list-style-type: none;
+#characterCreationDiv {
+	height: 90vh;
 }
 
-.divBoatWide {
-	position: absolute;
-	z-index: 10;
-	width: 27vw;
+#characterCreationFrame {
+	border:0;
+	width: 100%;
+	height: 100%;
+}
+
+#characterCreationLeftDiv {
+	float: left;
+	margin-left: 5vw;
+	margin-right: 5vw;
 	text-align: center;
-	list-style-type: none;
+}
+
+.faceDiv {
+	height: 40vw;
+	width: 40vw;
+	border: 3px solid black;
+}
+
+#characterCreationRightDiv {
+	float: left;
+	height: 60vw;
+	width: 40vw;
+	overflow: scroll;
+}
+
+.controlsSectionDiv {
+}
+
+.controlsSectionDiv input {
+	width: 20vw;
+	margin-right: 2vw;
+}
+
+.controlsSectionDiv button {
+	margin-top: 10px;
+}
+
+.characterClass {
+	float: left;
+	width: 10vw;
+	margin: 1vw;
+	padding-left: 0.5vw;
+	padding-right: 0.5vw;
+	padding-bottom: 0.5vw;
+}
+
+#classWork {
+	border: 0.5vw outset gold;
+	background-color: #ffff55;
+}
+
+#classFight {
+	border: 0.5vw outset red;
+	background-color: pink;
+}
+
+#classPray {
+	border: 0.5vw outset blue;
+	background-color: lightblue;
+}
+
+.classDesc {
+	font-size: 0.8em;
+}
+
+#characterCreationConfirmButtonDiv {
+	clear: both;
 }

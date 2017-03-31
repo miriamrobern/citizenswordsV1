@@ -447,216 +447,7 @@ var dataEthnicities = {
  			legs: {fill:'beige'},
  		},
  		svgNodes: function(mob,bodyConstants) {
- 			var svgNodes = document.createElementNS('http://www.w3.org/2000/svg',"g");
- 			
-			// Robe Bottom
- 			var robePath = document.createElementNS('http://www.w3.org/2000/svg',"path");
-			robePath.setAttribute("fill",'beige');
-			robePath.setAttribute("stroke","#000000");
-			robePath.setAttribute("stroke-width","1");
-			robePath.setAttribute("stroke-linecap","round");
-			
-			// start right hip
-			x = 100 - mob.faceData.hips;
-			y = bodyConstants.neck + 53;
-			var path = 'm '+x+','+y;
-			
-			// to right knee
-			x = -27 + mob.faceData.hips;
-			y = 20;
-			c1x = 0;
-			c1y = 0;
-			c2x = x;
-			c2y = y-3;
-			path += ' c '+c1x+','+c1y+' '+c2x+','+c2y+' '+x+','+y;
-			
-			// to fold on top of right foot
-			x = 5;
-			y = 12;
-			c1x = 0;
-			c1y = 3;
-			c2x = x;
-			c2y = y;
-			path += ' c '+c1x+','+c1y+' '+c2x+','+c2y+' '+x+','+y;
-			
-			path += ' l 3,2 l -3,-2';
-			
-			// to outside of fold
-			x = -2;
-			y = 4;
-			c1x = -3;
-			c1y = -2;
-			c2x = x;
-			c2y = y;
-			path += ' c '+c1x+','+c1y+' '+c2x+','+c2y+' '+x+','+y;
-			
-			// to floor
-			x = 24;
-			y = 7;
-			c1x = 0;
-			c1y = 0;
-			c2x = x - 10;
-			c2y = y;
-			path += ' c '+c1x+','+c1y+' '+c2x+','+c2y+' '+x+','+y;
-			
-			// to top of left foot
-			x = 22;
-			y = -7;
-			c1x = 10;
-			c1y = 0;
-			c2x = x;
-			c2y = y;
-			path += ' c '+c1x+','+c1y+' '+c2x+','+c2y+' '+x+','+y;
-			
-			// to left knee
-			x = 5;
-			y = -16;
-			c1x = 0;
-			c1y = 3;
-			c2x = x;
-			c2y = y;
-			path += ' c '+c1x+','+c1y+' '+c2x+','+c2y+' '+x+','+y;
-			
-			// to left hip
-			x = -27 + mob.faceData.hips;
-			y = -18;
-			c1x = 0;
-			c1y = -3;
-			c2x = x;
-			c2y = y-10;
-			path += ' c '+c1x+','+c1y+' '+c2x+','+c2y+' '+x+','+y;
-			
-			robePath.setAttributeNS(null,"d",path);
-			svgNodes.appendChild(robePath);
- 			
-			// Panel
- 			var panelPath = document.createElementNS('http://www.w3.org/2000/svg',"path");
-			panelPath.setAttribute("fill",'darkblue');
-			panelPath.setAttribute("stroke","gold");
-			panelPath.setAttribute("stroke-width","3");
-			panelPath.setAttribute("stroke-linecap","round");
-			
-			// start right top
-			x = 92;
-			y = bodyConstants.neck;
-			var path = 'm '+x+','+y;
-			
-			// down to bustline
-			x = 0 - Math.max(0,mob.faceData.bust / 8);
-			y = 24;
-			c1x = 0;
-			c1y = 0;
-			c2x = x;
-			c2y = y - Math.max(0,mob.faceData.bust / 8);
-			path += ' c '+c1x+','+c1y+' '+c2x+','+c2y+' '+x+','+y;
-			
-			// down to belly
-			x = 0 + Math.max(0,mob.faceData.bust / 8) - Math.max(0,mob.faceData.belly / 8);
-			y = 20;
-			c1x = 0;
-			c1y = Math.max(0,mob.faceData.bust / 8);
-			c2x = x;
-			c2y = y;
-			path += ' c '+c1x+','+c1y+' '+c2x+','+c2y+' '+x+','+y;
-			
-			// down to floor
-			x = Math.max(0,mob.faceData.belly / 8) - 2;
-			y = 45;
-			c1x = 0;
-			c1y = 0;
-			c2x = x+2;
-			c2y = y-2;
-			path += ' c '+c1x+','+c1y+' '+c2x+','+c2y+' '+x+','+y;
-			
-			// across to left bottom
-			x = 20;
-			y = 0;
-			c1x = 0;
-			c1y = 4;
-			c2x = x;
-			c2y = y+4;
-			path += ' c '+c1x+','+c1y+' '+c2x+','+c2y+' '+x+','+y;
-			
-			// up to belly
-			x = Math.max(0,mob.faceData.belly / 8) - 2;
-			y = -45;
-			c1x = -2;
-			c1y = -2;
-			c2x = x;
-			c2y = y;
-			path += ' c '+c1x+','+c1y+' '+c2x+','+c2y+' '+x+','+y;
-			
-			// up to bustline
-			x = Math.max(0,mob.faceData.bust / 8) - Math.max(0,mob.faceData.belly / 8);
-			y = -20;
-			c1x = 0;
-			c1y = 0;
-			c2x = x;
-			c2y = y + Math.max(0,mob.faceData.bust / 8);
-			path += ' c '+c1x+','+c1y+' '+c2x+','+c2y+' '+x+','+y;
-			
-			// up to neck
-			x = 0 - Math.max(0,mob.faceData.bust / 8);
-			y = -25;
-			c1x = 0;
-			c1y = 0 - Math.max(0,mob.faceData.bust / 8);
-			c2x = x;
-			c2y = y;
-			path += ' c '+c1x+','+c1y+' '+c2x+','+c2y+' '+x+','+y;
-			
-			path += ' z';
-			panelPath.setAttributeNS(null,"d",path);
-			svgNodes.appendChild(panelPath);
- 			
-			// Belt
- 			var beltPath = document.createElementNS('http://www.w3.org/2000/svg',"path");
-			beltPath.setAttribute("fill",'darkblue');
-			beltPath.setAttribute("stroke","#000000");
-			beltPath.setAttribute("stroke-width","1");
-			beltPath.setAttribute("stroke-linecap","round");
-			
-			var bellyDip = 0;
-			if (mob.faceData.belly > 0) {
-				bellyDip = (mob.faceData.belly-15) * 0.7;
-			};
-			
-			// start right top
-			x = 98 - mob.faceData.hips;
-			y = bodyConstants.neck + 51;
-			var path = 'm '+x+','+y;
-			
-			// go to left top with belly dip
-			x = mob.faceData.hips * 2 + 4;
-			y = 0;
-			c1x = 0;
-			c1y = bellyDip;
-			c2x = x;
-			c2y = y+bellyDip;
-			path += ' c '+c1x+','+c1y+' '+c2x+','+c2y+' '+x+','+y;
-			
-			// go to left bottom
-			x = 0;
-			y = 4;
-			c1x = 0;
-			c1y = 0;
-			c2x = x;
-			c2y = y;
-			path += ' c '+c1x+','+c1y+' '+c2x+','+c2y+' '+x+','+y;
-			
-			// go to right bottom with belly dip
-			x = mob.faceData.hips * -2 - 4;
-			y = 2;
-			c1x = 0;
-			c1y = bellyDip;
-			c2x = x;
-			c2y = y+bellyDip;
-			path += ' c '+c1x+','+c1y+' '+c2x+','+c2y+' '+x+','+y;
-			
-			path += ' z';
-			beltPath.setAttributeNS(null,"d",path);
-			svgNodes.appendChild(beltPath);
-			 			
- 			return svgNodes;
+ 			return draw.simpleRobe(mob,bodyConstants,['beige','darkblue','gold']);
  		},
  	},
  
@@ -688,208 +479,7 @@ var dataEthnicities = {
  			upperArms: {fill:'firebrick'},
  			feet: {fill:'saddlebrown',stroke:'#000000'},
  		},
- 		svgNodes: function(mob,bodyConstants) {
- 			var svgNodes = document.createElementNS('http://www.w3.org/2000/svg',"g");
- 			
- 			// Shirt
- 			var shirtGroup = document.createElementNS('http://www.w3.org/2000/svg',"g");
- 			
- 			var shirtPath = document.createElementNS('http://www.w3.org/2000/svg',"use");
-			shirtPath.setAttribute("fill",'firebrick');
-			shirtPath.setAttribute("href",'#torso');
-			shirtGroup.appendChild(shirtPath);
- 			
- 			var rightBreast = document.createElementNS('http://www.w3.org/2000/svg',"use");
-			rightBreast.setAttribute("fill",'firebrick');
-			rightBreast.setAttribute("href",'#rightBreast');
-			shirtGroup.appendChild(rightBreast);
- 			
- 			var leftBreast = document.createElementNS('http://www.w3.org/2000/svg',"use");
-			leftBreast.setAttribute("fill",'firebrick');
-			leftBreast.setAttribute("href",'#leftBreast');
-			shirtGroup.appendChild(leftBreast);
- 			
- 			var defs = document.createElementNS('http://www.w3.org/2000/svg',"defs");
- 			var collarClipPath = document.createElementNS('http://www.w3.org/2000/svg',"clipPath");
- 			var collarPath = document.createElementNS('http://www.w3.org/2000/svg',"path");
-			collarClipPath.appendChild(collarPath);
-			collarClipPath.id = 'collarClipPath';
-			defs.appendChild(collarClipPath);
-			svgNodes.appendChild(defs);
-			
-			// start right top
-			x = 100 - mob.faceData.shoulders * 0.5;
-			y = bodyConstants.neck;
-			var path = 'm '+x+','+y;
-			
-			// go to left top with dip
-			x = mob.faceData.shoulders;
-			y = 0;
-			c1x = 0;
-			c1y = 30;
-			c2x = x;
-			c2y = y + 30;
-			path += ' c '+c1x+','+c1y+' '+c2x+','+c2y+' '+x+','+y;
-			
-			var liningPath = path;
-			
-			path += 'h100 v100 h-250 v-100 z';
-			
-			collarPath.setAttributeNS(null,"d",path);
-			shirtGroup.setAttribute("clip-path","url(#collarClipPath)");
-			svgNodes.appendChild(shirtGroup);
-			
-			// Bustline
- 			var bustline = document.createElementNS('http://www.w3.org/2000/svg',"path");
-			bustline.setAttribute("fill",'firebrick');
-			bustline.setAttribute("stroke",'none');
-			bustline.setAttribute("stroke-width","1");
-			bustline.setAttribute("stroke-linecap","round");
-						
-			// start right top
-			x = 100 - mob.faceData.bust / 2;
-			y = bodyConstants.neck + 22;
-			var depth = mob.faceData.bust / 2 + 1.5;
-			var path = 'm '+x+','+y+' v'+depth+' h'+mob.faceData.bust+' v-'+depth;
-			
-			bustline.setAttributeNS(null,"d",path);
-			svgNodes.appendChild(bustline);
-			
- 			var collarLining = document.createElementNS('http://www.w3.org/2000/svg',"path");
-			collarLining.setAttribute("fill",'none');
-			collarLining.setAttribute("stroke",'#000000');
-			collarLining.setAttribute("stroke-width","1");
-			collarLining.setAttribute("stroke-linecap","round");
-			collarLining.setAttributeNS(null,"d",liningPath);
-			svgNodes.appendChild(collarLining);
-			
-			
-			// Shorts
- 			var shortsPath = document.createElementNS('http://www.w3.org/2000/svg',"path");
-			shortsPath.setAttribute("fill",'tan');
-			shortsPath.setAttribute("stroke","#000000");
-			shortsPath.setAttribute("stroke-width","1");
-			shortsPath.setAttribute("stroke-linecap","round");
-			
-			var bellyDip = 0;
-			if (mob.faceData.belly > 0) {
-				bellyDip = (mob.faceData.belly-15) * 0.5;
-			};
-			
-			// start right top
-			x = 100 - mob.faceData.hips;
-			y = bodyConstants.neck + 58;
-			var path = 'm '+x+','+y;
-			
-			// go to left top with belly dip
-			x = mob.faceData.hips * 2;
-			y = 0;
-			c1x = 0;
-			c1y = bellyDip;
-			c2x = x;
-			c2y = y+bellyDip;
-			path += ' c '+c1x+','+c1y+' '+c2x+','+c2y+' '+x+','+y;
-			
-			// go to outside left knee
-			x = 25 - mob.faceData.hips;
-			y = 15;
-			c1x = 0;
-			c1y = 0;
-			c2x = x;
-			c2y = y;
-			path += ' c '+c1x+','+c1y+' '+c2x+','+c2y+' '+x+','+y;
-			
-			// go to inside left knee
-			x = -10;
-			y = 5;
-			c1x = 0;
-			c1y = 0;
-			c2x = x;
-			c2y = y;
-			path += ' c '+c1x+','+c1y+' '+c2x+','+c2y+' '+x+','+y;
-			
-			// go to crotch
-			x = -15;
-			y = -12;
-			c1x = 0;
-			c1y = 0;
-			c2x = x;
-			c2y = y;
-			path += ' c '+c1x+','+c1y+' '+c2x+','+c2y+' '+x+','+y;
-			
-			// go to inside right knee
-			x = -15;
-			y = 12;
-			c1x = 0;
-			c1y = 0;
-			c2x = x;
-			c2y = y;
-			path += ' c '+c1x+','+c1y+' '+c2x+','+c2y+' '+x+','+y;
-			
-			// go to outside right knee
-			x = -10;
-			y = -5;
-			c1x = 0;
-			c1y = 0;
-			c2x = x;
-			c2y = y;
-			path += ' c '+c1x+','+c1y+' '+c2x+','+c2y+' '+x+','+y;
-			
-			path += ' z';
-			shortsPath.setAttributeNS(null,"d",path);
-			svgNodes.appendChild(shortsPath);
-			
-			
-			// Belt
- 			var beltPath = document.createElementNS('http://www.w3.org/2000/svg',"path");
-			beltPath.setAttribute("fill",'SaddleBrown');
-			beltPath.setAttribute("stroke","#000000");
-			beltPath.setAttribute("stroke-width","1");
-			beltPath.setAttribute("stroke-linecap","round");
-			
-			var bellyDip = 0;
-			if (mob.faceData.belly > 0) {
-				bellyDip = (mob.faceData.belly-15) * 0.5;
-			};
-			
-			// start right top
-			x = 100 - mob.faceData.hips;
-			y = bodyConstants.neck + 55;
-			var path = 'm '+x+','+y;
-			
-			// go to left top with belly dip
-			x = mob.faceData.hips * 2;
-			y = 0;
-			c1x = 0;
-			c1y = bellyDip;
-			c2x = x;
-			c2y = y+bellyDip;
-			path += ' c '+c1x+','+c1y+' '+c2x+','+c2y+' '+x+','+y;
-			
-			// go to left bottom
-			x = 0;
-			y = 3;
-			c1x = 0;
-			c1y = 0;
-			c2x = x;
-			c2y = y;
-			path += ' c '+c1x+','+c1y+' '+c2x+','+c2y+' '+x+','+y;
-			
-			// go to right bottom with belly dip
-			x = mob.faceData.hips * -2;
-			y = 0;
-			c1x = 0;
-			c1y = bellyDip;
-			c2x = x;
-			c2y = y+bellyDip;
-			path += ' c '+c1x+','+c1y+' '+c2x+','+c2y+' '+x+','+y;
-			
-			path += ' z';
-			beltPath.setAttributeNS(null,"d",path);
-			svgNodes.appendChild(beltPath);
-			 			
- 			return svgNodes;
- 		},
+ 		svgNodes: function(mob,bodyConstants) {return draw.roughspun(mob,bodyConstants);},
  	},
  	
  	scrapArmor: {
@@ -903,140 +493,7 @@ var dataEthnicities = {
  			legs: {fill:'tan'},
  			feet: {fill:'darkgrey',stroke:'#000000'},
  		},
- 		svgNodes: function(mob,bodyConstants) {
- 			var svgNodes = document.createElementNS('http://www.w3.org/2000/svg',"g");
- 			
- 			var scrapColors = ['#A0522D','#A05221','#A0452D'];
- 			
- 			// Skirt Straps
- 			var startX;
- 			var startY; 
- 			for (i in [0,1,2]) {
-				newPath = document.createElementNS('http://www.w3.org/2000/svg',"path");
-				newPath.setAttribute("fill",scrapColors[i]);
-				newPath.setAttribute("stroke","#000000");
-				newPath.setAttribute("stroke-width","1");
-				newPath.setAttribute("stroke-linecap","round");
-			
-				otherNewPath = document.createElementNS('http://www.w3.org/2000/svg',"path");
-				otherNewPath.setAttribute("fill",scrapColors[2-i]);
-				otherNewPath.setAttribute("stroke","#000000");
-				otherNewPath.setAttribute("stroke-width","1");
-				otherNewPath.setAttribute("stroke-linecap","round");
-				
-				var startX = 100 - i * mob.faceData.hips/3;
-				var startY = bodyConstants.neck + 70 + i * mob.faceData.hips/-3 ;
-				
-				var path = 'm '+startX+','+startY;
-				path += ' l -10,10 l -3,-3 l 8,-12';
-				
-				var startX = 100 + i * mob.faceData.hips/3;
-				
-				var otherPath = 'm '+startX+','+startY;
-				otherPath += ' l 10,10 l 3,-3 l -8,-12';
-				
-				newPath.setAttributeNS(null,"d",path);
-				svgNodes.appendChild(newPath);
-				
-				otherNewPath.setAttributeNS(null,"d",otherPath);
-				svgNodes.appendChild(otherNewPath);
-
- 			}
- 			
- 			// Shoulder Straps
- 			newPath = document.createElementNS('http://www.w3.org/2000/svg',"path");
-			newPath.setAttribute("fill",scrapColors[0]);
-			newPath.setAttribute("stroke","#000000");
-			newPath.setAttribute("stroke-width","1");
-			newPath.setAttribute("stroke-linecap","round");
-			
-			var x = 100 - mob.faceData.shoulders * 0.9;
-			var y = bodyConstants.neck + 3;
-			path = 'm '+x+','+y;
-			path += 'l 10,-2 l 2,20 l -12,0 z'
-			
-			newPath.setAttributeNS(null,"d",path);
-			svgNodes.appendChild(newPath);
-			
- 			newPath = document.createElementNS('http://www.w3.org/2000/svg',"path");
-			newPath.setAttribute("fill",scrapColors[1]);
-			newPath.setAttribute("stroke","#000000");
-			newPath.setAttribute("stroke-width","1");
-			newPath.setAttribute("stroke-linecap","round");
-			
-			var x = 100 + mob.faceData.shoulders * 0.9;
-			var y = bodyConstants.neck + 3;
-			path = 'm '+x+','+y;
-			path += 'l -10,-2 l -2,20 l 12,0 z'
-			
-			newPath.setAttributeNS(null,"d",path);
-			svgNodes.appendChild(newPath);
- 			
- 			var scraps = [
- 				{x:4+mob.faceData.hips,y:15,c1x:mob.faceData.hips/4},
- 				{x:4+mob.faceData.belly,y:10,c1x:mob.faceData.belly/2},
- 				{x:4+mob.faceData.shoulders*0.8,y:15,c1x:mob.faceData.bust/2},
- 				{x:4+mob.faceData.shoulders*0.9,y:10,c1x:mob.faceData.bust/3},
- 				{x:4+mob.faceData.shoulders,y:0},
- 			];
- 			
- 			var currentY = 50;
- 			for (i=0;i<scraps.length-1;i++) {
-				
-				var startY = bodyConstants.neck + currentY + scraps[i].x;
-				
-				var color = scrapColors[i % 3];
- 				newPath = document.createElementNS('http://www.w3.org/2000/svg',"path");
-				newPath.setAttribute("fill",color);
-				newPath.setAttribute("stroke","#000000");
-				newPath.setAttribute("stroke-width","1");
-				newPath.setAttribute("stroke-linecap","round");
-				var overstepY = scraps[i].y + scraps[i].x - scraps[i+1].y;
-				path = 'm 100,'+startY;
-				x = scraps[i].x;
-				y = scraps[i].x;
-				var c2y = y + scraps[1].c1x;
-				path += 'c '+scraps[i].c1x+',0 '+x+',-'+y+' '+x+',-'+y;
-				x = scraps[i+1].x - scraps[i].x;
-				y = -1 * scraps[i].y;
-				if (i < scraps.length-2) {path += 'l '+x+','+y;};
-				path += 'l -2,-2';
-				x = -1 * scraps[i+1].x - 3;
-				y = scraps[i].x + 5;
-				if (i === scraps.length-2) {y -= scraps[i].y -1;};
-				path += 'l '+x+','+y;
-				path += ' z';
-				newPath.setAttributeNS(null,"d",path);
-				svgNodes.appendChild(newPath);
-				
-				color = scrapColors[(scraps.length-i) % 3];
- 				newPath = document.createElementNS('http://www.w3.org/2000/svg',"path");
-				newPath.setAttribute("fill",color);
-				newPath.setAttribute("stroke","#000000");
-				newPath.setAttribute("stroke-width","1");
-				newPath.setAttribute("stroke-linecap","round");
-				var overstepY = scraps[i].y + scraps[i].x - scraps[i+1].y;
-				path = 'm 100,'+startY;
-				x = -1 * scraps[i].x;
-				y = scraps[i].x;
-				path += 'c -'+scraps[i].c1x+',0 '+x+',-'+y+' '+x+',-'+y;
-				x = scraps[i].x - scraps[i+1].x;
-				y = -1 * scraps[i].y;
-				if (i < scraps.length-2) {path += 'l '+x+','+y;};
-				path += 'l 2,-2';
-				x = scraps[i+1].x + 3;
-				y = scraps[i].x + 5;
-				if (i === scraps.length-2) {y -= scraps[i].y -1;};
-				path += 'l '+x+','+y;
-				path += ' z';
-				newPath.setAttributeNS(null,"d",path);
-				svgNodes.appendChild(newPath);
-				
-				currentY -= 15;
- 			};
- 			
- 			return svgNodes;
- 		},
+ 		svgNodes: function(mob,bodyConstants) {return draw.scrapArmor(mob,bodyConstants);},
  	},
  	
  	scrapShield: {
@@ -1268,7 +725,6 @@ var dataEthnicities = {
  		},
  		skills: {
  			maneuvers: [
-				dataManeuvers.slash,
 				dataManeuvers.defensiveStance,
  			],
  			passives: [
@@ -1330,3 +786,98 @@ var dataEthnicities = {
  	},
  
  };
+ 
+ var p1 = {
+	
+	name: "Player One",
+	id: "p1",
+	
+	faceData: {
+		skinColor: '#000',
+		templePosition: 0,
+		templeWidth: 0,
+		templeHeight: 0,
+		cheekbonePosition: 0,
+		cheekboneWidth: 0,
+		cheekboneHeight: 0,
+		chinHeight: 0,
+		chinWidth: 0,
+		eyeColor: '#000',
+		eyeDistance: 0,
+		eyeSize: 0,
+		browSize: 0,
+		leftBrowTilt: 0,
+		rightBrowTilt: 0,
+		insideEyelidCurve: 0,
+		outsideEyelidCurve: 0,
+		lowerEyelidCurve: 0,
+		noseColor: '#000',
+		noseHeight: 0,
+		noseSize: 0,
+		noseWidth: 0,
+		nostrilHeight: 0,
+		noseBump: 0,
+		lipColor: '#000',
+		mouthWidth: 0,
+		lipSize: 0,
+		smile: 0,
+		mouthOpen: 0,
+		teeth: 0,
+		leftTusk: 0,
+		rightTusk: 0,
+		earColor: '#000',
+		earSize: 0,
+		earDip: 0,
+		earTilt: 0,
+		earWidth: 0,
+		earLobe: 0,
+		hairColor: 0,
+		hairLength: 0,
+		hairCurl: 0,
+		hairPart: 0,
+		hairBangs: 0,
+		hairBangsLength: 0,
+		hairSweep: 0,
+		topHairHeight: 0,
+		topHairBase: 0,
+		topHairWidth: 0,
+		horns: 0,
+		shoulders: 0,
+		bust: 0,
+		belly: 0,
+		hips: 0,
+		feet: 0,
+	},
+	race: undefined,
+	img: undefined,
+	
+	stats: {
+		morale: 100,
+		move: 4,
+		moveMax: 4,
+		strength: 3,
+		strengthMax: 3,
+		focus: 2,
+		focusMax: 2,
+		armor: 2,
+	},
+	
+	equipment: {
+		armor: dataItems.roughspun,
+		right: dataItems.mothersSword,
+		left: undefined,
+		item0: undefined,
+		item1: undefined,
+		item2: undefined,
+	},
+	
+	skills: {
+		maneuvers: [
+			dataManeuvers.exhort,
+		],
+		passives: [
+			'dataPassives.ofThePeople',
+		],
+	},
+	
+};

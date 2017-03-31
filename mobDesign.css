@@ -21,7 +21,7 @@ body {
 	padding: 10px;
 	}
 
-#leftDiv {
+#characterCreationLeftDiv {
 	float: left;
 	margin-left: 5vw;
 	margin-right: 5vw;
@@ -35,7 +35,7 @@ body {
 	border: 3px solid black;
 }
 
-#rightDiv {
+#characterCreationRightDiv {
 	float: left;
 	height: 60vw;
 	width: 40vw;
@@ -46,12 +46,12 @@ body {
 .controlsSectionDiv {
 }
 
-input {
+.controlsSectionDiv input {
 	width: 20vw;
 	margin-right: 2vw;
 }
 
-button {
+.controlsSectionDiv button {
 	margin-top: 10px;
 }
 
@@ -81,4 +81,8 @@ button {
 
 .classDesc {
 	font-size: 0.8em;
+}
+
+#characterCreationConfirmButtonDiv {
+	clear: both;
 }

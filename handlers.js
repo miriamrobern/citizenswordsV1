@@ -218,6 +218,79 @@ var handlers = {
 			view.refreshRosterDescription('clear');
 		};
 	},
+	
+	// Character Creation
+	updateFace: function(mob) {
+		if (mob == undefined) {mob = p1};
+		
+		face = mob.faceData;
+	
+		var value;
+		for (i in face) {
+			value = document.getElementById(i + "Input").value;
+			if (i.indexOf('olor') == -1) {
+				value = parseInt(value);
+			};
+			face[i] = value;
+		};
+	
+		var mobSVG = draw.drawMob(p1);
+		view.updateFaceDiv(mobSVG);
+	},
+	
+	selectClass: function(className) {
+		document.getElementById('classWork').style.borderStyle = 'outset';
+		document.getElementById('classFight').style.borderStyle = 'outset';
+		document.getElementById('classPray').style.borderStyle = 'outset';
+		
+		if (className === "work") {
+			p1.equipment.armor = dataItems.roughspun;
+			p1.equipment.left = undefined;
+			p1.skills.maneuvers = [dataManeuvers.exhort];
+			p1.skills.passives = [dataManeuvers.exhort];
+			p1.stats.move = 4;
+			p1.stats.strength = 3;
+			p1.stats.focus = 3;
+			p1.stats.armor = 2;
+			document.getElementById('classWork').style.borderStyle = 'inset';
+		} else if (className === "fight") {
+			p1.equipment.armor = dataItems.scrapArmor;
+			p1.equipment.left = dataItems.scrapShield;
+			p1.skills.maneuvers = [dataManeuvers.defensiveStance,dataManeuvers.exhort];
+			p1.skills.passives = [];
+			p1.stats.move = 3;
+			p1.stats.strength = 4;
+			p1.stats.focus = 3;
+			p1.stats.armor = 4;
+			document.getElementById('classFight').style.borderStyle = 'inset';
+		} else if (className === "pray") {
+			p1.equipment.armor = dataItems.initiatesRobes;
+			p1.equipment.left = dataItems.initiatesSpellbook;
+			p1.skills.maneuvers = [dataManeuvers.arcaneBeam,dataManeuvers.exhort];
+			p1.skills.passives = [];
+			p1.stats.move = 3;
+			p1.stats.strength = 3;
+			p1.stats.focus = 4;
+			p1.stats.armor = 3;
+			document.getElementById('classPray').style.borderStyle = 'inset';
+		};
+		
+		p1.stats.moveMax = p1.stats.move;
+		p1.stats.strengthMax = p1.stats.strength;
+		p1.stats.focusMax = p1.stats.focus;
+		
+		handlers.updateFace();
+	},
+	
+	confirmCharacterCreation: function() {
+		var mobSVG = draw.drawMob(p1);
+		p1.img = mobSVG;
+		p1.name = document.getElementById('nameInput').value;
+		p1.pronouns = document.getElementById('pronounsInput').value;
+		heroes[0] = p1;
+// 		handlers.loadLevel(hellhoundCave);
+	},
+
 
 
 };
