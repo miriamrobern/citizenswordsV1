@@ -183,7 +183,7 @@ var handlers = {
 		handlers.updateFace(p1);
 	},
 	
-	randomizeFace: function(grandparents) {
+	randomizeFace: function(heritages) {
 		view.setSliders();
 		
 		// Randomized Base
@@ -193,25 +193,63 @@ var handlers = {
 			var blue = Math.random() * 255 << 0;
 			document.getElementById(i+'Input').value = "#" + ("0" + red.toString(16)).substr(-2) + ("0" + green.toString(16)).substr(-2) + ("0" + blue.toString(16)).substr(-2);
 		};
-		for (i in dataEthnicities.min) {
-			var slider = document.getElementById(i+'Input');
-			var random = Math.random();
-			var value = random*dataEthnicities.min[i] + (1-random)*dataEthnicities.max[i];
-			slider.value = value;
+		
+		var grandparents = [{faceData:{}},{faceData:{}},{faceData:{}},{faceData:{}}];
+		
+		// Generate Random Grandparents
+		for (i=0;i<4;i++) {
+			for (f in dataEthnicities.min) {
+				var random = Math.random();
+				grandparents[i].faceData[f]= random*dataEthnicities.min[f] + (1-random)*dataEthnicities.max[f];
+			};
 		};
 		
 		// Get Grandparents' Ethnicities
-		if (grandparents == undefined) {
+		if (heritages == undefined) {
 			var ethnicities = Object.keys(dataEthnicities);
 			ethnicities.splice(ethnicities.indexOf('min'),1);
 			ethnicities.splice(ethnicities.indexOf('max'),1);
-			var grandparents = [];
+			var heritages = [];
 			for (i=0;i<4;i++) {
-				grandparents.push(ethnicities[Math.random() * ethnicities.length << 0]);
-				ethnicities = dataEthnicities[grandparents[i]].neighbors;
+				grandparents[i].ethnicity = ethnicities[Math.random() * ethnicities.length << 0];
+				ethnicities = dataEthnicities[grandparents[i].ethnicity].neighbors;
+				ethnicities = ethnicities.concat([grandparents[i].ethnicity,grandparents[i].ethnicity,grandparents[i].ethnicity]);
+			};
+		} else {
+			for (i=0;i<4;i++) {
+				grandparents[i].ethnicity = heritages[i];
 			};
 		};
-		console.log(grandparents);
+		
+		// Modify Grandparents' FaceData
+		for (i in grandparents) {
+			for (f in dataEthnicities[grandparents[i].ethnicity]) {
+				grandparents[i].faceData[f] = (grandparents[i].faceData[f] + dataEthnicities[grandparents[i].ethnicity][f] ) / 2;
+				if (dataEthnicities[grandparents[i].ethnicity][f] === 0) {grandparents[i].faceData[f] = 0;}
+			};
+		};
+		
+		// Average to Parents
+		var parents = [{faceData:{}},{faceData:{}}];
+		for (i in parents) {
+			for (f in dataEthnicities.min) {
+				parents[i].faceData[f] = Math.floor(( grandparents[i].faceData[f] + grandparents[parseInt(i)+2].faceData[f] ) / 2);
+			};
+		};
+		
+		// Average to Child
+		var child = {};
+		for (f in dataEthnicities.min) {
+			child[f] = Math.floor(( parents[0].faceData[f] + parents[1].faceData[f] ) / 2 );
+		};
+		
+		// Set to Sliders
+		for (i in dataEthnicities.min) {
+			var slider = document.getElementById(i+'Input');
+			slider.value = child[i];
+		};
+		
+		console.log(grandparents[0].ethnicity,grandparents[1].ethnicity,grandparents[2].ethnicity,grandparents[3].ethnicity);
 		
 		handlers.updateColoring();
 		handlers.updateFace(p1);
@@ -3085,6 +3123,7 @@ var view = {
 	},
 };
 
+// For Prototyping Ethnic Looks (Delete Later)
 var faceDiffs = {
 		pinkPheomelanin:10,
 		greenKeratin:0,
