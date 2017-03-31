@@ -111,6 +111,15 @@ body {
 	height: 100%;
 	}
 
+.portraitImg {
+	width: 100%;
+	}
+
+.bustImg {
+	width: 100%;
+	max-height: 10vw;
+	}
+
 .beamDiv {
 	z-index: 3;
 	position: absolute;
@@ -168,7 +177,7 @@ body {
 	display: none;
 	}
 
-#focusMobImg {
+#focusMobImgDiv {
 	float:left;
 	width: 20vw;
 	}
@@ -473,8 +482,11 @@ body {
 	text-align: center;
 	}
 
-#rosterPortraitImg {
+#rosterPortraitBackdropDiv {
 	height: 35vh;
+	width: 35vh;
+	margin-left: auto;
+	margin-right: auto;
 	}
 
 #rosterEquipArmorDiv {
@@ -754,19 +766,19 @@ body {
 	to {opacity: 1}
 	}
 
-.dialogueBustImg {
-	max-width: 10vw;
-	max-height: 10vw;
+.dialogueBustDiv {
+	width: 10vw;
+	height: 10vw;
 	border: 5px solid green;
 	background: white;
 	}
 
-#dialogueBustLeftImg {
+#dialogueBustLeftDiv {
 	float: left;
 	margin-right: 2vw;
 	}
 
-#dialogueBustRightImg {
+#dialogueBustRightDiv {
 	float: right;
 	margin-left: 2vw;
 	}

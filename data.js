@@ -528,7 +528,7 @@ var dataEthnicities = {
  
  	hellhound: {
  		name: "Hellhound",
- 		img: "img/hellpuppy.svg",
+ 		imgPath: "img/hellpuppy.svg",
  		ai: 'basic',
  		stats: {
  			morale: 100,
@@ -547,7 +547,7 @@ var dataEthnicities = {
  
  	rat: {
  		name: "Rat",
- 		img: "img/rat.svg",
+ 		imgPath: "img/rat.svg",
  		ai: 'basic',
  		stats: {
  			morale: 100,
@@ -566,7 +566,7 @@ var dataEthnicities = {
  
  	beulahHill: {
  		name: "Beulah Hill",
- 		img: "img/giant.png",
+ 		imgPath: "img/giant.png",
  		ai: 'basic',
  		stats: {
  			morale: 100,
@@ -582,7 +582,7 @@ var dataEthnicities = {
  	
  	daisy: {
  		name: "Daisy Moucau",
- 		img: "img/minotaur.svg",
+ 		imgPath: "img/minotaur.svg",
  		ai: "basic",
  		stats: {
  			morale: 100,
@@ -606,7 +606,7 @@ var dataEthnicities = {
  
  	elderBock: {
  		name: "Elder Bock",
- 		img: "img/dwarf.png",
+ 		imgPath: "img/dwarf.png",
  		ai: 'basic',
  		stats: {
  			morale: 100,
@@ -622,7 +622,7 @@ var dataEthnicities = {
  	
  	guildmasterMoucau: {
  		name: "Guildmaster Moucau",
- 		img: "img/guildmasterMoucau.png",
+ 		imgPath: "img/guildmasterMoucau.png",
  		ai: 'basic',
  		stats: {
  			morale: 100,
@@ -638,7 +638,7 @@ var dataEthnicities = {
  	
  	looter: {
  		name: "Looter",
- 		img: "img/centaur.png",
+ 		imgPath: "img/centaur.png",
  		ai: 'basic',
  		stats: {
  			morale: 100,
@@ -657,7 +657,7 @@ var dataEthnicities = {
  	
  	assassin: {
  		name: "Assassin",
- 		img: "img/assassin.png",
+ 		imgPath: "img/assassin.png",
  		ai: 'basic',
  		stats: {
  			morale: 100,
@@ -676,7 +676,7 @@ var dataEthnicities = {
  	
  	motherSkullgoblet: {
  		name: "Mother Skullgoblet",
- 		img: "img/motherSkullgoblet.png",
+ 		imgPath: "img/motherSkullgoblet.png",
  		ai: 'basic',
  		stats: {
  			morale: 100,
@@ -699,7 +699,7 @@ var dataEthnicities = {
  		name: "Eleanor",
  		id: "p1",
  		race: "point",
- 		img: 'img/eleanor.svg',
+ 		imgPath: 'img/eleanor.svg',
  		stats: {
  			morale: 100,
  			move: 4,
@@ -735,7 +735,7 @@ var dataEthnicities = {
  	{
  		name: "Mx. Stout",
  		id: "stout",
- 		img: 'img/stout.svg',
+ 		imgPath: 'img/stout.svg',
  		race: "halfbreed",
  		stats: {
  			morale: 100,
@@ -776,7 +776,7 @@ var dataEthnicities = {
  
  	armory: [
  		dataItems.scrapArmor,
- 		dataItems.simpleShield,
+//  		dataItems.simpleShield,
  	],
  	
  	completed: [

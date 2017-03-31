@@ -19,7 +19,7 @@ var view = {
 		document.getElementById('companyHQDiv').style.display = 'none';
 		document.getElementById('characterCreationDiv').style.display = 'none';
 		
-		document.getElementById('focusMobImg').src = '';
+		document.getElementById('focusMobImgDiv').innerHTML = '';
 		document.getElementById('focusMobDetailsDiv').innerHTML = '';
 	},
 	
@@ -145,10 +145,7 @@ var view = {
 
 			newMobDiv.setAttribute("onclick","handlers.mobSelect("+i+")");
 
-			var newMobImg = document.createElement('img');
-			newMobImg.src = mobs[i].img;
-			newMobImg.className = "mobImg";
-			newMobDiv.appendChild(newMobImg);
+			newMobDiv.appendChild(mobs[i].imgMob);
 		
 			var hexPosition = document.getElementById('hex_'+mobs[i].location.x+'_'+mobs[i].location.y).getBoundingClientRect();
 			var mapPosition = document.getElementById('mapMobDiv').getBoundingClientRect();
@@ -282,8 +279,9 @@ var view = {
 			var focusMobDetailsDiv = document.getElementById('focusMobDetailsDiv');
 			focusMobDetailsDiv.innerHTML = '';
 		
-			var focusMobImg = document.getElementById('focusMobImg');
-			focusMobImg.src = mob.img;
+			var focusMobImgDiv = document.getElementById('focusMobImgDiv');
+			focusMobImgDiv.innerHTML = '';
+			focusMobImgDiv.appendChild(mob.imgPortrait);
 		
 			var focusMobNameHead = document.createElement('h2');
 			focusMobNameHead.id = 'focusMobNameHead';
@@ -584,7 +582,9 @@ var view = {
 		console.log(hero);
 		view.focus.hero = hero;
 		
-		document.getElementById('rosterPortraitImg').src = hero.img;
+		document.getElementById('rosterPortraitBackdropDiv').innerHTML = '';
+		document.getElementById('rosterPortraitBackdropDiv').appendChild(hero.imgMob);
+		
 		document.getElementById('rosterStatMoveSpan').innerHTML = hero.stats.move;
 		document.getElementById('rosterStatStrengthSpan').innerHTML = hero.stats.strength;
 		document.getElementById('rosterStatFocusSpan').innerHTML = hero.stats.focus;
@@ -731,6 +731,9 @@ var view = {
 	
 	displayDialogue: function(text,name,bust,bustPosition) {
 	
+		console.log(bust);
+		bust.className = 'bustImg';
+	
 		handlers.hideDialogueDiv();
 		document.getElementById('dialogueReturnButton').style.display = "none";
 		document.getElementById('dialogueContinueButton').style.display = "none";
@@ -744,20 +747,22 @@ var view = {
 		
 		document.getElementById('dialogueTextDiv').innerHTML += text;
 		
-		var dialogueBustLeftImg = document.getElementById('dialogueBustLeftImg');
+		var dialogueBustLeftDiv = document.getElementById('dialogueBustLeftDiv');
 		if (bustPosition === "left") {
-			dialogueBustLeftImg.style.display = 'block';
-			dialogueBustLeftImg.src = bust;
+			dialogueBustLeftDiv.style.display = 'block';
+			dialogueBustLeftDiv.innerHTML = '';
+			dialogueBustLeftDiv.appendChild(bust);
 		} else {
-			dialogueBustLeftImg.style.display = 'none';
+			dialogueBustLeftDiv.style.display = 'none';
 		}
 		
-		var dialogueBustRightImg = document.getElementById('dialogueBustRightImg');
+		var dialogueBustRightDiv = document.getElementById('dialogueBustRightDiv');
 		if (bustPosition === "right") {
-			dialogueBustRightImg.style.display = 'block';
-			dialogueBustRightImg.src = bust;
+			dialogueBustRightDiv.style.display = 'block';
+			dialogueBustRightDiv.innerHTML = '';
+			dialogueBustRightDiv.appendChild(bust);
 		} else {
-			dialogueBustRightImg.style.display = 'none';
+			dialogueBustRightDiv.style.display = 'none';
 		}
 		
 		handlers.showDialogueDiv();

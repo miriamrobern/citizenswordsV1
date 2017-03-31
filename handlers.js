@@ -48,6 +48,11 @@ var handlers = {
 				selectedHex = map.hexes[i]
 			};
 		}
+
+//		TERRIBLE CODE		
+		if (mobs[index].maneuvers == undefined && mobs[index].player) {
+			mobs[index].refreshManeuvers();
+		};
 		
 		if (this.mode == undefined && mobs[index].stats.move > 0) {
 			this.mode = 'move';
@@ -288,12 +293,13 @@ var handlers = {
 	},
 	
 	confirmCharacterCreation: function() {
-		var mobSVG = draw.drawMob(p1);
-		p1.img = mobSVG;
+		p1.imgMob = draw.drawMob(p1);
+		p1.imgPortrait = draw.drawMob(p1);
+		p1.imgBust = draw.drawMob(p1);
 		p1.name = document.getElementById('nameInput').value;
 		p1.pronouns = document.getElementById('pronounsInput').value;
 		heroes[0] = p1;
-// 		handlers.loadLevel(hellhoundCave);
+		handlers.loadLevel(hellhoundCave);
 	},
 
 

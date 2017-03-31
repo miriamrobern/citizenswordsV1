@@ -285,7 +285,36 @@ function Mob(type,x,y,id,name) {
 		this.name = name;
 	};	
 
-	this.img = type.img;
+	if (type.imgPath !== undefined) {
+		this.imgMob = new Image();
+		this.imgMob.src = type.imgPath;
+		this.imgPortrait = new Image();
+		this.imgPortrait.src = type.imgPath;
+		this.imgBust = new Image();
+		this.imgBust.src = type.imgPath;
+	} else if (type.imgMob !== undefined) {
+		this.imgMob = type.imgMob;
+		this.imgPortrait = type.imgPortrait;
+		this.imgBust = type.imgBust;
+	} else if (type.faceData !== undefined) {
+		this.imgMob = draw.drawFace(type);
+		this.imgBust = draw.drawFace(type);
+		this.imgPortrait = draw.drawFace(type);
+	} else {
+		this.imgMob = new Image();
+		this.imgMob.src = 'img/rat.svg';
+		this.imgBust = new Image();
+		this.imgBust.src = 'img/rat.svg';
+		this.imgPortrait = new Image();
+		this.imgPortrait.src = 'img/rat.svg';
+	};
+	this.imgMob.className = 'mobImg';
+	this.imgPortrait.className = 'portraitImg';
+	this.imgBust.className = 'bustImg';
+	
+	if (type.faceData !== undefined) {
+		this.faceData = type.faceData;
+	};
 	
 	if (type.race !== undefined) {
 		this.race = type.race;
@@ -587,13 +616,17 @@ function Mob(type,x,y,id,name) {
 			this.equipment.item2 = undefined;
 		};
 		this.equipment[slot] = item;
-		this.refreshManeuvers();
 		
 		// needs to change armor value
 		if (item.slot[0] === "armor") {
 			console.log('change armor value');
+			this.stats.armor = 1 + item.slot[0].armor;
+			this.imgMob = draw.drawMob(this);
+			this.imgPortrait = draw.drawMob(this);
+			this.imgBust = draw.drawMob(this);
 		};
 		
+		this.refreshManeuvers();
 	};
 	
 	this.train = function(item,skill) {
