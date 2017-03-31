@@ -297,9 +297,9 @@ function Mob(type,x,y,id,name) {
 		this.imgPortrait = type.imgPortrait;
 		this.imgBust = type.imgBust;
 	} else if (type.faceData !== undefined) {
-		this.imgMob = draw.drawFace(type);
-		this.imgBust = draw.drawFace(type);
-		this.imgPortrait = draw.drawFace(type);
+		this.imgMob = draw.drawMob(type);
+		this.imgBust = draw.drawMob(type);
+		this.imgPortrait = draw.drawMob(type);
 	} else {
 		this.imgMob = new Image();
 		this.imgMob.src = 'img/rat.svg';
