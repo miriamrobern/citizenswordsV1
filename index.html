@@ -5,6 +5,7 @@
 		<title>Citizen Swords against the Ogre King</title>
 		<link rel="stylesheet" href="style.css">
 		<script src="data.js"></script>
+		<script src="draw.js"></script>
 		<script src="handlers.js"></script>
 		<script src="model.js"></script>
 		<script src="view.js"></script>
@@ -19,7 +20,7 @@
 		<script src="levels/levelsIndex.js"></script>
 	</head>
 
-	<body>
+	<body onload='mobDesign.randomizeFace()'>
 		
 		<div id='mainMenuDiv'>
 		
@@ -40,8 +41,152 @@
 		
 		<div id='characterCreationDiv'>
 		
-			<iframe id='characterCreationFrame' src='mobDesign.html' seamless/>
+			<div id = 'characterCreationLeftDiv'>
+	
+				<div id='faceDiv' class='faceDiv'> &nbsp;</div>
 		
+				<div>
+					<p>
+						Name:
+						<input id='nameInput' type='text' oninput = 'view.enableConfirmButton()' onchange = 'view.enableConfirmButton()'></input>
+						<select id='pronounsInput' oninput = 'view.enableConfirmButton()' onchange = 'view.enableConfirmButton()'>
+							<option disabled selected>Pronouns</option>
+							<option>Herself</option>
+							<option>Himself</option>
+							<option>Themself</option>
+							<option>Emself</option>
+							<option>Cirself</option>
+							<option>Ferself</option>
+						</select>
+					</p>
+				</div>
+		
+				<div>
+					<h2>Choose Your Class</h2>
+					<div id='classWork' class='characterClass' onclick='handlers.selectClass("work")'>
+						<h3>Work</h3>
+						<p class='classDesc'>An apprentice unafraid of hard work and dressed accordingly.</p>
+						<button onclick='handlers.selectClass("work")'>Select Work</button>
+					</div>
+					<div id='classFight' class='characterClass' onclick='handlers.selectClass("fight")'>
+						<h3>Fight</h3>
+						<p class='classDesc'>A street tough in armor cobbled together from scraps.</p>
+						<button onclick='handlers.selectClass("fight")'>Select Fight</button>
+					</div>
+					<div id='classPray' class='characterClass' onclick='handlers.selectClass("pray")'>
+						<h3>Pray</h3>
+						<p class='classDesc'>An initiate to the priesthood in the robes of your order.</p>
+						<button onclick='handlers.selectClass("pray")'>Select Pray</button>
+					</div>
+				</div>
+		
+				<div id='characterCreationConfirmButtonDiv'>
+					<button id='characterCreationConfirmButton' disabled onclick='handlers.confirmCharacterCreation()'>Confirm Selection and Play</button>
+				</div>
+			</div>
+
+			<div id='characterCreationRightDiv'>
+				<h2>Customize your Appearance</h2>
+				<button onclick='mobDesign.randomizeFace()'>Randomize</button>
+
+				<div class='controlsSectionDiv'>
+					<h3>Coloring</h3>
+					<p><input disabled hidden id='skinColorInput' type = 'color' value = '#aaaaaa' oninput = 'handlers.updateFace()' onchange = 'handlers.updateFace()' /></p>
+					<p><input id= 'blackEumelaninInput' type = 'range' oninput = 'mobDesign.updateColoring()' onchange = 'mobDesign.updateColoring()' />Black Eumelanin</p>
+					<p><input id= 'brownEumelaninInput' type = 'range' oninput = 'mobDesign.updateColoring()' onchange = 'mobDesign.updateColoring()' />Brown Eumelanin</p>
+					<p><input id= 'pinkPheomelaninInput' type = 'range' oninput = 'mobDesign.updateColoring()' onchange = 'mobDesign.updateColoring()' />Pink Pheomelanin</p>
+					<p><input id= 'greenKeratinInput' type = 'range' oninput = 'mobDesign.updateColoring()' onchange = 'mobDesign.updateColoring()' />Green Keratin</p>
+					<p><input id='eyeColorInput' type = 'color' value = '#00FF00' oninput = 'handlers.updateFace()' onchange = 'handlers.updateFace()' />Eye Color</p>
+					<p><input id='hairColorInput' type = 'color' value = '#ffffff' oninput = 'handlers.updateFace()' onchange = 'handlers.updateFace()' />Hair Color</p>
+					<p><input disabled hidden id='noseColorInput' type = 'color' value = '#00FF00' oninput = 'handlers.updateFace()' onchange = 'mobDesign.updateColoring()' /></p>
+					<p><input id= 'noseShadingInput' type = 'range' oninput = 'mobDesign.updateColoring()' onchange = 'mobDesign.updateColoring()' />Nose Shading</p>
+					<p><input id= 'nosePinknessInput' type = 'range' oninput = 'mobDesign.updateColoring()' onchange = 'mobDesign.updateColoring()' />Nose Pinkness</p>
+					<p><input disabled hidden id='lipColorInput' type = 'color' value = '#00FF00' oninput = 'handlers.updateFace()' onchange = 'mobDesign.updateColoring()' /></p>
+					<p><input id= 'lipShadingInput' type = 'range' oninput = 'mobDesign.updateColoring()' onchange = 'mobDesign.updateColoring()' />Lip Shading</p>
+					<p><input id= 'lipPinknessInput' type = 'range' oninput = 'mobDesign.updateColoring()' onchange = 'mobDesign.updateColoring()' />Lip Pinkness</p>
+					<p><input disabled hidden id='earColorInput' type = 'color' value = '#00FF00' oninput = 'handlers.updateFace()' onchange = 'mobDesign.updateColoring()' /></p>
+					<p><input id= 'earShadingInput' type = 'range' oninput = 'mobDesign.updateColoring()' onchange = 'mobDesign.updateColoring()' />Inner Ear Shading</p>
+					<p><input id= 'earPinknessInput' type = 'range' oninput = 'mobDesign.updateColoring()' onchange = 'mobDesign.updateColoring()' />Inner Ear Pinkness</p>
+				</div>
+
+				<div class='controlsSectionDiv'>
+					<h3>Head Shape</h3>
+					<p><input id= 'templePositionInput' type = 'range' oninput = 'handlers.updateFace()' onchange = 'handlers.updateFace()' />Temple Position</p>
+					<p><input id= 'templeWidthInput' type = 'range' oninput = 'handlers.updateFace()' onchange = 'handlers.updateFace()' />Temple Width</p>
+					<p><input id= 'templeHeightInput' type = 'range' oninput = 'handlers.updateFace()' onchange = 'handlers.updateFace()' />Temple Height</p>
+					<p><input id= 'cheekbonePositionInput' type = 'range' oninput = 'handlers.updateFace()' onchange = 'handlers.updateFace()' />Cheekbone Position</p>
+					<p><input id= 'cheekboneWidthInput' type = 'range' oninput = 'handlers.updateFace()' onchange = 'handlers.updateFace()' />Cheekbone Width</p>
+					<p><input id= 'cheekboneHeightInput' type = 'range' oninput = 'handlers.updateFace()' onchange = 'handlers.updateFace()' />Cheekbone Height</p>
+					<p><input id= 'chinHeightInput' type = 'range' oninput = 'handlers.updateFace()' onchange = 'handlers.updateFace()' />Chin Height</p>
+					<p><input id= 'chinWidthInput' type = 'range' oninput = 'handlers.updateFace()' onchange = 'handlers.updateFace()' />Chin Width</p>
+				</div>
+	
+				<div class='controlsSectionDiv'>
+					<h3>Eyes</h3>
+					<p><input id= 'eyeSizeInput' type = 'range' step='0.25' oninput = 'handlers.updateFace()' onchange = 'handlers.updateFace()' />Eye Size</p>
+					<p><input id= 'eyeDistanceInput' type = 'range' oninput = 'handlers.updateFace()' onchange = 'handlers.updateFace()' />Eye Distance</p>
+					<p><input id= 'insideEyelidCurveInput' type = 'range' oninput = 'handlers.updateFace()' onchange = 'handlers.updateFace()' />Inside Eyelid Curve</p>
+					<p><input id= 'outsideEyelidCurveInput' type = 'range' oninput = 'handlers.updateFace()' onchange = 'handlers.updateFace()' />Outside Eyelid Curve</p>
+					<p><input id= 'lowerEyelidCurveInput' type = 'range' oninput = 'handlers.updateFace()' onchange = 'handlers.updateFace()' />Lower Eyelid Curve</p>
+					<p><input id= 'browSizeInput' type = 'range' step='0.25' oninput = 'handlers.updateFace()' onchange = 'handlers.updateFace()' />Brow Size</p>
+					<p><input id= 'leftBrowTiltInput' type = 'range' step='0.25' oninput = 'handlers.updateFace()' onchange = 'handlers.updateFace()' />Left Brow Tilt</p>
+					<p><input id= 'rightBrowTiltInput' type = 'range' step='0.25' oninput = 'handlers.updateFace()' onchange = 'handlers.updateFace()' />Right Brow Tilt</p>
+				</div>
+	
+				<div class='controlsSectionDiv'>
+					<h3>Nose</h3>
+					<p><input id= 'noseHeightInput' type = 'range' oninput = 'handlers.updateFace()' onchange = 'handlers.updateFace()' />Nose Height</p>
+					<p><input id= 'noseSizeInput' type = 'range' oninput = 'handlers.updateFace()' onchange = 'handlers.updateFace()' />Nose Size</p>
+					<p><input id= 'noseWidthInput' type = 'range' oninput = 'handlers.updateFace()' onchange = 'handlers.updateFace()' />Nose Width</p>
+					<p><input id= 'nostrilHeightInput' type = 'range' oninput = 'handlers.updateFace()' onchange = 'handlers.updateFace()' />Nostril Height</p>
+					<p><input id= 'noseBumpInput' type = 'range' oninput = 'handlers.updateFace()' onchange = 'handlers.updateFace()' />Nose Bump</p>
+				</div>
+	
+				<div class='controlsSectionDiv'>
+					<h3>Mouth</h3>
+					<p><input id= 'mouthWidthInput' type = 'range' oninput = 'handlers.updateFace()' onchange = 'handlers.updateFace()' />Mouth Width</p>
+					<p><input id= 'lipSizeInput' type = 'range' oninput = 'handlers.updateFace()' onchange = 'handlers.updateFace()' />Lip Size</p>
+					<p><input id= 'smileInput' type = 'range' oninput = 'handlers.updateFace()' onchange = 'handlers.updateFace()' />Smile</p>
+					<p><input id= 'mouthOpenInput' type = 'range' oninput = 'handlers.updateFace()' onchange = 'handlers.updateFace()' />Open</p>
+					<p><input id= 'teethInput' type = 'range' oninput = 'handlers.updateFace()' onchange = 'handlers.updateFace()' />Teeth</p>
+					<p><input id= 'leftTuskInput' type = 'range' oninput = 'handlers.updateFace()' onchange = 'handlers.updateFace()' />Left Tusk</p>
+					<p><input id= 'rightTuskInput' type = 'range' oninput = 'handlers.updateFace()' onchange = 'handlers.updateFace()' />Right Tusk</p>	
+				</div>
+		
+				<div class='controlsSectionDiv'>
+					<h3>Ears</h3>
+					<p><input id= 'earSizeInput' type = 'range' oninput = 'handlers.updateFace()' onchange = 'handlers.updateFace()' />Ear Size</p>
+					<p><input id= 'earDipInput' type = 'range' step = '0.5' oninput = 'handlers.updateFace()' onchange = 'handlers.updateFace()' />Ear Dip</p>
+					<p><input id= 'earTiltInput' type = 'range' step = '0.5' oninput = 'handlers.updateFace()' onchange = 'handlers.updateFace()' />Ear Tilt</p>
+					<p><input id= 'earWidthInput' type = 'range' step = '0.5' oninput = 'handlers.updateFace()' onchange = 'handlers.updateFace()' />Ear Width</p>
+					<p><input id= 'earLobeInput' type = 'range' step = '0.5' oninput = 'handlers.updateFace()' onchange = 'handlers.updateFace()' />Lobe</p>	
+				</div>
+	
+				<div class='controlsSectionDiv'>
+					<h3>Hair</h3>
+					<p><input id= 'hairLengthInput' type = 'range' oninput = 'handlers.updateFace()' onchange = 'handlers.updateFace()' />Hair Length</p>
+					<p><input id= 'hairCurlInput' type = 'range' step = '0.5' oninput = 'handlers.updateFace()' onchange = 'handlers.updateFace()' />Hair Curl</p>
+					<p><input id= 'hairBangsInput' type = 'range' oninput = 'handlers.updateFace()' onchange = 'handlers.updateFace()' />Bangs</p>
+					<p><input id= 'hairBangsLengthInput' type = 'range' oninput = 'handlers.updateFace()' onchange = 'handlers.updateFace()' />Bangs Length</p>
+					<p><input id= 'hairPartInput' type = 'range' oninput = 'handlers.updateFace()' onchange = 'handlers.updateFace()' />Hair Part</p>
+					<p><input id= 'hairSweepInput' type = 'range' oninput = 'handlers.updateFace()' onchange = 'handlers.updateFace()' />Bangs Sweep</p>
+					<p><input id= 'topHairHeightInput' type = 'range' oninput = 'handlers.updateFace()' onchange = 'handlers.updateFace()' />Top Hair Height</p>
+					<p><input id= 'topHairBaseInput' type = 'range' oninput = 'handlers.updateFace()' onchange = 'handlers.updateFace()' />Top Hair Base</p>
+					<p><input id= 'topHairWidthInput' type = 'range' oninput = 'handlers.updateFace()' onchange = 'handlers.updateFace()' />Top Hair Width</p>
+					<p><input id= 'hornsInput' type = 'range' oninput = 'handlers.updateFace()' onchange = 'handlers.updateFace()' />Horns</p>
+				</div>
+	
+				<div class='controlsSectionDiv'>
+					<h3>Body</h3>
+					<p><input id= 'shouldersInput' type = 'range' oninput = 'handlers.updateFace()' onchange = 'handlers.updateFace()' />Shoulders</p>
+					<p><input id= 'bustInput' type = 'range' oninput = 'handlers.updateFace()' onchange = 'handlers.updateFace()' />Bust</p>
+					<p><input id= 'bellyInput' type = 'range' oninput = 'handlers.updateFace()' onchange = 'handlers.updateFace()' />Belly</p>
+					<p><input id= 'hipsInput' type = 'range' oninput = 'handlers.updateFace()' onchange = 'handlers.updateFace()' />Hips</p>
+					<p><input id= 'feetInput' type = 'range' oninput = 'handlers.updateFace()' onchange = 'handlers.updateFace()' />Feet</p>
+					<p><input disabled id= 'hindquartersInput' type = 'range' oninput = 'handlers.updateFace()' onchange = 'handlers.updateFace()' />Hindquarters</p>
+				</div>
+			
+			</div>		
 		</div>
 		
 		<div id='mapDiv'>
