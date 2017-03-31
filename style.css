@@ -39,6 +39,13 @@ body {
 	padding-right: 15vw;
 	}
 	
+#introDiv {
+	width: 40vh;
+	margin-left: auto;
+	margin-right: auto;
+	margin-top: 20vh;
+	}
+	
 	
 
 
@@ -801,6 +808,7 @@ body {
 
 #characterCreationDiv {
 	height: 90vh;
+	display: none;
 }
 
 #characterCreationFrame {

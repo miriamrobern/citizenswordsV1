@@ -1,5 +1,10 @@
 var handlers = {
 
+	newGame: function() {
+		document.getElementById('characterCreationDiv').style.display = 'block';
+		document.getElementById('introDiv').style.display = 'none';
+	},
+
 	loadLevel: function(level) {
 		
 		console.log(level);
