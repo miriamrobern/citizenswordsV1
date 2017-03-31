@@ -343,7 +343,7 @@ var theCityRevolts = {
  	events: {
  	
  		guildmaster: function() {
- 			view.displayDialogue("There's the guildmaster!",this.name,this.img,"left");
+ 			view.displayDialogue("There's the guildmaster!",this.name,this.imgBust,"left");
  			view.nextEvent('guildmaster2');
  			map.findHex(8,6).event = undefined;
  			map.findHex(8,7).event = undefined;
@@ -354,7 +354,7 @@ var theCityRevolts = {
  		},
  		
  		cryForHelp: function() {
- 			view.displayDialogue("Wait, did you hear that?",this.name,this.img,"left");
+ 			view.displayDialogue("Wait, did you hear that?",this.name,this.imgBust,"left");
  			view.nextEvent('cryForHelp2');
  			map.findHex(11,5).event = undefined;
  			map.findHex(11,6).event = undefined;
@@ -363,12 +363,12 @@ var theCityRevolts = {
  		
  		cryForHelp2: function() {
  			var skullgoblet = game.findMob('motherSkullgoblet');
- 			view.displayDialogue("Help!  Looters! Thieves!  They're ransacking my poor shop!  Help!","Mother Skullgoblet","img/motherSkullgoblet.png","right");
+ 			view.displayDialogue("Help!  Looters! Thieves!  They're ransacking my poor shop!  Help!",skullgoblet.name,skullgoblet.imgBust,"right");
  			view.nextEvent('cryForHelp3');
  		},
  		
  		cryForHelp3: function() {
- 			view.displayDialogue("If we get involved, we may miss the Guildmaster.  What do you think?",mobs[1].name,mobs[1].img,"right");
+ 			view.displayDialogue("If we get involved, we may miss the Guildmaster.  What do you think?",mobs[1].name,mobs[1].imgBust,"right");
  		},
  		
  		stopThief: function() {
@@ -379,14 +379,14 @@ var theCityRevolts = {
  			} else {
  				epithet = "point-lover";
  			};
- 			view.displayDialogue("Stay out of our way, "+epithet+"!  This city's going to burn, and we're getting ours while we can.  You should, too!",looter1.name,looter1.img,"left");
+ 			view.displayDialogue("Stay out of our way, "+epithet+"!  This city's going to burn, and we're getting ours while we can.  You should, too!",looter1.name,looter1.imgBust,"left");
  			view.nextEvent('stopThief2');
  			this.location.event = undefined;
  			document.getElementById('mapBackgroundImg').src='img/theCityRevolts2.png';
  		},
  		
  		stopThief2: function() {
- 			view.displayDialogue("This is my neighborhood, punk.  You're not going to steal from Mother Skullgoblet on my watch!",view.focus.mob.name,view.focus.mob.img,"right");
+ 			view.displayDialogue("This is my neighborhood, punk.  You're not going to steal from Mother Skullgoblet on my watch!",view.focus.mob.name,view.focus.mob.imgBust,"right");
  			map.findHex(8,10).event = theCityRevolts.events.thankYou;
  		},
  		
@@ -395,60 +395,60 @@ var theCityRevolts = {
  			var looter2 = game.findMob('looter2');
  			var skullgoblet = game.findMob('motherSkullgoblet');
  			if (looter1.stats.morale === 0 && looter2.stats.morale === 0) {
- 				view.displayDialogue("Oh, thank you, thank you!  I take back every disparaging thing I ever said about you two rascals.",skullgoblet.name,skullgoblet.img,"right");
+ 				view.displayDialogue("Oh, thank you, thank you!  I take back every disparaging thing I ever said about you two rascals.",skullgoblet.name,skullgoblet.imgBust,"right");
  				this.location.event = undefined;
  				view.nextEvent('welcome',this);
  			};
  		},
  		
  		welcome: function() {
- 			view.displayDialogue("You're... welcome, I guess.  What... what disparaging things have you been... you know, never mind.  What should we do with these two?",this.name,this.img,"left");
+ 			view.displayDialogue("You're... welcome, I guess.  What... what disparaging things have you been... you know, never mind.  What should we do with these two?",this.name,this.imgBust,"left");
  			view.nextEvent('welcome2',this);
  		},
  		
  		welcome2: function() {
  			var skullgoblet = game.findMob('motherSkullgoblet');
- 			view.displayDialogue("Oh, you leave them to me.  I can't run and chase 'em, but I can give them the whupping they deserve now that they stay still.  You two come back by the shop later.  I'll remember this!",skullgoblet.name,skullgolet.img,"right");
+ 			view.displayDialogue("Oh, you leave them to me.  I can't run and chase 'em, but I can give them the whupping they deserve now that they stay still.  You two come back by the shop later.  I'll remember this!",skullgoblet.name,skullgolet.imgBust,"right");
  			company.deeds.skullgoblet = true;
  		},
  		
  		charter: function() {
- 			view.displayDialogue("Excuse me!  Master Moucau!  Master Moucau!",this.name,this.img,"left");
+ 			view.displayDialogue("Excuse me!  Master Moucau!  Master Moucau!",this.name,this.imgBust,"left");
  			view.nextEvent('charter2');
  			this.location.event = undefined;
  		},
  		
  		charter2: function() {
  			var guildmasterMoucau = game.findMob('guildmasterMoucau');
- 			view.displayDialogue("Yes?  So glad to see you come out for this!  Let me shake your hand before I go up on stage right now.",guildmasterMoucau.name,guildmasterMoucau.img,"right");
+ 			view.displayDialogue("Yes?  So glad to see you come out for this!  Let me shake your hand before I go up on stage right now.",guildmasterMoucau.name,guildmasterMoucau.imgBust,"right");
  			view.nextEvent('charter3');
  		},
  		
  		charter3: function() {
- 			view.displayDialogue("We're hoping for more than a handshake, Master.  My name is "+mobs[0].name+", this is my friend Mixter Stout.  We're hoping to register a charter for a fighting company.  We want to help the city.  Defend it, fight the Ogre King, preserve the Pileus way of life!",mobs[0].name,mobs[0].img,"left");
+ 			view.displayDialogue("We're hoping for more than a handshake, Master.  My name is "+mobs[0].name+", this is my friend Mixter Stout.  We're hoping to register a charter for a fighting company.  We want to help the city.  Defend it, fight the Ogre King, preserve the Pileus way of life!",mobs[0].name,mobs[0].imgBust,"left");
  			view.nextEvent('charter4');
  		},
  		
  		charter4: function() {
  			var guildmasterMoucau = game.findMob('guildmasterMoucau');
- 			view.displayDialogue("Right... well.  I suppose I could accept your petition.  Right after you supply the thousand gold piece registration fee.",guildmasterMoucau.name,guildmasterMoucau.img,"right");
+ 			view.displayDialogue("Right... well.  I suppose I could accept your petition.  Right after you supply the thousand gold piece registration fee.",guildmasterMoucau.name,guildmasterMoucau.imgBust,"right");
  			view.nextEvent('charter5');
  		},
  		
  		charter5: function() {
- 			view.displayDialogue("Th... thousa... I'm sorry, one <em>thousand</em> gold pieces?!?  Just to join the fight to protect our city?",mobs[0].name,mobs[0].img,"left");
+ 			view.displayDialogue("Th... thousa... I'm sorry, one <em>thousand</em> gold pieces?!?  Just to join the fight to protect our city?",mobs[0].name,mobs[0].imgBust,"left");
  			view.nextEvent('charter6');
  		},
  		
  		charter6: function() {
  			var stout = game.findMob('stout');
- 			view.displayDialogue("Oooooohhh, I get it.  The city registering all these companies isn't a call to arms, it's a tax scheme.",stout.name,stout.img,"left");
+ 			view.displayDialogue("Oooooohhh, I get it.  The city registering all these companies isn't a call to arms, it's a tax scheme.",stout.name,stout.imgBust,"left");
  			view.nextEvent('charter7');
  		},
  		
  		charter7: function() {
  			var guildmasterMoucau = game.findMob('guildmasterMoucau');
- 			view.displayDialogue("You're very sharp.  The city will need full coffers to fund our defense.<p>I wish I could help you kids.  I will say the City Watch is always accepting strong arms.  Why don't you inquire there?  But I'm afraid I've got to go.",guildmasterMoucau.name,guildmasterMoucau.img,"right");
+ 			view.displayDialogue("You're very sharp.  The city will need full coffers to fund our defense.<p>I wish I could help you kids.  I will say the City Watch is always accepting strong arms.  Why don't you inquire there?  But I'm afraid I've got to go.",guildmasterMoucau.name,guildmasterMoucau.imgBust,"right");
  			view.nextEvent('charter8');
  		},
  		
@@ -474,7 +474,7 @@ var theCityRevolts = {
  			view.moveMob(assassin2,landingHex2);
  			assassin2.location = landingHex2;
  			
- 			view.displayDialogue("Death to the Traitor Council!  Death to the Betrayer Guildmasters!  Long Live the Ogre King!",assassin1.name,assassin1.img,"left");
+ 			view.displayDialogue("Death to the Traitor Council!  Death to the Betrayer Guildmasters!  Long Live the Ogre King!",assassin1.name,assassin1.imgBust,"left");
  			view.nextEvent('assassins2');
  			
  			map.findHex(20,4).event = undefined;
@@ -485,14 +485,14 @@ var theCityRevolts = {
  			var elderBock = game.findMob('elderBock');
  			elderBock.move(map.findHex(18,2));
  			var guildmasterMoucau = game.findMob('guildmasterMoucau');
- 			view.displayDialogue("Shit!",guildmasterMoucau.name,guildmasterMoucau.img,"right");
+ 			view.displayDialogue("Shit!",guildmasterMoucau.name,guildmasterMoucau.imgBust,"right");
  			view.nextEvent('assassins3');
  		},
  		
  		assassins3: function() {
  			var guildmasterMoucau = game.findMob('guildmasterMoucau');
  			view.moveMob(guildmasterMoucau,map.findHex(21,4));
- 			view.displayDialogue("Help me!  "+mobs[0].name+", save me!",guildmasterMoucau.name,guildmasterMoucau.img,"right");
+ 			view.displayDialogue("Help me!  "+mobs[0].name+", save me!",guildmasterMoucau.name,guildmasterMoucau.imgBust,"right");
  			view.nextEvent('assassins4');
  		},
  		
@@ -516,13 +516,13 @@ var theCityRevolts = {
  			assassin2.location = landingHex2;
  			
  			var daisy = game.findMob('daisy');
- 			view.displayDialogue("Keep your filthy loyalist hands off my father!",daisy.name,daisy.img,"right");
+ 			view.displayDialogue("Keep your filthy loyalist hands off my father!",daisy.name,daisy.imgBust,"right");
  			view.nextEvent('daisyJoin');
  		},
  		
  		daisyJoin: function() {
  			var daisy = game.findMob('daisy');
-  			view.displayDialogue("Daisy has joined the party!",undefined,daisy.img,"right");
+  			view.displayDialogue("Daisy has joined the party!",undefined,daisy.imgBust,"right");
   			daisy.player = true;
   			daisy.look(daisy.location);
  		},

@@ -675,7 +675,7 @@ var dataEthnicities = {
  	
  	motherSkullgoblet: {
  		name: "Mother Skullgoblet",
- 		imgPath: "img/motherSkullgoblet.png",
+//  		imgPath: "img/motherSkullgoblet.png",
  		ai: 'basic',
  		stats: {
  			morale: 100,
@@ -687,6 +687,7 @@ var dataEthnicities = {
  			focusMax: 2,
  			armor: 2,
  		},
+ 		faceData: {"skinColor":"#958502","templePosition":10,"templeWidth":5,"templeHeight":4,"cheekbonePosition":13,"cheekboneWidth":3,"cheekboneHeight":5,"chinHeight":50,"chinWidth":26,"eyeColor":"#a27666","eyeDistance":11,"eyeSize":6,"browSize":0,"leftBrowTilt":-2,"rightBrowTilt":2,"insideEyelidCurve":-2,"outsideEyelidCurve":8,"lowerEyelidCurve":5,"noseColor":"#9e6710","noseHeight":34,"noseSize":5,"noseWidth":5,"nostrilHeight":4,"noseBump":-2,"lipColor":"#bd7641","mouthWidth":15,"lipSize":3,"smile":-7,"mouthOpen":5,"teeth":2,"leftTusk":2,"rightTusk":0,"earColor":"#be9050","earSize":13,"earDip":-20,"earTilt":0,"earWidth":29,"earLobe":12,"hairColor":"#c3bcb5","hairLength":22,"hairCurl":12,"hairPart":-1,"hairBangs":8,"hairBangsLength":5,"hairSweep":0,"topHairHeight":0,"topHairBase":15,"topHairWidth":2,"horns":0,"shoulders":30,"bust":32,"belly":25,"hips":23,"feet":12},
  	},
  
  };

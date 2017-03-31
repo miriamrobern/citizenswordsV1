@@ -53,6 +53,7 @@ var handlers = {
 		if (mobs[index].maneuvers == undefined && mobs[index].player) {
 			mobs[index].refreshManeuvers();
 		};
+		mobs[index].div.appendChild(mobs[index].imgMob);
 		
 		if (this.mode == undefined && mobs[index].stats.move > 0) {
 			this.mode = 'move';
