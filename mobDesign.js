@@ -91,7 +91,7 @@ var mobDesign = {
 	},
 	
 	randomizeFace: function(heritages) {
-		
+// 		console.log(heritages);
 		var newFace = {};
 		
 		// Randomized Base
@@ -100,7 +100,6 @@ var mobDesign = {
 			var green = Math.random() * 255  << 0;
 			var blue = Math.random() * 255 << 0;
 			newFace[i] = "#" + ("0" + red.toString(16)).substr(-2) + ("0" + green.toString(16)).substr(-2) + ("0" + blue.toString(16)).substr(-2);
-// 			document.getElementById(i+'Input').value = "#" + ("0" + red.toString(16)).substr(-2) + ("0" + green.toString(16)).substr(-2) + ("0" + blue.toString(16)).substr(-2);
 		};
 		
 		var grandparents = [{faceData:{}},{faceData:{}},{faceData:{}},{faceData:{}}];
@@ -131,7 +130,7 @@ var mobDesign = {
 			};
 		} else {
 			for (i=0;i<4;i++) {
-				grandparents[i].ethnicity = heritages[i];
+				grandparents[i].ethnicity = heritages[ i % heritages.length ];
 			};
 		};
 		

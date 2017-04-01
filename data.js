@@ -563,6 +563,22 @@ var dataEthnicities = {
  		],
  	},
  
+ 	doti: {
+ 		name: "Doti",
+ 		heritage: ['goblin','orcish'],
+ 		ai: 'basic',
+ 		stats: {
+ 			morale: 100,
+ 			move: 1,
+ 			moveMax: 1,
+ 			strength: 1,
+ 			strengthMax: 1,
+ 			focus: 2,
+ 			focusMax: 2,
+ 			armor: 2,
+ 		},
+ 	},
+ 
  	beulahHill: {
  		name: "Beulah Hill",
  		imgPath: "img/giant.png",

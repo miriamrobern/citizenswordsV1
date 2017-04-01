@@ -285,24 +285,28 @@ function Mob(type,x,y,id,name,heritage) {
 		this.name = name;
 	};	
 
-	if (type.imgPath !== undefined) {
+	if (type.imgPath !== undefined) { // outside image file
 		this.imgMob = new Image();
 		this.imgMob.src = type.imgPath;
 		this.imgPortrait = new Image();
 		this.imgPortrait.src = type.imgPath;
 		this.imgBust = new Image();
 		this.imgBust.src = type.imgPath;
-	} else if (type.imgMob !== undefined) {
+	} else if (type.imgMob !== undefined) { // internal pre-rendered image
 		this.imgMob = type.imgMob;
 		this.imgPortrait = type.imgPortrait;
 		this.imgBust = type.imgBust;
-	} else if (type.faceData !== undefined) {
+	} else if (type.faceData !== undefined) { // render from faceData
+		this.faceData = type.faceData;
 		this.imgMob = draw.drawMob(type);
 		this.imgBust = draw.drawMob(type);
 		this.imgPortrait = draw.drawMob(type);
-	} else if (heritage !== undefined) {
-		// Generate Random
-	} else {
+	} else if (type.heritage !== undefined) { // create faceData, then render
+		this.faceData = mobDesign.randomizeFace(type.heritage);
+		this.imgMob = draw.drawMob(this);
+		this.imgBust = draw.drawMob(this);
+		this.imgPortrait = draw.drawMob(this);
+	} else { // fallback
 		this.imgMob = new Image();
 		this.imgMob.src = 'img/rat.svg';
 		this.imgBust = new Image();

@@ -139,39 +139,40 @@ var view = {
 		
 // 		document.getElementById('mapMobDiv').innerHTML = '';
 		for (i in mobs) {
-			var newMobDiv = document.createElement('div');
-			newMobDiv.className = 'mobDiv';
-			document.getElementById('mapMobDiv').appendChild(newMobDiv);
+			if (mobs[i].location !== undefined) {
+				var newMobDiv = document.createElement('div');
+				newMobDiv.className = 'mobDiv';
+				document.getElementById('mapMobDiv').appendChild(newMobDiv);
 
-			newMobDiv.setAttribute("onclick","handlers.mobSelect("+i+")");
+				newMobDiv.setAttribute("onclick","handlers.mobSelect("+i+")");
 
-			newMobDiv.appendChild(mobs[i].imgMob);
+				newMobDiv.appendChild(mobs[i].imgMob);
 		
-			var hexPosition = document.getElementById('hex_'+mobs[i].location.x+'_'+mobs[i].location.y).getBoundingClientRect();
-			var mapPosition = document.getElementById('mapMobDiv').getBoundingClientRect();
-			var mobPosition = {}
-			mobPosition.top = hexPosition.top - mapPosition.top;
-			mobPosition.bottom = hexPosition.bottom - mapPosition.bottom;
-			mobPosition.left = hexPosition.left - mapPosition.left;
-			mobPosition.right = hexPosition.right - mapPosition.right;
-			mobPosition.height = hexPosition.height;
-			mobPosition.width = hexPosition.width;
+				var hexPosition = document.getElementById('hex_'+mobs[i].location.x+'_'+mobs[i].location.y).getBoundingClientRect();
+				var mapPosition = document.getElementById('mapMobDiv').getBoundingClientRect();
+				var mobPosition = {}
+				mobPosition.top = hexPosition.top - mapPosition.top;
+				mobPosition.bottom = hexPosition.bottom - mapPosition.bottom;
+				mobPosition.left = hexPosition.left - mapPosition.left;
+				mobPosition.right = hexPosition.right - mapPosition.right;
+				mobPosition.height = hexPosition.height;
+				mobPosition.width = hexPosition.width;
 			
-			// Translate px to vw
-			for (d in mobPosition) {
-				mobPosition[d] = mobPosition[d] * (100 / document.documentElement.clientWidth);
+				// Translate px to vw
+				for (d in mobPosition) {
+					mobPosition[d] = mobPosition[d] * (100 / document.documentElement.clientWidth);
+				};
+			
+				newMobDiv.style.top = mobPosition.top + "vw";
+				newMobDiv.style.left = mobPosition.left + "vw";
+				newMobDiv.style.bottom = mobPosition.bottom + "vw";
+				newMobDiv.style.right = mobPosition.right + "vw";
+			
+				newMobDiv.style.height = mobPosition.height + "vw";
+				newMobDiv.style.width = mobPosition.width + "vw";
+			
+				mobs[i].div = newMobDiv;
 			};
-			
-			newMobDiv.style.top = mobPosition.top + "vw";
-			newMobDiv.style.left = mobPosition.left + "vw";
-			newMobDiv.style.bottom = mobPosition.bottom + "vw";
-			newMobDiv.style.right = mobPosition.right + "vw";
-			
-			newMobDiv.style.height = mobPosition.height + "vw";
-			newMobDiv.style.width = mobPosition.width + "vw";
-			
-			mobs[i].div = newMobDiv;
-			
 		};
 	},
 	

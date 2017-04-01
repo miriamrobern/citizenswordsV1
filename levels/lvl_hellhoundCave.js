@@ -112,6 +112,13 @@ var hellhoundCave = {
 			type:dataMobs.rat,
 			ai: 'dormant',
  		},
+ 		
+ 		{
+			x:100,
+			y:100,
+			type:dataMobs.doti,
+			ai: 'dormant',
+ 		},
  	],
  	
  	triggers: [
