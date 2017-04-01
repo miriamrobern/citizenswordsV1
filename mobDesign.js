@@ -1,30 +1,29 @@
 
 var mobDesign = {
 	
-	updateColoring: function() {
-		
+	updateColoring: function(face) {
+
 		var skinRed = 255;
 		var skinGreen = 237;
 		var skinBlue = 220;
 		
 		// Black Eumelanin
-		var blackEumelanin = 100 - document.getElementById('blackEumelaninInput').value;
+		var blackEumelanin = 100 - face.blackEumelanin;
 		skinRed *= blackEumelanin / 100;
 		skinGreen *= blackEumelanin / 100;
 		skinBlue *= blackEumelanin / 100;
 		
 		// Brown Eumelanin
-		var brownEumelanin = 100 - document.getElementById('brownEumelaninInput').value;
+		var brownEumelanin = 100 - face.brownEumelanin;
 		skinBlue *= brownEumelanin / 100;
 
 		// Pink Pheomelanin
-		var pinkPheomelanin = 100 - document.getElementById('pinkPheomelaninInput').value;
+		var pinkPheomelanin = 100 - face.pinkPheomelanin;
 		skinGreen *= pinkPheomelanin / 100;
 		skinBlue *= pinkPheomelanin / 100;
 
 		// Green Keratin
-		var greenKeratin = document.getElementById('greenKeratinInput').value;
-		var greenDiff = greenKeratin/100 * (255 - skinGreen)
+		var greenDiff = face.greenKeratin/100 * (255 - skinGreen)
 		skinGreen += greenDiff;
 		skinRed = Math.max(0,skinRed - greenDiff);
 		skinBlue = Math.max(0,skinBlue - greenDiff);
@@ -32,10 +31,9 @@ var mobDesign = {
 // 		console.log('pigments',100-blackEumelanin,100-brownEumelanin,100-pinkPheomelanin);
 // 		console.log('RGB',Math.round(skinRed),Math.round(skinGreen),Math.round(skinBlue));
 		
-		var skinColor = "#" + ("0" + Math.round(skinRed).toString(16)).substr(-2) + ("0" + Math.round(skinGreen).toString(16)).substr(-2) + ("0" + Math.round(skinBlue).toString(16)).substr(-2);
-		document.getElementById('skinColorInput').value = skinColor;
+		face.skinColor = "#" + ("0" + Math.round(skinRed).toString(16)).substr(-2) + ("0" + Math.round(skinGreen).toString(16)).substr(-2) + ("0" + Math.round(skinBlue).toString(16)).substr(-2);
 		
-		var noseShading = parseInt(document.getElementById('noseShadingInput').value);
+		var noseShading = face.noseShading;
 		var targetShade = 255;
 		if (noseShading < 0) {
 			var noseRed = skinRed * (100 + noseShading)/100;
@@ -46,15 +44,14 @@ var mobDesign = {
 			var noseGreen = skinGreen + (255-skinGreen)*noseShading/100;
 			var noseBlue = skinBlue + (255-skinBlue)*noseShading/100;
 		};
-		var nosePinkness = parseInt(document.getElementById('nosePinknessInput').value);
+		var nosePinkness = face.nosePinkness
 		if (nosePinkness > 0) {
 			noseGreen *= (100 - nosePinkness)/100;
 			noseBlue *= (100 - nosePinkness)/100;
 		};
-		var noseColor= "#" + ("0" + Math.round(noseRed).toString(16)).substr(-2) + ("0" + Math.round(noseGreen).toString(16)).substr(-2) + ("0" + Math.round(noseBlue).toString(16)).substr(-2);
-		document.getElementById('noseColorInput').value = noseColor;
+		face.noseColor= "#" + ("0" + Math.round(noseRed).toString(16)).substr(-2) + ("0" + Math.round(noseGreen).toString(16)).substr(-2) + ("0" + Math.round(noseBlue).toString(16)).substr(-2);
 		
-		var lipShading = parseInt(document.getElementById('lipShadingInput').value);
+		var lipShading = face.lipShading;
 		var targetShade = 255;
 		if (lipShading < 0) {
 			var lipRed = skinRed * (100 + lipShading)/100;
@@ -65,15 +62,14 @@ var mobDesign = {
 			var lipGreen = skinGreen + (255-skinGreen)*lipShading/100;
 			var lipBlue = skinBlue + (255-skinBlue)*lipShading/100;
 		};
-		var lipPinkness = parseInt(document.getElementById('lipPinknessInput').value);
+		var lipPinkness = face.lipPinkness;
 		if (lipPinkness > 0) {
 			lipGreen *= (100 - lipPinkness)/100;
 			lipBlue *= (100 - lipPinkness)/100;
 		};
-		var lipColor= "#" + ("0" + Math.round(lipRed).toString(16)).substr(-2) + ("0" + Math.round(lipGreen).toString(16)).substr(-2) + ("0" + Math.round(lipBlue).toString(16)).substr(-2);
-		document.getElementById('lipColorInput').value = lipColor;
+		face.lipColor= "#" + ("0" + Math.round(lipRed).toString(16)).substr(-2) + ("0" + Math.round(lipGreen).toString(16)).substr(-2) + ("0" + Math.round(lipBlue).toString(16)).substr(-2);
 		
-		var earShading = parseInt(document.getElementById('earShadingInput').value);
+		var earShading = face.earShading;
 		var targetShade = 255;
 		if (earShading < 0) {
 			var earRed = skinRed * (100 + earShading)/100;
@@ -84,26 +80,27 @@ var mobDesign = {
 			var earGreen = skinGreen + (255-skinGreen)*earShading/100;
 			var earBlue = skinBlue + (255-skinBlue)*earShading/100;
 		};
-		var earPinkness = parseInt(document.getElementById('earPinknessInput').value);
+		var earPinkness = face.earPinkness;
 		if (earPinkness > 0) {
 			earGreen *= (100 - earPinkness)/100;
 			earBlue *= (100 - earPinkness)/100;
 		};
-		var earColor= "#" + ("0" + Math.round(earRed).toString(16)).substr(-2) + ("0" + Math.round(earGreen).toString(16)).substr(-2) + ("0" + Math.round(earBlue).toString(16)).substr(-2);
-		document.getElementById('earColorInput').value = earColor;
+		face.earColor= "#" + ("0" + Math.round(earRed).toString(16)).substr(-2) + ("0" + Math.round(earGreen).toString(16)).substr(-2) + ("0" + Math.round(earBlue).toString(16)).substr(-2);
 		
-		handlers.updateFace(p1);
+		return face;
 	},
 	
 	randomizeFace: function(heritages) {
-		view.setSliders();
+		
+		var newFace = {};
 		
 		// Randomized Base
 		for (i in {eyeColor:0,hairColor:0}) {
 			var red = Math.random() * 255 << 0;
 			var green = Math.random() * 255  << 0;
 			var blue = Math.random() * 255 << 0;
-			document.getElementById(i+'Input').value = "#" + ("0" + red.toString(16)).substr(-2) + ("0" + green.toString(16)).substr(-2) + ("0" + blue.toString(16)).substr(-2);
+			newFace[i] = "#" + ("0" + red.toString(16)).substr(-2) + ("0" + green.toString(16)).substr(-2) + ("0" + blue.toString(16)).substr(-2);
+// 			document.getElementById(i+'Input').value = "#" + ("0" + red.toString(16)).substr(-2) + ("0" + green.toString(16)).substr(-2) + ("0" + blue.toString(16)).substr(-2);
 		};
 		
 		var grandparents = [{faceData:{}},{faceData:{}},{faceData:{}},{faceData:{}}];
@@ -155,25 +152,18 @@ var mobDesign = {
 		};
 		
 		// Average to Child
-		var child = {};
 		for (f in dataEthnicities.min) {
-			child[f] = Math.floor(( parents[0].faceData[f] + parents[1].faceData[f] ) / 2 );
+			newFace[f] = Math.floor(( parents[0].faceData[f] + parents[1].faceData[f] ) / 2 );
 		};
 		
 		// Add random factor to too-normalized characteristics
 		var randomizedFeatures = {blackEumelanin:0,brownEumelanin:0,bust:0};
 		for (i in randomizedFeatures) {
 			random = Math.random();
-			child[i] = (random*dataEthnicities.min[i] + (1-random)*dataEthnicities.max[i] + child[i])/2
+			newFace[i] = (random*dataEthnicities.min[i] + (1-random)*dataEthnicities.max[i] + newFace[i])/2
 		};
-		
-		// Set to Sliders
-		for (i in dataEthnicities.min) {
-			var slider = document.getElementById(i+'Input');
-			slider.value = child[i];
-		};
-		
-		// Display
+				
+		// Display Heritage
 		heritages = [];
 		for (i in grandparents) {
 			if (heritages[grandparents[i].ethnicity] !== undefined) {
@@ -186,10 +176,12 @@ var mobDesign = {
 		for (i in heritages) {
 			heritageString += ['quarter','half','three-quarters','full-blooded'][heritages[i]-1] + " " +i + " ";
 		};
-		p1.heritage = heritageString;
+		newFace.heritage = heritageString;
 		
-		mobDesign.updateColoring();
-		handlers.updateFace(p1);
+		newFace = mobDesign.updateColoring(newFace);
+// 		handlers.updateFace(p1);
+		
+		return newFace;
 	},
 
 };

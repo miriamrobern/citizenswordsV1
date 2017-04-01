@@ -20,7 +20,7 @@
 		<script src="levels/levelsIndex.js"></script>
 	</head>
 
-	<body onload='mobDesign.randomizeFace()'>
+	<body onload='handlers.randomCharacter()'>
 		
 		<div id='mainMenuDiv'>
 		
@@ -87,26 +87,27 @@
 
 			<div id='characterCreationRightDiv'>
 				<h2>Customize your Appearance</h2>
-				<button onclick='mobDesign.randomizeFace()'>Randomize</button>
+				<button onclick='handlers.randomCharacter()'>Randomize</button>
+				<div class='debug'><input class='debug-inside' id='heritageInput' type='text'></input></div>
 
 				<div class='controlsSectionDiv'>
 					<h3>Coloring</h3>
 					<p><input disabled hidden id='skinColorInput' type = 'color' value = '#aaaaaa' oninput = 'handlers.updateFace()' onchange = 'handlers.updateFace()' /></p>
-					<p><input id= 'blackEumelaninInput' type = 'range' oninput = 'mobDesign.updateColoring()' onchange = 'mobDesign.updateColoring()' />Black Eumelanin</p>
-					<p><input id= 'brownEumelaninInput' type = 'range' oninput = 'mobDesign.updateColoring()' onchange = 'mobDesign.updateColoring()' />Brown Eumelanin</p>
-					<p><input id= 'pinkPheomelaninInput' type = 'range' oninput = 'mobDesign.updateColoring()' onchange = 'mobDesign.updateColoring()' />Pink Pheomelanin</p>
-					<p><input id= 'greenKeratinInput' type = 'range' oninput = 'mobDesign.updateColoring()' onchange = 'mobDesign.updateColoring()' />Green Keratin</p>
+					<p><input id= 'blackEumelaninInput' type = 'range' oninput = 'handlers.updateFace()' onchange = 'handlers.updateFace()' />Black Eumelanin</p>
+					<p><input id= 'brownEumelaninInput' type = 'range' oninput = 'handlers.updateFace()' onchange = 'handlers.updateFace()' />Brown Eumelanin</p>
+					<p><input id= 'pinkPheomelaninInput' type = 'range' oninput = 'handlers.updateFace()' onchange = 'handlers.updateFace()' />Pink Pheomelanin</p>
+					<p><input id= 'greenKeratinInput' type = 'range' oninput = 'handlers.updateFace()' onchange = 'handlers.updateFace()' />Green Keratin</p>
 					<p><input id='eyeColorInput' type = 'color' value = '#00FF00' oninput = 'handlers.updateFace()' onchange = 'handlers.updateFace()' />Eye Color</p>
 					<p><input id='hairColorInput' type = 'color' value = '#ffffff' oninput = 'handlers.updateFace()' onchange = 'handlers.updateFace()' />Hair Color</p>
-					<p><input disabled hidden id='noseColorInput' type = 'color' value = '#00FF00' oninput = 'handlers.updateFace()' onchange = 'mobDesign.updateColoring()' /></p>
-					<p><input id= 'noseShadingInput' type = 'range' oninput = 'mobDesign.updateColoring()' onchange = 'mobDesign.updateColoring()' />Nose Shading</p>
-					<p><input id= 'nosePinknessInput' type = 'range' oninput = 'mobDesign.updateColoring()' onchange = 'mobDesign.updateColoring()' />Nose Pinkness</p>
-					<p><input disabled hidden id='lipColorInput' type = 'color' value = '#00FF00' oninput = 'handlers.updateFace()' onchange = 'mobDesign.updateColoring()' /></p>
-					<p><input id= 'lipShadingInput' type = 'range' oninput = 'mobDesign.updateColoring()' onchange = 'mobDesign.updateColoring()' />Lip Shading</p>
-					<p><input id= 'lipPinknessInput' type = 'range' oninput = 'mobDesign.updateColoring()' onchange = 'mobDesign.updateColoring()' />Lip Pinkness</p>
-					<p><input disabled hidden id='earColorInput' type = 'color' value = '#00FF00' oninput = 'handlers.updateFace()' onchange = 'mobDesign.updateColoring()' /></p>
-					<p><input id= 'earShadingInput' type = 'range' oninput = 'mobDesign.updateColoring()' onchange = 'mobDesign.updateColoring()' />Inner Ear Shading</p>
-					<p><input id= 'earPinknessInput' type = 'range' oninput = 'mobDesign.updateColoring()' onchange = 'mobDesign.updateColoring()' />Inner Ear Pinkness</p>
+					<p><input disabled hidden id='noseColorInput' type = 'color' value = '#00FF00' oninput = 'handlers.updateFace()' onchange = 'mobDesign.updateFace()' /></p>
+					<p><input id= 'noseShadingInput' type = 'range' oninput = 'handlers.updateFace()' onchange = 'handlers.updateFace()' />Nose Shading</p>
+					<p><input id= 'nosePinknessInput' type = 'range' oninput = 'handlers.updateFace()' onchange = 'handlers.updateFace()' />Nose Pinkness</p>
+					<p><input disabled hidden id='lipColorInput' type = 'color' value = '#00FF00' oninput = 'handlers.updateFace()' onchange = 'mobDesign.updateFace()' /></p>
+					<p><input id= 'lipShadingInput' type = 'range' oninput = 'handlers.updateFace()' onchange = 'handlers.updateFace()' />Lip Shading</p>
+					<p><input id= 'lipPinknessInput' type = 'range' oninput = 'handlers.updateFace()' onchange = 'handlers.updateFace()' />Lip Pinkness</p>
+					<p><input disabled hidden id='earColorInput' type = 'color' value = '#00FF00' oninput = 'handlers.updateFace()' onchange = 'mobDesign.updateFace()' /></p>
+					<p><input id= 'earShadingInput' type = 'range' oninput = 'handlers.updateFace()' onchange = 'handlers.updateFace()' />Inner Ear Shading</p>
+					<p><input id= 'earPinknessInput' type = 'range' oninput = 'handlers.updateFace()' onchange = 'handlers.updateFace()' />Inner Ear Pinkness</p>
 				</div>
 
 				<div class='controlsSectionDiv'>

@@ -238,15 +238,28 @@ var handlers = {
 	
 		var value;
 		for (i in face) {
-			value = document.getElementById(i + "Input").value;
+			value = document.getElementById( i + "Input" ).value;
 			if (i.indexOf('olor') == -1) {
 				value = parseInt(value);
 			};
 			face[i] = value;
 		};
+
+		face = mobDesign.updateColoring(face);
 	
 		var mobSVG = draw.drawMob(p1);
 		view.updateFaceDiv(mobSVG);
+	},
+	
+	randomCharacter: function() {
+		view.setSliders();
+		
+		var newFace = mobDesign.randomizeFace();
+		for (i in newFace) {
+			document.getElementById( i + "Input" ).value = newFace[i]
+		};
+		p1.faceData = newFace;
+		handlers.updateFace();
 	},
 	
 	selectClass: function(className) {

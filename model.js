@@ -21,7 +21,7 @@ var game = {
 		};
 	
 		for (mobIndex in level.mobs) {
-			var newMob = new Mob(level.mobs[mobIndex].type,level.mobs[mobIndex].x,level.mobs[mobIndex].y,level.mobs[mobIndex].id,level.mobs[mobIndex].name);
+			var newMob = new Mob(level.mobs[mobIndex].type,level.mobs[mobIndex].x,level.mobs[mobIndex].y,level.mobs[mobIndex].id,level.mobs[mobIndex].name,level.mobs[mobIndex].heritage);
 			if (level.mobs[mobIndex].ai !== undefined) {
 				newMob.ai = ai[level.mobs[mobIndex].ai];
 			};
@@ -265,7 +265,7 @@ function Hex(x,y,type) {
 	// End Hex
 };
 
-function Mob(type,x,y,id,name) {
+function Mob(type,x,y,id,name,heritage) {
 
 	for (h in map.hexes) {
 		if (map.hexes[h].x === x && map.hexes[h].y === y) {
@@ -300,6 +300,8 @@ function Mob(type,x,y,id,name) {
 		this.imgMob = draw.drawMob(type);
 		this.imgBust = draw.drawMob(type);
 		this.imgPortrait = draw.drawMob(type);
+	} else if (heritage !== undefined) {
+		// Generate Random
 	} else {
 		this.imgMob = new Image();
 		this.imgMob.src = 'img/rat.svg';
