@@ -581,7 +581,7 @@ var dataEthnicities = {
  	
  	daisy: {
  		name: "Daisy Moucau",
- 		imgPath: "img/minotaur.svg",
+ 		faceData: {skinColor:'#824c38', templePosition:15, templeWidth:1, templeHeight:6, cheekbonePosition:14, cheekboneWidth:5, cheekboneHeight:6, chinHeight:47, chinWidth:30, eyeColor:'#1b0ec0', eyeDistance:19, eyeSize:9, browSize:2, leftBrowTilt:3, rightBrowTilt:1, insideEyelidCurve:0, outsideEyelidCurve:7, lowerEyelidCurve:7, noseColor:'#f37776', noseHeight:73, noseSize:2, noseWidth:9, nostrilHeight:7, noseBump:-3, lipColor:'#551f17', mouthWidth:15, lipSize:2, smile:-2, mouthOpen:1, teeth:0, leftTusk:0, rightTusk:0, earColor:'#9c493f', earSize:21, earDip:-8, earTilt:3, earWidth:-7, earLobe:7, hairColor:'#55284f', hairLength:50, hairCurl:1, hairPart:-4, hairBangs:2, hairBangsLength:2, hairSweep:3, topHairHeight:7, topHairBase:13, topHairWidth:18, horns:7, shoulders:38, bust:22, belly:22, hips:22, feet:0},
  		ai: "basic",
  		stats: {
  			morale: 100,
@@ -605,7 +605,7 @@ var dataEthnicities = {
  
  	elderBock: {
  		name: "Elder Bock",
- 		imgPath: "img/dwarf.png",
+ 		faceData: {skinColor:'#e8a287', templePosition:10, templeWidth:4, templeHeight:6, cheekbonePosition:11, cheekboneWidth:3, cheekboneHeight:6, chinHeight:44, chinWidth:22, eyeColor:'#9ce5e9', eyeDistance:16, eyeSize:7, browSize:2, leftBrowTilt:0, rightBrowTilt:0, insideEyelidCurve:0, outsideEyelidCurve:3, lowerEyelidCurve:4, noseColor:'#ed8c7b', noseHeight:44, noseSize:5, noseWidth:6, nostrilHeight:6, noseBump:2, lipColor:'#d85a4b', mouthWidth:11, lipSize:3, smile:-3, mouthOpen:0, teeth:0, leftTusk:0, rightTusk:0, earColor:'#ef9d8e', earSize:11, earDip:-7, earTilt:0, earWidth:16, earLobe:12, hairColor:'#c7c4a7', hairLength:49, hairCurl:3, hairPart:-1, hairBangs:8, hairBangsLength:7, hairSweep:6, topHairHeight:2, topHairBase:10, topHairWidth:8, horns:0, shoulders:33, bust:22, belly:21, hips:19, feet:10},
  		ai: 'basic',
  		stats: {
  			morale: 100,
@@ -621,7 +621,7 @@ var dataEthnicities = {
  	
  	guildmasterMoucau: {
  		name: "Guildmaster Moucau",
- 		imgPath: "img/guildmasterMoucau.png",
+ 		faceData: {skinColor:'#613925', templePosition:15, templeWidth:1, templeHeight:6, cheekbonePosition:19, cheekboneWidth:5, cheekboneHeight:6, chinHeight:47, chinWidth:30, eyeColor:'#1b0ec0', eyeDistance:19, eyeSize:8, browSize:5, leftBrowTilt:3, rightBrowTilt:1, insideEyelidCurve:0, outsideEyelidCurve:7, lowerEyelidCurve:7, noseColor:'#975b51', noseHeight:73, noseSize:2, noseWidth:10, nostrilHeight:7, noseBump:4, lipColor:'#3f170f', mouthWidth:15, lipSize:1, smile:2, mouthOpen:3, teeth:1, leftTusk:0, rightTusk:0, earColor:'#823f35', earSize:22, earDip:-8, earTilt:3, earWidth:-7, earLobe:7, hairColor:'#55284f', hairLength:16, hairCurl:1, hairPart:-5, hairBangs:2, hairBangsLength:13, hairSweep:0, topHairHeight:4, topHairBase:13, topHairWidth:18, horns:8, shoulders:38, bust:9, belly:23, hips:21, feet:3},
  		ai: 'basic',
  		stats: {
  			morale: 100,
@@ -675,7 +675,6 @@ var dataEthnicities = {
  	
  	motherSkullgoblet: {
  		name: "Mother Skullgoblet",
-//  		imgPath: "img/motherSkullgoblet.png",
  		ai: 'basic',
  		stats: {
  			morale: 100,
