@@ -1,5 +1,67 @@
 var draw = {
 
+	mothersSword: function(mob,bodyConstants,colors) {
+		var svgNodes = document.createElementNS('http://www.w3.org/2000/svg',"g");
+		
+		// Add thumb here
+		
+		var blade = document.createElementNS('http://www.w3.org/2000/svg',"path");
+		blade.setAttribute('fill',colors[0]);
+		blade.setAttribute("stroke","#000000");
+		blade.setAttribute("stroke-width","1");
+		blade.setAttribute("stroke-linecap","round");
+		path = 'm'+bodyConstants.wrist.cx.animVal.value+','+bodyConstants.wrist.cy.animVal.value;
+		path += 'm -5,-7 l-3,-65 l16,10 l-3,55';
+		blade.setAttributeNS(null,"d",path);
+		svgNodes.appendChild(blade);
+		
+		// Blade Shading
+		
+		// Grip
+		
+		var grip = document.createElementNS('http://www.w3.org/2000/svg',"path");
+		grip.setAttribute('fill',colors[2]);
+		grip.setAttribute("stroke","#000000");
+		grip.setAttribute("stroke-width","1");
+		grip.setAttribute("stroke-linecap","round");
+		path = 'm'+bodyConstants.wrist.cx.animVal.value+','+bodyConstants.wrist.cy.animVal.value;
+		path += 'm -5,-7 h10 l-3,33 h-4 l-3,-33';
+		grip.setAttributeNS(null,"d",path);
+		svgNodes.appendChild(grip);
+		
+		// Hilt
+		
+		var hilt = document.createElementNS('http://www.w3.org/2000/svg',"path");
+		hilt.setAttribute('fill',colors[1]);
+		hilt.setAttribute("stroke","#000000");
+		hilt.setAttribute("stroke-width","1");
+		hilt.setAttribute("stroke-linecap","round");
+		path = 'm'+bodyConstants.wrist.cx.animVal.value+','+bodyConstants.wrist.cy.animVal.value;
+		path += 'm 0,-7 h-15 v-5 h30 v5 h-15';
+		hilt.setAttributeNS(null,"d",path);
+		svgNodes.appendChild(hilt);
+		
+		// Pommel
+		
+		var pommel = document.createElementNS('http://www.w3.org/2000/svg',"circle");
+		pommel.setAttribute('fill',colors[1]);
+		pommel.setAttribute("stroke","#000000");
+		pommel.setAttribute("stroke-width","1");
+		pommel.setAttribute("stroke-linecap","round");
+		pommel.setAttribute("cx",bodyConstants.wrist.cx.animVal.value);
+		pommel.setAttribute("cy",28+bodyConstants.wrist.cy.animVal.value);
+		pommel.setAttribute("r",4);
+		svgNodes.appendChild(pommel);
+		
+		// Fist Front
+		
+		var fist = draw.fist(mob,bodyConstants);
+		svgNodes.appendChild(fist);
+		
+				
+		return svgNodes;
+	},
+
 	roughspun: function(mob,bodyConstants) {
 		var svgNodes = document.createElementNS('http://www.w3.org/2000/svg',"g");
 		
@@ -650,14 +712,14 @@ var draw = {
 		leftForearmTopGroup.id = 'leftForearmTopGroup';
 		leftArmTopGroup.appendChild(leftForearmTopGroup);
 		
-		var rightHand = document.createElementNS('http://www.w3.org/2000/svg',"g");
-		rightHand.id = 'rightHand';
-		rightForearmTopGroup.appendChild(rightHand);
+		var rightHandGroup = document.createElementNS('http://www.w3.org/2000/svg',"g");
+		rightHandGroup.id = 'rightHandGroup';
+		rightForearmTopGroup.appendChild(rightHandGroup);
 
-		var leftHand = document.createElementNS('http://www.w3.org/2000/svg',"g");
-		leftHand.id = 'leftHand';
-		leftHand.setAttributeNS('null','z-index',100);
-		leftForearmTopGroup.appendChild(leftHand);
+		var leftHandGroup = document.createElementNS('http://www.w3.org/2000/svg',"g");
+		leftHandGroup.id = 'leftHandGroup';
+		leftHandGroup.setAttributeNS('null','z-index',100);
+		leftForearmTopGroup.appendChild(leftHandGroup);
 		
 		// Hair in Back
 		
@@ -3039,307 +3101,20 @@ var draw = {
 		otherPath += ' c '+c1x+','+c1y+' '+c2x+','+c2y+' '+x+','+y;
 			
 		newPath.setAttributeNS(null,"d",path);
-		rightHand.appendChild(newPath);
+		rightHandGroup.appendChild(newPath);
 
 		otherNewPath.setAttributeNS(null,"d",otherPath);
-		leftHand.appendChild(otherNewPath);
+		leftHandGroup.appendChild(otherNewPath);
 		
 		// Items Here?
-		
-		// Fist Fronts
-				
-		newPath = document.createElementNS('http://www.w3.org/2000/svg',"path");
-		newPath.setAttribute("fill",face.skinColor);
-		newPath.setAttribute("stroke","#000000");
-		newPath.setAttribute("stroke-width","1");
-		newPath.setAttribute("stroke-linecap","round");
-		
-		otherNewPath = document.createElementNS('http://www.w3.org/2000/svg',"path");
-		otherNewPath.setAttribute("fill",face.skinColor);
-		otherNewPath.setAttribute("stroke","#000000");
-		otherNewPath.setAttribute("stroke-width","1");
-		otherNewPath.setAttribute("stroke-linecap","round");
-
-		// start at bottom of thumb
-		x = 100 + armWidth * 0.5 - face.shoulders;
-		y = neck + 5 + upperArmLength + 20;
-		path = 'm '+x+','+y;
-
-		x = 100 - armWidth * 0.5 + face.shoulders;
-		otherPath = 'm '+x+','+y;
-
-		// to top outside of fist
-		x = -9;
-		y = 0;
-		c1x = 0;
-		c1y = 0;
-		c2x = x;
-		c2y = y;
-		path += ' c '+c1x+','+c1y+' '+c2x+','+c2y+' '+x+','+y;
-		x *= -1;
-		c1x *= -1;
-		c2x *= -1;
-		otherPath += ' c '+c1x+','+c1y+' '+c2x+','+c2y+' '+x+','+y;
-		
-		// to bottom outside of fist
-		for (i=0;i<4;i++) {
-			// dip out for knuckle
-			x = -1;
-			y = 1;
-			c1x = 0;
-			c1y = 0;
-			c2x = x;
-			c2y = y;
-			path += ' c '+c1x+','+c1y+' '+c2x+','+c2y+' '+x+','+y;
-			x *= -1;
-			c1x *= -1;
-			c2x *= -1;
-			otherPath += ' c '+c1x+','+c1y+' '+c2x+','+c2y+' '+x+','+y;
-			// down a finger
-			x = 0;
-			y = 5;
-			c1x = 0;
-			c1y = 0;
-			c2x = x;
-			c2y = y;
-			path += ' c '+c1x+','+c1y+' '+c2x+','+c2y+' '+x+','+y;
-			x *= -1;
-			c1x *= -1;
-			c2x *= -1;
-			otherPath += ' c '+c1x+','+c1y+' '+c2x+','+c2y+' '+x+','+y;
-			// dip in for knuckle
-			x = 1;
-			y = 1;
-			c1x = 0;
-			c1y = 0;
-			c2x = x;
-			c2y = y;
-			path += ' c '+c1x+','+c1y+' '+c2x+','+c2y+' '+x+','+y;
-			x *= -1;
-			c1x *= -1;
-			c2x *= -1;
-			otherPath += ' c '+c1x+','+c1y+' '+c2x+','+c2y+' '+x+','+y;
-		}
-
-		// to bottom inside of fist
-		x = 16;
-		y = 0;
-		c1x = 0;
-		c1y = 0;
-		c2x = x;
-		c2y = y;
-		path += ' c '+c1x+','+c1y+' '+c2x+','+c2y+' '+x+','+y;
-		x *= -1;
-		c1x *= -1;
-		c2x *= -1;
-		otherPath += ' c '+c1x+','+c1y+' '+c2x+','+c2y+' '+x+','+y;
-
-		// Pinky Finger
-		// bottom corner
-		x = 1;
-		y = -1;
-		c1x = 0;
-		c1y = 0;
-		c2x = x;
-		c2y = y;
-		path += ' c '+c1x+','+c1y+' '+c2x+','+c2y+' '+x+','+y;
-		x *= -1;
-		c1x *= -1;
-		c2x *= -1;
-		otherPath += ' c '+c1x+','+c1y+' '+c2x+','+c2y+' '+x+','+y;
-
-		// up a finger
-		x = 0;
-		y = -5;
-		c1x = 0;
-		c1y = 0;
-		c2x = x;
-		c2y = y;
-		path += ' c '+c1x+','+c1y+' '+c2x+','+c2y+' '+x+','+y;
-		x *= -1;
-		c1x *= -1;
-		c2x *= -1;
-		otherPath += ' c '+c1x+','+c1y+' '+c2x+','+c2y+' '+x+','+y;
-
-		// top corner
-		x = -1;
-		y = -1;
-		c1x = 0;
-		c1y = 0;
-		c2x = x;
-		c2y = y;
-		path += ' c '+c1x+','+c1y+' '+c2x+','+c2y+' '+x+','+y;
-		x *= -1;
-		c1x *= -1;
-		c2x *= -1;
-		otherPath += ' c '+c1x+','+c1y+' '+c2x+','+c2y+' '+x+','+y;
-		
-		path += ' h -8 h 9';
-		otherPath += ' h 8 h -9';
-
-		// Ring Finger
-		// bottom corner
-		x = 1;
-		y = -1;
-		c1x = 0;
-		c1y = 0;
-		c2x = x;
-		c2y = y;
-		path += ' c '+c1x+','+c1y+' '+c2x+','+c2y+' '+x+','+y;
-		x *= -1;
-		c1x *= -1;
-		c2x *= -1;
-		otherPath += ' c '+c1x+','+c1y+' '+c2x+','+c2y+' '+x+','+y;
-
-		// up a finger
-		x = 0;
-		y = -5;
-		c1x = 0;
-		c1y = 0;
-		c2x = x;
-		c2y = y;
-		path += ' c '+c1x+','+c1y+' '+c2x+','+c2y+' '+x+','+y;
-		x *= -1;
-		c1x *= -1;
-		c2x *= -1;
-		otherPath += ' c '+c1x+','+c1y+' '+c2x+','+c2y+' '+x+','+y;
-
-		// top corner
-		x = -1;
-		y = -1;
-		c1x = 0;
-		c1y = 0;
-		c2x = x;
-		c2y = y;
-		path += ' c '+c1x+','+c1y+' '+c2x+','+c2y+' '+x+','+y;
-		x *= -1;
-		c1x *= -1;
-		c2x *= -1;
-		otherPath += ' c '+c1x+','+c1y+' '+c2x+','+c2y+' '+x+','+y;
-		
-		path += ' h -9 h 10';
-		otherPath += ' h 9 h -10';
-
-		// Middle Finger
-		// bottom corner
-		x = 1;
-		y = -1;
-		c1x = 0;
-		c1y = 0;
-		c2x = x;
-		c2y = y;
-		path += ' c '+c1x+','+c1y+' '+c2x+','+c2y+' '+x+','+y;
-		x *= -1;
-		c1x *= -1;
-		c2x *= -1;
-		otherPath += ' c '+c1x+','+c1y+' '+c2x+','+c2y+' '+x+','+y;
-
-		// up a finger
-		x = 0;
-		y = -5;
-		c1x = 0;
-		c1y = 0;
-		c2x = x;
-		c2y = y;
-		path += ' c '+c1x+','+c1y+' '+c2x+','+c2y+' '+x+','+y;
-		x *= -1;
-		c1x *= -1;
-		c2x *= -1;
-		otherPath += ' c '+c1x+','+c1y+' '+c2x+','+c2y+' '+x+','+y;
-
-		// top corner
-		x = -1;
-		y = -1;
-		c1x = 0;
-		c1y = 0;
-		c2x = x;
-		c2y = y;
-		path += ' c '+c1x+','+c1y+' '+c2x+','+c2y+' '+x+','+y;
-		x *= -1;
-		c1x *= -1;
-		c2x *= -1;
-		otherPath += ' c '+c1x+','+c1y+' '+c2x+','+c2y+' '+x+','+y;
-		
-		path += ' h -10 h 9';
-		otherPath += ' h 10 h -9';
-
-		// Index Finger
-		// bottom corner
-		x = 1;
-		y = -1;
-		c1x = 0;
-		c1y = 0;
-		c2x = x;
-		c2y = y;
-		path += ' c '+c1x+','+c1y+' '+c2x+','+c2y+' '+x+','+y;
-		x *= -1;
-		c1x *= -1;
-		c2x *= -1;
-		otherPath += ' c '+c1x+','+c1y+' '+c2x+','+c2y+' '+x+','+y;
-
-		// up a finger
-		x = 0;
-		y = -5;
-		c1x = 0;
-		c1y = 0;
-		c2x = x;
-		c2y = y;
-		path += ' c '+c1x+','+c1y+' '+c2x+','+c2y+' '+x+','+y;
-		x *= -1;
-		c1x *= -1;
-		c2x *= -1;
-		otherPath += ' c '+c1x+','+c1y+' '+c2x+','+c2y+' '+x+','+y;
-
-		// top corner
-		x = -1;
-		y = -1;
-		c1x = 0;
-		c1y = 0;
-		c2x = x;
-		c2y = y;
-		path += ' c '+c1x+','+c1y+' '+c2x+','+c2y+' '+x+','+y;
-		x *= -1;
-		c1x *= -1;
-		c2x *= -1;
-		otherPath += ' c '+c1x+','+c1y+' '+c2x+','+c2y+' '+x+','+y;
-
-		// to top  of fist
-		x = -9;
-		y = 0;
-		c1x = 0;
-		c1y = 0;
-		c2x = x;
-		c2y = y;
-		path += ' c '+c1x+','+c1y+' '+c2x+','+c2y+' '+x+','+y;
-		x *= -1;
-		c1x *= -1;
-		c2x *= -1;
-		otherPath += ' c '+c1x+','+c1y+' '+c2x+','+c2y+' '+x+','+y;
-
-		// to
-		x = 0;
-		y = 0;
-		c1x = 0;
-		c1y = 0;
-		c2x = x;
-		c2y = y;
-		path += ' c '+c1x+','+c1y+' '+c2x+','+c2y+' '+x+','+y;
-		x *= -1;
-		c1x *= -1;
-		c2x *= -1;
-		otherPath += ' c '+c1x+','+c1y+' '+c2x+','+c2y+' '+x+','+y;
-			
-		newPath.setAttributeNS(null,"d",path);
-		rightHand.appendChild(newPath);
-
-		otherNewPath.setAttributeNS(null,"d",otherPath);
-		leftHand.appendChild(otherNewPath);
-				
+						
 		// Clothing & Equipment
 		if (mob.equipment == undefined) {
 			var armor = dataItems.roughspun;
 		} else {
 			var armor = mob.equipment.armor;
+			var rightEquip = mob.equipment.right;
+			var leftEquip = mob.equipment.left;
 		};
 		
 		var armorColoring = armor.simpleColoring;
@@ -3416,9 +3191,31 @@ var draw = {
 			};
 		};
 		
+		var bodyConstants = {eyeline:eyeline,neck:neck};
+		
 		if (armor.svgNodes !== undefined) {
-			var armorSVGNodes = armor.svgNodes(mob,{eyeline:eyeline,neck:neck});
+			var armorSVGNodes = armor.svgNodes(mob,bodyConstants);
 			clothingGroup.appendChild(armorSVGNodes);
+		};
+		
+		bodyConstants.wrist = rightWristPivot;
+		if (rightEquip !== undefined) {
+			var rightEquipSVGNodes = rightEquip.svgNodes(mob,bodyConstants);
+			rightHandGroup.appendChild(rightEquipSVGNodes);
+		} else {
+			// draw empty hands
+			var rightEquipSVGNodes = draw.fist(mob,bodyConstants);
+			rightHandGroup.appendChild(rightEquipSVGNodes);
+		};
+		
+		bodyConstants.wrist = leftWristPivot;
+		if (leftEquip !== undefined) {
+			var leftEquipSVGNodes = leftEquip.svgNodes(mob,bodyConstants);
+			leftHandGroup.appendChild(leftEquipSVGNodes);
+		} else {
+			// draw empty hands
+			var leftEquipSVGNodes = draw.fist(mob,bodyConstants);
+			leftHandGroup.appendChild(leftEquipSVGNodes);
 		};
 		
 		// Animation		
@@ -3437,81 +3234,81 @@ var draw = {
 		leftForearmTopGroup.setAttributeNS(null,'transform','rotate(50 '+leftElbowPivot.cx.animVal.value+' '+leftElbowPivot.cy.animVal.value+')');
 		
 		// Test Loop
-// 		var animationLoop = document.createElementNS('http://www.w3.org/2000/svg',"animateTransform");
-// 		var animationTopLoop = document.createElementNS('http://www.w3.org/2000/svg',"animateTransform");
-// 		var animationData = [
-// 			{attribute:'attributeName',value:'transform'},
-// 			{attribute:'attributeType',value:'xml'},
-// 			{attribute:'type',value:'rotate'},
-// 			{attribute:'from',value:'25 '+rightShoulderPivot.cx.animVal.value+" "+rightShoulderPivot.cy.animVal.value},
-// 			{attribute:'to',value:'35 '+rightShoulderPivot.cx.animVal.value+" "+rightShoulderPivot.cy.animVal.value},
-// 			{attribute:'dur',value:'1s'},
-// 			{attribute:'begin',value:'0s;inAnimation.end'},
-// 			];
-// 		for (i in animationData) {
-// 			animationLoop.setAttribute(animationData[i].attribute,animationData[i].value);
-// 			animationTopLoop.setAttribute(animationData[i].attribute,animationData[i].value);
-// 		};
-// 		animationLoop.id = 'outAnimation';
-// 		rightArmGroup.appendChild(animationLoop);
-// 		rightArmTopGroup.appendChild(animationTopLoop);
-// 		
-// 		animationLoop = document.createElementNS('http://www.w3.org/2000/svg',"animateTransform");
-// 		animationTopLoop = document.createElementNS('http://www.w3.org/2000/svg',"animateTransform");
-// 		animationData = [
-// 			{attribute:'attributeName',value:'transform'},
-// 			{attribute:'attributeType',value:'xml'},
-// 			{attribute:'type',value:'rotate'},
-// 			{attribute:'from',value:'35 '+rightShoulderPivot.cx.animVal.value+" "+rightShoulderPivot.cy.animVal.value},
-// 			{attribute:'to',value:'25 '+rightShoulderPivot.cx.animVal.value+" "+rightShoulderPivot.cy.animVal.value},
-// 			{attribute:'dur',value:'1s'},
-// 			{attribute:'begin',value:'outAnimation.end'},
-// 			];
-// 		for (i in animationData) {
-// 			animationLoop.setAttribute(animationData[i].attribute,animationData[i].value);
-// 			animationTopLoop.setAttribute(animationData[i].attribute,animationData[i].value);
-// 		};
-// 		animationLoop.id = 'inAnimation';
-// 		rightArmGroup.appendChild(animationLoop);
-// 		rightArmTopGroup.appendChild(animationTopLoop);
-// 		
-// 		animationLoop = document.createElementNS('http://www.w3.org/2000/svg',"animateTransform");
-// 		animationTopLoop = document.createElementNS('http://www.w3.org/2000/svg',"animateTransform");
-// 		animationData = [
-// 			{attribute:'attributeName',value:'transform'},
-// 			{attribute:'attributeType',value:'xml'},
-// 			{attribute:'type',value:'rotate'},
-// 			{attribute:'from',value:'-45 '+rightElbowPivot.cx.animVal.value+" "+rightElbowPivot.cy.animVal.value},
-// 			{attribute:'to',value:'-65 '+rightElbowPivot.cx.animVal.value+" "+rightElbowPivot.cy.animVal.value},
-// 			{attribute:'dur',value:'1s'},
-// 			{attribute:'begin',value:'0s;inAnimationForearm.end'},
-// 			];
-// 		for (i in animationData) {
-// 			animationLoop.setAttribute(animationData[i].attribute,animationData[i].value);
-// 			animationTopLoop.setAttribute(animationData[i].attribute,animationData[i].value);
-// 		};
-// 		animationLoop.id = 'outAnimationForearm';
-// 		rightForearmGroup.appendChild(animationLoop);
-// 		rightForearmTopGroup.appendChild(animationTopLoop);
-// 		
-// 		animationLoop = document.createElementNS('http://www.w3.org/2000/svg',"animateTransform");
-// 		animationTopLoop = document.createElementNS('http://www.w3.org/2000/svg',"animateTransform");
-// 		animationData = [
-// 			{attribute:'attributeName',value:'transform'},
-// 			{attribute:'attributeType',value:'xml'},
-// 			{attribute:'type',value:'rotate'},
-// 			{attribute:'from',value:'-65 '+rightElbowPivot.cx.animVal.value+" "+rightElbowPivot.cy.animVal.value},
-// 			{attribute:'to',value:'-45 '+rightElbowPivot.cx.animVal.value+" "+rightElbowPivot.cy.animVal.value},
-// 			{attribute:'dur',value:'1s'},
-// 			{attribute:'begin',value:'outAnimationForearm.end'},
-// 			];
-// 		for (i in animationData) {
-// 			animationLoop.setAttribute(animationData[i].attribute,animationData[i].value);
-// 			animationTopLoop.setAttribute(animationData[i].attribute,animationData[i].value);
-// 		};
-// 		animationLoop.id = 'inAnimationForearm';
-// 		rightForearmGroup.appendChild(animationLoop);
-// 		rightForearmTopGroup.appendChild(animationTopLoop);
+		var animationLoop = document.createElementNS('http://www.w3.org/2000/svg',"animateTransform");
+		var animationTopLoop = document.createElementNS('http://www.w3.org/2000/svg',"animateTransform");
+		var animationData = [
+			{attribute:'attributeName',value:'transform'},
+			{attribute:'attributeType',value:'xml'},
+			{attribute:'type',value:'rotate'},
+			{attribute:'from',value:'25 '+rightShoulderPivot.cx.animVal.value+" "+rightShoulderPivot.cy.animVal.value},
+			{attribute:'to',value:'35 '+rightShoulderPivot.cx.animVal.value+" "+rightShoulderPivot.cy.animVal.value},
+			{attribute:'dur',value:'1s'},
+			{attribute:'begin',value:'0s;inAnimation.end'},
+			];
+		for (i in animationData) {
+			animationLoop.setAttribute(animationData[i].attribute,animationData[i].value);
+			animationTopLoop.setAttribute(animationData[i].attribute,animationData[i].value);
+		};
+		animationLoop.id = 'outAnimation';
+		rightArmGroup.appendChild(animationLoop);
+		rightArmTopGroup.appendChild(animationTopLoop);
+		
+		animationLoop = document.createElementNS('http://www.w3.org/2000/svg',"animateTransform");
+		animationTopLoop = document.createElementNS('http://www.w3.org/2000/svg',"animateTransform");
+		animationData = [
+			{attribute:'attributeName',value:'transform'},
+			{attribute:'attributeType',value:'xml'},
+			{attribute:'type',value:'rotate'},
+			{attribute:'from',value:'35 '+rightShoulderPivot.cx.animVal.value+" "+rightShoulderPivot.cy.animVal.value},
+			{attribute:'to',value:'25 '+rightShoulderPivot.cx.animVal.value+" "+rightShoulderPivot.cy.animVal.value},
+			{attribute:'dur',value:'1s'},
+			{attribute:'begin',value:'outAnimation.end'},
+			];
+		for (i in animationData) {
+			animationLoop.setAttribute(animationData[i].attribute,animationData[i].value);
+			animationTopLoop.setAttribute(animationData[i].attribute,animationData[i].value);
+		};
+		animationLoop.id = 'inAnimation';
+		rightArmGroup.appendChild(animationLoop);
+		rightArmTopGroup.appendChild(animationTopLoop);
+		
+		animationLoop = document.createElementNS('http://www.w3.org/2000/svg',"animateTransform");
+		animationTopLoop = document.createElementNS('http://www.w3.org/2000/svg',"animateTransform");
+		animationData = [
+			{attribute:'attributeName',value:'transform'},
+			{attribute:'attributeType',value:'xml'},
+			{attribute:'type',value:'rotate'},
+			{attribute:'from',value:'-45 '+rightElbowPivot.cx.animVal.value+" "+rightElbowPivot.cy.animVal.value},
+			{attribute:'to',value:'-65 '+rightElbowPivot.cx.animVal.value+" "+rightElbowPivot.cy.animVal.value},
+			{attribute:'dur',value:'1s'},
+			{attribute:'begin',value:'0s;inAnimationForearm.end'},
+			];
+		for (i in animationData) {
+			animationLoop.setAttribute(animationData[i].attribute,animationData[i].value);
+			animationTopLoop.setAttribute(animationData[i].attribute,animationData[i].value);
+		};
+		animationLoop.id = 'outAnimationForearm';
+		rightForearmGroup.appendChild(animationLoop);
+		rightForearmTopGroup.appendChild(animationTopLoop);
+		
+		animationLoop = document.createElementNS('http://www.w3.org/2000/svg',"animateTransform");
+		animationTopLoop = document.createElementNS('http://www.w3.org/2000/svg',"animateTransform");
+		animationData = [
+			{attribute:'attributeName',value:'transform'},
+			{attribute:'attributeType',value:'xml'},
+			{attribute:'type',value:'rotate'},
+			{attribute:'from',value:'-65 '+rightElbowPivot.cx.animVal.value+" "+rightElbowPivot.cy.animVal.value},
+			{attribute:'to',value:'-45 '+rightElbowPivot.cx.animVal.value+" "+rightElbowPivot.cy.animVal.value},
+			{attribute:'dur',value:'1s'},
+			{attribute:'begin',value:'outAnimationForearm.end'},
+			];
+		for (i in animationData) {
+			animationLoop.setAttribute(animationData[i].attribute,animationData[i].value);
+			animationTopLoop.setAttribute(animationData[i].attribute,animationData[i].value);
+		};
+		animationLoop.id = 'inAnimationForearm';
+		rightForearmGroup.appendChild(animationLoop);
+		rightForearmTopGroup.appendChild(animationTopLoop);
 		
 				
 		// End Draw Mob
@@ -3708,6 +3505,226 @@ var draw = {
 		};
 
 		return {svgNodes:svgNodes,torsoPath:torsoPath,rightBreastPath:rightBreastPath,leftBreastPath:leftBreastPath};
+	},
+	
+	fist: function(mob,bodyConstants,color) {
+		if (color !== undefined) {color = color[0]} else {color = mob.faceData.skinColor};
+		if (bodyConstants.wrist.id === 'rightWristPivot') {var reflect = 1} else {var reflect = -1};
+
+		var svgNodes = document.createElementNS('http://www.w3.org/2000/svg',"g");
+
+		// Fist Fronts
+				
+		newPath = document.createElementNS('http://www.w3.org/2000/svg',"path");
+		newPath.setAttribute("fill",face.skinColor);
+		newPath.setAttribute("stroke","#000000");
+		newPath.setAttribute("stroke-width","1");
+		newPath.setAttribute("stroke-linecap","round");
+		
+		otherNewPath = document.createElementNS('http://www.w3.org/2000/svg',"path");
+		otherNewPath.setAttribute("fill",face.skinColor);
+		otherNewPath.setAttribute("stroke","#000000");
+		otherNewPath.setAttribute("stroke-width","1");
+		otherNewPath.setAttribute("stroke-linecap","round");
+
+		// start at bottom of thumb
+		x = 100 + (10 * 0.5 - face.shoulders) * reflect;
+		y = bodyConstants.neck + 5 + 30 + 20;
+		path = 'm '+x+','+y;
+
+		// to top outside of fist
+		x = -9 * reflect;
+		y = 0;
+		c1x = 0;
+		c1y = 0;
+		c2x = x * reflect;
+		c2y = y;
+		path += ' c '+c1x+','+c1y+' '+c2x+','+c2y+' '+x+','+y;
+		
+		// to bottom outside of fist
+		for (i=0;i<4;i++) {
+			// dip out for knuckle
+			x = -1 * reflect;
+			y = 1;
+			c1x = 0;
+			c1y = 0;
+			c2x = x;
+			c2y = y;
+			path += ' c '+c1x+','+c1y+' '+c2x+','+c2y+' '+x+','+y;
+			// down a finger
+			x = 0;
+			y = 5;
+			c1x = 0;
+			c1y = 0;
+			c2x = x;
+			c2y = y;
+			path += ' c '+c1x+','+c1y+' '+c2x+','+c2y+' '+x+','+y;
+			// dip in for knuckle
+			x = 1 * reflect;
+			y = 1;
+			c1x = 0;
+			c1y = 0;
+			c2x = x;
+			c2y = y;
+			path += ' c '+c1x+','+c1y+' '+c2x+','+c2y+' '+x+','+y;
+		}
+
+		// to bottom inside of fist
+		x = 16 * reflect;
+		y = 0;
+		c1x = 0;
+		c1y = 0;
+		c2x = x;
+		c2y = y;
+		path += ' c '+c1x+','+c1y+' '+c2x+','+c2y+' '+x+','+y;
+
+		// Pinky Finger
+		// bottom corner
+		x = 1 * reflect;
+		y = -1;
+		c1x = 0;
+		c1y = 0;
+		c2x = x;
+		c2y = y;
+		path += ' c '+c1x+','+c1y+' '+c2x+','+c2y+' '+x+','+y;
+
+		// up a finger
+		x = 0;
+		y = -5;
+		c1x = 0;
+		c1y = 0;
+		c2x = x;
+		c2y = y;
+		path += ' c '+c1x+','+c1y+' '+c2x+','+c2y+' '+x+','+y;
+
+		// top corner
+		x = -1 * reflect;
+		y = -1;
+		c1x = 0;
+		c1y = 0;
+		c2x = x;
+		c2y = y;
+		path += ' c '+c1x+','+c1y+' '+c2x+','+c2y+' '+x+','+y;
+	
+		var inX = -8 * reflect;
+		var outX = 9 * reflect;
+		path += ' h '+inX+' h '+outX;
+
+		// Ring Finger
+		// bottom corner
+		x = 1 * reflect;
+		y = -1;
+		c1x = 0;
+		c1y = 0;
+		c2x = x;
+		c2y = y;
+		path += ' c '+c1x+','+c1y+' '+c2x+','+c2y+' '+x+','+y;
+
+		// up a finger
+		x = 0 * reflect;
+		y = -5;
+		c1x = 0;
+		c1y = 0;
+		c2x = x;
+		c2y = y;
+		path += ' c '+c1x+','+c1y+' '+c2x+','+c2y+' '+x+','+y;
+
+		// top corner
+		x = -1 * reflect;
+		y = -1;
+		c1x = 0;
+		c1y = 0;
+		c2x = x;
+		c2y = y;
+		path += ' c '+c1x+','+c1y+' '+c2x+','+c2y+' '+x+','+y;
+		
+		var inX = -9 * reflect;
+		var outX = 10 * reflect;
+		path += ' h '+inX+' h '+outX;
+
+		// Middle Finger
+		// bottom corner
+		x = 1 * reflect;
+		y = -1;
+		c1x = 0;
+		c1y = 0;
+		c2x = x;
+		c2y = y;
+		path += ' c '+c1x+','+c1y+' '+c2x+','+c2y+' '+x+','+y;
+
+		// up a finger
+		x = 0;
+		y = -5;
+		c1x = 0;
+		c1y = 0;
+		c2x = x;
+		c2y = y;
+		path += ' c '+c1x+','+c1y+' '+c2x+','+c2y+' '+x+','+y;
+
+		// top corner
+		x = -1 * reflect;
+		y = -1;
+		c1x = 0;
+		c1y = 0;
+		c2x = x;
+		c2y = y;
+		path += ' c '+c1x+','+c1y+' '+c2x+','+c2y+' '+x+','+y;
+		
+		var inX = -10 * reflect;
+		var outX = 9 * reflect;
+		path += ' h '+inX+' h '+outX;
+
+		// Index Finger
+		// bottom corner
+		x = 1 * reflect;
+		y = -1;
+		c1x = 0;
+		c1y = 0;
+		c2x = x;
+		c2y = y;
+		path += ' c '+c1x+','+c1y+' '+c2x+','+c2y+' '+x+','+y;
+
+		// up a finger
+		x = 0;
+		y = -5;
+		c1x = 0;
+		c1y = 0;
+		c2x = x;
+		c2y = y;
+		path += ' c '+c1x+','+c1y+' '+c2x+','+c2y+' '+x+','+y;
+
+		// top corner
+		x = -1 * reflect;
+		y = -1;
+		c1x = 0;
+		c1y = 0;
+		c2x = x;
+		c2y = y;
+		path += ' c '+c1x+','+c1y+' '+c2x+','+c2y+' '+x+','+y;
+
+		// to top  of fist
+		x = -9 * reflect;
+		y = 0;
+		c1x = 0;
+		c1y = 0;
+		c2x = x;
+		c2y = y;
+		path += ' c '+c1x+','+c1y+' '+c2x+','+c2y+' '+x+','+y;
+
+		// to
+		x = 0;
+		y = 0;
+		c1x = 0;
+		c1y = 0;
+		c2x = x;
+		c2y = y;
+		path += ' c '+c1x+','+c1y+' '+c2x+','+c2y+' '+x+','+y;
+			
+		newPath.setAttributeNS(null,"d",path);
+		svgNodes.appendChild(newPath);
+
+
+		return svgNodes;		
 	},
 
 };
