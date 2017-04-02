@@ -30,6 +30,8 @@ var view = {
 		document.getElementById('characterCreationDiv').style.display = 'none';
 		
 		document.getElementById('companyHQDiv').style.display = 'block';
+		
+		view.focus.hero = heroes[0];
 		view.refreshNews();
 		view.refreshRoster();
 		view.refreshAdventures();

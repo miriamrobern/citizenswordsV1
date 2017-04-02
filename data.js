@@ -172,6 +172,11 @@ var dataEthnicities = {
  		names: ["Daunted","Intimidated","Scared","Terrified"],
  		stat: "focus",
  	},
+ 
+ 	hook: {
+ 		names: ["Snagged","Hooked","Caught","Pinned"],
+ 		stat: "move",
+ 	},
  	
  	restraints: {
  		names: ["Tangled","Restrained","Trussed Up"],
@@ -309,6 +314,22 @@ var dataEthnicities = {
  		},
  	},
  
+ 	hook: {
+ 		name: "Hook",
+ 		id: 'hook',
+ 		description: 'Attempts to pin the target.',
+ 		img: '',
+ 		cost: {move:1,focus:1},
+ 		target: true,
+ 		targetHostiles: true,
+ 		targetTeam: false,
+ 		range: 1,
+ 		execute: function(attacker,defender) {
+ 			game.simpleAttack(attacker,'focus',defender,'focus',true,[dataWounds.hook])
+ 			view.attackAnimate(attacker,defender.location);
+ 		},
+ 	},
+ 
  	lunge: {
  		name: "Lunge",
  		id: 'lunge',
@@ -418,6 +439,23 @@ var dataEthnicities = {
  };
  
  var dataItems = {
+ 	
+ 	birthdaySuit: {
+ 		name: "Birthday Suit",
+ 		slot: ['armor'],
+ 		passiveDefense: 0,
+ 		simpleColoring: {},
+ 		svgNodes: function(mob,bodyConstants) {return draw.birthdaySuit(mob,bodyConstants);},
+ 	},
+ 	
+ 	cargoHook: {
+ 		name: "Cargo Hook",
+ 		slot: ['left','right'],
+ 		maneuvers: [
+ 			dataManeuvers.hook,
+ 		],
+ 		svgNodes: function(mob,bodyConstants) {return draw.cargoHook(mob,bodyConstants,['silver','saddlebrown'])},
+ 	},
  
  	firstAidKit: {
  		name: "First Aid Kit",
@@ -433,6 +471,9 @@ var dataEthnicities = {
  		maneuvers: [
  			dataManeuvers.quickTrance,
  		],
+ 		svgNodes: function(mob,bodyConstants) {
+ 			return draw.book(mob,bodyConstants,['steelblue','oldlace','gold'],1);
+ 		},
  	},
  	
  	initiatesRobes: {
@@ -462,7 +503,7 @@ var dataEthnicities = {
  
  	mothersSword: {
  		name: "Mother's Sword",
- 		slot: ['right'],
+ 		slot: ['right','left'],
  		maneuvers: [
  			dataManeuvers.slash,
  			dataManeuvers.defensiveStance,
@@ -504,6 +545,7 @@ var dataEthnicities = {
  		maneuvers: [
  			dataManeuvers.shieldSlam,
  		],
+ 		svgNodes: function(mob,bodyConstants) {return draw.simpleShield(mob,bodyConstants,['#6d5d04','saddlebrown']);},
  	},
  	
  	simpleAxe: {
@@ -512,6 +554,7 @@ var dataEthnicities = {
  		maneuvers: [
  			dataManeuvers.hack,
  		],
+ 		svgNodes: function(mob,bodyConstants) {return draw.simpleAxe(mob,bodyConstants,['#6d5d04','saddlebrown'])},
  	},
  	
  	mysticalSwordOfLegend: {
@@ -884,7 +927,7 @@ var dataEthnicities = {
 	equipment: {
 		armor: dataItems.roughspun,
 		right: dataItems.mothersSword,
-		left: undefined,
+		left: dataItems.cargoHook,
 		item0: undefined,
 		item1: undefined,
 		item2: undefined,

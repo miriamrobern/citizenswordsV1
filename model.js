@@ -627,10 +627,11 @@ function Mob(type,x,y,id,name,heritage) {
 		if (item.slot[0] === "armor") {
 			console.log('change armor value');
 			this.stats.armor = 1 + item.slot[0].armor;
-			this.imgMob = draw.drawMob(this);
-			this.imgPortrait = draw.drawMob(this);
-			this.imgBust = draw.drawMob(this);
 		};
+		
+		this.imgMob = draw.drawMob(this);
+		this.imgPortrait = draw.drawMob(this);
+		this.imgBust = draw.drawMob(this);
 		
 		this.refreshManeuvers();
 	};

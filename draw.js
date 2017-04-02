@@ -1,9 +1,157 @@
 var draw = {
+	
+	birthdaySuit: function(mob,bodyConstants) {
+
+		var svgNodes = document.createElementNS('http://www.w3.org/2000/svg',"g");
+		
+		var colors = [mob.faceData.skinColor,mob.faceData.noseColor,mob.faceData.earColor];
+		
+		for (p=0;p<400;p++) {
+			var pixelation = document.createElementNS('http://www.w3.org/2000/svg',"rect");
+			pixelation.setAttribute('fill',colors[Math.random() * colors.length << 0]);
+			pixelation.setAttribute("opacity",0.9);
+			pixelation.setAttribute("stroke","none");
+			pixelation.setAttribute("x",100 - mob.faceData.shoulders + (p%20)*(mob.faceData.shoulders/10));
+			pixelation.setAttribute("y",bodyConstants.neck + Math.floor(p/20)*4 + 8);
+			pixelation.setAttribute("width",mob.faceData.shoulders / 10);
+			pixelation.setAttribute("height",4);
+			svgNodes.appendChild(pixelation);
+		};
+		
+		return svgNodes;
+		
+	},
+
+	book: function(mob,bodyConstants,colors,size) {
+		if (bodyConstants.wrist.id === 'rightWristPivot') {var reflect = 1} else {var reflect = -1};
+
+		var svgNodes = document.createElementNS('http://www.w3.org/2000/svg',"g");
+		
+		var hand = document.createElementNS('http://www.w3.org/2000/svg',"path");
+		hand.setAttribute('fill',mob.skinColor);
+		hand.setAttribute("stroke","#000000");
+		hand.setAttribute("stroke-width","1");
+		hand.setAttribute("stroke-linecap","round");
+		path = 'm'+bodyConstants.wrist.cx.animVal.value+','+bodyConstants.wrist.cy.animVal.value;
+		path += ' h17 c 0,2 -1,4 -3,4 h-10 v2 h-10 v-2 h-20 v-4 z';
+		hand.setAttributeNS(null,'d',path);
+		svgNodes.appendChild(hand);
+		
+		var fingers = [
+			{x:5,y:1},
+			{x:-6,y:4},
+			{x:-14,y:1},
+			{x:-23,y:1},
+		];
+		for (i in fingers) {
+			var finger = document.createElementNS('http://www.w3.org/2000/svg',"path");
+			finger.setAttribute('fill',mob.skinColor);
+			finger.setAttribute("stroke","#000000");
+			finger.setAttribute("stroke-width","1");
+			finger.setAttribute("stroke-linecap","round");
+			path = 'm'+bodyConstants.wrist.cx.animVal.value+','+bodyConstants.wrist.cy.animVal.value;
+			path += ' m '+fingers[i].x+','+fingers[i].y;
+			path += 'c 4,0 4,0 4,4';
+			path += 'c 0,2 -8,2 -8,0';
+			path += 'c 0,-4 0,-4 4,-4';
+			finger.setAttributeNS(null,'d',path);
+			svgNodes.appendChild(finger);
+		};
+		
+		var pages = document.createElementNS('http://www.w3.org/2000/svg',"path");
+		pages.setAttribute('fill',colors[1]);
+		pages.setAttribute("stroke","#000000");
+		pages.setAttribute("stroke-width",1/size);
+		pages.setAttribute("stroke-linecap","round");
+		path = 'm'+bodyConstants.wrist.cx.animVal.value+','+bodyConstants.wrist.cy.animVal.value;
+		path += 'm -5,0';
+		path += ' c 0,-15 10,-5 20,-5 l 3,3';
+		path += ' h -18 v3 h -10 v-3 h -18';
+		path += ' l 3,-3 c 10,0 20,-10 20,5'; 
+		path += ' z';
+		pages.setAttributeNS(null,"d",path);
+		svgNodes.appendChild(pages);
+		
+		var cover = document.createElementNS('http://www.w3.org/2000/svg',"path");
+		cover.setAttribute('fill',colors[0]);
+		cover.setAttribute("stroke","#000000");
+		cover.setAttribute("stroke-width",1/size);
+		cover.setAttribute("stroke-linecap","round");
+		path = 'm'+bodyConstants.wrist.cx.animVal.value+','+bodyConstants.wrist.cy.animVal.value;
+		path += 'm -5,0';
+		path += 'm 5,-2 h20 v3 h-19 v3 h-12 v-3 h-19 v-3 h20 v3 h10 v-3';
+		cover.setAttributeNS(null,"d",path);
+		svgNodes.appendChild(cover);
+		
+		// Scaling Book
+		var matrix5 = bodyConstants.wrist.cx.animVal.value - size * bodyConstants.wrist.cx.animVal.value;
+		var matrix6 = bodyConstants.wrist.cy.animVal.value - size * bodyConstants.wrist.cy.animVal.value;
+		var matrix = 'matrix('+size+', 0, 0, '+size+', '+matrix5+', '+matrix6+')'
+		pages.setAttributeNS(null,'transform',matrix);
+		cover.setAttributeNS(null,'transform',matrix);
+		
+		var rotation = 45 * reflect;
+		svgNodes.setAttributeNS(null,'transform','rotate('+rotation+' '+bodyConstants.wrist.cx.animVal.value+' '+bodyConstants.wrist.cy.animVal.value+')');
+		
+		return svgNodes;
+	},
+	
+	cargoHook: function(mob,bodyConstants,colors) {
+		if (bodyConstants.wrist.id === 'rightWristPivot') {var reflect = 1} else {var reflect = -1};
+
+		var svgNodes = document.createElementNS('http://www.w3.org/2000/svg',"g");
+		
+		var thumb = draw.thumb(mob,bodyConstants);
+		svgNodes.appendChild(thumb);
+		
+		var handle = document.createElementNS('http://www.w3.org/2000/svg',"path");
+		handle.setAttribute("fill",colors[1]);
+		handle.setAttribute("stroke","#000000");
+		handle.setAttribute("stroke-width","1");
+		handle.setAttribute("stroke-linecap","round");
+		path = 'm'+bodyConstants.wrist.cx.animVal.value+','+bodyConstants.wrist.cy.animVal.value;
+		if (reflect === -1) {path += ' m -5,0 '};
+		path += 'v-10 c 0,-3 6,-3 6,0 v40 c 0,2 -6,2 -6,0 v-20';
+		handle.setAttributeNS(null,'d',path);
+		svgNodes.appendChild(handle);
+		
+		var fist = draw.fist(mob,bodyConstants);
+		svgNodes.appendChild(fist);
+		
+		var hook = document.createElementNS('http://www.w3.org/2000/svg',"path");
+		hook.setAttribute("fill",colors[0]);
+		hook.setAttribute("stroke","#000000");
+		hook.setAttribute("stroke-width","1");
+		hook.setAttribute("stroke-linecap","round");
+		path = 'm'+bodyConstants.wrist.cx.animVal.value+','+bodyConstants.wrist.cy.animVal.value;
+		path += ' m -4,10';
+		path += ' c 0,-3 5,-3 5,0';
+		path += ' v4';
+		path += ' c 5,0 15,5 15,10';
+		path += ' c 0,5 -10,10 -15,10';
+		path += ' c -7,0 -10,-10 -15,-10';
+		path += ' v-2';
+		path += ' c 5,0 10,8 15,8';
+		path += ' c 4,0 10,-3 10,-6';
+		path += ' c 0,-3 -15,-6 -15,-6';
+		path += ' c 0,0 0,-4 0,-8';
+		hook.setAttributeNS(null,'d',path);
+		if (reflect === 1) {
+			var offset = bodyConstants.wrist.cx.animVal.value * -2;
+			hook.setAttribute('transform','scale(-1,1) translate('+offset+',0)');
+		};
+		svgNodes.appendChild(hook);
+		
+		return svgNodes;
+	},
 
 	mothersSword: function(mob,bodyConstants,colors) {
 		var svgNodes = document.createElementNS('http://www.w3.org/2000/svg',"g");
 		
 		// Add thumb here
+		
+		var thumb = draw.thumb(mob,bodyConstants);
+		svgNodes.appendChild(thumb);
 		
 		var blade = document.createElementNS('http://www.w3.org/2000/svg',"path");
 		blade.setAttribute('fill',colors[0]);
@@ -212,6 +360,53 @@ var draw = {
 		
 		return svgNodes;
 
+	},
+	
+	simpleAxe: function(mob,bodyConstants,colors) {
+		if (bodyConstants.wrist.id === 'rightWristPivot') {var reflect = 1} else {var reflect = -1};
+
+		var svgNodes = document.createElementNS('http://www.w3.org/2000/svg',"g");
+		
+		var thumb = draw.thumb(mob,bodyConstants);
+		svgNodes.appendChild(thumb);
+		
+		var axeHead = document.createElementNS('http://www.w3.org/2000/svg',"path");
+		axeHead.setAttribute("fill",colors[0]);
+		axeHead.setAttribute("stroke","#000000");
+		axeHead.setAttribute("stroke-width","1");
+		axeHead.setAttribute("stroke-linecap","round");
+		path = 'm'+bodyConstants.wrist.cx.animVal.value+','+bodyConstants.wrist.cy.animVal.value;
+		path += 'm0,-40 ';
+		path += 'c -10,0 -20,4 -20,4 ';
+		path += 'c -6,10 -4,30 2,30 ';
+		path += 'c 0,0 8,-14 18,-14 ';
+		path += 'c 4,-4 16,-8 20,-4 ';
+		path += 'c 2,0 2,-6 0,-6 ';
+		path += 'c 0,0 -10,-10 -20,-10 ';
+		axeHead.setAttributeNS(null,'d',path);
+		if (reflect === -1) {
+			var offset = bodyConstants.wrist.cx.animVal.value * -2;
+			axeHead.setAttribute('transform','scale(-1,1) translate('+offset+',0)');
+		};
+		svgNodes.appendChild(axeHead);
+		
+		var handle = document.createElementNS('http://www.w3.org/2000/svg',"path");
+		handle.setAttribute("fill",colors[1]);
+		handle.setAttribute("stroke","#000000");
+		handle.setAttribute("stroke-width","1");
+		handle.setAttribute("stroke-linecap","round");
+		path = 'm'+bodyConstants.wrist.cx.animVal.value+','+bodyConstants.wrist.cy.animVal.value;
+		path += ' m -3,0 ';
+		path += 'v-40 c 0,-3 6,-3 6,0 v70 c 0,2 -6,2 -6,0 v-20';
+		handle.setAttributeNS(null,'d',path);
+		svgNodes.appendChild(handle);
+		
+		// Fist Front
+		
+		var fist = draw.fist(mob,bodyConstants);
+		svgNodes.appendChild(fist);
+		
+		return svgNodes;
 	},
 	
 	simpleBelt: function(mob,bodyConstants) {
@@ -552,6 +747,38 @@ var draw = {
 		
 		return beltPath;
 		
+ 	},
+ 	
+ 	simpleShield: function(mob,bodyConstants,colors) {
+
+		var svgNodes = document.createElementNS('http://www.w3.org/2000/svg',"g");
+		
+		if (bodyConstants.wrist.id === 'rightWristPivot') {var reflect = 1} else {var reflect = -1};
+		
+		var shieldBack = document.createElementNS('http://www.w3.org/2000/svg',"ellipse");
+		shieldBack.setAttribute("fill",colors[0]);
+		shieldBack.setAttribute("stroke","#000000");
+		shieldBack.setAttribute("stroke-width","1");
+		shieldBack.setAttribute("stroke-linecap","round");
+		shieldBack.setAttribute("cx",bodyConstants.wrist.cx.animVal.value);
+		shieldBack.setAttribute("cy",bodyConstants.wrist.cy.animVal.value);
+		shieldBack.setAttribute("rx",13);
+		shieldBack.setAttribute("ry",33);
+		
+		var shieldFront = document.createElementNS('http://www.w3.org/2000/svg',"ellipse");
+		shieldFront.setAttribute("fill",colors[1]);
+		shieldFront.setAttribute("stroke","#000000");
+		shieldFront.setAttribute("stroke-width","1");
+		shieldFront.setAttribute("stroke-linecap","round");
+		shieldFront.setAttribute("cx",bodyConstants.wrist.cx.animVal.value - 2*reflect);
+		shieldFront.setAttribute("cy",bodyConstants.wrist.cy.animVal.value);
+		shieldFront.setAttribute("rx",11);
+		shieldFront.setAttribute("ry",31);
+		
+		svgNodes.appendChild(shieldBack);
+		svgNodes.appendChild(shieldFront);
+		
+		return svgNodes;
  	},
 	
 	simpleShorts: function(mob,bodyConstants) {
@@ -3027,85 +3254,7 @@ var draw = {
 		// Hands
 		
 		// Thumbs
-				
-		newPath = document.createElementNS('http://www.w3.org/2000/svg',"path");
-		newPath.setAttribute("fill",face.skinColor);
-		newPath.setAttribute("stroke","#000000");
-		newPath.setAttribute("stroke-width","1");
-		newPath.setAttribute("stroke-linecap","round");
-		
-		otherNewPath = document.createElementNS('http://www.w3.org/2000/svg',"path");
-		otherNewPath.setAttribute("fill",face.skinColor);
-		otherNewPath.setAttribute("stroke","#000000");
-		otherNewPath.setAttribute("stroke-width","1");
-		otherNewPath.setAttribute("stroke-linecap","round");
-
-		// start at bottom of thumb
-		x = 100 + armWidth * 0.5 - face.shoulders;
-		y = neck + 5 + upperArmLength + 20;
-		path = 'm '+x+','+y;
-
-		x = 100 - armWidth * 0.5 + face.shoulders;
-		otherPath = 'm '+x+','+y;
-
-		// to top of thumb
-		x = 10;
-		y = -4;
-		c1x = 0;
-		c1y = 0;
-		c2x = x-1;
-		c2y = y;
-		path += ' c '+c1x+','+c1y+' '+c2x+','+c2y+' '+x+','+y;
-		x *= -1;
-		c1x *= -1;
-		c2x *= -1;
-		otherPath += ' c '+c1x+','+c1y+' '+c2x+','+c2y+' '+x+','+y;
-
-		// to bottom of first knuckle
-		x = 5;
-		y = 3;
-		c1x = 1;
-		c1y = 0;
-		c2x = x;
-		c2y = y-1;
-		path += ' c '+c1x+','+c1y+' '+c2x+','+c2y+' '+x+','+y;
-		x *= -1;
-		c1x *= -1;
-		c2x *= -1;
-		otherPath += ' c '+c1x+','+c1y+' '+c2x+','+c2y+' '+x+','+y;
-
-		// to tip of thumb
-		x = 0;
-		y = 10;
-		c1x = 0;
-		c1y = 0;
-		c2x = x;
-		c2y = y;
-		path += ' c '+c1x+','+c1y+' '+c2x+','+c2y+' '+x+','+y;
-		x *= -1;
-		c1x *= -1;
-		c2x *= -1;
-		otherPath += ' c '+c1x+','+c1y+' '+c2x+','+c2y+' '+x+','+y;
-
-		// to pad of thumb
-		x = -5;
-		y = -2;
-		c1x = -3;
-		c1y = 0;
-		c2x = x;
-		c2y = y;
-		path += ' c '+c1x+','+c1y+' '+c2x+','+c2y+' '+x+','+y;
-		x *= -1;
-		c1x *= -1;
-		c2x *= -1;
-		otherPath += ' c '+c1x+','+c1y+' '+c2x+','+c2y+' '+x+','+y;
-			
-		newPath.setAttributeNS(null,"d",path);
-		rightHandGroup.appendChild(newPath);
-
-		otherNewPath.setAttributeNS(null,"d",otherPath);
-		leftHandGroup.appendChild(otherNewPath);
-		
+						
 		// Items Here?
 						
 		// Clothing & Equipment
@@ -3117,7 +3266,13 @@ var draw = {
 			var leftEquip = mob.equipment.left;
 		};
 		
+		if (armor == undefined) {
+			armor = dataItems.birthdaySuit;
+		};
+		
 		var armorColoring = armor.simpleColoring;
+
+		
 		
 		if (armorColoring !== undefined) {
 			if (armorColoring.torso !== undefined) {
@@ -3234,81 +3389,81 @@ var draw = {
 		leftForearmTopGroup.setAttributeNS(null,'transform','rotate(50 '+leftElbowPivot.cx.animVal.value+' '+leftElbowPivot.cy.animVal.value+')');
 		
 		// Test Loop
-		var animationLoop = document.createElementNS('http://www.w3.org/2000/svg',"animateTransform");
-		var animationTopLoop = document.createElementNS('http://www.w3.org/2000/svg',"animateTransform");
-		var animationData = [
-			{attribute:'attributeName',value:'transform'},
-			{attribute:'attributeType',value:'xml'},
-			{attribute:'type',value:'rotate'},
-			{attribute:'from',value:'25 '+rightShoulderPivot.cx.animVal.value+" "+rightShoulderPivot.cy.animVal.value},
-			{attribute:'to',value:'35 '+rightShoulderPivot.cx.animVal.value+" "+rightShoulderPivot.cy.animVal.value},
-			{attribute:'dur',value:'1s'},
-			{attribute:'begin',value:'0s;inAnimation.end'},
-			];
-		for (i in animationData) {
-			animationLoop.setAttribute(animationData[i].attribute,animationData[i].value);
-			animationTopLoop.setAttribute(animationData[i].attribute,animationData[i].value);
-		};
-		animationLoop.id = 'outAnimation';
-		rightArmGroup.appendChild(animationLoop);
-		rightArmTopGroup.appendChild(animationTopLoop);
-		
-		animationLoop = document.createElementNS('http://www.w3.org/2000/svg',"animateTransform");
-		animationTopLoop = document.createElementNS('http://www.w3.org/2000/svg',"animateTransform");
-		animationData = [
-			{attribute:'attributeName',value:'transform'},
-			{attribute:'attributeType',value:'xml'},
-			{attribute:'type',value:'rotate'},
-			{attribute:'from',value:'35 '+rightShoulderPivot.cx.animVal.value+" "+rightShoulderPivot.cy.animVal.value},
-			{attribute:'to',value:'25 '+rightShoulderPivot.cx.animVal.value+" "+rightShoulderPivot.cy.animVal.value},
-			{attribute:'dur',value:'1s'},
-			{attribute:'begin',value:'outAnimation.end'},
-			];
-		for (i in animationData) {
-			animationLoop.setAttribute(animationData[i].attribute,animationData[i].value);
-			animationTopLoop.setAttribute(animationData[i].attribute,animationData[i].value);
-		};
-		animationLoop.id = 'inAnimation';
-		rightArmGroup.appendChild(animationLoop);
-		rightArmTopGroup.appendChild(animationTopLoop);
-		
-		animationLoop = document.createElementNS('http://www.w3.org/2000/svg',"animateTransform");
-		animationTopLoop = document.createElementNS('http://www.w3.org/2000/svg',"animateTransform");
-		animationData = [
-			{attribute:'attributeName',value:'transform'},
-			{attribute:'attributeType',value:'xml'},
-			{attribute:'type',value:'rotate'},
-			{attribute:'from',value:'-45 '+rightElbowPivot.cx.animVal.value+" "+rightElbowPivot.cy.animVal.value},
-			{attribute:'to',value:'-65 '+rightElbowPivot.cx.animVal.value+" "+rightElbowPivot.cy.animVal.value},
-			{attribute:'dur',value:'1s'},
-			{attribute:'begin',value:'0s;inAnimationForearm.end'},
-			];
-		for (i in animationData) {
-			animationLoop.setAttribute(animationData[i].attribute,animationData[i].value);
-			animationTopLoop.setAttribute(animationData[i].attribute,animationData[i].value);
-		};
-		animationLoop.id = 'outAnimationForearm';
-		rightForearmGroup.appendChild(animationLoop);
-		rightForearmTopGroup.appendChild(animationTopLoop);
-		
-		animationLoop = document.createElementNS('http://www.w3.org/2000/svg',"animateTransform");
-		animationTopLoop = document.createElementNS('http://www.w3.org/2000/svg',"animateTransform");
-		animationData = [
-			{attribute:'attributeName',value:'transform'},
-			{attribute:'attributeType',value:'xml'},
-			{attribute:'type',value:'rotate'},
-			{attribute:'from',value:'-65 '+rightElbowPivot.cx.animVal.value+" "+rightElbowPivot.cy.animVal.value},
-			{attribute:'to',value:'-45 '+rightElbowPivot.cx.animVal.value+" "+rightElbowPivot.cy.animVal.value},
-			{attribute:'dur',value:'1s'},
-			{attribute:'begin',value:'outAnimationForearm.end'},
-			];
-		for (i in animationData) {
-			animationLoop.setAttribute(animationData[i].attribute,animationData[i].value);
-			animationTopLoop.setAttribute(animationData[i].attribute,animationData[i].value);
-		};
-		animationLoop.id = 'inAnimationForearm';
-		rightForearmGroup.appendChild(animationLoop);
-		rightForearmTopGroup.appendChild(animationTopLoop);
+// 		var animationLoop = document.createElementNS('http://www.w3.org/2000/svg',"animateTransform");
+// 		var animationTopLoop = document.createElementNS('http://www.w3.org/2000/svg',"animateTransform");
+// 		var animationData = [
+// 			{attribute:'attributeName',value:'transform'},
+// 			{attribute:'attributeType',value:'xml'},
+// 			{attribute:'type',value:'rotate'},
+// 			{attribute:'from',value:'25 '+rightShoulderPivot.cx.animVal.value+" "+rightShoulderPivot.cy.animVal.value},
+// 			{attribute:'to',value:'35 '+rightShoulderPivot.cx.animVal.value+" "+rightShoulderPivot.cy.animVal.value},
+// 			{attribute:'dur',value:'1s'},
+// 			{attribute:'begin',value:'0s;inAnimation.end'},
+// 			];
+// 		for (i in animationData) {
+// 			animationLoop.setAttribute(animationData[i].attribute,animationData[i].value);
+// 			animationTopLoop.setAttribute(animationData[i].attribute,animationData[i].value);
+// 		};
+// 		animationLoop.id = 'outAnimation';
+// 		rightArmGroup.appendChild(animationLoop);
+// 		rightArmTopGroup.appendChild(animationTopLoop);
+// 		
+// 		animationLoop = document.createElementNS('http://www.w3.org/2000/svg',"animateTransform");
+// 		animationTopLoop = document.createElementNS('http://www.w3.org/2000/svg',"animateTransform");
+// 		animationData = [
+// 			{attribute:'attributeName',value:'transform'},
+// 			{attribute:'attributeType',value:'xml'},
+// 			{attribute:'type',value:'rotate'},
+// 			{attribute:'from',value:'35 '+rightShoulderPivot.cx.animVal.value+" "+rightShoulderPivot.cy.animVal.value},
+// 			{attribute:'to',value:'25 '+rightShoulderPivot.cx.animVal.value+" "+rightShoulderPivot.cy.animVal.value},
+// 			{attribute:'dur',value:'1s'},
+// 			{attribute:'begin',value:'outAnimation.end'},
+// 			];
+// 		for (i in animationData) {
+// 			animationLoop.setAttribute(animationData[i].attribute,animationData[i].value);
+// 			animationTopLoop.setAttribute(animationData[i].attribute,animationData[i].value);
+// 		};
+// 		animationLoop.id = 'inAnimation';
+// 		rightArmGroup.appendChild(animationLoop);
+// 		rightArmTopGroup.appendChild(animationTopLoop);
+// 		
+// 		animationLoop = document.createElementNS('http://www.w3.org/2000/svg',"animateTransform");
+// 		animationTopLoop = document.createElementNS('http://www.w3.org/2000/svg',"animateTransform");
+// 		animationData = [
+// 			{attribute:'attributeName',value:'transform'},
+// 			{attribute:'attributeType',value:'xml'},
+// 			{attribute:'type',value:'rotate'},
+// 			{attribute:'from',value:'-45 '+rightElbowPivot.cx.animVal.value+" "+rightElbowPivot.cy.animVal.value},
+// 			{attribute:'to',value:'-65 '+rightElbowPivot.cx.animVal.value+" "+rightElbowPivot.cy.animVal.value},
+// 			{attribute:'dur',value:'1s'},
+// 			{attribute:'begin',value:'0s;inAnimationForearm.end'},
+// 			];
+// 		for (i in animationData) {
+// 			animationLoop.setAttribute(animationData[i].attribute,animationData[i].value);
+// 			animationTopLoop.setAttribute(animationData[i].attribute,animationData[i].value);
+// 		};
+// 		animationLoop.id = 'outAnimationForearm';
+// 		rightForearmGroup.appendChild(animationLoop);
+// 		rightForearmTopGroup.appendChild(animationTopLoop);
+// 		
+// 		animationLoop = document.createElementNS('http://www.w3.org/2000/svg',"animateTransform");
+// 		animationTopLoop = document.createElementNS('http://www.w3.org/2000/svg',"animateTransform");
+// 		animationData = [
+// 			{attribute:'attributeName',value:'transform'},
+// 			{attribute:'attributeType',value:'xml'},
+// 			{attribute:'type',value:'rotate'},
+// 			{attribute:'from',value:'-65 '+rightElbowPivot.cx.animVal.value+" "+rightElbowPivot.cy.animVal.value},
+// 			{attribute:'to',value:'-45 '+rightElbowPivot.cx.animVal.value+" "+rightElbowPivot.cy.animVal.value},
+// 			{attribute:'dur',value:'1s'},
+// 			{attribute:'begin',value:'outAnimationForearm.end'},
+// 			];
+// 		for (i in animationData) {
+// 			animationLoop.setAttribute(animationData[i].attribute,animationData[i].value);
+// 			animationTopLoop.setAttribute(animationData[i].attribute,animationData[i].value);
+// 		};
+// 		animationLoop.id = 'inAnimationForearm';
+// 		rightForearmGroup.appendChild(animationLoop);
+// 		rightForearmTopGroup.appendChild(animationTopLoop);
 		
 				
 		// End Draw Mob
@@ -3516,16 +3671,10 @@ var draw = {
 		// Fist Fronts
 				
 		newPath = document.createElementNS('http://www.w3.org/2000/svg',"path");
-		newPath.setAttribute("fill",face.skinColor);
+		newPath.setAttribute("fill",mob.faceData.skinColor);
 		newPath.setAttribute("stroke","#000000");
 		newPath.setAttribute("stroke-width","1");
 		newPath.setAttribute("stroke-linecap","round");
-		
-		otherNewPath = document.createElementNS('http://www.w3.org/2000/svg',"path");
-		otherNewPath.setAttribute("fill",face.skinColor);
-		otherNewPath.setAttribute("stroke","#000000");
-		otherNewPath.setAttribute("stroke-width","1");
-		otherNewPath.setAttribute("stroke-linecap","round");
 
 		// start at bottom of thumb
 		x = 100 + (10 * 0.5 - face.shoulders) * reflect;
@@ -3725,6 +3874,62 @@ var draw = {
 
 
 		return svgNodes;		
+	},
+	
+	thumb: function(mob,bodyConstants) {
+		if (bodyConstants.wrist.id === 'rightWristPivot') {var reflect = 1} else {var reflect = -1};
+
+		newPath = document.createElementNS('http://www.w3.org/2000/svg',"path");
+		newPath.setAttribute("fill",mob.faceData.skinColor);
+		newPath.setAttribute("stroke","#000000");
+		newPath.setAttribute("stroke-width","1");
+		newPath.setAttribute("stroke-linecap","round");
+
+		// start at bottom of thumb
+		x = 100 + (10 * 0.5 - mob.faceData.shoulders) * reflect;
+		y = bodyConstants.neck + 5 + 30 + 20;
+		path = 'm '+x+','+y;
+
+		// to top of thumb
+		x = 10 * reflect;
+		y = -4;
+		c1x = 0;
+		c1y = 0;
+		c2x = x - 1 * reflect;
+		c2y = y;
+		path += ' c '+c1x+','+c1y+' '+c2x+','+c2y+' '+x+','+y;
+
+		// to bottom of first knuckle
+		x = 5 * reflect;
+		y = 3;
+		c1x = 1 * reflect;
+		c1y = 0;
+		c2x = x;
+		c2y = y-1;
+		path += ' c '+c1x+','+c1y+' '+c2x+','+c2y+' '+x+','+y;
+
+		// to tip of thumb
+		x = 0 * reflect;
+		y = 10;
+		c1x = 0;
+		c1y = 0;
+		c2x = x;
+		c2y = y;
+		path += ' c '+c1x+','+c1y+' '+c2x+','+c2y+' '+x+','+y;
+
+		// to pad of thumb
+		x = -5 * reflect;
+		y = -2;
+		c1x = -3 * reflect;
+		c1y = 0;
+		c2x = x;
+		c2y = y;
+		path += ' c '+c1x+','+c1y+' '+c2x+','+c2y+' '+x+','+y;
+			
+		newPath.setAttributeNS(null,"d",path);
+		
+		return newPath;
+
 	},
 
 };

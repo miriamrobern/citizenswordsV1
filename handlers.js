@@ -154,6 +154,9 @@ var handlers = {
 			slot = slot.substring(0,slot.length-3).toLowerCase();
 			view.focus.item = view.focus.hero.equipment[slot];
 			view.focus.hero.equipment[slot] = undefined;
+			view.focus.hero.imgMob = draw.drawMob(view.focus.hero);
+			view.focus.hero.imgPortrait = draw.drawMob(view.focus.hero);
+			view.focus.hero.imgBust = draw.drawMob(view.focus.hero);
 			view.focus.hero.refreshManeuvers();
 		} else {
 			var item = company.armory[e.srcElement.id.slice(10)];
@@ -269,7 +272,7 @@ var handlers = {
 		
 		if (className === "work") {
 			p1.equipment.armor = dataItems.roughspun;
-			p1.equipment.left = undefined;
+			p1.equipment.left = dataItems.cargoHook;
 			p1.skills.maneuvers = [dataManeuvers.exhort];
 			p1.skills.passives = [dataManeuvers.exhort];
 			p1.stats.move = 4;
@@ -289,7 +292,7 @@ var handlers = {
 			document.getElementById('classFight').style.borderStyle = 'inset';
 		} else if (className === "pray") {
 			p1.equipment.armor = dataItems.initiatesRobes;
-			p1.equipment.left = dataItems.initiatesSpellbook;
+			p1.equipment.left = dataItems.initiateSpellbook;
 			p1.skills.maneuvers = [dataManeuvers.arcaneBeam,dataManeuvers.exhort];
 			p1.skills.passives = [];
 			p1.stats.move = 3;
