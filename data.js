@@ -213,9 +213,16 @@ var dataEthnicities = {
  		targetHostiles: true,
  		targetTeam: false,
  		range: 10,
+ 		attackStat: 'focus',
+ 		attackBonus: 0,
+ 		defenseStat: 'armor',
+ 		defenseBonus: 0,
+ 		dodgeable: true,
+ 		wounds: [dataWounds.fire,dataWounds.fear],
  		projectileImg: 'img/rainbow.png',
  		execute: function(attacker,defender) {
- 			game.simpleAttack(attacker,'focus',defender,'armor',true,[dataWounds.fire,dataWounds.fear])
+ 			console.log('this',this);
+ 			game.simpleAttack(attacker,defender,this)
  			view.bounceMob(attacker,defender.location);
  			view.beamAnimate(attacker.location,defender.location,'img/rainbow.png');
  		},
@@ -231,8 +238,14 @@ var dataEthnicities = {
  		targetHostiles: true,
  		targetTeam: false,
  		range: 1,
+ 		attackStat: 'strength',
+ 		attackBonus: 0,
+ 		defenseStat: 'armor',
+ 		defenseBonus: 0,
+ 		dodgeable: true,
+ 		wounds: [dataWounds.bite],
  		execute: function(attacker,defender) {
- 			game.simpleAttack(attacker,'strength',defender,'armor',true,[dataWounds.bite])
+ 			game.simpleAttack(attacker,defender,this)
  			view.attackAnimate(attacker,defender.location);
  		},
  	},
@@ -321,8 +334,14 @@ var dataEthnicities = {
  		targetHostiles: true,
  		targetTeam: false,
  		range: 1,
+ 		attackStat: 'strength',
+ 		attackBonus: 0,
+ 		defenseStat: 'armor',
+ 		defenseBonus: 0,
+ 		dodgeable: true,
+ 		wounds: [dataWounds.sharp],
  		execute: function(attacker,defender) {
- 			game.simpleAttack(attacker,'strength',defender,'armor',true,[dataWounds.sharp])
+ 			game.simpleAttack(attacker,defender,this)
  			view.attackAnimate(attacker,defender.location);
  		},
  	},
@@ -337,8 +356,14 @@ var dataEthnicities = {
  		targetHostiles: true,
  		targetTeam: false,
  		range: 1,
+ 		attackStat: 'focus',
+ 		attackBonus: 0,
+ 		defenseStat: 'focus',
+ 		defenseBonus: 0,
+ 		dodgeable: true,
+ 		wounds: [dataWounds.hook,dataWounds.sharp],
  		execute: function(attacker,defender) {
- 			game.simpleAttack(attacker,'focus',defender,'focus',true,[dataWounds.hook])
+ 			game.simpleAttack(attacker,defender,this)
  			view.attackAnimate(attacker,defender.location);
  		},
  	},
@@ -353,8 +378,14 @@ var dataEthnicities = {
  		targetHostiles: true,
  		targetTeam: false,
  		range: 2,
+ 		attackStat: 'focus',
+ 		attackBonus: 0,
+ 		defenseStat: 'armor',
+ 		defenseBonus: 0,
+ 		dodgeable: true,
+ 		wounds: [dataWounds.sharp],
  		execute: function(attacker,defender) {
- 			game.simpleAttack(attacker,'focus',defender,'armor',true,[dataWounds.sharp])
+ 			game.simpleAttack(attacker,defender,this)
  			view.attackAnimate(attacker,defender.location);
  		},
  	},
@@ -369,9 +400,15 @@ var dataEthnicities = {
  		targetHostiles: true,
  		targetTeam: false,
  		range: 1,
+ 		attackStat: 'strength',
+ 		attackBonus: 0,
+ 		defenseStat: 'armor',
+ 		defenseBonus: 0,
+ 		dodgeable: true,
+ 		wounds: [dataWounds.sharp,dataWounds.fear],
  		execute: function(attacker,defender) {
- 			game.simpleAttack(attacker,'strength',defender,'armor',true,[dataWounds.sharp])
- 			game.simpleAttack(attacker,'strength',defender,'armor',true,[dataWounds.fear])
+ 			game.simpleAttack(attacker,defender,this)
+ 			game.simpleAttack(attacker,defender,this)
  			view.attackAnimate(attacker,defender.location);
  		},
  	},
@@ -416,8 +453,15 @@ var dataEthnicities = {
  		targetHostiles: true,
  		targetTeam: false,
  		range: 1,
+ 		attackStat: 'strength',
+ 		attackBonus: 0,
+ 		defenseStat: 'armor',
+ 		defenseBonus: 0,
+ 		dodgeable: true,
+ 		wounds: [dataWounds.blunt],
  		execute: function(attacker,defender) {
- 			game.simpleAttack(attacker,'strength',defender,'strength',true,[dataWounds.blunt]);
+ 			game.simpleAttack(attacker,defender,this);
+ 			// knockback
  			view.attackAnimate(attacker,defender.location);
  		},
  	},
@@ -432,8 +476,14 @@ var dataEthnicities = {
  		targetHostiles: true,
  		targetTeam: false,
  		range: 1,
+ 		attackStat: 'focus',
+ 		attackBonus: 0,
+ 		defenseStat: 'armor',
+ 		defenseBonus: 0,
+ 		dodgeable: true,
+ 		wounds: [dataWounds.sharp],
  		execute: function(attacker,defender) {
- 			game.simpleAttack(attacker,'focus',defender,'armor',true,[dataWounds.sharp])
+ 			game.simpleAttack(attacker,defender,this)
  			view.attackAnimate(attacker,defender.location);
  		},
  	},

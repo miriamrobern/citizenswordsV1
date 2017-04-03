@@ -114,7 +114,14 @@ var game = {
 		};
 	},
 	
-	simpleAttack: function(attacker,attackStat,defender,defenseStat,dodge,wounds) {
+	simpleAttack: function(attacker,defender,maneuver) {
+		
+		var attackStat = maneuver.attackStat;
+		var defenseStat = maneuver.defenseStat;
+		var dodge = maneuver.dodgeable;
+		var wounds = maneuver.wounds;
+		var attackBonus = maneuver.attackBonus;
+		var defenseBonus = maneuver.defenseBonus;
 		
 		if (wounds == undefined) {wounds = [dataWounds.blunt];};
 		wound = wounds[Math.random() * wounds.length << 0];
@@ -122,12 +129,12 @@ var game = {
 		var result;
 		
 		var toHit = 0;
-		for (i=0;i<attacker.stats[attackStat];i++) {
+		for (i=0;i<attacker.stats[attackStat]+attackBonus;i++) {
 			toHit += Math.random()*0.9 + 0.1;
 		};
 
 		var toDefend = 0;
-		var passiveDefense = defender.stats[defenseStat];
+		var passiveDefense = defender.stats[defenseStat]+defenseBonus;
 		var activeDefense = 0;
 		if (dodge) {activeDefense = defender.stats.move;};
 		for (i=0;i<passiveDefense+activeDefense;i++) {
@@ -572,6 +579,9 @@ function Mob(type,x,y,id,name,heritage) {
 // 		view.selectMob(this);
 		if (this.stats.move < 1 && this.player) {
 			game.checkEndTurn();
+		};
+		if (this.player) {
+			this.refreshManeuvers();
 		};
 	};
 	
