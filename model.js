@@ -140,12 +140,28 @@ var game = {
 			defender.takeWound(wound,penalty);
 			result = wound;
 		} else {
-			console.log('defend: ',toHit,' vs ',toDefend);
+			console.log('defended: ',toHit,' vs ',toDefend);
 			result = false;
 		};
 		
 		return result;
 		
+	},
+	
+	gainItem: function(items) {
+		company.haul = company.haul.concat(items);
+		var itemString = '';
+		var article = '';
+		for (i in items) {
+			if (items[i].article == undefined) {article = 'a';} else {article = items[i].article;};
+			itemString += ' '+article+' '+items[i].name;
+			if (i < items.length -2) {
+				itemString += ',';
+			} else if (i == items.length-2) {
+				itemString += ', and ';
+			};
+		};
+		view.displayDialogue('You gain '+itemString+'!')
 	},
 };
 
@@ -347,6 +363,7 @@ function Mob(type,x,y,id,name,heritage) {
 	};
 	
 	this.equipment = type.equipment;
+	this.loot = type.loot;
 	
 	mobs.push(this);
 	
@@ -653,7 +670,37 @@ function Mob(type,x,y,id,name,heritage) {
 		maneuverSources.push(this.equipment.item0);
 		maneuverSources.push(this.equipment.item1);
 		maneuverSources.push(this.equipment.item2);
-				
+		
+		var adjacentMobs = [];
+		var disarm = false; var slaughter = false; var execute = false; var restrain = false;
+		for (hex in this.location.adjacent) {
+			for (mob in mobs) {
+				if (mobs[mob].location === this.location.adjacent[hex] && mobs[mob].stats.morale === 0) {
+					adjacentMobs.push(mobs[mob]);
+					if (mobs[mob].equipment !== undefined) {
+						disarm = true;
+					};
+					if (mobs[mob].loot !== undefined) {
+						slaughter = true;
+					} else {
+						execute = true;
+						if ((this.equipment.item0 !== undefined && this.equipment.item0.restraint > 0) || (this.equipment.item1 !== undefined && this.equipment.item1.restraint > 0) || (this.equipment.item2 !== undefined && this.equipment.item2.restraint > 0) ) {
+							restrain = true;
+						};
+					};
+				};
+			};
+		};
+		
+		if (adjacentMobs.length > 0) { // if next to defeated mob, enable defeat maneuvers
+			var defeatManeuvers = {maneuvers:[]};
+			if (disarm) {defeatManeuvers.maneuvers.push(dataManeuvers.zDisarm)};
+			if (execute) {defeatManeuvers.maneuvers.push(dataManeuvers.zExecute)};
+			if (restrain) {defeatManeuvers.maneuvers.push(dataManeuvers.zRestrain)};
+			if (slaughter) {defeatManeuvers.maneuvers.push(dataManeuvers.zSlaughter)};
+			maneuverSources.push(defeatManeuvers);
+		};
+
 		for (i in maneuverSources) {
 			if (maneuverSources[i] !== undefined && maneuverSources[i].maneuvers !== undefined) {
 				maneuvers = maneuvers.concat(maneuverSources[i].maneuvers);

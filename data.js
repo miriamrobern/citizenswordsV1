@@ -448,6 +448,93 @@ var dataEthnicities = {
  		range: 2,
  		execute: function() {},
  	},
+ 	
+ 	zDisarm: {
+ 		name: "Disarm",
+ 		id: 'zDisarm',
+ 		description: "Disarms a defeated opponent of equipment.",
+ 		img: '',
+ 		cost: {move:1},
+ 		target: true,
+ 		targetHostiles: true,
+ 		targetTeam: false,
+ 		range: 1,
+ 		execute: function(attacker,defender) {
+ 			var loot = [];
+ 			for (e in defender.equipment) {
+ 				if (defender.equipment[e] !== undefined) {
+					loot.push(defender.equipment[e]);
+ 				};
+ 			}
+ 			defender.equipment = undefined;
+ 			game.gainItem(loot);
+ 			attacker.refreshManeuvers();
+ 		},
+ 	},
+ 	
+ 	zExecute: {
+ 		name: "Execute",
+ 		id: 'zExecute',
+ 		description: "Executes a defeated opponent and disarms them of equipment.",
+ 		img: '',
+ 		cost: {move:1},
+ 		target: true,
+ 		targetHostiles: true,
+ 		targetTeam: false,
+ 		range: 1,
+ 		execute: function(attacker,defender) {
+ 			var loot = [];
+ 			for (e in defender.equipment) {
+ 				if (defender.equipment[e] !== undefined) {
+					loot.push(defender.equipment[e]);
+ 				};
+ 			}
+ 			game.gainItem(loot);
+ 			defender.location = undefined;
+ 			defender.div.parentElement.removeChild(defender.div);
+ 			attacker.refreshManeuvers();
+ 		},
+ 	},
+ 	
+ 	zRestrain: {
+ 		name: "Restrain",
+ 		id: 'zRestrain',
+ 		description: "Restrains a defeated opponent.",
+ 		img: '',
+ 		cost: {move:1},
+ 		target: true,
+ 		targetHostiles: true,
+ 		targetTeam: false,
+ 		range: 1,
+ 		execute: function(attacker,defender) {
+ 			var penalty = 0;
+ 			for (e in attacker.equipment) {
+ 				if (attacker.equipment[e] !== undefined && attacker.equipment[e].restraint !== undefined) {
+ 					penalty = Math.max(penalty,attacker.equipemnt.restraint);
+ 				};
+ 			};
+ 			defender.takeWound(datWounds.restraints,penalty);
+ 			attacker.refreshManeuvers();
+ 		},
+ 	},
+ 	
+ 	zSlaughter: {
+ 		name: "Slaughter",
+ 		id: 'zSlaughter',
+ 		description: "Slaughters a defeated opponent and harvests them for loot.",
+ 		img: '',
+ 		cost: {move:1},
+ 		target: true,
+ 		targetHostiles: true,
+ 		targetTeam: false,
+ 		range: 1,
+ 		execute: function(attacker,defender) {
+ 			game.gainItem(defender.loot);
+ 			defender.location = undefined;
+ 			defender.div.parentElement.removeChild(defender.div);
+ 			attacker.refreshManeuvers();
+ 		},
+ 	},
  
  };
  
@@ -472,6 +559,7 @@ var dataEthnicities = {
  
  	eleanorDress: {
  		name: "Eleanor's Dress",
+ 		article: 'an',
  		slot: ['armor'],
  		simpleColoring: {
  			legs: {fill:'black'},
@@ -506,6 +594,7 @@ var dataEthnicities = {
  	
  	initiateSpellbook: {
  		name: "Initiate's Spellbook",
+ 		article: 'an',
  		slot:['left','right'],
  		maneuvers: [
  			dataManeuvers.quickTrance,
@@ -517,6 +606,7 @@ var dataEthnicities = {
  	
  	initiatesRobes: {
  		name: "Initiate's Robes",
+ 		article: 'an',
  		slot: ['armor'],
  		passiveDefense: 2,
  		simpleColoring: {
@@ -539,6 +629,12 @@ var dataEthnicities = {
  			dataManeuvers.overhead,
  		],
  	},
+ 	
+ 	manacles: {
+ 		name: "Set of Manacles",
+ 		slot: ['item0','item1','item2'],
+ 		restraint: 2,
+ 	},
  
  	mothersSword: {
  		name: "Mother's Sword",
@@ -550,6 +646,16 @@ var dataEthnicities = {
  		svgNodes: function(mob,bodyConstants) {
  			return draw.mothersSword(mob,bodyConstants,['gainsboro','goldenrod','darkred']);
  		},
+ 	},
+ 	
+ 	ratCarcass: {
+ 		name: "Rat Carcass",
+ 	},
+ 	
+ 	rope: {
+ 		name: "Rope",
+ 		slot: ['item0','item1','item2'],
+ 		restraint: 1,
  	},
  	
  	roughspun: {
@@ -646,7 +752,8 @@ var dataEthnicities = {
  		maneuvers: [
  			dataManeuvers.bite,
  		],
- 	},
+ 		loot: [dataItems.ratCarcass]
+ 	 	},
  
  	doti: {
  		name: "Doti",
@@ -877,10 +984,13 @@ var dataEthnicities = {
  
  	armory: [
  		dataItems.eleanorDress,
- 		dataItems.scrapArmor,
+ 		dataItems.rope,
  	],
  	
  	completed: [
+ 	],
+ 	
+ 	haul: [
  	],
  	
  	deeds: {

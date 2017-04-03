@@ -114,6 +114,13 @@ var hellhoundCave = {
  		},
  		
  		{
+			x:3,
+			y:2,
+			type:dataMobs.rat,
+			ai: 'dormant',
+ 		},
+ 		
+ 		{
 			x:100,
 			y:100,
 			type:dataMobs.doti,

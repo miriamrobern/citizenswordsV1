@@ -738,7 +738,9 @@ var view = {
 	
 	displayDialogue: function(text,name,bust,bustPosition) {
 	
-		bust.className = 'bustImg';
+		if (bust !== undefined) {
+			bust.className = 'bustImg';
+		};
 	
 		handlers.hideDialogueDiv();
 		document.getElementById('dialogueReturnButton').style.display = "none";
