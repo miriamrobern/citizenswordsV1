@@ -266,6 +266,10 @@ var view = {
 	
 		view.focus.mob = mob;
 		
+		if (mob.player) {
+			mob.refreshManeuvers();
+		};
+		
 		view.displayFocusMob();
 		
 		if (mob.player) {

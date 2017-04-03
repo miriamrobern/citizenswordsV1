@@ -661,7 +661,6 @@ function Mob(type,x,y,id,name,heritage) {
 		};
 				
 		this.maneuvers = maneuvers;
-		view.refreshRoster();
 	
 	};
 	

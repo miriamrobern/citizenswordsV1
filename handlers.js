@@ -48,12 +48,6 @@ var handlers = {
 				selectedHex = map.hexes[i]
 			};
 		}
-
-//		TERRIBLE CODE		
-		if (mobs[index].maneuvers == undefined && mobs[index].player) {
-			mobs[index].refreshManeuvers();
-		};
-		mobs[index].div.appendChild(mobs[index].imgMob);
 		
 		if (this.mode == undefined && mobs[index].stats.move > 0) {
 			this.mode = 'move';
@@ -207,6 +201,7 @@ var handlers = {
 					slotCheck = true;
 				};
 			};
+			view.refreshRoster();
 		};
 		if (view.focus.divBoat !== undefined && view.focus.slot !== undefined && slotCheck) {
 			view.focus.divBoat.className = 'HQItem rosterItem';
@@ -219,6 +214,7 @@ var handlers = {
 			view.focus.hero.equip(view.focus.item,slot);
 			
 			view.focus.divBoat = undefined;
+			view.refreshRoster();
 			
 		} else if (view.focus.divBoat !== undefined) {
 			view.focus.divBoat.className = 'HQItem rosterItem';
@@ -230,7 +226,9 @@ var handlers = {
 			
 			view.focus.divBoat = undefined;
 			view.refreshRosterDescription('clear');
+			view.refreshRoster();
 		};
+
 	},
 	
 	// Character Creation
@@ -283,7 +281,7 @@ var handlers = {
 		} else if (className === "fight") {
 			p1.equipment.armor = dataItems.scrapArmor;
 			p1.equipment.left = dataItems.scrapShield;
-			p1.skills.maneuvers = [dataManeuvers.defensiveStance,dataManeuvers.exhort];
+			p1.skills.maneuvers = [dataManeuvers.exhort];
 			p1.skills.passives = [];
 			p1.stats.move = 3;
 			p1.stats.strength = 4;
@@ -293,7 +291,7 @@ var handlers = {
 		} else if (className === "pray") {
 			p1.equipment.armor = dataItems.initiatesRobes;
 			p1.equipment.left = dataItems.initiateSpellbook;
-			p1.skills.maneuvers = [dataManeuvers.arcaneBeam,dataManeuvers.exhort];
+			p1.skills.maneuvers = [dataManeuvers.focusedStrength,dataManeuvers.exhort];
 			p1.skills.passives = [];
 			p1.stats.move = 3;
 			p1.stats.strength = 3;
@@ -318,7 +316,6 @@ var handlers = {
 		heroes[0] = p1;
 		handlers.loadLevel(hellhoundCave);
 	},
-
 
 
 };

@@ -297,6 +297,19 @@ var dataEthnicities = {
  			};
  		},
  	},
+ 	
+ 	focusedStrength: {
+ 		name: "Focused Strength",
+ 		id: 'focusedStrength',
+ 		description: 'Converts 1 Focus into 2 Strength.',
+ 		img: '',
+ 		cost: {move:1,focus:1},
+ 		target: false,
+ 		range: 0,
+ 		execute: function() {
+ 			view.focus.mob.stats.strength = Math.min(view.focus.mob.stats.strength+2,view.focus.mob.stats.strengthMax);
+ 		},
+ 	},
  
  	hack: {
  		name: "Hack",
@@ -475,6 +488,20 @@ var dataEthnicities = {
  		maneuvers: [
  			dataManeuvers.firstAid,
  		],
+ 	},
+ 	
+ 	moucauRobes: {
+ 		name: "Guildmaster Moucau's Robes",
+ 		slot: ['armor'],
+ 		simpleColoring: {
+ 			torso: {fill:'darkred'},
+ 			upperArms: {fill:'darkred'},
+ 			lowerArms: {fill:'darkred'},
+ 			legs: {fill:'black'},
+ 		},
+ 		svgNodes: function(mob,bodyConstants) {
+ 			return draw.simpleRobe(mob,bodyConstants,['darkred','goldenrod','darkblue']);
+ 		},
  	},
  	
  	initiateSpellbook: {
