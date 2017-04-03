@@ -569,7 +569,7 @@ function Mob(type,x,y,id,name,heritage) {
 				p = 999;
 			};
 		};
-		view.selectMob(this);
+// 		view.selectMob(this);
 		if (this.stats.move < 1 && this.player) {
 			game.checkEndTurn();
 		};

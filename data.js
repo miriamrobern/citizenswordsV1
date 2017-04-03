@@ -490,6 +490,7 @@ var dataEthnicities = {
  				};
  			}
  			game.gainItem(loot);
+ 			company.killCount++;
  			defender.location = undefined;
  			defender.div.parentElement.removeChild(defender.div);
  			attacker.refreshManeuvers();
@@ -994,6 +995,14 @@ var dataEthnicities = {
  	],
  	
  	deeds: {
+ 	},
+ 	
+ 	reputation: {
+ 		killCount: 0,
+ 		pileus: 0,
+ 		moucau: 0,
+ 		points: 0,
+ 		rounds: 0,
  	},
  
  };

@@ -78,7 +78,7 @@ var ai = {
 		var targets = [];
 		for (i in options) {
 			for (m in mobs) {
-				if (mobs[m].location.adjacent.indexOf(options[i]) !== -1 && mobs[m].player) {
+				if (mobs[m].location !== undefined && mobs[m].location.adjacent.indexOf(options[i]) !== -1 && mobs[m].player) {
 					targets.push(options[i]);
 				};
 			};
