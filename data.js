@@ -457,6 +457,18 @@ var dataEthnicities = {
  		svgNodes: function(mob,bodyConstants) {return draw.cargoHook(mob,bodyConstants,['silver','saddlebrown'])},
  	},
  
+ 	eleanorDress: {
+ 		name: "Eleanor's Dress",
+ 		slot: ['armor'],
+ 		simpleColoring: {
+ 			legs: {fill:'black'},
+ 			feet: {fill:'black'},
+ 		},
+ 		svgNodes: function(mob,bodyConstants) {
+ 			return draw.eleanorDress(mob,bodyConstants,['teal','yellow','fuchsia']);
+ 		},
+ 	},
+ 
  	firstAidKit: {
  		name: "First Aid Kit",
  		slot: ['item0','item1','item2'],
@@ -837,8 +849,8 @@ var dataEthnicities = {
  var company = {
  
  	armory: [
+ 		dataItems.eleanorDress,
  		dataItems.scrapArmor,
-//  		dataItems.simpleShield,
  	],
  	
  	completed: [
@@ -925,7 +937,7 @@ var dataEthnicities = {
 	},
 	
 	equipment: {
-		armor: dataItems.roughspun,
+		armor: dataItems.eleanorDress,
 		right: dataItems.mothersSword,
 		left: dataItems.cargoHook,
 		item0: undefined,

@@ -144,6 +144,247 @@ var draw = {
 		
 		return svgNodes;
 	},
+	
+	sundress: function(mob,bodyConstants,colors) {
+		var svgNodes = document.createElementNS('http://www.w3.org/2000/svg',"g");
+		svgNodes.setAttribute('fill',colors[0]);
+		
+		var dress = document.createElementNS('http://www.w3.org/2000/svg',"path");
+		dress.setAttribute('fill',colors[0]);
+		dress.setAttribute("stroke","#000000");
+		dress.setAttribute("stroke-width","1");
+		dress.setAttribute("stroke-linecap","round");
+		path = 'm 100,'+bodyConstants.neck;
+		path += ' h-12';
+		var x = mob.faceData.shoulders * -0.8 + 12;
+		var y = 30;
+		var c1y = 10
+		path += ' c 0,'+c1y+' '+x+','+y+' '+x+','+y;
+		
+		// to right belly
+		x = face.shoulders * 0.8 - face.belly;
+		y = 10;
+		c1x = 0;
+		c1y = 3;
+		c2x = x;
+		c2y = y-3;
+		path += ' c '+c1x+','+c1y+' '+c2x+','+c2y+' '+x+','+y;
+
+		// to right hip
+		x = face.belly - face.hips;
+		y = 15;
+		c1x = 0;
+		c1y = face.belly / 3;
+		c2x = x;
+		c2y = y - face.hips/3;
+		path += ' c '+c1x+','+c1y+' '+c2x+','+c2y+' '+x+','+y;
+
+		// to right side of skirt
+		x = -20;
+		y = 25;
+		c1x = 0;
+		c1y = 10;
+		c2x = x;
+		c2y = y;
+		path += ' c '+c1x+','+c1y+' '+c2x+','+c2y+' '+x+','+y;
+
+		// to left side of skirt
+		x = face.hips * 2 + 40;
+		y = 0;
+		c1x = 0;
+		c1y = 5;
+		c2x = x;
+		c2y = y+5;
+		path += ' c '+c1x+','+c1y+' '+c2x+','+c2y+' '+x+','+y;
+
+		// to left hip
+		x = -20;
+		y = -25;
+		c1x = 0;
+		c1y = 0;
+		c2x = x;
+		c2y = y+10;
+		path += ' c '+c1x+','+c1y+' '+c2x+','+c2y+' '+x+','+y;
+
+		// to left belly
+		x = face.belly - face.hips;
+		y = -15;
+		c1x = 0;
+		c1y = face.hips/-3;
+		c2x = x;
+		c2y = y + face.belly / 3;
+		path += ' c '+c1x+','+c1y+' '+c2x+','+c2y+' '+x+','+y;
+
+		// to left rib
+		x = face.shoulders * 0.8 - face.belly;
+		y = -10;
+		c1x = 0;
+		c1y = -3;
+		c2x = x;
+		c2y = y+3;
+		path += ' c '+c1x+','+c1y+' '+c2x+','+c2y+' '+x+','+y;
+		
+		x = mob.faceData.shoulders * -0.8 + 12;
+		y = -32;
+		c2y = y + 10;
+		path += ' c 0,0 '+x+','+c2y+' '+x+','+y;
+
+		
+		dress.setAttributeNS(null,"d",path);
+		svgNodes.appendChild(dress);
+		
+		if (mob.faceData.bust > mob.faceData.shoulders * 0.7) {
+			var rightBreastPath = document.createElementNS('http://www.w3.org/2000/svg',"path");
+			var leftBreastPath = document.createElementNS('http://www.w3.org/2000/svg',"path");
+			rightBreastPath.setAttribute("fill",'inherit');
+			rightBreastPath.setAttribute("stroke","#000000");
+			rightBreastPath.setAttribute("stroke-width","1");
+			rightBreastPath.setAttribute("stroke-linecap","round");
+		
+			leftBreastPath.setAttribute("fill",'inherit');
+			leftBreastPath.setAttribute("stroke","#000000");
+			leftBreastPath.setAttribute("stroke-width","1");
+			leftBreastPath.setAttribute("stroke-linecap","round");
+
+			var startX = 12;
+
+			// start 
+			x = 100 - startX;
+			y = bodyConstants.neck;
+			path = 'm '+x+','+y;
+		
+			x = 100 + startX;
+			otherPath = 'm '+x+','+y;
+
+			// to outside of bust
+			x = startX - face.bust;
+			y = 10 + face.bust * 0.4;
+			c1x = 0;
+			c1y = face.bust * 0.2;
+			c2x = x + face.bust * 0.1;
+			c2y = y;
+			path += ' c '+c1x+','+c1y+' '+c2x+','+c2y+' '+x+','+y;
+			x *= -1;
+			c1x *= -1;
+			c2x *= -1;
+			otherPath += ' c '+c1x+','+c1y+' '+c2x+','+c2y+' '+x+','+y;
+
+			// to bottom of bust
+			x = face.bust * 0.5;
+			y = face.bust * 0.5;
+			c1x = 0;
+			c1y = face.bust * 0.3;
+			c2x = x - face.bust * 0.33;
+			c2y = y;
+			path += ' c '+c1x+','+c1y+' '+c2x+','+c2y+' '+x+','+y;
+			x *= -1;
+			c1x *= -1;
+			c2x *= -1;
+			otherPath += ' c '+c1x+','+c1y+' '+c2x+','+c2y+' '+x+','+y;
+
+			// to inside of bust
+			x = face.bust * 0.5;
+			y = 0 - face.bust * 0.1;
+			c1x = face.bust * 0.33;
+			c1y = 0;
+			c2x = x-3;
+			c2y = y;
+			path += ' c '+c1x+','+c1y+' '+c2x+','+c2y+' '+x+','+y;
+			x *= -1;
+			c1x *= -1;
+			c2x *= -1;
+			otherPath += ' c '+c1x+','+c1y+' '+c2x+','+c2y+' '+x+','+y;
+		
+			rightBreastPath.setAttributeNS(null,"d",path);
+			svgNodes.appendChild(rightBreastPath);
+		
+			leftBreastPath.setAttributeNS(null,"d",otherPath);
+			svgNodes.appendChild(leftBreastPath);
+		
+		};
+		
+		return svgNodes;
+	},
+	
+	eleanorDress: function(mob,bodyConstants,colors) {
+		var svgNodes = document.createElementNS('http://www.w3.org/2000/svg',"g");
+		
+		var dress = draw.sundress(mob,bodyConstants,colors);
+		svgNodes.appendChild(dress);
+		
+		var star = document.createElementNS('http://www.w3.org/2000/svg',"path");
+		star.setAttribute('fill',colors[1]);
+		star.setAttribute("stroke","#000000");
+		star.setAttribute("stroke-width","1");
+		star.setAttribute("stroke-linecap","round");
+		var y =bodyConstants.neck + 18;
+		path = 'm 100,'+y;
+		path += ' l -2,4 l -5,0 l 4,3 l -1,4 l 4,-3';
+		path += ' l 4,3 l -1,-4 l 4,-3 l -5,0 l -2,-4';
+		star.setAttributeNS(null,'d',path);
+		svgNodes.appendChild(star);
+		
+		var star = document.createElementNS('http://www.w3.org/2000/svg',"path");
+		star.setAttribute('fill',colors[2]);
+		star.setAttribute("stroke","#000000");
+		star.setAttribute("stroke-width","1");
+		star.setAttribute("stroke-linecap","round");
+		var y =bodyConstants.neck + 33;
+		path = 'm 100,'+y;
+		path += ' l -3,6 l -7.5,0 l 6,4.5 l -1.5,6 l 6,-4.5';
+		path += ' l 6,4.5 l -1.5,-6 l 6,-4.5 l -7.5,0 l -3,-6';
+		star.setAttributeNS(null,'d',path);
+		svgNodes.appendChild(star);
+		
+		var heart = document.createElementNS('http://www.w3.org/2000/svg',"path");
+		heart.setAttribute('fill',colors[2]);
+		heart.setAttribute("stroke","#000000");
+		heart.setAttribute("stroke-width","1");
+		heart.setAttribute("stroke-linecap","round");
+		
+		var heart2 = document.createElementNS('http://www.w3.org/2000/svg',"path");
+		heart2.setAttribute('fill',colors[1]);
+		heart2.setAttribute("stroke","#000000");
+		heart2.setAttribute("stroke-width","1");
+		heart2.setAttribute("stroke-linecap","round");
+		
+		path = 'm 90,155 ';
+		otherPath = 'm 110,155 ';
+		x = -4;
+		y = 10;
+		c1x = 20;
+		c1y = -8;
+		c2x = x;
+		c2y = y;
+		path += ' c '+c1x+','+c1y+' '+c2x+','+c2y+' '+x+','+y;
+		x *= -1;
+		c1x *= -1;
+		c2x *= -1;
+		otherPath += ' c '+c1x+','+c1y+' '+c2x+','+c2y+' '+x+','+y;
+		
+		x = 4;
+		y = -10;
+		c1x = 0;
+		c1y = 0;
+		c2x = x-15;
+		c2y = y-10;
+		path += ' c '+c1x+','+c1y+' '+c2x+','+c2y+' '+x+','+y;
+		x *= -1;
+		c1x *= -1;
+		c2x *= -1;
+		otherPath += ' c '+c1x+','+c1y+' '+c2x+','+c2y+' '+x+','+y;
+		
+		heart.setAttributeNS(null,'d',path);
+		svgNodes.appendChild(heart);
+		
+		heart2.setAttributeNS(null,'d',otherPath);
+		svgNodes.appendChild(heart2);
+		
+		var belt = draw.simpleBelt(mob,bodyConstants,['black']);
+		svgNodes.appendChild(belt);
+		
+		return svgNodes;
+	},
 
 	mothersSword: function(mob,bodyConstants,colors) {
 		var svgNodes = document.createElementNS('http://www.w3.org/2000/svg',"g");
@@ -409,11 +650,13 @@ var draw = {
 		return svgNodes;
 	},
 	
-	simpleBelt: function(mob,bodyConstants) {
+	simpleBelt: function(mob,bodyConstants,colors) {
+		
+		if (colors == undefined) {colors = ['saddlebrown'];};
 		
 		// Belt
 		var beltPath = document.createElementNS('http://www.w3.org/2000/svg',"path");
-		beltPath.setAttribute("fill",'SaddleBrown');
+		beltPath.setAttribute("fill",colors[0]);
 		beltPath.setAttribute("stroke","#000000");
 		beltPath.setAttribute("stroke-width","1");
 		beltPath.setAttribute("stroke-linecap","round");
@@ -1531,193 +1774,6 @@ var draw = {
 		var torsoPath = torso.torsoPath;
 		var rightBreastPath = torso.rightBreastPath;
 		var leftBreastPath = torso.leftBreastPath;
-		
-// 		var torsoPath = document.createElementNS('http://www.w3.org/2000/svg',"path");
-// 		torsoPath.id = 'torso';
-// 		torsoPath.setAttribute("fill",'inherit');
-// 		torsoPath.setAttribute("stroke","#000000");
-// 		torsoPath.setAttribute("stroke-width","1");
-// 		torsoPath.setAttribute("stroke-linecap","round");
-// 
-// 		// start 
-// 		x = 100;
-// 		y = neck;
-// 		path = 'm '+x+','+y;
-// 
-// 		// to right shoulder
-// 		x = 0 - face.shoulders;
-// 		y = 10;
-// 		c1x = -1 * face.shoulders;
-// 		c1y = 0;
-// 		c2x = x;
-// 		c2y = y;
-// 		path += ' c '+c1x+','+c1y+' '+c2x+','+c2y+' '+x+','+y;
-// 
-// 		// to right rib
-// 		x = face.shoulders * 0.2;
-// 		y = 20;
-// 		c1x = 0;
-// 		c1y = 0;
-// 		c2x = x;
-// 		c2y = y;
-// 		path += ' c '+c1x+','+c1y+' '+c2x+','+c2y+' '+x+','+y;
-// 
-// 		// to right belly
-// 		x = face.shoulders * 0.8 - face.belly;
-// 		y = 10;
-// 		c1x = 0;
-// 		c1y = 3;
-// 		c2x = x;
-// 		c2y = y-3;
-// 		path += ' c '+c1x+','+c1y+' '+c2x+','+c2y+' '+x+','+y;
-// 
-// 		// to right hip
-// 		x = face.belly - face.hips;
-// 		y = 15;
-// 		c1x = 0;
-// 		c1y = face.belly / 3;
-// 		c2x = x;
-// 		c2y = y - face.hips/3;
-// 		path += ' c '+c1x+','+c1y+' '+c2x+','+c2y+' '+x+','+y;
-// 
-// 		// to butt
-// 		x = face.hips;
-// 		y = 10;
-// 		c1x = 0;
-// 		c1y = 3;
-// 		c2x = x - face.hips;
-// 		c2y = y;
-// 		path += ' c '+c1x+','+c1y+' '+c2x+','+c2y+' '+x+','+y;
-// 
-// 		// to left hip
-// 		x = face.hips;
-// 		y = -10;
-// 		c1x = face.hips;
-// 		c1y = 0;
-// 		c2x = x;
-// 		c2y = y+3;
-// 		path += ' c '+c1x+','+c1y+' '+c2x+','+c2y+' '+x+','+y;
-// 
-// 		// to left belly
-// 		x = face.belly - face.hips;
-// 		y = -15;
-// 		c1x = 0;
-// 		c1y = face.hips/-3;
-// 		c2x = x;
-// 		c2y = y + face.belly / 3;
-// 		path += ' c '+c1x+','+c1y+' '+c2x+','+c2y+' '+x+','+y;
-// 
-// 		// to left rib
-// 		x = face.shoulders * 0.8 - face.belly;
-// 		y = -10;
-// 		c1x = 0;
-// 		c1y = -3;
-// 		c2x = x;
-// 		c2y = y+3;
-// 		path += ' c '+c1x+','+c1y+' '+c2x+','+c2y+' '+x+','+y;
-// 
-// 		// to left shoulder
-// 		x = face.shoulders - face.shoulders * 0.8;
-// 		y = -20;
-// 		c1x = 0;
-// 		c1y = 0;
-// 		c2x = x;
-// 		c2y = y;
-// 		path += ' c '+c1x+','+c1y+' '+c2x+','+c2y+' '+x+','+y;
-// 
-// 		// back to start (behind head)
-// 		x = 0 - face.shoulders;
-// 		y = -10;
-// 		c1x = 0;
-// 		c1y = 0;
-// 		c2x = x + face.shoulders;
-// 		c2y = y;
-// 		path += ' c '+c1x+','+c1y+' '+c2x+','+c2y+' '+x+','+y;
-// 	
-// 		path += 'z';
-// 		torsoPath.setAttributeNS(null,"d",path);
-// 		bodyGroup.appendChild(torsoPath);
-// 		
-// 		// Bust
-// 		var rightBreastPath = document.createElementNS('http://www.w3.org/2000/svg',"path");
-// 		rightBreastPath.id = 'rightBreast';
-// 		var leftBreastPath = document.createElementNS('http://www.w3.org/2000/svg',"path");
-// 		leftBreastPath.id = 'leftBreast';
-// 		if (face.bust > 10) {
-// 			
-// 			rightBreastPath.setAttribute("fill",'inherit');
-// 			rightBreastPath.setAttribute("stroke","#000000");
-// 			rightBreastPath.setAttribute("stroke-width","1");
-// 			rightBreastPath.setAttribute("stroke-linecap","round");
-// 		
-// 			leftBreastPath.setAttribute("fill",'inherit');
-// 			leftBreastPath.setAttribute("stroke","#000000");
-// 			leftBreastPath.setAttribute("stroke-width","1");
-// 			leftBreastPath.setAttribute("stroke-linecap","round");
-// 
-// 			var startX = Math.max(face.bust * 0.5 , face.shoulders * 0.7);
-// 
-// 			// start 
-// 			x = 100 - startX;
-// 			y = neck + 10;
-// 			path = 'm '+x+','+y;
-// 		
-// 			x = 100 + startX;
-// 			otherPath = 'm '+x+','+y;
-// 
-// 			// to outside of bust (if necessary)
-// 			if (startX-face.bust < 0) {
-// 				x = startX - face.bust;
-// 				y = face.bust * 0.4;
-// 				c1x = 0;
-// 				c1y = 0;
-// 				c2x = x;
-// 				c2y = y - face.bust * 0.2;
-// 				path += ' c '+c1x+','+c1y+' '+c2x+','+c2y+' '+x+','+y;
-// 				x *= -1;
-// 				c1x *= -1;
-// 				c2x *= -1;
-// 				otherPath += ' c '+c1x+','+c1y+' '+c2x+','+c2y+' '+x+','+y;
-// 			} else {
-// 				x = 100 - (face.bust + face.shoulders * 0.7)/2;
-// 				y = neck + face.shoulders * 0.55;
-// 				path = 'm '+x+','+y;
-// 				x = 100 + (face.bust + face.shoulders * 0.7)/2;
-// 				otherPath = 'm '+x+','+y;
-// 			};
-// 
-// 			// to bottom of bust
-// 			x = face.bust * 0.5;
-// 			y = face.bust * 0.5;
-// 			c1x = 0;
-// 			c1y = face.bust * 0.3;
-// 			c2x = x - face.bust * 0.33;
-// 			c2y = y;
-// 			path += ' c '+c1x+','+c1y+' '+c2x+','+c2y+' '+x+','+y;
-// 			x *= -1;
-// 			c1x *= -1;
-// 			c2x *= -1;
-// 			otherPath += ' c '+c1x+','+c1y+' '+c2x+','+c2y+' '+x+','+y;
-// 
-// 			// to inside of bust
-// 			x = face.bust * 0.5;
-// 			y = 0 - face.bust * 0.5;
-// 			c1x = face.bust * 0.33;
-// 			c1y = 0;
-// 			c2x = x;
-// 			c2y = y + face.bust * 0.3;
-// 			path += ' c '+c1x+','+c1y+' '+c2x+','+c2y+' '+x+','+y;
-// 			x *= -1;
-// 			c1x *= -1;
-// 			c2x *= -1;
-// 			otherPath += ' c '+c1x+','+c1y+' '+c2x+','+c2y+' '+x+','+y;
-// 		
-// 			rightBreastPath.setAttributeNS(null,"d",path);
-// 			bodyGroup.appendChild(rightBreastPath);
-// 		
-// 			leftBreastPath.setAttributeNS(null,"d",otherPath);
-// 			bodyGroup.appendChild(leftBreastPath);
-// 		};
 		
 		// Head
 			

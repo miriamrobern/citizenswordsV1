@@ -3,6 +3,11 @@ body {
 	padding-top: 5vw;
 	}
 
+svg {
+	height: 100%;
+	width: 100%;
+	}
+
 .debug {
 	border: 2px solid black;
 	background: repeating-linear-gradient(
