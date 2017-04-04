@@ -123,13 +123,20 @@ var game = {
 		var attackBonus = maneuver.attackBonus;
 		var defenseBonus = maneuver.defenseBonus;
 		
+		var equipmentBonus = 0;
+		for (e in attacker.equipment) {
+			if (attacker.equipment[e] !== undefined && attacker.equipment[e].maneuvers !== undefined && attacker.equipment[e].bonus !== undefined && attacker.equipment[e].bonus[maneuver.id] !== undefined) {
+				equipmentBonus = Math.max(equipmentBonus,attacker.equipment[e].bonus[maneuver.id]);
+			}
+		};
+		
 		if (wounds == undefined) {wounds = [dataWounds.blunt];};
 		wound = wounds[Math.random() * wounds.length << 0];
 		
 		var result;
 		
 		var toHit = 0;
-		for (i=0;i<attacker.stats[attackStat]+attackBonus;i++) {
+		for (i=0;i<attacker.stats[attackStat]+attackBonus+equipmentBonus;i++) {
 			toHit += Math.random()*0.9 + 0.1;
 		};
 
@@ -576,12 +583,13 @@ function Mob(type,x,y,id,name,heritage) {
 				p = 999;
 			};
 		};
-// 		view.selectMob(this);
+
 		if (this.stats.move < 1 && this.player) {
 			game.checkEndTurn();
 		};
 		if (this.player) {
 			this.refreshManeuvers();
+			view.selectMob(this);
 		};
 	};
 	

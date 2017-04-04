@@ -694,6 +694,9 @@ var dataEthnicities = {
  			dataManeuvers.slash,
  			dataManeuvers.defensiveStance,
  		],
+ 		bonus: {
+ 			slash: 100,
+ 		},
  		svgNodes: function(mob,bodyConstants) {
  			return draw.mothersSword(mob,bodyConstants,['gainsboro','goldenrod','darkred']);
  		},

@@ -727,9 +727,19 @@ var view = {
 			if (view.focus.item.passiveDefense !== undefined) {
 				rosterDescriptionDiv.innerHTML += '<p>Provides armor of '+view.focus.item.passiveDefense+'.</p>'
 			};
+			if (view.focus.item.restraint !== undefined) {
+				rosterDescriptionDiv.innerHTML += '<p>Provides restraints of '+view.focus.item.passiveDefense+'.</p>'
+			};
+			if (view.focus.item.prestige !== undefined) {
+				rosterDescriptionDiv.innerHTML += '<p>Provides prestige of '+view.focus.item.passiveDefense+'.</p>'
+			};
 			if (view.focus.item.maneuvers !== undefined) {
 				for (i in view.focus.item.maneuvers) {
-					rosterDescriptionDiv.innerHTML += '<p>Provides the maneuver '+view.focus.item.maneuvers[i].name+'.</p>'
+					var bonus = '';
+					if (view.focus.item.bonus !== undefined && view.focus.item.bonus[view.focus.item.maneuvers[i].id] !== undefined) {
+						bonus = ' (+'+view.focus.item.bonus[view.focus.item.maneuvers[i].id]+')'
+					};
+					rosterDescriptionDiv.innerHTML += '<p>Provides the maneuver '+view.focus.item.maneuvers[i].name+bonus+'.</p>';
 				};
 			};
 		} else if (type === 'training') {

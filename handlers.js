@@ -37,6 +37,8 @@ var handlers = {
 		} else if (this.mode === "target" && view.focus.range.indexOf(selectedHex) !== -1) {
 			console.log('targeting',selectedHex);
 			handlers.executeManeuver(view.focus.maneuver,selectedHex);
+			view.focus.mob.refreshManeuvers();
+			view.displayFocusMob();
 		};
 	},
 	
@@ -56,6 +58,8 @@ var handlers = {
 			view.selectMob(mobs[index]);
 		} else if (this.mode === 'target' && view.focus.range.indexOf(selectedHex) !== -1) {
 			handlers.executeManeuver(view.focus.maneuver,mobs[index]);
+			view.focus.mob.refreshManeuvers();
+			view.displayFocusMob();
 		} else {
 			this.mode = undefined;
 			view.selectMob(mobs[index]);

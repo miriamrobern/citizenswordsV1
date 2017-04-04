@@ -162,7 +162,7 @@ var draw = {
 		path += ' c 0,'+c1y+' '+x+','+y+' '+x+','+y;
 		
 		// to right belly
-		x = face.shoulders * 0.8 - face.belly;
+		x = mob.faceData.shoulders * 0.8 - mob.faceData.belly;
 		y = 10;
 		c1x = 0;
 		c1y = 3;
@@ -171,7 +171,7 @@ var draw = {
 		path += ' c '+c1x+','+c1y+' '+c2x+','+c2y+' '+x+','+y;
 
 		// to right hip
-		x = face.belly - face.hips;
+		x = mob.faceData.belly - mob.faceData.hips;
 		y = 15;
 		c1x = 0;
 		c1y = face.belly / 3;
@@ -189,7 +189,7 @@ var draw = {
 		path += ' c '+c1x+','+c1y+' '+c2x+','+c2y+' '+x+','+y;
 
 		// to left side of skirt
-		x = face.hips * 2 + 40;
+		x = mob.faceData.hips * 2 + 40;
 		y = 0;
 		c1x = 0;
 		c1y = 5;
@@ -207,16 +207,16 @@ var draw = {
 		path += ' c '+c1x+','+c1y+' '+c2x+','+c2y+' '+x+','+y;
 
 		// to left belly
-		x = face.belly - face.hips;
+		x = mob.faceData.belly - mob.faceData.hips;
 		y = -15;
 		c1x = 0;
-		c1y = face.hips/-3;
+		c1y = mob.faceData.hips/-3;
 		c2x = x;
-		c2y = y + face.belly / 3;
+		c2y = y + mob.faceData.belly / 3;
 		path += ' c '+c1x+','+c1y+' '+c2x+','+c2y+' '+x+','+y;
 
 		// to left rib
-		x = face.shoulders * 0.8 - face.belly;
+		x = mob.faceData.shoulders * 0.8 - mob.faceData.belly;
 		y = -10;
 		c1x = 0;
 		c1y = -3;
@@ -257,11 +257,11 @@ var draw = {
 			otherPath = 'm '+x+','+y;
 
 			// to outside of bust
-			x = startX - face.bust;
-			y = 10 + face.bust * 0.4;
+			x = startX - mob.faceData.bust;
+			y = 10 + mob.faceData.bust * 0.4;
 			c1x = 0;
-			c1y = face.bust * 0.2;
-			c2x = x + face.bust * 0.1;
+			c1y = mob.faceData.bust * 0.2;
+			c2x = x + mob.faceData.bust * 0.1;
 			c2y = y;
 			path += ' c '+c1x+','+c1y+' '+c2x+','+c2y+' '+x+','+y;
 			x *= -1;
@@ -270,11 +270,11 @@ var draw = {
 			otherPath += ' c '+c1x+','+c1y+' '+c2x+','+c2y+' '+x+','+y;
 
 			// to bottom of bust
-			x = face.bust * 0.5;
-			y = face.bust * 0.5;
+			x = mob.faceData.bust * 0.5;
+			y = mob.faceData.bust * 0.5;
 			c1x = 0;
-			c1y = face.bust * 0.3;
-			c2x = x - face.bust * 0.33;
+			c1y = mob.faceData.bust * 0.3;
+			c2x = x - mob.faceData.bust * 0.33;
 			c2y = y;
 			path += ' c '+c1x+','+c1y+' '+c2x+','+c2y+' '+x+','+y;
 			x *= -1;
@@ -283,9 +283,9 @@ var draw = {
 			otherPath += ' c '+c1x+','+c1y+' '+c2x+','+c2y+' '+x+','+y;
 
 			// to inside of bust
-			x = face.bust * 0.5;
-			y = 0 - face.bust * 0.1;
-			c1x = face.bust * 0.33;
+			x = mob.faceData.bust * 0.5;
+			y = 0 - mob.faceData.bust * 0.1;
+			c1x = mob.faceData.bust * 0.33;
 			c1y = 0;
 			c2x = x-3;
 			c2y = y;
