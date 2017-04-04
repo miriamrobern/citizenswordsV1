@@ -665,6 +665,37 @@ svg {
 	border: 0.25vw outset orchid;
 	}
 
+#marketProprietorDiv {
+	float: left;
+	}
+
+#marketProprietorSVG {
+	height: 16vw;
+	width: 16vw;
+	}
+
+#marketDialogueDiv {
+	float: left;
+	width: 39vw;
+	height: 12vw;
+	padding: 2vw;
+	}
+
+#marketWaresDiv {
+	clear: both;
+	float: left;
+	border: 0.5vw inset purple;
+	width: 16vw;
+	height: 20vw;
+	overflow-y: scroll;
+	}
+
+#waresList {
+	list-style-type: none;
+	margin: 0;
+	padding: 0;
+	}
+
 #adventuresDiv {
 	background-color: seagreen;
 	border: 0.5vw outset darkgreen;

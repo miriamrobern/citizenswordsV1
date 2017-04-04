@@ -34,7 +34,7 @@
 		</div>
 		
 		<div id='introDiv'>
-			<p>I am teaching myself javascript (and now svg), and thought: "What better way to learn than to make something hideously complicated?"  And thus <em>Citizen Swords</em> was born.  In this game, you take on the role of citizens of a beautiful, cosmopolitain fantasy city who rise up against the tyranny of the despotic Ogre King.  It's a tactical roleplaying game, which means you mostly move little characters around on a map to stage little battles.</p>
+			<p>In this <em>very under-construction</em> game, you take on the role of citizens of a beautiful, cosmopolitain fantasy city who rise up against the tyranny of the despotic Ogre King.  It's a tactical roleplaying game, which means you mostly move little characters around on a map to stage little battles.</p>
 			<p>There isn't much here yet – one and a half levels – but I'm doing a lot of backend work to make creating levels as easy as possible in the future.</p>
 			<p>Click on <strong>New Game</strong> above to start a game.</p>
 		</div>
@@ -184,7 +184,7 @@
 					<p><input id= 'bellyInput' type = 'range' oninput = 'handlers.updateFace()' onchange = 'handlers.updateFace()' />Belly</p>
 					<p><input id= 'hipsInput' type = 'range' oninput = 'handlers.updateFace()' onchange = 'handlers.updateFace()' />Hips</p>
 					<p><input id= 'feetInput' type = 'range' oninput = 'handlers.updateFace()' onchange = 'handlers.updateFace()' />Feet</p>
-					<p><input disabled id= 'hindquartersInput' type = 'range' oninput = 'handlers.updateFace()' onchange = 'handlers.updateFace()' />Hindquarters</p>
+					<p><input id= 'hindquartersInput' type = 'range' oninput = 'handlers.updateFace()' onchange = 'handlers.updateFace()' />Hindquarters</p>
 				</div>
 			
 			</div>		
@@ -337,7 +337,7 @@
 					<h2>Provisioning</h2>
 					
 					<div id='provisioningListDiv' class='HQPaneSelectDiv'>
-						<ul class='HQList'>
+						<ul id='provisioningList' class='HQList'>
 							<li class='HQItem provisioningItem'>Orktown Market</li>
 							<li class='HQItem provisioningItem'>Alfar Downs</li>
 							<li class='HQItem provisioningItem'>City Militia Armory</li>
@@ -346,6 +346,8 @@
 					</div>
 					
 					<div id='provisioningDetailsDiv' class='HQPaneBigDiv'>
+						<div id='provisioningMarketDiv'>
+						</div>
 					</div>
 				
 				</div>

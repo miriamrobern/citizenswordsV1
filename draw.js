@@ -1139,6 +1139,11 @@ var draw = {
 		bodyAndClothingGroup.id = 'bodyAndClothingGroup';
 		bodyAndClothingGroup.setAttribute("fill",face.skinColor);
 		svg.appendChild(bodyAndClothingGroup);
+
+		var hindquartersGroup = document.createElementNS('http://www.w3.org/2000/svg',"g");
+		hindquartersGroup.id = 'hindquartersGroup';
+		hindquartersGroup.setAttributeNS('null','z-index',100);
+		bodyAndClothingGroup.appendChild(hindquartersGroup);
 		
 		var bodyGroup = document.createElementNS('http://www.w3.org/2000/svg',"g");
 		bodyGroup.id = 'bodyGroup';
@@ -1297,6 +1302,94 @@ var draw = {
 		};
 		
 		// Body
+		
+		// Hindquarters
+		var rightHindFootPath = document.createElementNS('http://www.w3.org/2000/svg',"path");
+		var leftHindFootPath = document.createElementNS('http://www.w3.org/2000/svg',"path");
+		if (face.hindquarters > 0) {
+			
+			var bodyConstants = {eyeline:eyeline,neck:neck,crotch:{}};
+			bodyConstants.crotch.x = 120;
+			bodyConstants.crotch.y = 145;
+			var hindLegs = draw.legs(mob,bodyConstants);
+			hindLegs.rightLegPath.setAttribute('fill','inherit');
+			hindLegs.leftLegPath.setAttribute('fill','inherit');
+			rightHindFootPath = hindLegs.rightFootPath;
+			leftHindFootPath = hindLegs.leftFootPath;
+			var scale = 0.8;
+			var matrix5 = bodyConstants.crotch.x - scale * bodyConstants.crotch.x;
+			var matrix6 = bodyConstants.crotch.y - scale * bodyConstants.crotch.y;
+			var transform = 'matrix('+scale+', 0, 0, '+scale+', '+matrix5+', '+matrix6+')';
+			hindLegs.svg.setAttribute('transform',transform);
+			hindquartersGroup.appendChild(hindLegs.svg);
+		
+			var hindquarters = document.createElementNS('http://www.w3.org/2000/svg',"path");
+			hindquarters.id = 'hindquarters';
+			hindquarters.setAttribute("fill",'inherit');
+			hindquarters.setAttribute("stroke","#000000");
+			hindquarters.setAttribute("stroke-width","1");
+			hindquarters.setAttribute("stroke-linecap","round");
+			
+			path = 'm 120,125 ';
+			x = face.hips * 0.3;
+			c2x = x / 2;
+			path += 'c 2,0 '+c2x+',-2 '+x+',-2 ';
+			x = face.hips * 0.6;
+			path += 'c 10,0 '+x+',8 '+x+',10 ';
+			x = -1.2 * face.hips;
+			c2x = x * 0.5;
+			path += 'c 0,10 '+c2x+',15 '+x+',15 ';
+			path += 'c -10,0 '+x+',-15 '+x+',-15 ';
+			x = 0.6 * face.hips;
+			c2x = x * 0.5;
+			path += 'c 0,-10 '+c2x+',-15 '+x+',-15 ';
+			
+			hindquarters.setAttributeNS(null,'d',path);
+			hindquartersGroup.appendChild(hindquarters);
+		
+			var flank = document.createElementNS('http://www.w3.org/2000/svg',"path");
+			flank.id = 'flank';
+			flank.setAttribute("fill",'inherit');
+			flank.setAttribute("stroke","#000000");
+			flank.setAttribute("stroke-width","1");
+			flank.setAttribute("stroke-linecap","round");
+			path = 'm 120,140 ';
+			path += 'c 0,8 12,18 12,18 ';
+			flank.setAttributeNS(null,'d',path);
+			hindquartersGroup.appendChild(flank);
+		
+			var flank = document.createElementNS('http://www.w3.org/2000/svg',"path");
+			flank.id = 'flank';
+			flank.setAttribute("fill",'inherit');
+			flank.setAttribute("stroke","none");
+			
+			var x = 120 + face.hips * 0.8;
+			var y = 128;
+			path = 'm '+x+','+y;
+			x = 18 + face.hips * -0.8
+			c2x = x - 5;
+			path += 'c 5,0 '+c2x+',21 '+x+',27 ';
+			path += 'l -15,-9 v-10';
+			flank.setAttributeNS(null,'d',path);
+			hindquartersGroup.appendChild(flank);
+		
+			var flankStroke = document.createElementNS('http://www.w3.org/2000/svg',"path");
+			flankStroke.id = 'flankStroke';
+			flankStroke.setAttribute("fill",'none');
+			flankStroke.setAttribute("stroke","#000000");
+			flankStroke.setAttribute("stroke-width","1");
+			flankStroke.setAttribute("stroke-linecap","round");
+			
+			var x = 120 + face.hips * 0.8;
+			var y = 128;
+			path = 'm '+x+','+y;
+			x = 18 + face.hips * -0.8
+			c2x = x - 5;
+			path += 'c 5,0 '+c2x+',21 '+x+',27 ';
+			flankStroke.setAttributeNS(null,'d',path);
+			hindquartersGroup.appendChild(flankStroke);
+			
+		};
 		
 		// Arms
 		
@@ -1563,209 +1656,15 @@ var draw = {
 		leftForearmGroup.appendChild(leftLowerArmPath);
 				
 		// Legs
-		var rightLegPath = document.createElementNS('http://www.w3.org/2000/svg',"path");
-		rightLegPath.id = 'rightLeg';
-		rightLegPath.setAttribute("fill",face.skinColor);
-		rightLegPath.setAttribute("stroke","#000000");
-		rightLegPath.setAttribute("stroke-width","1");
-		rightLegPath.setAttribute("stroke-linecap","round");
-		
-		var leftLegPath = document.createElementNS('http://www.w3.org/2000/svg',"path");
-		leftLegPath.id = 'leftLeg';
-		leftLegPath.setAttribute("fill",face.skinColor);
-		leftLegPath.setAttribute("stroke","#000000");
-		leftLegPath.setAttribute("stroke-width","1");
-		leftLegPath.setAttribute("stroke-linecap","round");
-
-		// start at crotch (behind body)
-		x = 100 ;
-		y = neck + 60;
-		path = 'm '+x+','+y;
-		otherPath = 'm '+x+','+y;
-
-		// to inside right knee
-		x = -15;
-		y = 17;
-		c1x = 0;
-		c1y = 0;
-		c2x = x;
-		c2y = y;
-		path += ' c '+c1x+','+c1y+' '+c2x+','+c2y+' '+x+','+y;
-		x *= -1;
-		c1x *= -1;
-		c2x *= -1;
-		otherPath += ' c '+c1x+','+c1y+' '+c2x+','+c2y+' '+x+','+y;
-
-		// to right heel
-		x = 5;
-		y = 18;
-		c1x = 0;
-		c1y = 0;
-		c2x = x;
-		c2y = y;
-		path += ' c '+c1x+','+c1y+' '+c2x+','+c2y+' '+x+','+y;
-		x *= -1;
-		c1x *= -1;
-		c2x *= -1;
-		otherPath += ' c '+c1x+','+c1y+' '+c2x+','+c2y+' '+x+','+y;
-
-		// to inside of right tread
-		x = -4;
-		y = 3;
-		c1x = 0;
-		c1y = 0;
-		c2x = x + 2;
-		c2y = y;
-		path += ' c '+c1x+','+c1y+' '+c2x+','+c2y+' '+x+','+y;
-		x *= -1;
-		c1x *= -1;
-		c2x *= -1;
-		otherPath += ' c '+c1x+','+c1y+' '+c2x+','+c2y+' '+x+','+y;
-
-		// to outside bottom right leg
-		x = -5;
-		y = 0;
-		c1x = 0;
-		c1y = 0;
-		c2x = x;
-		c2y = y;
-		path += ' c '+c1x+','+c1y+' '+c2x+','+c2y+' '+x+','+y;
-		x *= -1;
-		c1x *= -1;
-		c2x *= -1;
-		otherPath += ' c '+c1x+','+c1y+' '+c2x+','+c2y+' '+x+','+y;
-
-		// to top right foot
-		x = 0;
-		y = -8;
-		c1x = 0;
-		c1y = -10;
-		c2x = x;
-		c2y = y;
-		path += ' c '+c1x+','+c1y+' '+c2x+','+c2y+' '+x+','+y;
-		x *= -1;
-		c1x *= -1;
-		c2x *= -1;
-		otherPath += ' c '+c1x+','+c1y+' '+c2x+','+c2y+' '+x+','+y;
-
-		// to outside right knee
-		x = -5;
-		y = -14;
-		c1x = 0;
-		c1y = 0;
-		c2x = x;
-		c2y = y+2;
-		path += ' c '+c1x+','+c1y+' '+c2x+','+c2y+' '+x+','+y;
-		x *= -1;
-		c1x *= -1;
-		c2x *= -1;
-		otherPath += ' c '+c1x+','+c1y+' '+c2x+','+c2y+' '+x+','+y;
-
-		// to top of right leg
-		x = 15;
-		y = -20;
-		c1x = 0;
-		c1y = -4;
-		c2x = x;
-		c2y = y;
-		path += ' c '+c1x+','+c1y+' '+c2x+','+c2y+' '+x+','+y;
-		x *= -1;
-		c1x *= -1;
-		c2x *= -1;
-		otherPath += ' c '+c1x+','+c1y+' '+c2x+','+c2y+' '+x+','+y;
-	
-		rightLegPath.setAttributeNS(null,"d",path);
-		bodyGroup.appendChild(rightLegPath);
-	
-		leftLegPath.setAttributeNS(null,"d",otherPath);
-		bodyGroup.appendChild(leftLegPath);
-				
-		// Feet
-		var rightFootPath = document.createElementNS('http://www.w3.org/2000/svg',"path");
-		rightFootPath.id = 'rightFootPath';
-		rightFootPath.setAttribute("fill",'inherit');
-		rightFootPath.setAttribute("stroke","#000000");
-		rightFootPath.setAttribute("stroke-width","1");
-		rightFootPath.setAttribute("stroke-linecap","round");
-		
-		var leftFootPath = document.createElementNS('http://www.w3.org/2000/svg',"path");
-		leftFootPath.id = 'leftFootPath';
-		leftFootPath.setAttribute("fill",'inherit');
-		leftFootPath.setAttribute("stroke","#000000");
-		leftFootPath.setAttribute("stroke-width","1");
-		leftFootPath.setAttribute("stroke-linecap","round");
-
-		// start at crotch (behind body)
-		x = 89;
-		y = neck + 92;
-		path = 'm '+x+','+y;
-		x = 111;
-		otherPath = 'm '+x+','+y;
-		
-		// to heel
-		x = 2;
-		y = 5;
-		c1x = 0;
-		c1y = 0;
-		c2x = x;
-		c2y = y;
-		path += ' c '+c1x+','+c1y+' '+c2x+','+c2y+' '+x+','+y;
-		x *= -1;
-		c1x *= -1;
-		c2x *= -1;
-		otherPath += ' c '+c1x+','+c1y+' '+c2x+','+c2y+' '+x+','+y;
-
-		// to inside of right tread
-		x = -4;
-		y = 3;
-		c1x = 0;
-		c1y = 0;
-		c2x = x + 2;
-		c2y = y;
-		path += ' c '+c1x+','+c1y+' '+c2x+','+c2y+' '+x+','+y;
-		x *= -1;
-		c1x *= -1;
-		c2x *= -1;
-		otherPath += ' c '+c1x+','+c1y+' '+c2x+','+c2y+' '+x+','+y;
-
-		// to outside bottom right leg
-		x = -6 - face.feet;
-		y = 0;
-		c1x = 0;
-		c1y = 0;
-		c2x = x;
-		c2y = y;
-		path += ' c '+c1x+','+c1y+' '+c2x+','+c2y+' '+x+','+y;
-		x *= -1;
-		c1x *= -1;
-		c2x *= -1;
-		otherPath += ' c '+c1x+','+c1y+' '+c2x+','+c2y+' '+x+','+y;
-
-		// to top right foot
-		x = face.feet;
-		y = -8;
-		c1x = 0;
-		c1y = -10;
-		c2x = x;
-		c2y = y;
-		path += ' c '+c1x+','+c1y+' '+c2x+','+c2y+' '+x+','+y;
-		x *= -1;
-		c1x *= -1;
-		c2x *= -1;
-		otherPath += ' c '+c1x+','+c1y+' '+c2x+','+c2y+' '+x+','+y;
-		
-		if (face.feet < 5) {
-			rightFootPath.setAttribute("fill",'#555555');
-			leftFootPath.setAttribute("fill",'#666666');
-			path += ' z';
-			otherPath += ' z';
-		};
-	
-		rightFootPath.setAttributeNS(null,"d",path);
-		bodyGroup.appendChild(rightFootPath);
-	
-		leftFootPath.setAttributeNS(null,"d",otherPath);
-		bodyGroup.appendChild(leftFootPath);
+		var bodyConstants = {eyeline:eyeline,neck:neck,crotch:{}};
+		bodyConstants.crotch.x = 100;
+		bodyConstants.crotch.y = neck + 60;
+		var legs = draw.legs(mob,bodyConstants);
+		bodyGroup.appendChild(legs.svg);
+		var rightLegPath = legs.rightLegPath;
+		var leftLegPath = legs.leftLegPath;
+		var rightFootPath = legs.rightFootPath;
+		var leftFootPath = legs.leftFootPath;
 		
 		// Torso
 		
@@ -3383,21 +3282,27 @@ var draw = {
 				if (armorColoring.legs.fill !== undefined) {
 					rightLegPath.setAttribute("fill",armorColoring.legs.fill);
 					leftLegPath.setAttribute("fill",armorColoring.legs.fill);
+					hindquartersGroup.setAttribute("fill",armorColoring.legs.fill);
 				};
 				if (armorColoring.legs.stroke !== undefined) {
 					rightLegPath.setAttribute("stroke",armorColoring.legs.stroke);
 					leftLegPath.setAttribute("stroke",armorColoring.legs.stroke);
+					hindquartersGroup.setAttribute("stroke",armorColoring.legs.stroke);
 				};
 			};
 		
-			if (armorColoring.feet !== undefined && face.feet >= 5) {
+			if (armorColoring.feet !== undefined && face.feet >= 5 && face.hindquarters <= 0) {
 				if (armorColoring.feet.fill !== undefined) {
 					rightFootPath.setAttribute("fill",armorColoring.feet.fill);
 					leftFootPath.setAttribute("fill",armorColoring.feet.fill);
+					rightHindFootPath.setAttribute("fill",armorColoring.feet.fill);
+					leftHindFootPath.setAttribute("fill",armorColoring.feet.fill);
 				};
 				if (armorColoring.feet.stroke !== undefined) {
 					rightFootPath.setAttribute("stroke",armorColoring.feet.stroke);
 					leftFootPath.setAttribute("stroke",armorColoring.feet.stroke);
+					rightHindFootPath.setAttribute("stroke",armorColoring.feet.stroke);
+					leftHindFootPath.setAttribute("stroke",armorColoring.feet.stroke);
 				};
 			};
 		};
@@ -3985,6 +3890,230 @@ var draw = {
 		newPath.setAttributeNS(null,"d",path);
 		
 		return newPath;
+
+	},
+	
+	legs: function(mob,bodyConstants) {
+
+		var legGroup = document.createElementNS('http://www.w3.org/2000/svg',"g");
+		
+		var rightLegPath = document.createElementNS('http://www.w3.org/2000/svg',"path");
+		rightLegPath.id = 'rightLeg';
+		rightLegPath.setAttribute("fill",face.skinColor);
+		rightLegPath.setAttribute("stroke","#000000");
+		rightLegPath.setAttribute("stroke-width","1");
+		rightLegPath.setAttribute("stroke-linecap","round");
+		
+		var leftLegPath = document.createElementNS('http://www.w3.org/2000/svg',"path");
+		leftLegPath.id = 'leftLeg';
+		leftLegPath.setAttribute("fill",face.skinColor);
+		leftLegPath.setAttribute("stroke","#000000");
+		leftLegPath.setAttribute("stroke-width","1");
+		leftLegPath.setAttribute("stroke-linecap","round");
+
+		// start at crotch (behind body)
+		x = bodyConstants.crotch.x ;
+		y = bodyConstants.crotch.y;
+		path = 'm '+x+','+y;
+		otherPath = 'm '+x+','+y;
+
+		// to inside right knee
+		x = -15;
+		y = 17;
+		c1x = 0;
+		c1y = 0;
+		c2x = x;
+		c2y = y;
+		path += ' c '+c1x+','+c1y+' '+c2x+','+c2y+' '+x+','+y;
+		x *= -1;
+		c1x *= -1;
+		c2x *= -1;
+		otherPath += ' c '+c1x+','+c1y+' '+c2x+','+c2y+' '+x+','+y;
+
+		// to right heel
+		x = 5;
+		y = 18;
+		c1x = 0;
+		c1y = 0;
+		c2x = x;
+		c2y = y;
+		path += ' c '+c1x+','+c1y+' '+c2x+','+c2y+' '+x+','+y;
+		x *= -1;
+		c1x *= -1;
+		c2x *= -1;
+		otherPath += ' c '+c1x+','+c1y+' '+c2x+','+c2y+' '+x+','+y;
+
+		// to inside of right tread
+		x = -4;
+		y = 3;
+		c1x = 0;
+		c1y = 0;
+		c2x = x + 2;
+		c2y = y;
+		path += ' c '+c1x+','+c1y+' '+c2x+','+c2y+' '+x+','+y;
+		x *= -1;
+		c1x *= -1;
+		c2x *= -1;
+		otherPath += ' c '+c1x+','+c1y+' '+c2x+','+c2y+' '+x+','+y;
+
+		// to outside bottom right leg
+		x = -5;
+		y = 0;
+		c1x = 0;
+		c1y = 0;
+		c2x = x;
+		c2y = y;
+		path += ' c '+c1x+','+c1y+' '+c2x+','+c2y+' '+x+','+y;
+		x *= -1;
+		c1x *= -1;
+		c2x *= -1;
+		otherPath += ' c '+c1x+','+c1y+' '+c2x+','+c2y+' '+x+','+y;
+
+		// to top right foot
+		x = 0;
+		y = -8;
+		c1x = 0;
+		c1y = -10;
+		c2x = x;
+		c2y = y;
+		path += ' c '+c1x+','+c1y+' '+c2x+','+c2y+' '+x+','+y;
+		x *= -1;
+		c1x *= -1;
+		c2x *= -1;
+		otherPath += ' c '+c1x+','+c1y+' '+c2x+','+c2y+' '+x+','+y;
+
+		// to outside right knee
+		x = -5;
+		y = -14;
+		c1x = 0;
+		c1y = 0;
+		c2x = x;
+		c2y = y+2;
+		path += ' c '+c1x+','+c1y+' '+c2x+','+c2y+' '+x+','+y;
+		x *= -1;
+		c1x *= -1;
+		c2x *= -1;
+		otherPath += ' c '+c1x+','+c1y+' '+c2x+','+c2y+' '+x+','+y;
+
+		// to top of right leg
+		x = 15;
+		y = -20;
+		c1x = 0;
+		c1y = -4;
+		c2x = x;
+		c2y = y;
+		path += ' c '+c1x+','+c1y+' '+c2x+','+c2y+' '+x+','+y;
+		x *= -1;
+		c1x *= -1;
+		c2x *= -1;
+		otherPath += ' c '+c1x+','+c1y+' '+c2x+','+c2y+' '+x+','+y;
+	
+		rightLegPath.setAttributeNS(null,"d",path);
+		legGroup.appendChild(rightLegPath);
+	
+		leftLegPath.setAttributeNS(null,"d",otherPath);
+		legGroup.appendChild(leftLegPath);
+				
+		// Feet
+		
+		var feetLength = mob.faceData.feet;
+		if (mob.faceData.hindquarters > 0) {
+			feetLength = 4 * mob.faceData.feet / 20;
+		};
+		
+		var rightFootPath = document.createElementNS('http://www.w3.org/2000/svg',"path");
+		rightFootPath.id = 'rightFootPath';
+		rightFootPath.setAttribute("fill",'inherit');
+		rightFootPath.setAttribute("stroke","#000000");
+		rightFootPath.setAttribute("stroke-width","1");
+		rightFootPath.setAttribute("stroke-linecap","round");
+		
+		var leftFootPath = document.createElementNS('http://www.w3.org/2000/svg',"path");
+		leftFootPath.id = 'leftFootPath';
+		leftFootPath.setAttribute("fill",'inherit');
+		leftFootPath.setAttribute("stroke","#000000");
+		leftFootPath.setAttribute("stroke-width","1");
+		leftFootPath.setAttribute("stroke-linecap","round");
+
+		// start at crotch (behind body)
+		x = bodyConstants.crotch.x - 11;
+		y = bodyConstants.crotch.y + 32;
+		path = 'm '+x+','+y;
+		x = bodyConstants.crotch.x + 11;
+		otherPath = 'm '+x+','+y;
+		
+		// to heel
+		x = 2;
+		y = 5;
+		c1x = 0;
+		c1y = 0;
+		c2x = x;
+		c2y = y;
+		path += ' c '+c1x+','+c1y+' '+c2x+','+c2y+' '+x+','+y;
+		x *= -1;
+		c1x *= -1;
+		c2x *= -1;
+		otherPath += ' c '+c1x+','+c1y+' '+c2x+','+c2y+' '+x+','+y;
+
+		// to inside of right tread
+		x = -4;
+		y = 3;
+		c1x = 0;
+		c1y = 0;
+		c2x = x + 2;
+		c2y = y;
+		path += ' c '+c1x+','+c1y+' '+c2x+','+c2y+' '+x+','+y;
+		x *= -1;
+		c1x *= -1;
+		c2x *= -1;
+		otherPath += ' c '+c1x+','+c1y+' '+c2x+','+c2y+' '+x+','+y;
+
+		// to outside bottom right leg
+		x = -6 - feetLength;
+		y = 0;
+		c1x = 0;
+		c1y = 0;
+		c2x = x;
+		c2y = y;
+		path += ' c '+c1x+','+c1y+' '+c2x+','+c2y+' '+x+','+y;
+		x *= -1;
+		c1x *= -1;
+		c2x *= -1;
+		otherPath += ' c '+c1x+','+c1y+' '+c2x+','+c2y+' '+x+','+y;
+
+		// to top right foot
+		x = feetLength;
+		y = -8;
+		c1x = 0;
+		c1y = -10;
+		c2x = x;
+		c2y = y;
+		path += ' c '+c1x+','+c1y+' '+c2x+','+c2y+' '+x+','+y;
+		x *= -1;
+		c1x *= -1;
+		c2x *= -1;
+		otherPath += ' c '+c1x+','+c1y+' '+c2x+','+c2y+' '+x+','+y;
+		
+		if (feetLength < 5) {
+			rightFootPath.setAttribute("fill",'#555555');
+			leftFootPath.setAttribute("fill",'#666666');
+			path += ' z';
+			otherPath += ' z';
+		};
+	
+		rightFootPath.setAttributeNS(null,"d",path);
+		legGroup.appendChild(rightFootPath);
+	
+		leftFootPath.setAttributeNS(null,"d",otherPath);
+		legGroup.appendChild(leftFootPath);
+		
+		return {
+			svg:legGroup,
+			rightLegPath:rightLegPath,
+			leftLegPath:leftLegPath,
+			rightFootPath:rightFootPath,
+			leftFootPath:leftFootPath,
+		};
 
 	},
 

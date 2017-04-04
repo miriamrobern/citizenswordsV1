@@ -178,8 +178,6 @@ var mobDesign = {
 		newFace.heritage = heritageString;
 		
 		newFace = mobDesign.updateColoring(newFace);
-// 		handlers.updateFace(p1);
-		
 		return newFace;
 	},
 

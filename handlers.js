@@ -294,7 +294,7 @@ var handlers = {
 			document.getElementById('classFight').style.borderStyle = 'inset';
 		} else if (className === "pray") {
 			p1.equipment.armor = dataItems.initiatesRobes;
-			p1.equipment.left = dataItems.initiateSpellbook;
+			p1.equipment.left = dataItems.initiatesSpellbook;
 			p1.skills.maneuvers = [dataManeuvers.focusedStrength,dataManeuvers.exhort];
 			p1.skills.passives = [];
 			p1.stats.move = 3;
