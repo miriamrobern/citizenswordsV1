@@ -89,6 +89,24 @@ var hellhoundCave = {
  		{x:3,y:10},
  	],
  	
+ 	teams: {
+ 	
+ 		player: {
+ 			id: 'player',
+ 			truce: ['civilians'],
+ 		},
+ 		
+ 		rats: {
+ 			id: 'rats',
+ 			truce: ['hell'],
+ 		},
+ 		
+ 		hell: {
+ 			id: 'hell',
+ 		},
+ 	
+ 	},
+ 	
  	mobs: [
  		{
 			x:10,
@@ -97,6 +115,7 @@ var hellhoundCave = {
 			id: "puppy",
 			name: "Hellpuppy",
 			ai: 'dormant',
+			team: 'hell',
  		},
  		
  		{
@@ -104,6 +123,7 @@ var hellhoundCave = {
 			y:9,
 			type:dataMobs.rat,
 			ai: 'dormant',
+			team: 'rats',
  		},
  		
  		{
@@ -111,12 +131,15 @@ var hellhoundCave = {
 			y:9,
 			type:dataMobs.rat,
 			ai: 'dormant',
+			team: 'rats',
  		},
  		
  		{
 			x:3,
 			y:2,
 			type:dataMobs.rat,
+			ai: 'defeated',
+			team: 'rats',
  		},
  		
  		{

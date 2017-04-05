@@ -5,6 +5,8 @@ var game = {
 
 	loadLevel: function(level) {
 
+		view.focus.level = level;
+		
 		// Map
 		map = {};
 		mobs = [];
@@ -66,7 +68,7 @@ var game = {
 		};
 	
 		for (i in mobs) {
-			if (!mobs[i].player && mobs[i].stats.morale > 0) {
+			if (!mobs[i].player) {
 				mobs[i].ai();
 			};
 		};
@@ -105,9 +107,9 @@ var game = {
 			mob.stats.move = adjustedMoveMax;
 		};
 		
-		if (mob.stats.morale <= 0) {
-			mob.stats.move = 0;
-		};
+// 		if (mob.stats.morale <= 0) {
+// 			mob.stats.move = 0;
+// 		};
 		
 		if (view.focus.mob === mob) {
 			view.displayFocusMob();
@@ -370,8 +372,12 @@ function Mob(type,x,y,id,name,heritage) {
 	this.maneuvers = type.maneuvers;
 	this.skills = type.skills;
 	
+	
+	this.team = type.team;
+	
 	if (type.ai == undefined) {
 		this.player = true;
+		this.team = 'player';
 	} else {
 		this.ai = ai[type.ai];
 	};
@@ -528,9 +534,23 @@ function Mob(type,x,y,id,name,heritage) {
 			newRangeOptions = [];
 		};
 		
+		// Identify Potential Targets
+		var potentialTargets = [];
+		var friendly = false;
+		var foe = false;
+		for (m in mobs) {
+			if (this.team == undefined || view.focus.level.teams[this.team].truce.indexOf(mobs[m].team) == -1 || this.team !== mobs[m].team) {
+				friendly = false; foe = true;
+			} else {
+				friendly = true;foe = false;
+			};
+			if ( maneuver == undefined || (maneuver.targetFriendlies && friendly) || (maneuver.targetFoes && foe) ) {
+			potentialTargets.push(mobs[m]);
+			};
+		};
+		
 		// Limit to hexes with mobs on them
 		var mobHexesWithinRange = [];
-		var potentialTargets = mobs;
 		for (m in potentialTargets) {
 			if (rangeOptions.indexOf(potentialTargets[m].location) !== -1) {
 				mobHexesWithinRange.push(potentialTargets[m].location);
@@ -625,11 +645,14 @@ function Mob(type,x,y,id,name,heritage) {
 		
 		if (this.state === "defeated") {
 			this.state = "upright";
+			this.ai = this.oldAi;
 			view.reviveMob(this);
 		};
 		
 		if (this.stats.morale === 0) {
 			this.state = "defeated";
+			this.oldAi = this.ai;
+			this.ai = ai.defeated;
 			view.defeatMob(this);
 		};
 		

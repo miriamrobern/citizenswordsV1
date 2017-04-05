@@ -212,8 +212,8 @@ var dataEthnicities = {
  		img: '',
  		cost: {move:1,focus:1},
  		target: true,
- 		targetHostiles: true,
- 		targetTeam: false,
+ 		targetFoes: true,
+ 		targetFriendlies: false,
  		range: 10,
  		attackStat: 'focus',
  		attackBonus: 0,
@@ -237,8 +237,8 @@ var dataEthnicities = {
  		img: '',
  		cost: {move:1},
  		target: true,
- 		targetHostiles: true,
- 		targetTeam: false,
+ 		targetFoes: true,
+ 		targetFriendlies: false,
  		range: 1,
  		attackStat: 'strength',
  		attackBonus: 0,
@@ -272,8 +272,8 @@ var dataEthnicities = {
  		img: '',
  		cost: {move:1,focus:1},
  		target: true,
- 		targetHostiles: false,
- 		targetTeam: true,
+ 		targetFoes: false,
+ 		targetFriendlies: true,
  		range: 2,
  		execute: function(enactor,target) {
  			var moraleCost = enactor.stats.morale * 0.2;
@@ -291,8 +291,8 @@ var dataEthnicities = {
  		img: '',
  		cost: {move:1,focus:1},
  		target: true,
- 		targetHostiles: false,
- 		targetTeam: true,
+ 		targetFoes: false,
+ 		targetFriendlies: true,
  		range: 1,
  		execute: function(enactor,target) {
  			var woundCount = 0;
@@ -333,8 +333,8 @@ var dataEthnicities = {
  		img: '',
  		cost: {move:1,strength:1},
  		target: true,
- 		targetHostiles: true,
- 		targetTeam: false,
+ 		targetFoes: true,
+ 		targetFriendlies: false,
  		range: 1,
  		attackStat: 'strength',
  		attackBonus: 0,
@@ -355,8 +355,8 @@ var dataEthnicities = {
  		img: '',
  		cost: {move:1,focus:1},
  		target: true,
- 		targetHostiles: true,
- 		targetTeam: false,
+ 		targetFoes: true,
+ 		targetFriendlies: false,
  		range: 1,
  		attackStat: 'focus',
  		attackBonus: 0,
@@ -377,8 +377,8 @@ var dataEthnicities = {
  		img: '',
  		cost: {move:1,strength:1},
  		target: true,
- 		targetHostiles: true,
- 		targetTeam: false,
+ 		targetFoes: true,
+ 		targetFriendlies: false,
  		range: 2,
  		attackStat: 'focus',
  		attackBonus: 0,
@@ -399,8 +399,8 @@ var dataEthnicities = {
  		img: '',
  		cost: {move:1,strength:2},
  		target: true,
- 		targetHostiles: true,
- 		targetTeam: false,
+ 		targetFoes: true,
+ 		targetFriendlies: false,
  		range: 1,
  		attackStat: 'strength',
  		attackBonus: 0,
@@ -422,8 +422,8 @@ var dataEthnicities = {
  		img: '',
  		cost: {move:1,focus:1},
  		target: true,
- 		targetHostiles: false,
- 		targetTeam: true,
+ 		targetFoes: false,
+ 		targetFriendlies: true,
  		range: 1,
  		execute: function(enactor,target) {
  			target.adjustMorale(100);
@@ -452,8 +452,8 @@ var dataEthnicities = {
  		img: '',
  		cost: {move:1},
  		target: true,
- 		targetHostiles: true,
- 		targetTeam: false,
+ 		targetFoes: true,
+ 		targetFriendlies: false,
  		range: 1,
  		attackStat: 'strength',
  		attackBonus: 0,
@@ -475,8 +475,8 @@ var dataEthnicities = {
  		img: '',
  		cost: {move:1,strength:1},
  		target: true,
- 		targetHostiles: true,
- 		targetTeam: false,
+ 		targetFoes: true,
+ 		targetFriendlies: false,
  		range: 1,
  		attackStat: 'focus',
  		attackBonus: 0,
@@ -508,8 +508,8 @@ var dataEthnicities = {
  		img: '',
  		cost: {move:1},
  		target: true,
- 		targetHostiles: true,
- 		targetTeam: false,
+ 		targetFoes: true,
+ 		targetFriendlies: false,
  		range: 1,
  		execute: function(attacker,defender) {
  			var loot = [];
@@ -531,8 +531,8 @@ var dataEthnicities = {
  		img: '',
  		cost: {move:1},
  		target: true,
- 		targetHostiles: true,
- 		targetTeam: false,
+ 		targetFoes: true,
+ 		targetFriendlies: false,
  		range: 1,
  		execute: function(attacker,defender) {
  			var loot = [];
@@ -544,6 +544,7 @@ var dataEthnicities = {
  			game.gainItem(loot);
  			company.killCount++;
  			defender.location = undefined;
+ 			defender.ai = ai.dormant;
  			defender.div.parentElement.removeChild(defender.div);
  			attacker.refreshManeuvers();
  		},
@@ -556,8 +557,8 @@ var dataEthnicities = {
  		img: '',
  		cost: {move:1},
  		target: true,
- 		targetHostiles: true,
- 		targetTeam: false,
+ 		targetFoes: true,
+ 		targetFriendlies: false,
  		range: 1,
  		execute: function(attacker,defender) {
  			var penalty = 0;
@@ -578,12 +579,13 @@ var dataEthnicities = {
  		img: '',
  		cost: {move:1},
  		target: true,
- 		targetHostiles: true,
- 		targetTeam: false,
+ 		targetFoes: true,
+ 		targetFriendlies: false,
  		range: 1,
  		execute: function(attacker,defender) {
  			game.gainItem(defender.loot);
  			defender.location = undefined;
+ 			defender.ai = ai.dormant;
  			defender.div.parentElement.removeChild(defender.div);
  			attacker.refreshManeuvers();
  		},

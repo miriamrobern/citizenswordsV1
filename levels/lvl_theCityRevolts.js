@@ -197,6 +197,28 @@ var theCityRevolts = {
  		{x:32,y:1},
  	],
  	
+ 	teams: {
+ 	
+ 		player: {
+ 			id: 'player',
+ 			truce: ['civilians'],
+ 		},
+ 		
+ 		civilians: {
+ 			id: 'civilians',
+ 			truce: ['player','looters','assassins'],
+ 		},
+ 		
+ 		looters: {
+ 			id: 'looters',
+ 		},
+ 		
+ 		assassins: {
+ 			id: 'assassins',
+ 		},
+ 	
+ 	},
+ 	
  	mobs: [
  		
  		{
@@ -205,6 +227,7 @@ var theCityRevolts = {
 			type:dataMobs.beulahHill,
 			id: "beulahHill",
 			name: "Beulah Hill",
+			team: 'civilians',
 			ai: 'dormant',
  		},
  		
