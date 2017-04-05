@@ -1,7 +1,7 @@
 var theCityRevolts = {
 	
 	name: "The City Revolts",
-	description: "City Placeholder!",
+	description: "<p>The city of Pileus -- your home -- has erupted in celebration, protest, and violence in the wake of the city council's rebellion from the rule of the Ogre King.  While many welcome the daring move, many others, moved by their loyalty to the King, strenuously object.  Still others see these tumultuous times as an opportunity to settle old scores, lash out against the vulnerable, or descend into looting whatever isn't nailed down.</p><p>Seeking to address the unrest, Guildmaster Moucau has announced he will be speaking in the Orktown slums -- your neighborhood.  It is a rare thing to see a citizen of such means and importance deigning to address the poor and disadvantaged citizens of the city, but these are rare times, indeed.</p><p>This may be an opportunity for you, however: the guildmasters are recruiting and chartering companies of fighters to bolster the city's defenses.  This is your chance to get an audience with the guildmaster and establish your company's status in the city.</p>",
  
  	sizeX: 36,
  	sizeY: 12,
@@ -237,6 +237,7 @@ var theCityRevolts = {
 			type: dataMobs.elderBock,
 			id: "elderBock",
 			name: "Elder Bock",
+			team: 'civilians',
 			ai: 'dormant',
  		},
  		
@@ -246,6 +247,7 @@ var theCityRevolts = {
 			type: dataMobs.motherSkullgoblet,
 			id: "motherSkullgoblet",
 			name: "Mother Skullgoblet",
+			team: 'civilians',
 			ai: 'dormant',
  		},
  		
@@ -255,6 +257,7 @@ var theCityRevolts = {
  			type: dataMobs.looter,
  			id: "looter1",
  			name: "Filthy-mouthed Looter",
+			team: 'looters',
  		},
  		
  		{
@@ -263,6 +266,7 @@ var theCityRevolts = {
  			type: dataMobs.looter,
  			id: "looter2",
  			name: "Shifty-eyed Looter",
+			team: 'looters',
  		},
  		
  		{
@@ -271,6 +275,7 @@ var theCityRevolts = {
  			type: dataMobs.assassin,
  			id: "assassin1",
  			name: "Gnome Assassin",
+			team: 'assassins',
  		},
  		
  		{
@@ -279,6 +284,7 @@ var theCityRevolts = {
  			type: dataMobs.assassin,
  			id: "assassin2",
  			name: "Dwarf Assassin",
+			team: 'assassins',
  		},
  		
  		{
@@ -287,6 +293,7 @@ var theCityRevolts = {
  			type: dataMobs.daisy,
  			id: 'daisy',
  			name: 'Daisy Moucau',
+			team: 'player',
  			ai: 'dormant',
  		},
  		
@@ -296,6 +303,7 @@ var theCityRevolts = {
 			type:dataMobs.guildmasterMoucau,
 			id: "guildmasterMoucau",
 			name: "Guildmaster Moucau",
+			team: 'civilians',
 			ai: 'dormant',
  		},
  	],

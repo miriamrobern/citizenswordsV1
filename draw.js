@@ -3320,7 +3320,9 @@ var draw = {
 			rightHandGroup.appendChild(rightEquipSVGNodes);
 		} else {
 			// draw empty hands
-			var rightEquipSVGNodes = draw.fist(mob,bodyConstants);
+			var rightEquipSVGNodes = draw.thumb(mob,bodyConstants);
+			rightHandGroup.appendChild(rightEquipSVGNodes);
+			rightEquipSVGNodes = draw.fist(mob,bodyConstants);
 			rightHandGroup.appendChild(rightEquipSVGNodes);
 		};
 		
@@ -3330,7 +3332,9 @@ var draw = {
 			leftHandGroup.appendChild(leftEquipSVGNodes);
 		} else {
 			// draw empty hands
-			var leftEquipSVGNodes = draw.fist(mob,bodyConstants);
+			var leftEquipSVGNodes = draw.thumb(mob,bodyConstants);
+			leftHandGroup.appendChild(leftEquipSVGNodes);
+			leftEquipSVGNodes = draw.fist(mob,bodyConstants);
 			leftHandGroup.appendChild(leftEquipSVGNodes);
 		};
 		
@@ -3899,14 +3903,14 @@ var draw = {
 		
 		var rightLegPath = document.createElementNS('http://www.w3.org/2000/svg',"path");
 		rightLegPath.id = 'rightLeg';
-		rightLegPath.setAttribute("fill",face.skinColor);
+		rightLegPath.setAttribute("fill",'inherit');
 		rightLegPath.setAttribute("stroke","#000000");
 		rightLegPath.setAttribute("stroke-width","1");
 		rightLegPath.setAttribute("stroke-linecap","round");
 		
 		var leftLegPath = document.createElementNS('http://www.w3.org/2000/svg',"path");
 		leftLegPath.id = 'leftLeg';
-		leftLegPath.setAttribute("fill",face.skinColor);
+		leftLegPath.setAttribute("fill",'inherit');
 		leftLegPath.setAttribute("stroke","#000000");
 		leftLegPath.setAttribute("stroke-width","1");
 		leftLegPath.setAttribute("stroke-linecap","round");

@@ -23,7 +23,7 @@ var game = {
 		};
 	
 		for (mobIndex in level.mobs) {
-			var newMob = new Mob(level.mobs[mobIndex].type,level.mobs[mobIndex].x,level.mobs[mobIndex].y,level.mobs[mobIndex].id,level.mobs[mobIndex].name,level.mobs[mobIndex].heritage);
+			var newMob = new Mob(level.mobs[mobIndex].type,level.mobs[mobIndex].x,level.mobs[mobIndex].y,level.mobs[mobIndex].id,level.mobs[mobIndex].name,level.mobs[mobIndex].team,level.mobs[mobIndex].heritage);
 			if (level.mobs[mobIndex].ai !== undefined) {
 				newMob.ai = ai[level.mobs[mobIndex].ai];
 			};
@@ -297,7 +297,7 @@ function Hex(x,y,type) {
 	// End Hex
 };
 
-function Mob(type,x,y,id,name,heritage) {
+function Mob(type,x,y,id,name,team,heritage) {
 
 	for (h in map.hexes) {
 		if (map.hexes[h].x === x && map.hexes[h].y === y) {
@@ -371,9 +371,8 @@ function Mob(type,x,y,id,name,heritage) {
 	
 	this.maneuvers = type.maneuvers;
 	this.skills = type.skills;
-	
-	
-	this.team = type.team;
+
+	this.team = team;
 	
 	if (type.ai == undefined) {
 		this.player = true;
@@ -536,10 +535,12 @@ function Mob(type,x,y,id,name,heritage) {
 		
 		// Identify Potential Targets
 		var potentialTargets = [];
+		var truce = view.focus.level.teams[this.team].truce;
+		if (truce == undefined) {truce = []};
 		var friendly = false;
 		var foe = false;
 		for (m in mobs) {
-			if (this.team == undefined || view.focus.level.teams[this.team].truce.indexOf(mobs[m].team) == -1 || this.team !== mobs[m].team) {
+			if (this.team == undefined || truce.indexOf(mobs[m].team) == -1 || this.team !== mobs[m].team) {
 				friendly = false; foe = true;
 			} else {
 				friendly = true;foe = false;

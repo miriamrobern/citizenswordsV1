@@ -1,6 +1,6 @@
 var elvishKeep = {
 	
-	name: "The Keep at Elvish-name Pass",
+	name: "The Keep at Interskog Pass",
 	description: "Keep Placeholder!",
  
  	sizeX: 22,

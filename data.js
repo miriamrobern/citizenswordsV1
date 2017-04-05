@@ -690,6 +690,9 @@ var dataEthnicities = {
  			dataManeuvers.lunge,
  			dataManeuvers.overhead,
  		],
+ 		svgNodes: function(mob,bodyConstants) {
+ 			return draw.mothersSword(mob,bodyConstants,['gainsboro','goldenrod','darkred']);
+ 		},
  	},
  	
  	manacles: {
@@ -913,6 +916,9 @@ var dataEthnicities = {
  			focus: 2,
  			focusMax: 2,
  			armor: 2,
+ 		},
+ 		equipment: {
+ 			armor: dataItems.moucauRobes,
  		},
  	},
  	
@@ -1255,7 +1261,7 @@ var dataEthnicities = {
 	},
 	
 	equipment: {
-		armor: dataItems.eleanorDress,
+		armor: dataItems.roughspun,
 		right: dataItems.mothersSword,
 		left: dataItems.cargoHook,
 		item0: undefined,
