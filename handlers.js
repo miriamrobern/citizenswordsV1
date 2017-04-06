@@ -235,6 +235,28 @@ var handlers = {
 
 	},
 	
+	refreshMarketDescription: function(type,itemIndex) {
+		var item;
+		if (type === 'wares') {
+			item = view.focus.market.wares[itemIndex];
+		} else {
+			item = company.armory[itemIndex];
+		};
+		view.refreshMarketDescription(type,item);
+	},
+	
+	buyItem: function(item,value) {
+		game.buyItem(item,value);
+		view.displayMarket();
+		view.refreshArmory();
+	},
+	
+	sellItem: function(item,value) {
+		game.sellItem(item,value);
+		view.displayMarket();
+		view.refreshArmory();
+	},
+	
 	// Character Creation
 	updateFace: function(mob) {
 		if (mob == undefined) {mob = p1};
@@ -318,6 +340,7 @@ var handlers = {
 		p1.name = document.getElementById('nameInput').value;
 		p1.pronouns = document.getElementById('pronounsInput').value;
 		heroes[0] = p1;
+		company.marks = 110 + p1.faceData.earDip * 5;
 		handlers.loadLevel(hellhoundCave);
 	},
 

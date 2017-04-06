@@ -680,26 +680,34 @@ var view = {
 	},
 	
 	displayMarket: function(m) {
-		var market = dataMarkets[m];
+		if (m == undefined) {
+			var market = view.focus.market;
+		} else {
+			var market = dataMarkets[m];
+			view.focus.market = market;
+		};
 		
 		var provisioningMarketDiv = document.getElementById('provisioningMarketDiv');
 		provisioningMarketDiv.innerHTML = '';
+		var marketTopDiv = document.createElement('div');
+		marketTopDiv.id = 'marketTopDiv';
+		provisioningMarketDiv.appendChild(marketTopDiv);
+		var marketBottomDiv = document.createElement('div');
+		marketBottomDiv.id = 'marketBottomDiv';
+		provisioningMarketDiv.appendChild(marketBottomDiv);
 		var marketHead = document.createElement('h2');
 		marketHead.innerHTML = market.name;
-		provisioningMarketDiv.appendChild(marketHead);
+		marketTopDiv.appendChild(marketHead);
 		var marketProprietorDiv = document.createElement('div');
 		marketProprietorDiv.id = 'marketProprietorDiv';
 		var marketProprietorSVG = draw.drawMob(market.proprietor);
 		marketProprietorSVG.className = 'mobImg';
 		marketProprietorSVG.id = 'marketProprietorSVG';
 		marketProprietorDiv.appendChild(marketProprietorSVG);
-		provisioningMarketDiv.appendChild(marketProprietorDiv);
+		marketTopDiv.appendChild(marketProprietorDiv);
 		var marketDialogueDiv = document.createElement('div');
 		marketDialogueDiv.id = 'marketDialogueDiv';
-		provisioningMarketDiv.appendChild(marketDialogueDiv);
-		var marketWaresDiv = document.createElement('div');
-		marketWaresDiv.id = 'marketWaresDiv';
-		provisioningMarketDiv.appendChild(marketWaresDiv);
+		marketTopDiv.appendChild(marketDialogueDiv);
 		
 		var repCheck = true;
 		for (i in market.requirements) {
@@ -709,7 +717,9 @@ var view = {
 			};
 		};
 		if (!repCheck) {
-			marketDialogueDiv.innerHTML = market.refusal;
+			var marketRefusalP = document.createElement('p');
+			marketRefusalP.innerHTML = market.refusal;
+			marketDialogueDiv.appendChild(marketRefusalP);
 			marketDialogueDiv.innerHTML += '<hr />';
 			marketDialogueDiv.innerHTML += 'This market requires greater reputation than you currently have.';
 			var repList = document.createElement('ul');
@@ -720,7 +730,19 @@ var view = {
 			};
 			marketDialogueDiv.appendChild(repList);
 		} else {
-			marketDialogueDiv.innerHTML = market.welcome;
+			var marketWelcomeP = document.createElement('p');
+			marketWelcomeP.innerHTML = market.welcome;
+			marketDialogueDiv.appendChild(marketWelcomeP);
+			
+			var marketMarksP = document.createElement('p');
+			marketMarksP.id = 'marketMarksP';
+			marketMarksP.innerHTML = company.marks + " marks";
+			marketDialogueDiv.appendChild(marketMarksP);
+			
+			// Wares
+			var marketWaresDiv = document.createElement('div');
+			marketWaresDiv.id = 'marketWaresDiv';
+			marketBottomDiv.appendChild(marketWaresDiv);
 			var waresHead = document.createElement('h3');
 			waresHead.className = 'rosterHead';
 			waresHead.innerHTML = "Wares";
@@ -732,8 +754,36 @@ var view = {
 				var newItem = document.createElement('li');
 				newItem.className = 'HQItem provisioningItem';
 				newItem.innerHTML = market.wares[i].name;
+				newItem.setAttribute('onclick','handlers.refreshMarketDescription("wares",'+i+')');
 				waresList.appendChild(newItem);
 			};
+			
+			// Description
+			var marketDescriptionDiv = document.createElement('div');
+			marketDescriptionDiv.id = 'marketDescriptionDiv';
+			marketDescriptionDiv.className = 'itemDescriptionDiv';
+			marketDescriptionDiv.innerHTML = '&nbsp';
+			marketBottomDiv.appendChild(marketDescriptionDiv);
+			
+			// Armory
+			var marketStocksDiv = document.createElement('div');
+			marketStocksDiv.id = 'marketStocksDiv';
+			marketBottomDiv.appendChild(marketStocksDiv);
+			var stocksHead = document.createElement('h3');
+			stocksHead.className = 'rosterHead';
+			stocksHead.innerHTML = "Armory";
+			var stocksList = document.createElement('ul');
+			stocksList.id = 'stocksList';
+			marketStocksDiv.appendChild(stocksHead);
+			marketStocksDiv.appendChild(stocksList);
+			for (i in company.armory) {
+				var newItem = document.createElement('li');
+				newItem.className = 'HQItem provisioningItem';
+				newItem.innerHTML = company.armory[i].name;
+				newItem.setAttribute('onclick','handlers.refreshMarketDescription("stocks",'+i+')');
+				stocksList.appendChild(newItem);
+			};
+
 		};
 	},
 	
@@ -794,27 +844,55 @@ var view = {
 			rosterDescriptionDiv.innerHTML += costText;
 			rosterDescriptionDiv.innerHTML += '<p>'+object.description+'</p>';
 		} else if (type === 'item') {
-			rosterDescriptionDiv.innerHTML += '<h4>'+view.focus.item.name+'</h4>';
-			if (view.focus.item.passiveDefense !== undefined) {
-				rosterDescriptionDiv.innerHTML += '<p>Provides armor of '+view.focus.item.passiveDefense+'.</p>'
-			};
-			if (view.focus.item.restraint !== undefined) {
-				rosterDescriptionDiv.innerHTML += '<p>Provides restraints of '+view.focus.item.restraint+'.</p>'
-			};
-			if (view.focus.item.prestige !== undefined) {
-				rosterDescriptionDiv.innerHTML += '<p>Provides prestige of '+view.focus.item.prestige+'.</p>'
-			};
-			if (view.focus.item.maneuvers !== undefined) {
-				for (i in view.focus.item.maneuvers) {
-					var bonus = '';
-					if (view.focus.item.bonus !== undefined && view.focus.item.bonus[view.focus.item.maneuvers[i].id] !== undefined) {
-						bonus = ' (+'+view.focus.item.bonus[view.focus.item.maneuvers[i].id]+')'
-					};
-					rosterDescriptionDiv.innerHTML += '<p>Provides the maneuver '+view.focus.item.maneuvers[i].name+bonus+'.</p>';
-				};
-			};
+			var description = view.itemDescription(view.focus.item);
+			rosterDescriptionDiv.innerHTML = description;
 		} else if (type === 'training') {
 		};
+	},
+	
+	refreshMarketDescription: function(type,item) {
+		if (item !== undefined) {
+			var description = view.itemDescription(item);
+			marketDescriptionDiv.innerHTML = description;
+		} else {
+			marketDescriptionDiv.innerHTML = '';
+		};
+		if (type === 'wares') {
+			var cost = item.value;
+			var buyButton = document.createElement('button');
+			buyButton.innerHTML = 'Buy '+cost+'m';
+			buyButton.setAttribute('onclick','handlers.buyItem(dataItems.'+item.id+','+cost+')');
+			marketDescriptionDiv.appendChild(buyButton);
+		} else {
+			var cost = item.value;
+			var sellButton = document.createElement('button');
+			sellButton.innerHTML = 'Sell '+cost+'m';
+			sellButton.setAttribute('onclick','handlers.sellItem(dataItems.'+item.id+','+cost+')');
+			marketDescriptionDiv.appendChild(sellButton);
+		};
+	},
+	
+	itemDescription: function(item) {
+		var description = '<h4>'+item.name+'</h4>';
+		if (item.passiveDefense !== undefined) {
+			description += '<p>Provides armor of '+item.passiveDefense+'.</p>'
+		};
+		if (item.restraint !== undefined) {
+			description += '<p>Provides restraints of '+item.restraint+'.</p>'
+		};
+		if (item.prestige !== undefined) {
+			description += '<p>Provides prestige of '+item.prestige+'.</p>'
+		};
+		if (item.maneuvers !== undefined) {
+			for (i in item.maneuvers) {
+				var bonus = '';
+				if (item.bonus !== undefined && item.bonus[item.maneuvers[i].id] !== undefined) {
+					bonus = ' (+'+item.bonus[item.maneuvers[i].id]+')'
+				};
+				description += '<p>Provides the maneuver '+item.maneuvers[i].name+bonus+'.</p>';
+			};
+		};		
+		return description;
 	},
 	
 	displayDialogue: function(text,name,bust,bustPosition) {

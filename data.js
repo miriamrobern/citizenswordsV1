@@ -597,6 +597,7 @@ var dataEthnicities = {
  	
  	birthdaySuit: {
  		name: "Birthday Suit",
+ 		id: 'birthdaySuit',
  		slot: ['armor'],
  		passiveDefense: 0,
  		simpleColoring: {},
@@ -605,6 +606,7 @@ var dataEthnicities = {
  	
  	cargoHook: {
  		name: "Cargo Hook",
+ 		id: 'cargoHook',
  		value: 10,
  		slot: ['left','right'],
  		maneuvers: [
@@ -615,6 +617,7 @@ var dataEthnicities = {
  
  	eleanorDress: {
  		name: "Eleanor's Dress",
+ 		id: 'eleanorDress',
  		article: 'an',
  		value: 100,
  		prestige: 1,
@@ -630,6 +633,7 @@ var dataEthnicities = {
  
  	firstAidKit: {
  		name: "First Aid Kit",
+ 		id: 'firstAidKit',
  		value: 50,
  		slot: ['item0','item1','item2'],
  		maneuvers: [
@@ -639,6 +643,7 @@ var dataEthnicities = {
  	
  	moucauRobes: {
  		name: "Guildmaster Moucau's Robes",
+ 		id: 'moucauRobes',
  		slot: ['armor'],
  		simpleColoring: {
  			torso: {fill:'darkred'},
@@ -653,6 +658,7 @@ var dataEthnicities = {
  	
  	initiatesSpellbook: {
  		name: "Initiate's Spellbook",
+ 		id: 'initiatesSpellbook',
  		value: 30,
  		article: 'an',
  		slot:['left','right'],
@@ -666,6 +672,7 @@ var dataEthnicities = {
  	
  	initiatesRobes: {
  		name: "Initiate's Robes",
+ 		id: 'initiatesRobes',
  		value: 10,
  		article: 'an',
  		slot: ['armor'],
@@ -683,6 +690,7 @@ var dataEthnicities = {
  
  	daisySword: {
  		name: "Daisy's Sword",
+ 		id: 'daisySword',
  		value: 80,
  		slot: ['right'],
  		size: 2,
@@ -697,6 +705,7 @@ var dataEthnicities = {
  	
  	manacles: {
  		name: "Set of Manacles",
+ 		id: 'manacles',
  		value: 20,
  		slot: ['item0','item1','item2'],
  		restraint: 2,
@@ -704,6 +713,7 @@ var dataEthnicities = {
  
  	mothersSword: {
  		name: "Mother's Sword",
+ 		id: 'mothersSword',
  		slot: ['right','left'],
  		maneuvers: [
  			dataManeuvers.slash,
@@ -718,12 +728,14 @@ var dataEthnicities = {
  	},
  	
  	ratCarcass: {
- 		name: "Rat Carcass",
+ 		name: "Giant Rat Carcass",
+ 		id: 'ratCarcass',
  		value: 10,
  	},
  	
  	rope: {
  		name: "Rope",
+ 		id: 'rope',
  		value: 10,
  		slot: ['item0','item1','item2'],
  		restraint: 1,
@@ -731,6 +743,7 @@ var dataEthnicities = {
  	
  	roughspun: {
  		name: "Roughspun Clothes",
+ 		id: 'roughspun',
  		value: 10,
  		slot: ['armor'],
  		passiveDefense: 0,
@@ -744,6 +757,7 @@ var dataEthnicities = {
  	
  	scrapArmor: {
  		name: "Scrap Armor",
+ 		id: 'scrapArmor',
  		value: 50,
  		slot: ['armor'],
  		passiveDefense: 1,
@@ -758,7 +772,8 @@ var dataEthnicities = {
  	},
  	
  	scrapShield: {
- 		name: "Simple Shield",
+ 		name: "Scrap Shield",
+ 		id: 'scrapShield',
  		value: 30,
  		slot: ['left','right'],
  		maneuvers: [
@@ -769,6 +784,7 @@ var dataEthnicities = {
  	
  	simpleAxe: {
  		name: "Simple Axe",
+ 		id: 'simpleAxe',
  		value: 30,
  		slot: ['left','right'],
  		maneuvers: [
@@ -779,6 +795,7 @@ var dataEthnicities = {
  	
  	mysticalSwordOfLegend: {
  		name: "Mystical Sword of Legend which also Sings, Probably",
+ 		id: 'mysticalSwordOfLegend',
  		value: 10000,
  		slot: ['left','right'],
  		maneuvers: [
@@ -1021,7 +1038,6 @@ var dataEthnicities = {
  	{
  		name: "Mx. Stout",
  		id: "stout",
-//  		imgPath: 'img/stout.svg',
  		race: "halfbreed",
  		faceData: { hairColor:'aqua', skinColor:'#d9895a', templePosition:12, templeWidth:2, templeHeight:5, cheekbonePosition:11, cheekboneWidth:2, cheekboneHeight:6, chinHeight:43, chinWidth:22, eyeColor:'#0e9bb4', eyeDistance:13, eyeSize:8, browSize:4, leftBrowTilt:2, rightBrowTilt:0, insideEyelidCurve:1, outsideEyelidCurve:7, lowerEyelidCurve:5, noseColor:'#de6c50', noseHeight:46, noseSize:3, noseWidth:6, nostrilHeight:8, noseBump:10, lipColor:'#e96557', mouthWidth:13, lipSize:5, smile:3, mouthOpen:3, teeth:2, leftTusk:0, rightTusk:0, earColor:'#e08465', earSize:14, earDip:-8, earTilt:-3, earWidth:-5, earLobe:14, hairLength:14, hairCurl:4, hairPart:-7, hairBangs:6, hairBangsLength:14, hairSweep:5, topHairHeight:2, topHairBase:12, topHairWidth:6, horns:0, shoulders:32, bust:10, belly:20, hips:15, feet:20},
  		stats: {
@@ -1073,6 +1089,7 @@ var dataEthnicities = {
  		welcome: "What do you scumbuckets want?",
  		refusal: "Get out of here, you're not welcome here!",
  		wares: [
+ 			dataItems.cargoHook,
  			dataItems.rope,
  			dataItems.scrapShield,
  			dataItems.scrapArmor,
@@ -1107,7 +1124,9 @@ var dataEthnicities = {
  			'pantheon',
  			'points',
  		],
- 		proprietor: dataMobs.motherSkullgoblet,
+ 		proprietor: {
+ 			faceData: { hairColor:'aqua', skinColor:'#d9895a', templePosition:12, templeWidth:2, templeHeight:5, cheekbonePosition:11, cheekboneWidth:2, cheekboneHeight:6, chinHeight:43, chinWidth:22, eyeColor:'#0e9bb4', eyeDistance:13, eyeSize:8, browSize:4, leftBrowTilt:2, rightBrowTilt:0, insideEyelidCurve:1, outsideEyelidCurve:7, lowerEyelidCurve:5, noseColor:'#de6c50', noseHeight:46, noseSize:3, noseWidth:6, nostrilHeight:8, noseBump:10, lipColor:'#e96557', mouthWidth:13, lipSize:5, smile:3, mouthOpen:3, teeth:2, leftTusk:0, rightTusk:0, earColor:'#e08465', earSize:14, earDip:-8, earTilt:-3, earWidth:-5, earLobe:14, hairLength:14, hairCurl:4, hairPart:-7, hairBangs:6, hairBangsLength:14, hairSweep:5, topHairHeight:2, topHairBase:12, topHairWidth:6, horns:0, shoulders:32, bust:10, belly:20, hips:15, feet:20},
+ 		},
  		welcome: "What can I do for my fellow supplicants of the Pantheon?",
  		refusal: "You are welcome to join our services, but we only do business with those who have proven themselves to the Pantheon.  You can never be too careful; I'm sure you understand.",
  		wares: [
@@ -1171,6 +1190,8 @@ var dataEthnicities = {
  	
  	haul: [
  	],
+ 	
+ 	marks: 100,
  	
  	deeds: {
  	},

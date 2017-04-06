@@ -582,20 +582,23 @@ svg {
 	margin-top: 1vh;
 	}
 
-#rosterDescriptionDiv {
+.itemDescriptionDiv {
 	background-color: gray;
 	border: 1px solid #333;
-	width: 41%;
-	height: 80%;
 	float: left;
-	margin-left: 3vw;
-	margin-top: 1vh;
-	margin-bottom: 1vh;
 	padding-top: 1vh;
 	padding-left: 1vw;
 	padding-right: 1vw;
 	padding-bottom: 1vh;
 	font-size: 0.8em;
+	}
+
+#rosterDescriptionDiv {
+	width: 41%;
+	height: 80%;
+	margin-left: 3vw;
+	margin-top: 1vh;
+	margin-bottom: 1vh;
 	}
 
 #rosterDescriptionDiv h4 {
@@ -665,6 +668,17 @@ svg {
 	border: 0.25vw outset orchid;
 	}
 
+#marketTopDiv {
+	height: 45%;
+	width: 100%;
+}
+
+#marketBottomDiv {
+	clear: both;
+	height: 45%;
+	width: 100%;
+}
+
 #marketProprietorDiv {
 	float: left;
 	}
@@ -676,16 +690,28 @@ svg {
 
 #marketDialogueDiv {
 	float: left;
-	width: 39vw;
+	width: 38vw;
 	height: 12vw;
 	padding: 2vw;
 	}
 
+#marketMarksP {
+	width: 100%;
+	text-align:right;
+	}
+
 #marketWaresDiv {
-	clear: both;
 	float: left;
 	border: 0.5vw inset purple;
-	width: 16vw;
+	width: 14vw;
+	height: 20vw;
+	overflow-y: scroll;
+	}
+
+#marketStocksDiv {
+	float: left;
+	border: 0.5vw inset purple;
+	width: 14vw;
 	height: 20vw;
 	overflow-y: scroll;
 	}
@@ -694,6 +720,19 @@ svg {
 	list-style-type: none;
 	margin: 0;
 	padding: 0;
+	}
+
+#stocksList {
+	list-style-type: none;
+	margin: 0;
+	padding: 0;
+	}
+
+#marketDescriptionDiv {
+	margin-left: 2vw;
+	margin-right: 2vw;
+	width: 22vw;
+	height: 19vw;
 	}
 
 #adventuresDiv {

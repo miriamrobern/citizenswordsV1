@@ -46,6 +46,7 @@ var game = {
 			};
 		};
 		mobs = [];
+		company.armory = company.armory.concat(company.haul);
 	},
 
 	checkEndTurn: function() {
@@ -178,6 +179,16 @@ var game = {
 			};
 		};
 		view.displayDialogue('You gain '+itemString+'!')
+	},
+	
+	sellItem: function(item,value) {
+		company.marks += value;
+		company.armory.splice(company.armory.indexOf(item),1);
+	},
+	
+	buyItem: function(item,value) {
+		company.marks -= value;
+		company.armory.push(item);
 	},
 };
 
