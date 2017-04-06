@@ -3849,10 +3849,10 @@ var draw = {
 		newPath.setAttribute("stroke","#000000");
 		newPath.setAttribute("stroke-width","1");
 		newPath.setAttribute("stroke-linecap","round");
-
+		
 		// start at bottom of thumb
-		x = 100 + (10 * 0.5 - mob.faceData.shoulders) * reflect;
-		y = bodyConstants.neck + 5 + 30 + 20;
+		x = bodyConstants.wrist.cx.animVal.value + - reflect;
+		y = bodyConstants.wrist.cy.animVal.value - 5;
 		path = 'm '+x+','+y;
 
 		// to top of thumb
