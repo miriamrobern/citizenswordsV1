@@ -21,6 +21,8 @@ var view = {
 		
 		document.getElementById('focusMobImgDiv').innerHTML = '';
 		document.getElementById('focusMobDetailsDiv').innerHTML = '';
+		
+		document.getElementById('saveButton').disabled = true;
 	},
 	
 	switchToHeadquartersMode: function() {
@@ -30,6 +32,8 @@ var view = {
 		document.getElementById('characterCreationDiv').style.display = 'none';
 		
 		document.getElementById('companyHQDiv').style.display = 'block';
+		
+		document.getElementById('saveButton').disabled = false;
 		
 		view.focus.hero = heroes[0];
 		view.refreshNews();
@@ -972,6 +976,58 @@ var view = {
 		document.getElementById('dialogueContinueButton').style.display = "none";
 		document.getElementById('dialogueReturnButton').style.display = "inline";
 	},
+
+// Save and Load
+
+	refreshSaveLoad: function() {
+		var localStorageKeys = Object.keys(localStorage);
+		var saves = [];
+		for ( i in localStorageKeys ) {
+			if (localStorageKeys[i].indexOf("CitizenSwordsSave") == 0) {
+				saves.push(localStorageKeys[i]);
+			};
+		};
+		if (saves.length > 0) {
+			var saveLoadTable = document.getElementById('saveLoadTable');
+			for (i in saves) {
+				var save = JSON.parse(localStorage[saves[i]]);
+				var saveName = saves[i].slice(18);
+				console.log(save);
+				
+				var newRow = document.createElement('tr');
+				newRow.id = 'loadRow '+saveName;
+				
+				var saveLoadCell = document.createElement('td');
+				var loadButton = document.createElement('button');
+				var charName = save.heroes[0].name;
+				if (save.name !== undefined) {
+					charName += ' of the ' + save.name;
+				};
+				loadButton.className = 'loadButton';
+				loadButton.innerHTML = '<button>Play '+charName+'</button>';
+				loadButton.setAttribute('onclick','handlers.loadSave("'+saveName+'")');
+				saveLoadCell.appendChild(loadButton);
+				
+				var saveNameCell = document.createElement('td');
+				saveNameCell.innerHTML = saveName;
+				
+				var saveDateCell = document.createElement('td');
+				saveDateCell.innerHTML = new Date(save.saveDate);
+				
+				var saveDeleteCell = document.createElement('td');
+				saveDeleteCell.innerHTML = '<button disabled>Delete</button>';
+				
+				newRow.appendChild(saveLoadCell);
+				newRow.appendChild(saveNameCell);
+				newRow.appendChild(saveDateCell);
+				newRow.appendChild(saveDeleteCell);
+				saveLoadTable.appendChild(newRow);
+			};
+		} else {
+			document.getElementById('saveLoadTable').style.display = 'none';
+		};
+	},
+	
 	
 // 	Character Creation
 	setSliders: function() {

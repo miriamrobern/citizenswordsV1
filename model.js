@@ -45,8 +45,34 @@ var game = {
 				heroes.push(mobs[i]);
 			};
 		};
+		company.heroes = heroes;
 		mobs = [];
 		company.armory = company.armory.concat(company.haul);
+		company.haul = [];
+	},
+	
+	flattenCompany: function() {
+		var flatCompany = {};
+		
+		flatCompany.saveDate = new Date();
+		flatCompany.name = company.name;
+		
+		flatCompany.armory = [];
+		for (i in company.armory) {
+			flatCompany.armory.push(company.armory[i].id);
+		};
+		
+		flatCompany.heroes = [];
+		for (i in company.heroes) {
+			flatCompany.heroes.push(company.heroes[i].flatten());
+		};
+		
+		flatCompany.deeds = company.deeds;
+		flatCompany.levels = company.levels;
+		flatCompany.marks = company.marks;
+		flatCompany.reputations = company.reputations;
+		
+		return flatCompany;
 	},
 
 	checkEndTurn: function() {
@@ -335,6 +361,7 @@ function Mob(type,x,y,id,name,team,heritage) {
 		this.imgPortrait.src = type.imgPath;
 		this.imgBust = new Image();
 		this.imgBust.src = type.imgPath;
+		this.imgPath = type.imgPath;
 	} else if (type.imgMob !== undefined) { // internal pre-rendered image
 		this.imgMob = type.imgMob;
 		this.imgPortrait = type.imgPortrait;
@@ -773,6 +800,34 @@ function Mob(type,x,y,id,name,team,heritage) {
 				
 		this.maneuvers = maneuvers;
 	
+	};
+	
+	this.flatten = function() {
+	
+		var flatCharacter = {
+			equipment: {},
+			faceData: this.faceData,
+			id: this.id,
+			imgPath: this.imgPath,
+			name: this.name,
+			skills: {maneuvers:[],passives:[]},
+			stats: this.stats,
+		};
+		for (i in this.equipment) {
+			if (this.equipment[i] !== undefined) {
+				flatCharacter.equipment[i] = this.equipment[i].id;
+			} else {
+				flatCharacter.equipment[i] = undefined;
+			};
+		};
+		for (i in this.skills.maneuvers) {
+			flatCharacter.skills.maneuvers[i] = this.skills.maneuvers[i].id;
+		};
+		for (i in this.skills.passives) {
+			flatCharacter.skills.passives[i] = this.skills.passives[i].id;
+		};
+		
+		return flatCharacter;
 	};
 	
 	// End Mob

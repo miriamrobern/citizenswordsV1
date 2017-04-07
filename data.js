@@ -607,7 +607,9 @@ var dataEthnicities = {
  	shinyBrooch: {
  		name: "Shiny Brooch",
  		id: 'shinyBrooch',
+ 		slot: ['item0','item1','item2'],
  		value: 50,
+ 		prestige: 1,
  	},
  	
  	cargoHook: {
@@ -1197,10 +1199,6 @@ var dataEthnicities = {
  
  	armory: [
  		dataItems.eleanorDress,
- 		dataItems.rope,
- 	],
- 	
- 	completed: [
  	],
  	
  	deeds: {
@@ -1208,6 +1206,8 @@ var dataEthnicities = {
  	
  	haul: [
  	],
+ 	
+ 	heroes: heroes,
  	
  	levels: {
 		hellhoundCave: {

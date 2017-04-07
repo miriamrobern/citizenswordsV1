@@ -1,8 +1,25 @@
 var handlers = {
 
 	newGame: function() {
+		handlers.randomCharacter();
 		document.getElementById('characterCreationDiv').style.display = 'block';
 		document.getElementById('introDiv').style.display = 'none';
+	},
+	
+	resumeGame: function() {
+	},
+	
+	saveGame: function() {
+		var saveName = prompt("Name your save:","Citizen Swords");
+		saveName = 'CitizenSwordsSave ' + saveName;
+		localStorage[saveName] = JSON.stringify(game.flattenCompany());
+	},
+	
+	loadGame: function() {
+	},
+	
+	selectSave: function(saveName) {
+		console.log(saveName);
 	},
 
 	loadLevel: function(level) {

@@ -300,7 +300,7 @@ var hellhoundCave = {
  		home2: function() {
  			var narratorBust = new Image();
  			narratorBust.src = 'img/narrator.jpg';
- 			view.displayDialogue("The road back to Pileus is not long, but takes the remainder of the day.  By the time you reach the city that you call home, the sun is pregnant on the horizon and supper is at the forefront of your mind.  But the everyday sounds and bustle of the city at dinnertime is not what you encounter.  Instead, the city is alight with torches and full of shouting, cheering, shouting.  Something is happening… something big.","Narrator",narratorBust,"right")
+ 			view.displayDialogue("The road back to Pileus is not long, but takes the remainder of the day.  By the time you reach the city that you call home, the sun is pregnant on the horizon and supper is at the forefront of your mind.  But the everyday sounds and bustle of the city at dinnertime is not what you encounter.  Instead, the city is alight with torches and full of shouting, cheering, screams, celebration.  Something is happening... something big.","Narrator",narratorBust,"right")
 			view.nextEvent('wall');
  		},
  		

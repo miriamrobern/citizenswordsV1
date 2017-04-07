@@ -21,15 +21,16 @@
 		<script src="levels/levelsIndex.js"></script>
 	</head>
 
-	<body onload='handlers.randomCharacter()'>
+	<body onload='view.refreshSaveLoad()'>
 		
 		<div id='mainMenuDiv'>
 		
 			<h4 id='titleHead'>Citizen Swords against the Ogre King</h4>
 		
 			<button onclick = 'handlers.newGame()'>New Game</button>
-			<button disabled>Save Game</button>
-			<button disabled>Load Game</button>
+			<button disabled onclick = 'handlers.resumeGame()'>Resume Game</button>
+			<button id = 'saveButton' disabled onclick = 'handlers.saveGame()'>Save Game</button>
+			<button onclick = 'handlers.loadGame()'>Load Game</button>
 			<button disabled>Options</button>
 		
 		</div>
@@ -37,7 +38,14 @@
 		<div id='introDiv'>
 			<p>In this <em>very under-construction</em> game, you take on the role of citizens of a beautiful, cosmopolitain fantasy city who rise up against the tyranny of the despotic Ogre King.  It's a tactical roleplaying game, which means you mostly move little characters around on a map to stage little battles.</p>
 			<p>There isn't much here yet -- one and a half levels -- but I'm doing a lot of backend work to make creating levels as easy as possible in the future.</p>
-			<p>Click on <strong>New Game</strong> above to start a game.</p>
+			
+			<div id='newGameDiv'>
+				<button onclick = 'handlers.newGame()'>New Game</button>
+				<button disabled onclick = 'handlers.resumeGame()'>Resume Game</button>
+			</div>
+			
+			<table id='saveLoadTable'></table>
+		
 		</div>
 		
 		<div id='characterCreationDiv'>
