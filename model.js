@@ -714,15 +714,17 @@ function Mob(type,x,y,id,name,team,heritage) {
 		var maneuvers = [];
 	
 		var maneuverSources = [];
-		maneuverSources.push(this.equipment.right);
-		if (this.equipment.left !== this.equipment.right) {
-			maneuverSources.push(this.equipment.left);
+		if (this.equipment !== undefined) {
+			maneuverSources.push(this.equipment.right);
+			if (this.equipment.left !== this.equipment.right) {
+				maneuverSources.push(this.equipment.left);
+			};
+			maneuverSources.push(this.equipment.armor);
+			maneuverSources.push(this.skills);
+			maneuverSources.push(this.equipment.item0);
+			maneuverSources.push(this.equipment.item1);
+			maneuverSources.push(this.equipment.item2);
 		};
-		maneuverSources.push(this.equipment.armor);
-		maneuverSources.push(this.skills);
-		maneuverSources.push(this.equipment.item0);
-		maneuverSources.push(this.equipment.item1);
-		maneuverSources.push(this.equipment.item2);
 		
 		var adjacentMobs = [];
 		var disarm = false; var slaughter = false; var execute = false; var restrain = false;

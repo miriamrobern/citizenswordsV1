@@ -1,4 +1,4 @@
-var elvishKeep = {
+var interskogKeep = {
 	
 	name: "The Keep at Interskog Pass",
 	description: "Keep Placeholder!",

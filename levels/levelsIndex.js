@@ -3,5 +3,6 @@
  	theCityRevolts: theCityRevolts,
  	shadyvale: shadyvale,
  	gryphonscry: gryphonscry,
- 	elvishKeep: elvishKeep,
+ 	interskogKeep: interskogKeep,
+ 	sewerSpelunk: sewerSpelunk,
  };

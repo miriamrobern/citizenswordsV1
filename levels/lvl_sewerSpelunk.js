@@ -1,12 +1,12 @@
-var gryphonscry = {
+var sewerSpelunk = {
 	
-	name: "The Vault under Gryphonscry Mountain",
-	description: "<p>When the war was at its direst, the Ogre King hid away his riches and treasures in secret vaults throughout the kingdom.</p><p>One of those vaults has been identified: a series of caverns beneath Gryphonscry Mountain. A cabal of loyalist Sovereign cultists are said to guard the cache, which is also worryingly close to a Deeps community.</p><p>Still, the prize is tempting. What treasures – lucrative or magical – might lurk down there?</p>",
+	name: "Sewer Spelunk",
+	description: "<p>Placeholder Description</p>",
  
  	sizeX: 22,
  	sizeY: 12,
  	
- 	background: 'img/blankHexMap.png',
+ 	background: 'img/rainbow.png',
  	
  	startLocations: [
  		{x:1,y:1},

@@ -1,93 +1,120 @@
 var hellhoundCave = {
 	
-	name: "Hellhound Cave",
-	description: "Placeholder!",
+	name: "The Lair of the Hellhound",
+	description: "<p>One day, people will ask each other, 'What were you doing when the city declared itself sovereign?'</p><p>You will have to answer, 'I was fighting giant rats to save a puppy from angry villagers.'</p>",
  
- 	sizeX: 12,
- 	sizeY: 11,
+ 	sizeX: 22,
+ 	sizeY: 12,
  	
- 	background: 'img/background.png',
+ 	background: 'img/hellhoundCave.svg',
  	
  	startLocations: [
- 		{x:1,y:1},
- 		{x:0,y:2}
+ 		{x:6,y:1},
+ 		{x:5,y:2}
  	],
  	
  	walls: [
- 		{x:1,y:4},
- 		{x:8,y:0},
- 		{x:9,y:0},
- 		{x:10,y:0},
- 		{x:9,y:1},
- 		{x:8,y:2},
- 		{x:7,y:3},
- 		{x:8,y:3},
- 		{x:10,y:3},
- 		{x:8,y:4},
- 		{x:9,y:5},
- 		{x:10,y:6},
- 		{x:10,y:7},
- 		{x:9,y:8},
- 		{x:6,y:5},
- 		{x:6,y:6},
- 		{x:7,y:7},
- 		{x:6,y:8},
- 		{x:6,y:9},
- 		{x:11,y:0},
- 		{x:11,y:2},
- 		{x:11,y:3},
- 		{x:11,y:4},
- 		{x:11,y:5},
- 		{x:11,y:6},
- 		{x:11,y:8},
- 		{x:4,y:10},
- 		{x:5,y:10},
- 		{x:6,y:10},
- 		{x:7,y:10},
- 		{x:8,y:10},
- 		{x:9,y:10},
- 		{x:10,y:10},
- 		{x:11,y:10},
- 	],
+		{x:6,y:4},
+		{x:13,y:0},
+		{x:14,y:0},
+		{x:15,y:0},
+		{x:14,y:1},
+		{x:13,y:2},
+		{x:12,y:3},
+		{x:13,y:3},
+		{x:15,y:3},
+		{x:13,y:4},
+		{x:14,y:5},
+		{x:15,y:6},
+		{x:15,y:7},
+		{x:14,y:8},
+		{x:11,y:5},
+		{x:11,y:6},
+		{x:12,y:7},
+		{x:11,y:8},
+		{x:11,y:9},
+		{x:9,y:10},
+		{x:10,y:10},
+		{x:16,y:3},
+		{x:17,y:3},
+		{x:18,y:3},
+		{x:19,y:3},
+		{x:20,y:3},
+		{x:21,y:3},
+		],
  		
  	pits: [
- 		{x:3,y:0},
- 		{x:4,y:0},
- 		{x:5,y:0},
- 		{x:6,y:0},
- 		{x:4,y:1},
- 		{x:5,y:1},
- 		{x:6,y:1},
- 		{x:4,y:2},
- 		{x:4,y:3},
- 		{x:3,y:5},
- 		{x:4,y:5},
- 		{x:1,y:6},
- 		{x:2,y:6},
- 		{x:3,y:6},
- 		{x:4,y:6},
- 		{x:1,y:7},
- 		{x:2,y:7},
- 		{x:3,y:7},
- 		{x:4,y:7},
- 		{x:5,y:7},
- 		{x:1,y:8},
- 		{x:2,y:8},
- 		{x:3,y:8},
- 		{x:4,y:8},
- 		{x:1,y:9},
- 		{x:2,y:9},
- 		{x:3,y:9},
- 		{x:4,y:9},
- 		{x:0,y:6},
- 		{x:0,y:7},
- 		{x:0,y:8},
- 		{x:0,y:9},
- 		{x:0,y:10},
- 		{x:1,y:10},
- 		{x:2,y:10},
- 		{x:3,y:10},
- 	],
+		{x:8,y:0},
+		{x:9,y:0},
+		{x:10,y:0},
+		{x:11,y:0},
+		{x:9,y:1},
+		{x:10,y:1},
+		{x:11,y:1},
+		{x:9,y:2},
+		{x:9,y:3},
+		{x:8,y:5},
+		{x:9,y:5},
+		{x:6,y:6},
+		{x:7,y:6},
+		{x:8,y:6},
+		{x:9,y:6},
+		{x:6,y:7},
+		{x:7,y:7},
+		{x:8,y:7},
+		{x:9,y:7},
+		{x:10,y:7},
+		{x:6,y:8},
+		{x:7,y:8},
+		{x:8,y:8},
+		{x:9,y:8},
+		{x:6,y:9},
+		{x:7,y:9},
+		{x:8,y:9},
+		{x:9,y:9},
+		{x:5,y:6},
+		{x:5,y:7},
+		{x:5,y:8},
+		{x:5,y:9},
+		{x:5,y:10},
+		{x:6,y:10},
+		{x:7,y:10},
+		{x:8,y:10},
+		{x:4,y:2},
+		{x:4,y:3},
+		{x:4,y:4},
+		{x:4,y:5},
+		{x:4,y:6},
+		{x:5,y:7},
+		{x:3,y:4},
+		{x:2,y:4},
+		{x:2,y:3},
+		{x:1,y:4},
+		{x:0,y:4},
+		{x:0,y:3},
+		{x:7,y:0},
+		{x:5,y:0},
+		{x:4,y:0},
+		{x:3,y:0},
+		{x:2,y:0},
+		{x:1,y:0},
+		{x:0,y:0},
+		{x:11,y:10},
+		{x:12,y:10},
+		{x:13,y:10},
+		{x:14,y:10},
+		{x:15,y:10},
+		{x:16,y:10},
+		{x:16,y:0},
+		{x:16,y:2},
+		{x:16,y:4},
+		{x:16,y:5},
+		{x:16,y:6},
+		{x:16,y:8},
+		{x:16,y:9},
+		{x:17,y:1},
+		{x:17,y:7},
+		],
  	
  	teams: {
  	
@@ -109,7 +136,7 @@ var hellhoundCave = {
  	
  	mobs: [
  		{
-			x:10,
+			x:15,
 			y:2,
 			type:dataMobs.hellhound,
 			id: "puppy",
@@ -119,7 +146,7 @@ var hellhoundCave = {
  		},
  		
  		{
-			x:7,
+			x:12,
 			y:9,
 			type:dataMobs.rat,
 			ai: 'dormant',
@@ -127,24 +154,26 @@ var hellhoundCave = {
  		},
  		
  		{
-			x:8,
+			x:13,
 			y:9,
 			type:dataMobs.rat,
 			ai: 'dormant',
 			team: 'rats',
  		},
  		
- 		{
-			x:3,
-			y:2,
-			type:dataMobs.rat,
-			ai: 'defeated',
-			team: 'rats',
- 		},
+//  		{
+// 			x:8,
+// 			y:2,
+// 			type:dataMobs.rat,
+//			id: 'targetRat',
+// 			ai: 'defeated',
+// 			team: 'rats',
+//  		},
  		
  		{
 			x:100,
 			y:100,
+			id: 'doti',
 			type:dataMobs.doti,
 			ai: 'dormant',
  		},
@@ -152,25 +181,25 @@ var hellhoundCave = {
  	
  	triggers: [
  		{
- 			x: 3,
+ 			x: 8,
  			y: 4,
  			event: 'intro',
  		},
  		
  		{
- 			x: 10,
+ 			x: 15,
  			y: 5,
  			event: 'noHellhound',
  		},
  		
  		{
- 			x: 9,
+ 			x: 14,
  			y: 2,
  			event: 'puppy',
  		},
  		
  		{
- 			x: 6,
+ 			x: 11,
  			y: 4,
  			event: 'rats',
  		},
@@ -195,9 +224,9 @@ var hellhoundCave = {
  			view.displayDialogue("Ugh, I see rat droppings.  Is this cave filled with giant rats?  What is this, the first level of a fantasy RPG?",this.name,this.imgBust,"left");
  			this.location.event = undefined;
  			mobs[4].stats.move = 4;
- 			mobs[4].move(map.hexes[104]);
+ 			mobs[4].move(map.hexes[167]);
  			mobs[3].stats.move = 4;
- 			mobs[3].move(map.hexes[92]);
+ 			mobs[3].move(map.hexes[189]);
  			mobs[3].ai = ai.basic;
  			mobs[4].ai = ai.basic;
  		},
@@ -227,7 +256,7 @@ var hellhoundCave = {
  		
  		puppyJoin: function() {
  			view.displayDialogue("Hellpuppy has joined the party!",undefined,mobs[2].imgBust,"left");
- 			map.hexes[52].event = hellhoundCave.events.home;
+ 			map.hexes[96].event = hellhoundCave.events.home;
  		},
  		
  		home: function() {
@@ -250,9 +279,8 @@ var hellhoundCave = {
  		},
  		
  		wall2: function() {
- 			var dotiImgBust = new Image();
- 			dotiImgBust.src = 'img/orc.png';
- 			view.displayDialogue("The City Council has denounced the Ogre King and declared us independent!  It's madness inside.  Everyone fears the King will come crush us overnight, like some all-powerful god.  Pfft.  Civilians.","Doti",dotiImgBust,"right");
+ 			var doti = game.findMob('doti');
+ 			view.displayDialogue("The City Council has denounced the Ogre King and declared us independent!  It's madness inside.  Everyone fears the King will come crush us overnight, like some all-powerful god.  Pfft.  Civilians.","Doti",doti.imgBust,"right");
  			view.nextEvent('wall3');
  		},
  		
@@ -262,9 +290,8 @@ var hellhoundCave = {
  		},
  		
  		wall4: function() {
- 			var dotiImgBust = new Image();
- 			dotiImgBust.src = 'img/orc.png';
- 			view.displayDialogue("He can try.  Since the war, his armies are crippled and scattered.  We have enough time to prepare.  We won't go down without a fight.<br />In fact, the Council is chartering companies of soldiers now.","Doti",dotiImgBust,"right");
+ 			var doti = game.findMob('doti');
+ 			view.displayDialogue("He can try.  Since the war, his armies are crippled and scattered.  We have enough time to prepare.  We won't go down without a fight.<br />In fact, the Council is chartering companies of soldiers now.","Doti",doti.imgBust,"right");
  			view.nextEvent('wall5');
  		},
  		
@@ -279,7 +306,7 @@ var hellhoundCave = {
  		},
  		
  		wall7: function() {
- 			view.displayDialogue("No!  I can finally realize my lifelong dream… of becoming a badass hero!  We can get one of those charters.  You and me.  We can form a company of fighters, we can defend the city, we can finally be somebody.  We'll be <em>awesome</em>.",mobs[0].name,mobs[0].imgBust,"left");
+ 			view.displayDialogue("No!  I can finally realize my lifelong dream... of becoming a badass hero!  We can get one of those charters.  You and me.  We can form a company of fighters, we can defend the city, we can finally be somebody.  We'll be <em>awesome</em>.",mobs[0].name,mobs[0].imgBust,"left");
  			view.setupReturn();
  		},
  	},

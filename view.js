@@ -802,12 +802,29 @@ var view = {
 	
 	displayAdventureDescription: function(level) {
 		l = dataLevels[level];
+		var completed = false;
+		var unlocked = false;
+		if (company.levels[level] !== undefined) {
+			unlocked = company.levels[level].unlocked;
+			completed = company.levels[level].completed;
+		};
 		var adventuresTextDiv = document.getElementById('adventuresTextDiv');
 		adventuresTextDiv.innerHTML = "<h2>"+l.name+"</h2>";
-		adventuresTextDiv.innerHTML += l.description;
+		if (unlocked) {
+			adventuresTextDiv.innerHTML += l.description;
+		} else {
+			adventuresTextDiv.innerHTML += '<p><em>You have not unlocked this adventure.</em></p>'
+		}
+		if (completed) {
+			adventuresTextDiv.innerHTML += '<p><em>You have completed this adventure.</em></p>'
+		};
 		var adventuresLoadButton = document.getElementById('adventuresLoadButton');
 		adventuresLoadButton.setAttribute('onclick','handlers.loadLevel('+level+')');
-		adventuresLoadButton.disabled = false;
+		if (unlocked) {
+			adventuresLoadButton.disabled = false;
+		} else {
+			adventuresLoadButton.disabled = true;
+		};
 	},
 	
 	refreshNews: function() {

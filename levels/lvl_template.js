@@ -1,4 +1,7 @@
-var returnToPileus = {
+var idOfAdventure = {
+	
+	name: "Placeholder Name",
+	description: "<p>Placeholder Description</p>",
  
  	sizeX: 22,
  	sizeY: 12,

@@ -1096,24 +1096,6 @@ var dataEthnicities = {
  			dataItems.simpleAxe,
  		],
  	},
- 	
- 	alfarDowns: {
- 		name: "Alfar Downs",
- 		requirements: {
- 			pileus: 5,
- 		},
- 		factions: [
- 			'pileus',
- 			'rounds',
- 			'moucau',
- 		],
- 		proprietor: dataMobs.motherSkullgoblet,
- 		welcome: "Welcome to Alfar Downs.  We'd love to assist you!",
- 		refusal: "Um.  I'm afraid we only service a certain caliber of clientele.",
- 		wares: [
- 			dataItems.manacles,
- 		],
- 	},
  
  	neighborhoodShrine: {
  		name: "Neighborhood Shrine",
@@ -1125,7 +1107,8 @@ var dataEthnicities = {
  			'points',
  		],
  		proprietor: {
- 			faceData: { hairColor:'aqua', skinColor:'#d9895a', templePosition:12, templeWidth:2, templeHeight:5, cheekbonePosition:11, cheekboneWidth:2, cheekboneHeight:6, chinHeight:43, chinWidth:22, eyeColor:'#0e9bb4', eyeDistance:13, eyeSize:8, browSize:4, leftBrowTilt:2, rightBrowTilt:0, insideEyelidCurve:1, outsideEyelidCurve:7, lowerEyelidCurve:5, noseColor:'#de6c50', noseHeight:46, noseSize:3, noseWidth:6, nostrilHeight:8, noseBump:10, lipColor:'#e96557', mouthWidth:13, lipSize:5, smile:3, mouthOpen:3, teeth:2, leftTusk:0, rightTusk:0, earColor:'#e08465', earSize:14, earDip:-8, earTilt:-3, earWidth:-5, earLobe:14, hairLength:14, hairCurl:4, hairPart:-7, hairBangs:6, hairBangsLength:14, hairSweep:5, topHairHeight:2, topHairBase:12, topHairWidth:6, horns:0, shoulders:32, bust:10, belly:20, hips:15, feet:20},
+ 			faceData: {eyeColor:'#f2bcf3', hairColor:'#98c5a7', skinColor:'#80530d', noseColor:'#76400a', lipColor:'#552f07', earColor:'#572c07', blackEumelanin:40.45138839354496, brownEumelanin:33.508374444079124, pinkPheomelanin:58, greenKeratin:12, noseShading:-8, nosePinkness:16, lipShading:-34, lipPinkness:14, earShading:-32, earPinkness:22, templePosition:13, templeWidth:1, templeHeight:7, cheekbonePosition:11, cheekboneWidth:2, cheekboneHeight:4, chinHeight:42, chinWidth:22, eyeDistance:14, eyeSize:7, browSize:2, insideEyelidCurve:0, outsideEyelidCurve:5, lowerEyelidCurve:5, noseHeight:68, noseSize:2, noseWidth:7, nostrilHeight:8, noseBump:0, mouthWidth:12, lipSize:3, teeth:2, leftTusk:0, rightTusk:0, earSize:13, earDip:-8, earTilt:-4, earWidth:4, earLobe:11, hairCurl:8, horns:3, shoulders:33, belly:19, hips:18, feet:5, hindquarters:0, leftBrowTilt:0, rightBrowTilt:1, smile:1, mouthOpen:2, hairLength:27, hairPart:-1, hairBangs:3, hairBangsLength:24, hairSweep:5, topHairHeight:6, topHairBase:10, topHairWidth:19, bust:20.129732262417324,},
+ 			equipment: {armor:dataItems.initiatesRobes},
  		},
  		welcome: "What can I do for my fellow supplicants of the Pantheon?",
  		refusal: "You are welcome to join our services, but we only do business with those who have proven themselves to the Pantheon.  You can never be too careful; I'm sure you understand.",
@@ -1144,9 +1127,31 @@ var dataEthnicities = {
  			'pileus',
  			'rounds',
  		],
- 		proprietor: dataMobs.motherSkullgoblet,
+ 		proprietor: {
+ 			faceData: {eyeColor:'#875fa8', hairColor:'#df0a59', skinColor:'#64381a', noseColor:'#632e15', lipColor:'#945042', earColor:'#be564f', blackEumelanin:59, brownEumelanin:38, pinkPheomelanin:47, greenKeratin:2, noseShading:-1, nosePinkness:17, lipShading:31, lipPinkness:32, earShading:58, earPinkness:50, templePosition:9, templeWidth:3, templeHeight:5, cheekbonePosition:6, cheekboneWidth:1, cheekboneHeight:6, chinHeight:43, chinWidth:22, eyeDistance:16, eyeSize:6, browSize:2, insideEyelidCurve:4, outsideEyelidCurve:4, lowerEyelidCurve:6, noseHeight:48, noseSize:3, noseWidth:6, nostrilHeight:6, noseBump:8, mouthWidth:14, lipSize:4, teeth:1, leftTusk:0, rightTusk:0, earSize:12, earDip:-8, earTilt:1, earWidth:3, earLobe:12, hairCurl:15, horns:0, shoulders:34, belly:19, hips:18, feet:12, hindquarters:2, leftBrowTilt:0, rightBrowTilt:0, smile:1, mouthOpen:3, hairLength:18, hairPart:-3, hairBangs:4, hairBangsLength:9, hairSweep:4, topHairHeight:0, topHairBase:9, topHairWidth:12, bust:19, },
+ 		},
  		welcome: "Welcome to AB.  What can I help you with?",
  		refusal: "I'm sorry, we're not taking any charity cases today.  Try again later.",
+ 	},
+ 	
+ 	alfarDowns: {
+ 		name: "Alfar Downs",
+ 		requirements: {
+ 			pileus: 5,
+ 		},
+ 		factions: [
+ 			'pileus',
+ 			'rounds',
+ 			'moucau',
+ 		],
+ 		proprietor: {
+ 			faceData: {eyeColor:'#53de3f', hairColor:'#027607', skinColor:'#9d640a', noseColor:'#a64a15', lipColor:'#a05f0f', earColor:'#772f04', blackEumelanin:26, brownEumelanin:35, pinkPheomelanin:61, greenKeratin:17, noseShading:9, nosePinkness:35, lipShading:3, lipPinkness:9, earShading:-24, earPinkness:38, templePosition:13, templeWidth:2, templeHeight:4, cheekbonePosition:7, cheekboneWidth:3, cheekboneHeight:5, chinHeight:44, chinWidth:18, eyeDistance:14, eyeSize:7, browSize:2, insideEyelidCurve:0, outsideEyelidCurve:6, lowerEyelidCurve:5, noseHeight:46, noseSize:3, noseWidth:5, nostrilHeight:4, noseBump:-10, mouthWidth:11, lipSize:4, teeth:1, leftTusk:0, rightTusk:0, earSize:15, earDip:-8, earTilt:3, earWidth:19, earLobe:9, hairCurl:13, horns:2, shoulders:32, belly:15, hips:22, feet:1, hindquarters:0, leftBrowTilt:2, rightBrowTilt:2, smile:2, mouthOpen:2, hairLength:58, hairPart:-1, hairBangs:6, hairBangsLength:8, hairSweep:3, topHairHeight:0, topHairBase:19, topHairWidth:7, bust:25, },
+ 		},
+ 		welcome: "Welcome to Alfar Downs.  We'd love to assist you!",
+ 		refusal: "Um.  I'm afraid we only service a certain caliber of clientele.",
+ 		wares: [
+ 			dataItems.manacles,
+ 		],
  	},
  	
  	cityMilitiaArmory: {
@@ -1158,7 +1163,9 @@ var dataEthnicities = {
  		factions: [
  			'pileus',
  		],
- 		proprietor: dataMobs.motherSkullgoblet,
+ 		proprietor: {
+			faceData: {eyeColor:'#685034',hairColor:'#3a3347',skinColor:'#e9923c',noseColor:'#e9722e',lipColor:'#ef7048',earColor:'#ec884b',blackEumelanin:7,brownEumelanin:51,pinkPheomelanin:36,greenKeratin:4,noseShading:0,nosePinkness:22,lipShading:27,lipPinkness:36,earShading:15,earPinkness:16,templePosition:9,templeWidth:2,templeHeight:7,cheekbonePosition:11,cheekboneWidth:3,cheekboneHeight:8,chinHeight:45,chinWidth:18,eyeDistance:14,eyeSize:7,browSize:3,insideEyelidCurve:0,outsideEyelidCurve:5,lowerEyelidCurve:4,noseHeight:46,noseSize:3,noseWidth:6,nostrilHeight:5,noseBump:-7,mouthWidth:12,lipSize:4,teeth:0,leftTusk:0,rightTusk:0,earSize:10,earDip:-7,earTilt:1,earWidth:5,earLobe:11,hairCurl:14,horns:4,shoulders:39,belly:23,hips:21,feet:15,hindquarters:0,leftBrowTilt:-2,rightBrowTilt:-1,smile:-4,mouthOpen:0,hairLength:13,hairPart:-4,hairBangs:5,hairBangsLength:8,hairSweep:5,topHairHeight:3,topHairBase:14,topHairWidth:19,bust:7},
+ 		},
  		welcome: "At ease, grunt.  You got a requisition order for me or what?",
  		refusal: "This armory is for professionals with professional reputations.  Come back after you've proven yourself, maggot.",
  	},
@@ -1172,7 +1179,9 @@ var dataEthnicities = {
  		factions: [
  			'rounds',
  		],
- 		proprietor: dataMobs.motherSkullgoblet,
+ 		proprietor: {
+			faceData: {eyeColor:'#2ab4e5', hairColor:'#5c4411', skinColor:'#bd8558', noseColor:'#bf7a53', lipColor:'#c46448', earColor:'#a86542', blackEumelanin:26, brownEumelanin:29, pinkPheomelanin:24, greenKeratin:0, noseShading:4, nosePinkness:12, lipShading:11, lipPinkness:32, earShading:-11, earPinkness:15, templePosition:5, templeWidth:3, templeHeight:3, cheekbonePosition:13, cheekboneWidth:2, cheekboneHeight:6, chinHeight:45, chinWidth:22, eyeDistance:13, eyeSize:6, browSize:3, insideEyelidCurve:2, outsideEyelidCurve:7, lowerEyelidCurve:5, noseHeight:40, noseSize:4, noseWidth:6, nostrilHeight:5, noseBump:8, mouthWidth:13, lipSize:2, teeth:1, leftTusk:0, rightTusk:0, earSize:11, earDip:-8, earTilt:1, earWidth:15, earLobe:10, hairCurl:2, horns:0, shoulders:34, belly:21, hips:19, feet:13, hindquarters:0, leftBrowTilt:2, rightBrowTilt:2, smile:2, mouthOpen:3, hairLength:2, hairPart:-2, hairBangs:2, hairBangsLength:0, hairSweep:3, topHairHeight:1, topHairBase:4, topHairWidth:12, bust:10},
+ 		},
  		welcome: "You have entered Oloin's Dwarven Armory.  I'll give you a moment; it often takes a while for customers to recover from the awe of being in such a wondrous place.",
  		refusal: "Deliveries are around the back, dear.  Take care not to muss my doorstep as you go.  Bless.",
  	},
@@ -1188,13 +1197,36 @@ var dataEthnicities = {
  	completed: [
  	],
  	
+ 	deeds: {
+ 	},
+ 	
  	haul: [
  	],
  	
- 	marks: 100,
- 	
- 	deeds: {
+ 	levels: {
+		hellhoundCave: {
+			unlocked: true,
+			completed: true,
+		},
+		theCityRevolts:  {
+			unlocked: true,
+			completed: false,
+		},
+		shadyvale:  {
+			unlocked: false,
+			completed: false,
+		},
+		gryphonscry:  {
+			unlocked: true,
+			completed: false,
+		},
+		interskogKeep:  {
+			unlocked: false,
+			completed: false,
+		},
  	},
+ 	
+ 	marks: 100,
  	
  	reputations: {
  		killCount: 0,
