@@ -3642,7 +3642,7 @@ var draw = {
 		newPath.setAttribute("stroke-linecap","round");
 
 		// start at bottom of thumb
-		x = 100 + (10 * 0.5 - face.shoulders) * reflect;
+		x = 100 + (10 * 0.5 - mob.faceData.shoulders) * reflect;
 		y = bodyConstants.neck + 5 + 30 + 20;
 		path = 'm '+x+','+y;
 

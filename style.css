@@ -66,10 +66,30 @@ svg {
 
 #saveLoadTable {
 	width: 100%;
+	border: 1px solid maroon;
+	}
+
+#saveLoadTable caption {
+	color: white;
+	background-color: maroon;
+	padding: 0.5vw;
 	}
 
 .loadButton {
+	font-size: 0.8em;
 	width: 100%;
+	}
+
+.saveGameLoadCell {
+	width: 20%;
+	}
+
+.saveGameNameCell {
+	width: 40%;
+	}
+
+.saveGameDateCell {
+	font-size: 0.6em;
 	}
 	
 

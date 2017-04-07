@@ -74,6 +74,36 @@ var game = {
 		
 		return flatCompany;
 	},
+	
+	unflattenCompany: function(gameSave,saveName) {
+		company.name = gameSave.name;
+		company.lastSaveName = saveName;
+		company.deeds = gameSave.deeds;
+		company.levels = gameSave.levels;
+		company.reputations = gameSave.reputations;
+		
+		company.armory = [];
+		for (i in gameSave.armory) {
+			company.armory.push(dataItems[gameSave.armory[i]]);
+		};
+		
+		company.heroes = [];
+		for (i in gameSave.heroes) {
+			console.log(gameSave.heroes[i]);
+			company.heroes.push(gameSave.heroes[i]);
+			for (e in gameSave.heroes[i].equipment) {
+				company.heroes[i].equipment[e] = dataItems[gameSave.heroes[i].equipment[e]];
+			};
+			for (m in gameSave.heroes[i].skills.maneuvers) {
+				company.heroes[i].skills.maneuvers[m] = dataManeuvers[gameSave.heroes[i].skills.maneuvers[m]];
+			};
+			for (m in gameSave.heroes[i].skills.passives) {
+				company.heroes[i].skills.passives[m] = dataPassives[gameSave.heroes[i].skills.passives[m]];
+			};
+			company.heroes[i] = new Mob(company.heroes[i],undefined,undefined,company.heroes[i].id);
+		};
+		heroes = company.heroes;
+	},
 
 	checkEndTurn: function() {
 		var endTurn = true;
@@ -820,6 +850,7 @@ function Mob(type,x,y,id,name,team,heritage) {
 				flatCharacter.equipment[i] = undefined;
 			};
 		};
+		console.log('flattening',this);
 		for (i in this.skills.maneuvers) {
 			flatCharacter.skills.maneuvers[i] = this.skills.maneuvers[i].id;
 		};

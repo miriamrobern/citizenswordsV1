@@ -24,12 +24,28 @@ var view = {
 		
 		document.getElementById('saveButton').disabled = true;
 	},
+
+	switchToIntroMode: function() {
+		document.getElementById('buttonRowDiv').style.display = 'none';
+		document.getElementById('focusMobDiv').style.display = 'none';	
+		document.getElementById('mapDiv').style.display = 'none';
+		document.getElementById('companyHQDiv').style.display = 'none';
+		document.getElementById('characterCreationDiv').style.display = 'none';
+		document.getElementById('introDiv').style.display = 'block';
+		
+		document.getElementById('focusMobImgDiv').innerHTML = '';
+		document.getElementById('focusMobDetailsDiv').innerHTML = '';
+		
+		document.getElementById('saveButton').disabled = true;
+	},
 	
 	switchToHeadquartersMode: function() {
 		document.getElementById('buttonRowDiv').style.display = 'none';
 		document.getElementById('focusMobDiv').style.display = 'none';	
 		document.getElementById('mapDiv').style.display = 'none';
 		document.getElementById('characterCreationDiv').style.display = 'none';
+		document.getElementById('introDiv').style.display = 'none';
+		
 		
 		document.getElementById('companyHQDiv').style.display = 'block';
 		
@@ -989,6 +1005,10 @@ var view = {
 		};
 		if (saves.length > 0) {
 			var saveLoadTable = document.getElementById('saveLoadTable');
+			saveLoadTable.innerHTML = '';
+			var saveLoadCaption = document.createElement('caption');
+			saveLoadCaption.innerHTML = 'Saved Games';
+			saveLoadTable.appendChild(saveLoadCaption);
 			for (i in saves) {
 				var save = JSON.parse(localStorage[saves[i]]);
 				var saveName = saves[i].slice(18);
@@ -998,24 +1018,32 @@ var view = {
 				newRow.id = 'loadRow '+saveName;
 				
 				var saveLoadCell = document.createElement('td');
+// 				var saveImg = draw.face(save.heroes[0]);
+// 				saveLoadCell.appendChild(saveImg);
 				var loadButton = document.createElement('button');
 				var charName = save.heroes[0].name;
 				if (save.name !== undefined) {
 					charName += ' of the ' + save.name;
 				};
 				loadButton.className = 'loadButton';
-				loadButton.innerHTML = '<button>Play '+charName+'</button>';
-				loadButton.setAttribute('onclick','handlers.loadSave("'+saveName+'")');
+				loadButton.innerHTML = 'Play '+charName;
+				loadButton.setAttribute('onclick','handlers.loadGame("'+saveName+'")');
+				saveLoadCell.className = 'saveGameLoadCell';
 				saveLoadCell.appendChild(loadButton);
 				
 				var saveNameCell = document.createElement('td');
+				saveNameCell.className = 'saveGameNameCell';
 				saveNameCell.innerHTML = saveName;
 				
 				var saveDateCell = document.createElement('td');
 				saveDateCell.innerHTML = new Date(save.saveDate);
+				saveDateCell.className = 'saveGameDateCell';
 				
 				var saveDeleteCell = document.createElement('td');
-				saveDeleteCell.innerHTML = '<button disabled>Delete</button>';
+				var saveDeleteButton = document.createElement('button');
+				saveDeleteButton.innerHTML = 'Delete';
+				saveDeleteButton.setAttribute('onclick','handlers.deleteSave("'+saveName+'")');
+				saveDeleteCell.appendChild(saveDeleteButton);
 				
 				newRow.appendChild(saveLoadCell);
 				newRow.appendChild(saveNameCell);

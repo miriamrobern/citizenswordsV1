@@ -28,9 +28,8 @@
 			<h4 id='titleHead'>Citizen Swords against the Ogre King</h4>
 		
 			<button onclick = 'handlers.newGame()'>New Game</button>
-			<button disabled onclick = 'handlers.resumeGame()'>Resume Game</button>
 			<button id = 'saveButton' disabled onclick = 'handlers.saveGame()'>Save Game</button>
-			<button onclick = 'handlers.loadGame()'>Load Game</button>
+			<button onclick = 'view.switchToIntroMode()'>Load Game</button>
 			<button disabled>Options</button>
 		
 		</div>
@@ -41,7 +40,6 @@
 			
 			<div id='newGameDiv'>
 				<button onclick = 'handlers.newGame()'>New Game</button>
-				<button disabled onclick = 'handlers.resumeGame()'>Resume Game</button>
 			</div>
 			
 			<table id='saveLoadTable'></table>

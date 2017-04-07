@@ -10,16 +10,22 @@ var handlers = {
 	},
 	
 	saveGame: function() {
-		var saveName = prompt("Name your save:","Citizen Swords");
+		var name = 'Citizen Swords';
+		if (company.lastSaveName !== undefined) {name = company.lastSaveName;};
+		var saveName = prompt("Overwrite current save or rename:",name);
 		saveName = 'CitizenSwordsSave ' + saveName;
 		localStorage[saveName] = JSON.stringify(game.flattenCompany());
 	},
 	
-	loadGame: function() {
+	loadGame: function(saveName) {
+		var gameSave = JSON.parse(localStorage['CitizenSwordsSave ' + saveName]);
+		game.unflattenCompany(gameSave,saveName);
+		view.switchToHeadquartersMode();
 	},
 	
-	selectSave: function(saveName) {
-		console.log(saveName);
+	deleteSave: function(saveName) {
+		localStorage.removeItem('CitizenSwordsSave ' + saveName);
+		view.refreshSaveLoad();
 	},
 
 	loadLevel: function(level) {
@@ -315,7 +321,7 @@ var handlers = {
 			p1.equipment.armor = dataItems.roughspun;
 			p1.equipment.left = dataItems.cargoHook;
 			p1.skills.maneuvers = [dataManeuvers.exhort];
-			p1.skills.passives = [dataManeuvers.exhort];
+			p1.skills.passives = [dataPassives.ofThePeople];
 			p1.stats.move = 4;
 			p1.stats.strength = 3;
 			p1.stats.focus = 3;

@@ -593,6 +593,15 @@ var dataEthnicities = {
  
  };
  
+ var dataPassives = {
+ 
+ 	ofThePeople: {
+ 		name: "Of the People",
+ 		id: 'ofThePeople',
+ 	},
+ 	
+ };
+ 
  var dataItems = {
  	
  	birthdaySuit: {
@@ -834,6 +843,10 @@ var dataEthnicities = {
  		maneuvers: [
  			dataManeuvers.puppyKisses,
  		],
+ 		skills: {
+ 			maneuvers: [dataManeuvers.puppyKisses],
+ 			passives: [],
+ 		},
  	},
  
  	rat: {
@@ -909,6 +922,10 @@ var dataEthnicities = {
  		equipment: {
  			left: dataItems.daisySword,
  			armor: dataItems.scrapArmor,
+ 		},
+ 		skills: {
+ 			maneuvers: [],
+ 			passives: [],
  		},
  	},
  
@@ -1333,7 +1350,7 @@ var dataEthnicities = {
 			dataManeuvers.exhort,
 		],
 		passives: [
-			'dataPassives.ofThePeople',
+			dataPassives.ofThePeople,
 		],
 	},
 	
