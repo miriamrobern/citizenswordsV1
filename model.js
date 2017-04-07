@@ -625,6 +625,15 @@ function Mob(type,x,y,id,name,team,heritage) {
 		};
 	};
 	
+	this.testStat = function(stat) {
+		if (stat == undefined) {stat = 'focus'};
+		var total = 0;
+		for (i=0;i<this.stats[stat];i++) {
+			total += Math.random();
+		};
+		return total;
+	};
+	
 	this.takeWound = function(woundType,penalty) {
 			
 		// jiggle

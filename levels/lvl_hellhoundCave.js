@@ -203,6 +203,18 @@ var hellhoundCave = {
  			y: 4,
  			event: 'rats',
  		},
+ 		
+ 		{
+ 			x: 14,
+ 			y: 9,
+ 			event: 'tightFit',
+ 		},
+ 		
+ 		{
+ 			x: 16,
+ 			y: 7,
+ 			event: 'ratNest',
+ 		},
  	],
  	
  	events: {
@@ -229,6 +241,25 @@ var hellhoundCave = {
  			mobs[3].move(map.hexes[189]);
  			mobs[3].ai = ai.basic;
  			mobs[4].ai = ai.basic;
+ 		},
+ 		
+ 		tightFit: function() {
+			if (this.testStat() > 1) {
+				view.displayDialogue("Wow, it's a tight fit through here, and some of these rocks are sharp.  I think I've got it, though...",this.name,this.imgBust,"left");
+			} else {
+				this.takeWound(dataWounds.sharp,1);
+				view.displayDialogue("Ouch!  Cut my hand.  These rocks are sharp, and the passage is tight.",this.name,this.imgBust,"left");
+			};
+ 		},
+ 		
+ 		ratNest: function() {
+ 			view.displayDialogue("Ew, rat's nest.  Twigs and straw and... phew, rat droppings aplenty.  Looks like they've been collecting things, too.  Here's a boot.  A sack of feed from some farm; did they drag it here?  Two glass bottles, must have grabbed them cause they're shiny.  And... oh look at this!",this.name,this.imgBust,"left");
+ 			this.location.event = undefined;
+ 			view.nextEvent('brooch');
+ 		},
+ 		
+ 		brooch: function() {
+ 			game.gainItem([dataItems.shinyBrooch]);
  		},
  		
  		noHellhound: function() {
@@ -309,6 +340,7 @@ var hellhoundCave = {
  			view.displayDialogue("No!  I can finally realize my lifelong dream... of becoming a badass hero!  We can get one of those charters.  You and me.  We can form a company of fighters, we can defend the city, we can finally be somebody.  We'll be <em>awesome</em>.",mobs[0].name,mobs[0].imgBust,"left");
  			view.setupReturn();
  		},
+ 		
  	},
  
  };

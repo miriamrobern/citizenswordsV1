@@ -20,7 +20,7 @@ var dataEthnicities = {
 		chinHeight:40,
 		chinWidth:10,
 		eyeDistance:9,
-		eyeSize:6,
+		eyeSize:4,
 		browSize:0,
 		insideEyelidCurve:-2,
 		outsideEyelidCurve:2,
@@ -82,7 +82,7 @@ var dataEthnicities = {
 		chinHeight:50,
 		chinWidth:40,
 		eyeDistance:25,
-		eyeSize:10,
+		eyeSize:8,
 		browSize:5,
 		insideEyelidCurve:5,
 		outsideEyelidCurve:8,
@@ -602,6 +602,12 @@ var dataEthnicities = {
  		passiveDefense: 0,
  		simpleColoring: {},
  		svgNodes: function(mob,bodyConstants) {return draw.birthdaySuit(mob,bodyConstants);},
+ 	},
+ 	
+ 	shinyBrooch: {
+ 		name: "Shiny Brooch",
+ 		id: 'shinyBrooch',
+ 		value: 50,
  	},
  	
  	cargoHook: {
