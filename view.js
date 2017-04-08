@@ -958,7 +958,14 @@ var view = {
 				};
 				description += '<p>Provides the maneuver '+item.maneuvers[i].name+bonus+'.</p>';
 			};
-		};		
+		};
+		if (item.bonus !== undefined) {
+			for (i in item.bonus) {
+				if ( item.maneuvers == undefined || item.maneuvers.indexOf(dataManeuvers[i]) == -1 ) {
+					description += '<p>Provides a +'+item.bonus[i]+' bonus to the '+dataManeuvers[i].name+' maneuver.</p>';
+				};
+			};
+		}
 		return description;
 	},
 	

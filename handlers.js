@@ -198,6 +198,7 @@ var handlers = {
 		for (i in slot) {
 			var slotName = 'rosterEquip' + slot[i].charAt(0).toUpperCase() + slot[i].slice(1) + 'Div';
 			document.getElementById(slotName).style.borderColor = 'red';
+			document.getElementById(slotName).innerHTML = '<p class="rosterEquipEmpty">Empty</p>';
 		}
 		
 		window.addEventListener('mousemove',handlers.moveItem,true);

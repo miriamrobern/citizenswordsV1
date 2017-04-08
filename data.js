@@ -694,6 +694,9 @@ var dataEthnicities = {
  		article: 'an',
  		slot: ['armor'],
  		passiveDefense: 2,
+ 		bonus: {
+ 			exhort: 1,
+ 		},
  		simpleColoring: {
  			torso: {fill:'beige'},
  			upperArms: {fill:'beige'},
