@@ -174,9 +174,9 @@ var draw = {
 		x = mob.faceData.belly - mob.faceData.hips;
 		y = 15;
 		c1x = 0;
-		c1y = face.belly / 3;
+		c1y = mob.faceData.belly / 3;
 		c2x = x;
-		c2y = y - face.hips/3;
+		c2y = y - mob.faceData.hips/3;
 		path += ' c '+c1x+','+c1y+' '+c2x+','+c2y+' '+x+','+y;
 
 		// to right side of skirt
