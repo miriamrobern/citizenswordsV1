@@ -172,6 +172,7 @@ var handlers = {
 	pickupItem: function(e) {
 		if (e.srcElement.nodeName === "DIV") {
 			var slot = e.srcElement.parentElement.id.slice(11);
+			e.srcElement.parentElement.innerHTML = '<p class="rosterEquipEmpty">Empty</p>';
 			slot = slot.substring(0,slot.length-3).toLowerCase();
 			view.focus.item = view.focus.hero.equipment[slot];
 			view.focus.hero.equipment[slot] = undefined;
@@ -198,7 +199,6 @@ var handlers = {
 		for (i in slot) {
 			var slotName = 'rosterEquip' + slot[i].charAt(0).toUpperCase() + slot[i].slice(1) + 'Div';
 			document.getElementById(slotName).style.borderColor = 'red';
-			document.getElementById(slotName).innerHTML = '<p class="rosterEquipEmpty">Empty</p>';
 		}
 		
 		window.addEventListener('mousemove',handlers.moveItem,true);

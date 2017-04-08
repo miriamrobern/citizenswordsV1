@@ -792,34 +792,36 @@ function Mob(type,x,y,id,name,team,heritage) {
 			maneuverSources.push(this.equipment.item2);
 		};
 		
-		var adjacentMobs = [];
-		var disarm = false; var slaughter = false; var execute = false; var restrain = false;
-		for (hex in this.location.adjacent) {
-			for (mob in mobs) {
-				if (mobs[mob].location === this.location.adjacent[hex] && mobs[mob].stats.morale === 0) {
-					adjacentMobs.push(mobs[mob]);
-					if (mobs[mob].equipment !== undefined) {
-						disarm = true;
-					};
-					if (mobs[mob].loot !== undefined) {
-						slaughter = true;
-					} else {
-						execute = true;
-						if ((this.equipment.item0 !== undefined && this.equipment.item0.restraint > 0) || (this.equipment.item1 !== undefined && this.equipment.item1.restraint > 0) || (this.equipment.item2 !== undefined && this.equipment.item2.restraint > 0) ) {
-							restrain = true;
+		if (this.location !== undefined) {
+			var adjacentMobs = [];
+			var disarm = false; var slaughter = false; var execute = false; var restrain = false;
+			for (hex in this.location.adjacent) {
+				for (mob in mobs) {
+					if (mobs[mob].location === this.location.adjacent[hex] && mobs[mob].stats.morale === 0) {
+						adjacentMobs.push(mobs[mob]);
+						if (mobs[mob].equipment !== undefined) {
+							disarm = true;
+						};
+						if (mobs[mob].loot !== undefined) {
+							slaughter = true;
+						} else {
+							execute = true;
+							if ((this.equipment.item0 !== undefined && this.equipment.item0.restraint > 0) || (this.equipment.item1 !== undefined && this.equipment.item1.restraint > 0) || (this.equipment.item2 !== undefined && this.equipment.item2.restraint > 0) ) {
+								restrain = true;
+							};
 						};
 					};
 				};
 			};
-		};
 		
-		if (adjacentMobs.length > 0) { // if next to defeated mob, enable defeat maneuvers
-			var defeatManeuvers = {maneuvers:[]};
-			if (disarm) {defeatManeuvers.maneuvers.push(dataManeuvers.zDisarm)};
-			if (execute) {defeatManeuvers.maneuvers.push(dataManeuvers.zExecute)};
-			if (restrain) {defeatManeuvers.maneuvers.push(dataManeuvers.zRestrain)};
-			if (slaughter) {defeatManeuvers.maneuvers.push(dataManeuvers.zSlaughter)};
-			maneuverSources.push(defeatManeuvers);
+			if (adjacentMobs.length > 0) { // if next to defeated mob, enable defeat maneuvers
+				var defeatManeuvers = {maneuvers:[]};
+				if (disarm) {defeatManeuvers.maneuvers.push(dataManeuvers.zDisarm)};
+				if (execute) {defeatManeuvers.maneuvers.push(dataManeuvers.zExecute)};
+				if (restrain) {defeatManeuvers.maneuvers.push(dataManeuvers.zRestrain)};
+				if (slaughter) {defeatManeuvers.maneuvers.push(dataManeuvers.zSlaughter)};
+				maneuverSources.push(defeatManeuvers);
+			};
 		};
 
 		for (i in maneuverSources) {
