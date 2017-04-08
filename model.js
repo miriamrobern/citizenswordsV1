@@ -608,13 +608,15 @@ function Mob(type,x,y,id,name,team,heritage) {
 		var friendly = false;
 		var foe = false;
 		for (m in mobs) {
-			if (this.team == undefined || truce.indexOf(mobs[m].team) == -1 || this.team !== mobs[m].team) {
+			console.log(this.team == undefined,truce.indexOf(mobs[m].team) == -1,this.team !== mobs[m].team);
+			if (this.team == undefined || ( truce.indexOf(mobs[m].team) == -1 && this.team !== mobs[m].team ) ) {
 				friendly = false; foe = true;
 			} else {
 				friendly = true;foe = false;
 			};
+			console.log(maneuver.targetFriendlies,friendly,maneuver.targetFoes,foe);
 			if ( maneuver == undefined || (maneuver.targetFriendlies && friendly) || (maneuver.targetFoes && foe) ) {
-			potentialTargets.push(mobs[m]);
+				potentialTargets.push(mobs[m]);
 			};
 		};
 		
