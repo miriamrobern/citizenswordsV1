@@ -203,9 +203,19 @@ svg {
 	position: relative;
 	margin-left: auto;
 	margin-right: auto;
-	width: 75vw;
+	width: 65vw;
 	text-align: right;
 	display: none;
+	background-color: maroon;
+	padding: 0.5vh;
+	}
+
+#heroButtonsDiv {
+	float:left;
+	}
+
+.heroButton {
+	margin-right: 1vw;
 	}
 
 #endTurnButton {

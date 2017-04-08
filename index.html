@@ -28,8 +28,9 @@
 			<h4 id='titleHead'>Citizen Swords against the Ogre King</h4>
 		
 			<button onclick = 'handlers.newGame()'>New Game</button>
+			<button id='abortLevelButton' disabled onclick='handlers.returnHome()'>Abort Level</button>
 			<button id = 'saveButton' disabled onclick = 'handlers.saveGame()'>Save Game</button>
-			<button onclick = 'view.switchToIntroMode()'>Load Game</button>
+			<button id = 'loadGameButton' disabled onclick = 'view.switchToIntroMode()'>Load Game</button>
 			<button disabled>Options</button>
 		
 		</div>
@@ -210,7 +211,8 @@
 		</div>
 		
 		<div id='buttonRowDiv'>
-			<button id='endTurnButton' onclick='handlers.returnHome()'>Abort Level</button>
+			<div id='heroButtonsDiv'>
+			</div>
 			<button id='endTurnButton' onclick='handlers.endTurn()'>End Turn</button>
 		</div>
 		

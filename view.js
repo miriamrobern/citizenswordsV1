@@ -23,6 +23,8 @@ var view = {
 		document.getElementById('focusMobDetailsDiv').innerHTML = '';
 		
 		document.getElementById('saveButton').disabled = true;
+		document.getElementById('abortLevelButton').disabled = false;
+		document.getElementById('loadGameButton').disabled = false;
 	},
 
 	switchToIntroMode: function() {
@@ -37,6 +39,10 @@ var view = {
 		document.getElementById('focusMobDetailsDiv').innerHTML = '';
 		
 		document.getElementById('saveButton').disabled = true;
+		document.getElementById('abortLevelButton').disabled = true;
+		document.getElementById('loadGameButton').disabled = true;
+		
+		view.refreshSaveLoad();
 	},
 	
 	switchToHeadquartersMode: function() {
@@ -50,6 +56,8 @@ var view = {
 		document.getElementById('companyHQDiv').style.display = 'block';
 		
 		document.getElementById('saveButton').disabled = false;
+		document.getElementById('abortLevelButton').disabled = true;
+		document.getElementById('loadGameButton').disabled = false;
 		
 		view.focus.hero = heroes[0];
 		view.refreshNews();
@@ -197,6 +205,7 @@ var view = {
 				mobs[i].div = newMobDiv;
 			};
 		};
+		view.refreshHeroes();
 	},
 	
 	drawHex: function(draw,x,y,size,style) {
@@ -274,6 +283,27 @@ var view = {
 			view.drawHex(draw,x,y,size,style);
 		};
 		
+	},
+	
+	refreshHeroes: function() {
+		var levelHeroes = [];
+		for (i in mobs) {
+			if (mobs[i].player) {
+				levelHeroes.push(mobs[i]);
+			};
+		};
+		var heroButtonsDiv = document.getElementById('heroButtonsDiv');
+		for (i in levelHeroes) {
+			var newButton = document.createElement('button');
+			newButton.innerHTML = levelHeroes[i].name;
+			newButton.className = 'heroButton';
+			var mobIndex;
+			for (m in mobs) {
+				if (mobs[m] === levelHeroes[i]) {mobIndex = m;};
+			};
+			newButton.setAttribute('onclick','handlers.mobSelect('+mobIndex+')');
+			heroButtonsDiv.appendChild(newButton);
+		};
 	},
 	
 	selectMob: function(mob) {
