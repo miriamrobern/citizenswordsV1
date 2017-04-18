@@ -207,8 +207,8 @@ var handlers = {
 	
 	moveItem: function(e) {
 		view.disableHighlight(e);
-		var divBoatX = e.clientX + 5;
-		var divBoatY = e.clientY + 5;
+		var divBoatX = e.clientX - 50;
+		var divBoatY = e.clientY - 40;
 		view.focus.divBoat.style.top = divBoatY + 'px';
 		view.focus.divBoat.style.left = divBoatX + 'px';
 	},
@@ -319,6 +319,7 @@ var handlers = {
 		document.getElementById('classPray').style.borderStyle = 'outset';
 		
 		if (className === "work") {
+			company.deeds.p1classWork = true;
 			p1.equipment.armor = dataItems.roughspun;
 			p1.equipment.left = dataItems.cargoHook;
 			p1.skills.maneuvers = [dataManeuvers.exhort];
@@ -329,6 +330,7 @@ var handlers = {
 			p1.stats.armor = 2;
 			document.getElementById('classWork').style.borderStyle = 'inset';
 		} else if (className === "fight") {
+			company.deeds.p1classFight = true;
 			p1.equipment.armor = dataItems.scrapArmor;
 			p1.equipment.left = dataItems.scrapShield;
 			p1.skills.maneuvers = [dataManeuvers.exhort];
@@ -339,6 +341,7 @@ var handlers = {
 			p1.stats.armor = 4;
 			document.getElementById('classFight').style.borderStyle = 'inset';
 		} else if (className === "pray") {
+			company.deeds.p1classPray = true;
 			p1.equipment.armor = dataItems.initiatesRobes;
 			p1.equipment.left = dataItems.initiatesSpellbook;
 			p1.skills.maneuvers = [dataManeuvers.focusedStrength,dataManeuvers.exhort];

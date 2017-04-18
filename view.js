@@ -180,7 +180,7 @@ var view = {
 				newMobDiv.appendChild(mobs[i].imgMob);
 		
 				var hexPosition = document.getElementById('hex_'+mobs[i].location.x+'_'+mobs[i].location.y).getBoundingClientRect();
-				var mapPosition = document.getElementById('mapMobDiv').getBoundingClientRect();
+				var mapPosition = document.getElementById('mapGridDiv').getBoundingClientRect();
 				var mobPosition = {}
 				mobPosition.top = hexPosition.top - mapPosition.top;
 				mobPosition.bottom = hexPosition.bottom - mapPosition.bottom;
@@ -189,18 +189,13 @@ var view = {
 				mobPosition.height = hexPosition.height;
 				mobPosition.width = hexPosition.width;
 			
-				// Translate px to vw
-				for (d in mobPosition) {
-					mobPosition[d] = mobPosition[d] * (100 / document.documentElement.clientWidth);
-				};
+				newMobDiv.style.top = mobPosition.top + "px";
+				newMobDiv.style.left = mobPosition.left + "px";
+				newMobDiv.style.bottom = mobPosition.bottom + "px";
+				newMobDiv.style.right = mobPosition.right + "px";
 			
-				newMobDiv.style.top = mobPosition.top + "vw";
-				newMobDiv.style.left = mobPosition.left + "vw";
-				newMobDiv.style.bottom = mobPosition.bottom + "vw";
-				newMobDiv.style.right = mobPosition.right + "vw";
-			
-				newMobDiv.style.height = mobPosition.height + "vw";
-				newMobDiv.style.width = mobPosition.width + "vw";
+				newMobDiv.style.height = mobPosition.height + "px";
+				newMobDiv.style.width = mobPosition.width + "px";
 			
 				mobs[i].div = newMobDiv;
 			};
@@ -293,6 +288,7 @@ var view = {
 			};
 		};
 		var heroButtonsDiv = document.getElementById('heroButtonsDiv');
+		heroButtonsDiv.innerHTML = '';
 		for (i in levelHeroes) {
 			var newButton = document.createElement('button');
 			newButton.innerHTML = levelHeroes[i].name;
@@ -1049,7 +1045,6 @@ var view = {
 			for (i in saves) {
 				var save = JSON.parse(localStorage[saves[i]]);
 				var saveName = saves[i].slice(18);
-				console.log(save);
 				
 				var newRow = document.createElement('tr');
 				newRow.id = 'loadRow '+saveName;

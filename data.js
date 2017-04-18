@@ -151,7 +151,7 @@ var dataEthnicities = {
  	},
  
  	blunt: {
- 		names: ["Dazed","Dizzy","Concussion"],
+ 		names: ["Dazed","Battered","Bruised","Concussion"],
  		stat: "focus",
  	},
  
@@ -251,6 +251,28 @@ var dataEthnicities = {
  			view.attackAnimate(attacker,defender.location);
  		},
  	},
+ 
+ 	burn: {
+ 		name: "Burn",
+ 		id: 'burn',
+ 		description: '',
+ 		img: '',
+ 		cost: {strength:1},
+ 		target: true,
+ 		targetFoes: true,
+ 		targetFriendlies: false,
+ 		range: 1,
+ 		attackStat: 'strength',
+ 		attackBonus: 0,
+ 		defenseStat: 'armor',
+ 		defenseBonus: 0,
+ 		dodgeable: false,
+ 		wounds: [dataWounds.fire],
+ 		execute: function(attacker,defender) {
+ 			game.simpleAttack(attacker,defender,this)
+ 			view.attackAnimate(attacker,defender.location);
+ 		},
+ 	},
  	
  	defensiveStance: {
  		name: "Defensive Stance",
@@ -262,6 +284,19 @@ var dataEthnicities = {
  		range: 0,
  		execute: function() {
  			view.focus.mob.stats.move = Math.min(view.focus.mob.stats.move+2,view.focus.mob.stats.moveMax);
+ 		},
+ 	},
+ 	
+ 	douse: {
+ 		name: "Douse",
+ 		id: "douse",
+ 		cost: {move:1},
+ 		target: true,
+ 		targetFoes: true,
+ 		targetFriendlies: false,
+ 		range: 1,
+ 		execute: function(attacker,defender) {
+ 			console.log('douse!');
  		},
  	},
  	
@@ -747,6 +782,17 @@ var dataEthnicities = {
  		},
  	},
  	
+ 	pail: {
+ 		name: "Pail",
+ 		id: 'pail',
+ 		value: 0,
+ 		slot: ['left','right'],
+ 		maneuvers: [dataManeuvers.douse],
+ 		svgNodes: function(mob,bodyConstants) {
+ 			return draw.pail(mob,bodyConstants,['silver','saddleBrown','aqua']);
+ 		},
+ 	},
+ 	
  	ratCarcass: {
  		name: "Giant Rat Carcass",
  		id: 'ratCarcass',
@@ -850,6 +896,26 @@ var dataEthnicities = {
  			maneuvers: [dataManeuvers.puppyKisses],
  			passives: [],
  		},
+ 	},
+ 	
+ 	fire: {
+ 		name: "Fire",
+ 		imgPath: "img/fire.svg",
+ 		ai: 'dormant',
+ 		stats: {
+ 			morale: 100,
+ 			move: 0,
+ 			moveMax: 0,
+ 			strength: 1,
+ 			strengthMax: 5,
+ 			focus: 0,
+ 			focusMax: 0,
+ 			armor: 100,
+ 		},
+ 		maneuvers: [
+ 			dataManeuvers.burn,
+ 		],
+ 		loot: [],
  	},
  
  	rat: {
@@ -1074,8 +1140,8 @@ var dataEthnicities = {
  			moveMax: 3,
  			strength: 3,
  			strengthMax: 3,
- 			focus: 5,
- 			focusMax: 5,
+ 			focus: 4,
+ 			focusMax: 4,
  			armor: 4,
  		},
  		maneuvers: [

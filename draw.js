@@ -145,6 +145,115 @@ var draw = {
 		return svgNodes;
 	},
 	
+	pail: function(mob,bodyConstants,colors) {
+		if (bodyConstants.wrist.id === 'rightWristPivot') {var reflect = 1} else {var reflect = -1};
+		var rotation = 110 * reflect;
+		var pailRotation = 20 * reflect;
+		var offset = 5 * reflect;
+		
+		var svgNodes = document.createElementNS('http://www.w3.org/2000/svg',"g");
+		
+		// Thumb
+		var thumb = draw.thumb(mob,bodyConstants);
+		thumb.setAttribute('transform','translate('+offset+',10) rotate('+rotation+','+bodyConstants.wrist.cx.animVal.value+','+bodyConstants.wrist.cy.animVal.value+')');
+		svgNodes.appendChild(thumb);
+		
+		// Handle
+		
+		var handle = document.createElementNS('http://www.w3.org/2000/svg',"circle");
+		handle.setAttribute('stroke',colors[0]);
+		handle.setAttribute('stroke-width',3);
+		handle.setAttribute('fill','none');
+		handle.setAttribute('cx',bodyConstants.wrist.cx.animVal.value-reflect*10);
+		handle.setAttribute('cy',bodyConstants.wrist.cy.animVal.value+20);
+		handle.setAttribute('r',20);
+		svgNodes.appendChild(handle);
+		
+		var handle = document.createElementNS('http://www.w3.org/2000/svg',"circle");
+		handle.setAttribute('stroke','black');
+		handle.setAttribute('stroke-width',1);
+		handle.setAttribute('fill','none');
+		handle.setAttribute('cx',bodyConstants.wrist.cx.animVal.value-reflect*10);
+		handle.setAttribute('cy',bodyConstants.wrist.cy.animVal.value+20);
+		handle.setAttribute('r',22);
+		svgNodes.appendChild(handle);
+		
+		var handle = document.createElementNS('http://www.w3.org/2000/svg',"circle");
+		handle.setAttribute('stroke','black');
+		handle.setAttribute('stroke-width',1);
+		handle.setAttribute('fill','none');
+		handle.setAttribute('cx',bodyConstants.wrist.cx.animVal.value-reflect*10);
+		handle.setAttribute('cy',bodyConstants.wrist.cy.animVal.value+20);
+		handle.setAttribute('r',18);
+		svgNodes.appendChild(handle);
+		
+		// Pail
+		
+		var side = document.createElementNS('http://www.w3.org/2000/svg',"path");
+		side.setAttribute('stroke','black');
+		side.setAttribute('stroke-width',1);
+		side.setAttribute('fill',colors[1]);
+		var path = 'm '+bodyConstants.wrist.cx.animVal.value+','+bodyConstants.wrist.cy.animVal.value;
+		var pailOffset = -3 * reflect - 22;
+		path += 'm '+pailOffset+',25';
+		path += 'l 4,20 c 0,8 36,8 36,0 l 4,-20 l -44,0';
+		side.setAttributeNS(null,'d',path);
+		side.setAttribute('transform','rotate('+pailRotation+','+bodyConstants.wrist.cx.animVal.value+','+bodyConstants.wrist.cy.animVal.value+')');
+		svgNodes.appendChild(side);
+		
+		var lip = document.createElementNS('http://www.w3.org/2000/svg',"ellipse");
+		lip.setAttribute('stroke',colors[1]);
+		lip.setAttribute('stroke-width',3);
+		lip.setAttribute('fill',colors[2]);
+		lip.setAttribute('cx',bodyConstants.wrist.cx.animVal.value-reflect*3);
+		lip.setAttribute('cy',bodyConstants.wrist.cy.animVal.value+25);
+		lip.setAttribute('rx',20);
+		lip.setAttribute('ry',5);
+		lip.setAttribute('transform','rotate('+pailRotation+','+bodyConstants.wrist.cx.animVal.value+','+bodyConstants.wrist.cy.animVal.value+')');
+		svgNodes.appendChild(lip);
+		
+		var lip = document.createElementNS('http://www.w3.org/2000/svg',"ellipse");
+		lip.setAttribute('stroke','black');
+		lip.setAttribute('stroke-width',1);
+		lip.setAttribute('fill','none');
+		lip.setAttribute('cx',bodyConstants.wrist.cx.animVal.value-reflect*3);
+		lip.setAttribute('cy',bodyConstants.wrist.cy.animVal.value+25);
+		lip.setAttribute('rx',22);
+		lip.setAttribute('ry',7);
+		lip.setAttribute('transform','rotate('+pailRotation+','+bodyConstants.wrist.cx.animVal.value+','+bodyConstants.wrist.cy.animVal.value+')');
+		svgNodes.appendChild(lip);
+		
+		var stave = document.createElementNS('http://www.w3.org/2000/svg',"line");
+		stave.setAttribute('stroke','black');
+		stave.setAttribute('stroke-width',1);
+		stave.setAttribute('fill','none');
+		stave.setAttribute('x1',bodyConstants.wrist.cx.animVal.value-reflect*3);
+		stave.setAttribute('y1',bodyConstants.wrist.cy.animVal.value+32);
+		stave.setAttribute('x2',bodyConstants.wrist.cx.animVal.value-reflect*12);
+		stave.setAttribute('y2',bodyConstants.wrist.cy.animVal.value+49);
+		lip.setAttribute('transform','rotate('+pailRotation+','+bodyConstants.wrist.cx.animVal.value+','+bodyConstants.wrist.cy.animVal.value+')');
+		svgNodes.appendChild(stave);
+		
+		var stave = document.createElementNS('http://www.w3.org/2000/svg',"line");
+		stave.setAttribute('stroke','black');
+		stave.setAttribute('stroke-width',1);
+		stave.setAttribute('fill','none');
+		stave.setAttribute('x1',bodyConstants.wrist.cx.animVal.value+reflect*3);
+		stave.setAttribute('y1',bodyConstants.wrist.cy.animVal.value+32);
+		stave.setAttribute('x2',bodyConstants.wrist.cx.animVal.value-reflect*7);
+		stave.setAttribute('y2',bodyConstants.wrist.cy.animVal.value+49);
+		lip.setAttribute('transform','rotate('+pailRotation+','+bodyConstants.wrist.cx.animVal.value+','+bodyConstants.wrist.cy.animVal.value+')');
+		svgNodes.appendChild(stave);
+		
+		
+		// Fist Front
+		var fist = draw.fist(mob,bodyConstants);
+		fist.setAttribute('transform','translate('+offset+',10) rotate('+rotation+','+bodyConstants.wrist.cx.animVal.value+','+bodyConstants.wrist.cy.animVal.value+')');
+		svgNodes.appendChild(fist);
+		
+		return svgNodes;
+	},
+	
 	sundress: function(mob,bodyConstants,colors) {
 		var svgNodes = document.createElementNS('http://www.w3.org/2000/svg',"g");
 		svgNodes.setAttribute('fill',colors[0]);
@@ -389,7 +498,7 @@ var draw = {
 	mothersSword: function(mob,bodyConstants,colors) {
 		var svgNodes = document.createElementNS('http://www.w3.org/2000/svg',"g");
 		
-		// Add thumb here
+		// Thumb
 		
 		var thumb = draw.thumb(mob,bodyConstants);
 		svgNodes.appendChild(thumb);
