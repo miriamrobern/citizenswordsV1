@@ -87,7 +87,7 @@ var view = {
 		
 		for (i in range) {
 			var newFogDiv = document.createElement('div');
-			document.getElementById('mapMobDiv').appendChild(newFogDiv);
+			document.getElementById('mapFogDiv').appendChild(newFogDiv);
 			
 			newFogDiv.className = 'fogTile';
 
@@ -168,7 +168,7 @@ var view = {
 	
 	refreshMapMobs: function() {
 		
-// 		document.getElementById('mapMobDiv').innerHTML = '';
+		document.getElementById('mapMobDiv').innerHTML = '';
 		for (i in mobs) {
 			if (mobs[i].location !== undefined) {
 				var newMobDiv = document.createElement('div');

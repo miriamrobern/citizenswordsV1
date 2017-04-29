@@ -294,9 +294,36 @@ var dataEthnicities = {
  		target: true,
  		targetFoes: true,
  		targetFriendlies: false,
- 		range: 1,
+ 		range: 2,
  		execute: function(attacker,defender) {
- 			console.log('douse!');
+ 			if (defender.name === "Fire") {
+				
+				defender.stats.strength -= 2;
+				view.jiggleMob(mobs[mob]);
+				for (hex in defender.location.adjacent) {
+					for (mob in mobs) {
+						if (mobs[mob].location === hex && mobs[mob].name === "Fire") {
+							mobs[mob].stats.strength--;
+							view.jiggleMob(mobs[mob]);
+						};
+						if (mobs[mob].name === "Fire" && mobs[mob].stats.strength <= 0) {
+							mobs[mob].location = undefined;
+							mobs[mob].ai = ai.dormant;
+						};
+					};
+				};
+				
+				if (attacker.equipment.left === dataItems.pail) {
+					attacker.equip(attacker.scabbard.left,'left');
+				} else {
+					attacker.equip(attacker.scabbard.left,'left');
+					attacker.equip(attacker.scabbard.right,'right');
+					attacker.scabbard = undefined;
+				};
+				view.refreshMapMobs();
+				view.selectMob(attacker);
+				
+ 			};
  		},
  	},
  	

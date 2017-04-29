@@ -376,6 +376,7 @@ var handlers = {
 
 window.addEventListener('mouseup',handlers.dropItem,false);
 
+// dismissing dialogue pane
 window.onclick = function(event) {
 	var dialogueBacksplash = document.getElementById('dialogueBacksplash');
 	if (event.target == dialogueBacksplash) {
@@ -387,6 +388,7 @@ window.onclick = function(event) {
 	};
 };
 
+// keybindings
 document.addEventListener('keydown',function(event) {
 	if (Number.isInteger(parseInt(event.key)) && view.focus.mob !== undefined) {
 		if (view.focus.mob.player) {

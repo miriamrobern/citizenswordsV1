@@ -366,6 +366,8 @@ function Hex(x,y,type) {
 
 function Mob(type,x,y,id,name,team,heritage) {
 
+	this.type = type;
+
 	for (h in map.hexes) {
 		if (map.hexes[h].x === x && map.hexes[h].y === y) {
 			this.location = map.hexes[h];

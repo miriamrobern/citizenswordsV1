@@ -420,18 +420,12 @@ var theCityRevolts = {
  		},
  		
  		{
- 			x: 1,
- 			y: 3,
+ 			x: 5,
+ 			y: 5,
  			type: dataMobs.fire,
  			id: 'fire1',
  		},
  		
- 		{
- 			x: 2,
- 			y: 3,
- 			type: dataMobs.fire,
- 			id: 'fire2',
- 		},
  	],
  	
  	triggers: [
@@ -537,12 +531,35 @@ var theCityRevolts = {
  			y: 9,
  			event: 'safe',
  		},
+ 		
+ 		{
+ 			x: 5,
+ 			y: 3,
+ 			event: 'well',
+ 		},
  	],
  	
  	events: {
  		
  		well: function() {
- 			console.log('well well well!');
+ 			if (this.equipment.right !== dataItems.pail) {
+				view.displayDialogue("Draw pails of water? <br /> <em>Tip: once you have a full pail, you can use the 'Douse' maneuver to help put out the fires.</em>");
+				view.nextEvent('well2',mobs.indexOf(this));
+				document.getElementById('dialogueContinueButton').innerHTML = "Yes";
+				document.getElementById('dialogueCloseButton').innerHTML = "No";
+				document.getElementById('dialogueCloseButton').style.display = 'inline';
+ 			};
+ 		},
+ 		
+ 		well2: function(actor) {
+ 			actor = mobs[actor];
+ 			document.getElementById('dialogueBacksplash').style.display = 'none';
+ 			actor.scabbard = {left:actor.equipment.left,right:actor.equipment.right};
+ 			actor.equip(dataItems.pail,'left');
+ 			actor.equip(dataItems.pail,'right');
+ 			view.refreshMapMobs();
+ 			view.selectMob(actor);
+ 			console.log(actor);
  		},
  	
  		guildmaster: function() {
