@@ -31,6 +31,30 @@ var ai = {
 		
 	},
 	
+	fire: function() {
+		if (this.testStat('strength') > 1.5) {
+			var potentialSpread = [];
+			for ( i in this.location.adjacent ) {
+				if (this.location.adjacent[i].fuel) {
+					var unoccupied = true;
+					for (m in mobs) {
+						if (mobs[m].location == this.location.adjacent[i]) {
+							unoccupied = false;
+						};
+					};
+					if (unoccupied) {
+						potentialSpread.push(this.location.adjacent[i]);
+					};
+				};
+			};
+			if (potentialSpread.length > 0) {
+				var spreadHex = potentialSpread[Math.random() * potentialSpread.length << 0];
+				var newFire = new Mob(dataMobs.fire,spreadHex.x,spreadHex.y);
+				view.refreshMapMobs();
+			};
+		};
+	},
+	
 	defeated: function() {
 		for (m=0;m<this.stats.move;m++) {
 			ai.flee(this);

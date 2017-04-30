@@ -27,6 +27,28 @@ var handlers = {
 		localStorage.removeItem('CitizenSwordsSave ' + saveName);
 		view.refreshSaveLoad();
 	},
+	
+	toggleOptions: function() {
+		var optionsDiv = document.getElementById('optionsDiv');
+		if (optionsDiv.style.display == 'none') {
+			optionsDiv.style.display = 'block';
+		} else {
+			optionsDiv.style.display = 'none';
+		}
+	},
+	
+	updateDebug: function() {
+		if (document.getElementById('debugToggle').value == 0) {
+			document.getElementById('optionDebugOff').className = 'optionSelected';
+			document.getElementById('optionDebugOn').className = 'optionDeselected';
+			view.options.debug = false;
+		} else {
+			document.getElementById('optionDebugOff').className = 'optionDeselected';
+			document.getElementById('optionDebugOn').className = 'optionSelected';
+			view.options.debug = true;
+		};
+		view.displayMapGrid();
+	},
 
 	loadLevel: function(level) {
 		

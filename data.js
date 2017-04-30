@@ -928,7 +928,7 @@ var dataEthnicities = {
  	fire: {
  		name: "Fire",
  		imgPath: "img/fire.svg",
- 		ai: 'dormant',
+ 		ai: 'fire',
  		stats: {
  			morale: 100,
  			move: 0,

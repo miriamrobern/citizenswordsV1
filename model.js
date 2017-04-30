@@ -28,6 +28,10 @@ var game = {
 				newMob.ai = ai[level.mobs[mobIndex].ai];
 			};
 		};
+		
+		if (view.focus.level.onload !== undefined) {
+			view.focus.level.onload();
+		}
 
 	
 	},

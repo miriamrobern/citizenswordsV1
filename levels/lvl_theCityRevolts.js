@@ -302,6 +302,16 @@ var theCityRevolts = {
  		{x:9,y:20},
  	],
  	
+ 	onload: function() {
+ 		
+ 		// Define Hexes with Burnable Fuel
+ 		var fuelHexes = [124,125,155,156,157,158,188,189,190,220,221,222,254,255,256,287,288,289,322];
+ 		for (hex in fuelHexes) {
+ 			map.hexes[fuelHexes[hex]].fuel = true;
+ 		};
+ 		
+ 	},
+ 	
  	teams: {
  	
  		player: {
@@ -417,13 +427,6 @@ var theCityRevolts = {
  			y: 9,
  			type: dataMobs.fire,
  			id: 'fire0',
- 		},
- 		
- 		{
- 			x: 5,
- 			y: 5,
- 			type: dataMobs.fire,
- 			id: 'fire1',
  		},
  		
  	],
@@ -543,7 +546,7 @@ var theCityRevolts = {
  		
  		well: function() {
  			if (this.equipment.right !== dataItems.pail) {
-				view.displayDialogue("Draw pails of water? <br /> <em>Tip: once you have a full pail, you can use the 'Douse' maneuver to help put out the fires.</em>");
+				view.displayDialogue("Draw pails of water? </p> <p class='tip'>Tip: once you have a full pail, you can use the 'Douse' maneuver to help put out the fires.");
 				view.nextEvent('well2',mobs.indexOf(this));
 				document.getElementById('dialogueContinueButton').innerHTML = "Yes";
 				document.getElementById('dialogueCloseButton').innerHTML = "No";

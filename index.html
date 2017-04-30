@@ -31,19 +31,33 @@
 			<button id='abortLevelButton' disabled onclick='handlers.returnHome()'>Abort Level</button>
 			<button id = 'saveButton' disabled onclick = 'handlers.saveGame()'>Save Game</button>
 			<button id = 'loadGameButton' disabled onclick = 'view.switchToIntroMode()'>Load Game</button>
-			<button disabled>Options</button>
+			<button onclick='handlers.toggleOptions()' >Options</button>
 		
 		</div>
 		
 		<div id='introDiv'>
 			<p>In this <em>very under-construction</em> game, you take on the role of citizens of a beautiful, cosmopolitain fantasy city who rise up against the tyranny of the despotic Ogre King.  It's a tactical roleplaying game, which means you mostly move little characters around on a map to stage little battles.</p>
-			<p>There isn't much here yet -- one and a half levels -- but I'm doing a lot of backend work to make creating levels as easy as possible in the future.</p>
+			<p>There isn't much here yet -- one and a half levels -- but I'm doing a lot of backend work to make creating levels as easy as possible going forward.</p>
 			
 			<div id='newGameDiv'>
 				<button onclick = 'handlers.newGame()'>New Game</button>
 			</div>
 			
 			<table id='saveLoadTable'></table>
+		
+		</div>
+		
+		<div id='optionsDiv' hidden>
+		
+			<div id='optionsTitle'>Options</div>
+		
+			<div class='optionsItem'>
+				Debug: <span id='optionDebugOff' class='optionSelected'>off</span> <input id='debugToggle' class='optionsToggle' type='range' min=0 max=1 value=0 onchange = 'handlers.updateDebug()' /> <span id='optionDebugOn' class='optionDeselected'>on</span>
+			</div>
+			
+			<div class='optionsItem'>
+				<button onclick='handlers.toggleOptions()' >Close Options</button>
+			</div>
 		
 		</div>
 		

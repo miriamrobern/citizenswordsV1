@@ -7,6 +7,8 @@ var view = {
 		
 	},
 	
+	options: {debug:false},
+	
 	clearLevel: function() {
 		document.getElementById('mapGridDiv').innerHTML = '';
 		document.getElementById('mapMobDiv').innerHTML = '';
@@ -158,8 +160,12 @@ var view = {
 			};
 			
 			var newHexCoords = document.createElement('p');
-			newHexCoords.className = 'hexCoords';
 			newHexCoords.innerHTML = "(" + map.hexes[i].x + "," + map.hexes[i].y + ")<br>Hex "+i;
+			if (view.options.debug) {
+				newHexCoords.className = 'hexCoords';
+			} else {
+				newHexCoords.className = 'hexCoords hidden';
+			};
 			newHexDiv.appendChild(newHexCoords);
 			
 			map.hexes[i].div = newHexDiv;
