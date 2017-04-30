@@ -9,6 +9,8 @@ var theCityRevolts = {
  	background: 'img/theCityRevolts.svg',
  	
  	startLocations: [
+ 		{x:16,y:7},
+ 		{x:16,y:8},
  		{x:1,y:2},
  		{x:2,y:2},
  		{x:1,y:3},
@@ -305,10 +307,14 @@ var theCityRevolts = {
  	onload: function() {
  		
  		// Define Hexes with Burnable Fuel
- 		var fuelHexes = [124,125,155,156,157,158,188,189,190,220,221,222,254,255,256,287,288,289,322];
+ 		var fuelHexes = [124,125,155,156,157,188,189,190,220,221,222,254,255,256,287,288,289,322];
  		for (hex in fuelHexes) {
  			map.hexes[fuelHexes[hex]].fuel = true;
  		};
+ 		
+ 		// Put Sovereign Icon in Iconoclast's Hands
+ 		var iconoclast = game.findMob('iconoclast');
+ 		iconoclast.equipment.right = dataItems.sovereignIcon;
  		
  	},
  	
@@ -335,6 +341,57 @@ var theCityRevolts = {
  	},
  	
  	mobs: [
+ 	
+ 		{
+ 			x:9,
+ 			y:7,
+ 			type: dataMobs.bossNosh,
+ 			id: 'bossNosh',
+ 			team: 'civilians',
+ 		},
+ 		
+ 		{
+ 			x: 25,
+ 			y: 9,
+ 			type: dataMobs.fire,
+ 			id: 'fire0',
+ 		},
+ 		
+ 		{
+			x:26,
+			y:21,
+			type: dataMobs.elderBock,
+			id: "elderBock",
+			name: "Elder Bock",
+			team: 'civilians',
+			ai: 'dormant',
+ 		},
+ 		
+ 		{
+			x:27,
+			y:21,
+			type:dataMobs.guildmasterMoucau,
+			id: "guildmasterMoucau",
+			team: 'civilians',
+			ai: 'dormant',
+ 		},
+ 		
+ 		{
+ 			x: 26,
+ 			y: 17,
+ 			type: dataMobs.vicarKakkel,
+ 			id: 'vicarKakkel',
+ 			team: 'civilians', 
+ 		},
+ 		
+ 		{
+ 			x:17,
+ 			y:15,
+ 			type: dataMobs.iconoclast,
+ 			id: 'iconoclast',
+ 			team: 'looters',
+ 			ai: 'dormant',
+ 		},
  		
  		{
 			x:7,
@@ -365,21 +422,19 @@ var theCityRevolts = {
  		},
  		
  		{
+ 			x:9,
+ 			y:25,
+ 			type:dataMobs.donRondel,
+ 			id: 'donRondel',
+ 			team: 'civilians',
+ 		},
+ 		
+ 		{
 			x:21,
 			y:28,
 			type:dataMobs.beulahHill,
 			id: "beulahHill",
 			name: "Beulah Hill",
-			team: 'civilians',
-			ai: 'dormant',
- 		},
- 		
- 		{
-			x:26,
-			y:21,
-			type: dataMobs.elderBock,
-			id: "elderBock",
-			name: "Elder Bock",
 			team: 'civilians',
 			ai: 'dormant',
  		},
@@ -410,23 +465,6 @@ var theCityRevolts = {
  			name: 'Daisy Moucau',
 			team: 'player',
  			ai: 'dormant',
- 		},
- 		
- 		{
-			x:27,
-			y:21,
-			type:dataMobs.guildmasterMoucau,
-			id: "guildmasterMoucau",
-			name: "Guildmaster Moucau",
-			team: 'civilians',
-			ai: 'dormant',
- 		},
- 		
- 		{
- 			x: 25,
- 			y: 9,
- 			type: dataMobs.fire,
- 			id: 'fire0',
  		},
  		
  	],
@@ -545,7 +583,7 @@ var theCityRevolts = {
  	events: {
  		
  		well: function() {
- 			if (this.equipment.right !== dataItems.pail) {
+ 			if (this.equipment !== undefined && this.equipment.right !== dataItems.pail ) {
 				view.displayDialogue("Draw pails of water? </p> <p class='tip'>Tip: once you have a full pail, you can use the 'Douse' maneuver to help put out the fires.");
 				view.nextEvent('well2',mobs.indexOf(this));
 				document.getElementById('dialogueContinueButton').innerHTML = "Yes";

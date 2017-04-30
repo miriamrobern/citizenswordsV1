@@ -302,14 +302,16 @@ var dataEthnicities = {
 				view.jiggleMob(mobs[mob]);
 				for (hex in defender.location.adjacent) {
 					for (mob in mobs) {
-						if (mobs[mob].location === hex && mobs[mob].name === "Fire") {
+						if (mobs[mob].location === defender.location.adjacent[hex] && mobs[mob].name === "Fire") {
 							mobs[mob].stats.strength--;
 							view.jiggleMob(mobs[mob]);
 						};
-						if (mobs[mob].name === "Fire" && mobs[mob].stats.strength <= 0) {
-							mobs[mob].location = undefined;
-							mobs[mob].ai = ai.dormant;
-						};
+					};
+				};
+				for (mob in mobs) {
+					if (mobs[mob].name === "Fire" && mobs[mob].stats.strength <= 0) {
+						mobs[mob].location = undefined;
+						mobs[mob].ai = ai.dormant;
 					};
 				};
 				
@@ -886,6 +888,27 @@ var dataEthnicities = {
  		svgNodes: function(mob,bodyConstants) {return draw.simpleAxe(mob,bodyConstants,['#6d5d04','saddlebrown'])},
  	},
  	
+ 	simpleSpear: {
+ 		name: "Simple Spear",
+ 		id: "simpleSpear",
+ 		value: 20,
+ 		slot: ['left','right'],
+ 		maneuvers: [
+ 		],
+ 		svgNodes: function(mob,bodyConstants) {return draw.simpleSpear(mob,bodyConstants,['#6d5d04','saddlebrown','burlywood'])},
+ 	},
+ 	
+ 	sovereignIcon: {
+ 		name: "Sovereign Icon",
+ 		id: 'sovereignIcon',
+ 		value: 10,
+ 		slot: ['left','right'],
+ 		prestige: 1,
+ 		svgNodes: function(mob,bodyConstants) {
+ 			return draw.book(mob,bodyConstants,['crimson','oldlace','gold'],1.5);
+ 		},
+ 	},
+ 	
  	mysticalSwordOfLegend: {
  		name: "Mystical Sword of Legend which also Sings, Probably",
  		id: 'mysticalSwordOfLegend',
@@ -901,84 +924,24 @@ var dataEthnicities = {
  };
  
  var dataMobs = {
- 
- 	hellhound: {
- 		name: "Hellhound",
- 		imgPath: "img/hellpuppy.svg",
- 		ai: 'basic',
- 		stats: {
- 			morale: 100,
- 			move: 6,
- 			moveMax: 6,
- 			strength: 5,
- 			strengthMax: 5,
- 			focus: 2,
- 			focusMax: 2,
- 			armor: 4,
- 		},
- 		maneuvers: [
- 			dataManeuvers.puppyKisses,
- 		],
- 		skills: {
- 			maneuvers: [dataManeuvers.puppyKisses],
- 			passives: [],
- 		},
- 	},
  	
- 	fire: {
- 		name: "Fire",
- 		imgPath: "img/fire.svg",
- 		ai: 'fire',
- 		stats: {
- 			morale: 100,
- 			move: 0,
- 			moveMax: 0,
- 			strength: 1,
- 			strengthMax: 5,
- 			focus: 0,
- 			focusMax: 0,
- 			armor: 100,
- 		},
- 		maneuvers: [
- 			dataManeuvers.burn,
- 		],
- 		loot: [],
- 	},
- 
- 	rat: {
- 		name: "Rat",
- 		imgPath: "img/rat.svg",
+ 	assassin: {
+ 		name: "Assassin",
+ 		heritage: ['dwarven','gnomish'],
  		ai: 'basic',
  		stats: {
  			morale: 100,
- 			move: 3,
- 			moveMax: 3,
- 			strength: 2,
- 			strengthMax: 2,
- 			focus: 1,
- 			focusMax: 1,
- 			armor: 1,
+ 			move: 2,
+ 			moveMax: 2,
+ 			strength: 3,
+ 			strengthMax: 3,
+ 			focus: 3,
+ 			focusMax: 3,
+ 			armor: 3,
  		},
  		maneuvers: [
- 			dataManeuvers.bite,
+ 			dataManeuvers.slash,
  		],
- 		loot: [dataItems.ratCarcass]
- 	 	},
- 
- 	doti: {
- 		name: "Doti",
- 		heritage: ['goblin','orcish'],
- 		ai: 'basic',
- 		stats: {
- 			morale: 100,
- 			move: 1,
- 			moveMax: 1,
- 			strength: 1,
- 			strengthMax: 1,
- 			focus: 2,
- 			focusMax: 2,
- 			armor: 2,
- 		},
  	},
  
  	beulahHill: {
@@ -994,6 +957,26 @@ var dataEthnicities = {
  			focus: 2,
  			focusMax: 2,
  			armor: 2,
+ 		},
+ 	},
+ 	
+ 	bossNosh: {
+ 		name: 'Boss Nosh',
+ 		heritage: ['ogrish'],
+ 		ai: 'dormant',
+ 		stats: {
+ 			morale: 100,
+ 			move: 3,
+ 			moveMax: 3,
+ 			strength: 3,
+ 			strengthMax: 3,
+ 			focus: 3,
+ 			focusMax: 3,
+ 			armor: 3,
+ 		},
+ 		equipment: {
+ 			left: dataItems.cargoHook,
+ 			armor: dataItems.roughspun,
  		},
  	},
  	
@@ -1024,6 +1007,46 @@ var dataEthnicities = {
  			passives: [],
  		},
  	},
+ 	
+ 	donRondel: {
+ 		name: 'Don Rondel',
+ 		heritage: ['trollish'],
+ 		ai: 'dormant',
+ 		stats: {
+ 			morale: 100,
+ 			move: 3,
+ 			moveMax: 3,
+ 			strength: 8,
+ 			strengthMax: 8,
+ 			focus: 6,
+ 			focusMax: 6,
+ 			armor: 6,
+ 		},
+ 		equipment: {
+ 			armor: dataItems.scrapArmor,
+ 		},
+ 	},
+ 
+ 	doti: {
+ 		name: "Doti",
+ 		heritage: ['goblin','orcish'],
+ 		ai: 'basic',
+ 		stats: {
+ 			morale: 100,
+ 			move: 1,
+ 			moveMax: 1,
+ 			strength: 1,
+ 			strengthMax: 1,
+ 			focus: 2,
+ 			focusMax: 2,
+ 			armor: 2,
+ 		},
+ 		equipment: {
+ 			armor: dataItems.scrapArmor,
+ 			left: dataItems.simpleSpear,
+ 			right: dataItems.scrapShield
+ 		},
+ 	},
  
  	elderBock: {
  		name: "Elder Bock",
@@ -1039,6 +1062,26 @@ var dataEthnicities = {
  			focusMax: 2,
  			armor: 2,
  		},
+ 	},
+ 	
+ 	fire: {
+ 		name: "Fire",
+ 		imgPath: "img/fire.svg",
+ 		ai: 'fire',
+ 		stats: {
+ 			morale: 100,
+ 			move: 0,
+ 			moveMax: 0,
+ 			strength: 1,
+ 			strengthMax: 5,
+ 			focus: 0,
+ 			focusMax: 0,
+ 			armor: 100,
+ 		},
+ 		maneuvers: [
+ 			dataManeuvers.burn,
+ 		],
+ 		loot: [],
  	},
  	
  	guildmasterMoucau: {
@@ -1057,6 +1100,53 @@ var dataEthnicities = {
  		},
  		equipment: {
  			armor: dataItems.moucauRobes,
+ 		},
+ 	},
+ 
+ 	hellhound: {
+ 		name: "Hellhound",
+ 		imgPath: "img/hellpuppy.svg",
+ 		ai: 'basic',
+ 		stats: {
+ 			morale: 100,
+ 			move: 6,
+ 			moveMax: 6,
+ 			strength: 5,
+ 			strengthMax: 5,
+ 			focus: 2,
+ 			focusMax: 2,
+ 			armor: 4,
+ 		},
+ 		maneuvers: [
+ 			dataManeuvers.puppyKisses,
+ 		],
+ 		skills: {
+ 			maneuvers: [dataManeuvers.puppyKisses],
+ 			passives: [],
+ 		},
+ 	},
+ 	
+ 	iconoclast: {
+ 		name: "Iconoclast",
+ 		heritage: [],
+ 		ai: 'basic',
+ 		stats: {
+ 			morale: 100,
+ 			move: 1,
+ 			moveMax: 1,
+ 			strength: 2,
+ 			strengthMax: 2,
+ 			focus: 4,
+ 			focusMax: 4,
+ 			armor: 2,
+ 		},
+ 		maneuvers: [
+ 			dataManeuvers.hack,
+ 			dataManeuvers.arcaneBeam,
+ 		],
+ 		equipment: {
+ 			left: dataItems.simpleAxe,
+ 			armor: dataItems.roughspun,
  		},
  	},
  	
@@ -1079,25 +1169,6 @@ var dataEthnicities = {
  		],
  	},
  	
- 	assassin: {
- 		name: "Assassin",
- 		heritage: ['dwarven','gnomish'],
- 		ai: 'basic',
- 		stats: {
- 			morale: 100,
- 			move: 2,
- 			moveMax: 2,
- 			strength: 3,
- 			strengthMax: 3,
- 			focus: 3,
- 			focusMax: 3,
- 			armor: 3,
- 		},
- 		maneuvers: [
- 			dataManeuvers.slash,
- 		],
- 	},
- 	
  	motherSkullgoblet: {
  		name: "Mother Skullgoblet",
   		faceData: {"skinColor":"#958502","templePosition":10,"templeWidth":5,"templeHeight":4,"cheekbonePosition":13,"cheekboneWidth":3,"cheekboneHeight":5,"chinHeight":50,"chinWidth":26,"eyeColor":"#a27666","eyeDistance":11,"eyeSize":6,"browSize":0,"leftBrowTilt":-2,"rightBrowTilt":2,"insideEyelidCurve":-2,"outsideEyelidCurve":8,"lowerEyelidCurve":5,"noseColor":"#9e6710","noseHeight":34,"noseSize":5,"noseWidth":5,"nostrilHeight":4,"noseBump":-2,"lipColor":"#bd7641","mouthWidth":15,"lipSize":3,"smile":-7,"mouthOpen":5,"teeth":2,"leftTusk":2,"rightTusk":0,"earColor":"#be9050","earSize":13,"earDip":-20,"earTilt":0,"earWidth":29,"earLobe":12,"hairColor":"#c3bcb5","hairLength":22,"hairCurl":12,"hairPart":-1,"hairBangs":8,"hairBangsLength":5,"hairSweep":0,"topHairHeight":0,"topHairBase":15,"topHairWidth":2,"horns":0,"shoulders":30,"bust":32,"belly":25,"hips":23,"feet":12},
@@ -1111,6 +1182,46 @@ var dataEthnicities = {
  			focus: 2,
  			focusMax: 2,
  			armor: 2,
+ 		},
+ 	},
+ 
+ 	rat: {
+ 		name: "Rat",
+ 		imgPath: "img/rat.svg",
+ 		ai: 'basic',
+ 		stats: {
+ 			morale: 100,
+ 			move: 3,
+ 			moveMax: 3,
+ 			strength: 2,
+ 			strengthMax: 2,
+ 			focus: 1,
+ 			focusMax: 1,
+ 			armor: 1,
+ 		},
+ 		maneuvers: [
+ 			dataManeuvers.bite,
+ 		],
+ 		loot: [dataItems.ratCarcass]
+ 	 },
+ 	
+ 	vicarKakkel: {
+ 		name: "Vicar Kakkel",
+ 		heritage: ['gnollish','gnollish','gnollish','gnomish'],
+ 		ai: 'dormant',
+ 		stats: {
+ 			morale: 100,
+ 			move: 2,
+ 			moveMax: 2,
+ 			strength: 2,
+ 			strengthMax: 2,
+ 			focus: 8,
+ 			focusMax: 8,
+ 			armor: 2,
+ 		},
+ 		equipment: {
+ 			armor: dataItems.initiatesRobes,
+ 			left: dataItems.initiatesSpellbook,
  		},
  	},
  
@@ -1227,10 +1338,7 @@ var dataEthnicities = {
  			'pantheon',
  			'points',
  		],
- 		proprietor: {
- 			faceData: {eyeColor:'#f2bcf3', hairColor:'#98c5a7', skinColor:'#80530d', noseColor:'#76400a', lipColor:'#552f07', earColor:'#572c07', blackEumelanin:40.45138839354496, brownEumelanin:33.508374444079124, pinkPheomelanin:58, greenKeratin:12, noseShading:-8, nosePinkness:16, lipShading:-34, lipPinkness:14, earShading:-32, earPinkness:22, templePosition:13, templeWidth:1, templeHeight:7, cheekbonePosition:11, cheekboneWidth:2, cheekboneHeight:4, chinHeight:42, chinWidth:22, eyeDistance:14, eyeSize:7, browSize:2, insideEyelidCurve:0, outsideEyelidCurve:5, lowerEyelidCurve:5, noseHeight:68, noseSize:2, noseWidth:7, nostrilHeight:8, noseBump:0, mouthWidth:12, lipSize:3, teeth:2, leftTusk:0, rightTusk:0, earSize:13, earDip:-8, earTilt:-4, earWidth:4, earLobe:11, hairCurl:8, horns:3, shoulders:33, belly:19, hips:18, feet:5, hindquarters:0, leftBrowTilt:0, rightBrowTilt:1, smile:1, mouthOpen:2, hairLength:27, hairPart:-1, hairBangs:3, hairBangsLength:24, hairSweep:5, topHairHeight:6, topHairBase:10, topHairWidth:19, bust:20.129732262417324,},
- 			equipment: {armor:dataItems.initiatesRobes},
- 		},
+ 		proprietor: dataMobs.prelateKakkel,
  		welcome: "What can I do for my fellow supplicants of the Pantheon?",
  		refusal: "You are welcome to join our services, but we only do business with those who have proven themselves to the Pantheon.  You can never be too careful; I'm sure you understand.",
  		wares: [
@@ -1435,7 +1543,7 @@ var dataEthnicities = {
 	equipment: {
 		armor: dataItems.roughspun,
 		right: dataItems.mothersSword,
-		left: dataItems.cargoHook,
+		left: dataItems.simpleSpear,
 		item0: undefined,
 		item1: undefined,
 		item2: undefined,

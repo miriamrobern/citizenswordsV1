@@ -126,6 +126,7 @@ var handlers = {
 	
 	selectManeuver: function(maneuver,button) {
 		maneuver = dataManeuvers[maneuver];
+		console.log(maneuver);
 		if (this.mode === "target") {
 			view.deselectAllManeuverButtons();
 			view.drawHexRange(view.focus.range,'open');
@@ -134,7 +135,9 @@ var handlers = {
 		};
 		if (view.focus.maneuver === maneuver) {
 			button.className = 'focusMobManeuverButton';
+			view.focus.maneuver = undefined;
 		} else if (maneuver.target) {
+			console.log('check');
 			this.mode = 'target';
 			view.focus.maneuver = maneuver;
 			view.drawHexRange(view.focus.range,'open');

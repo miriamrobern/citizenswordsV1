@@ -389,6 +389,8 @@ function Mob(type,x,y,id,name,team,heritage) {
 	} else {
 		this.name = name;
 	};	
+	
+	this.equipment = type.equipment;
 
 	if (type.imgPath !== undefined) { // outside image file
 		this.imgMob = new Image();
@@ -455,7 +457,6 @@ function Mob(type,x,y,id,name,team,heritage) {
 		this.ai = ai[type.ai];
 	};
 	
-	this.equipment = type.equipment;
 	this.loot = type.loot;
 	
 	mobs.push(this);
@@ -665,7 +666,8 @@ function Mob(type,x,y,id,name,team,heritage) {
 			};
 			paths = paths.concat(newPaths);
 		};
-
+		
+		console.log(this);
 		for (p=1;p<path.length;p++) {
 			var timedEvent = setTimeout(view.moveMob.bind(view,this,path[p]),p*200);
 			if (this.player) {

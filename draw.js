@@ -1211,6 +1211,85 @@ var draw = {
 		return shortsPath;
 	},
 	
+	simpleSpear: function(mob,bodyConstants,colors) {
+		if (bodyConstants.wrist.id === 'rightWristPivot') {var reflect = 1} else {var reflect = -1};
+
+		var svgNodes = document.createElementNS('http://www.w3.org/2000/svg',"g");
+		
+		var thumb = draw.thumb(mob,bodyConstants);
+		svgNodes.appendChild(thumb);
+		
+		var spearHead = document.createElementNS('http://www.w3.org/2000/svg',"path");
+		spearHead.setAttribute("fill",colors[0]);
+		spearHead.setAttribute("stroke","#000000");
+		spearHead.setAttribute("stroke-width","1");
+		spearHead.setAttribute("stroke-linecap","round");
+		path = 'm'+bodyConstants.wrist.cx.animVal.value+','+bodyConstants.wrist.cy.animVal.value;
+		path += 'm0,-125 ';
+		path += 'l 10,30 h-6 v10 c3,0,3,0,3,3 h-14 c0,-3,0,-3,3,-3 v-10 h-6 l10,-30';
+		spearHead.setAttributeNS(null,'d',path);
+		svgNodes.appendChild(spearHead);
+		
+		var handle = document.createElementNS('http://www.w3.org/2000/svg',"path");
+		handle.setAttribute("fill",colors[1]);
+		handle.setAttribute("stroke","#000000");
+		handle.setAttribute("stroke-width","1");
+		handle.setAttribute("stroke-linecap","round");
+		path = 'm'+bodyConstants.wrist.cx.animVal.value+','+bodyConstants.wrist.cy.animVal.value;
+		path += ' m -3,0 ';
+		path += 'v-100 c 1,-6 5,-6 6,0 v150 c 0,2 -6,2 -6,0 v-40';
+		handle.setAttributeNS(null,'d',path);
+		svgNodes.appendChild(handle);
+		
+		for (i in [1,2,3]) {
+			var binding = document.createElementNS('http://www.w3.org/2000/svg',"rect");
+			binding.setAttribute('fill',colors[2]);
+			binding.setAttribute('stroke','black');
+			binding.setAttribute('strike-width','1');
+			binding.setAttribute('x',bodyConstants.wrist.cx.animVal.value-5);
+			binding.setAttribute('y',bodyConstants.wrist.cy.animVal.value-95+i*3);
+			binding.setAttribute('width',10);
+			binding.setAttribute('height','3');
+			binding.setAttribute('rx','2');
+			binding.setAttribute('ry','2');
+			svgNodes.appendChild(binding);
+		};
+		
+		// Fist Front
+		
+		var fist = draw.fist(mob,bodyConstants);
+		svgNodes.appendChild(fist);
+		
+		return svgNodes;
+	},	
+	
+	simpleStaff: function(mob,bodyConstants,colors) {
+		if (bodyConstants.wrist.id === 'rightWristPivot') {var reflect = 1} else {var reflect = -1};
+
+		var svgNodes = document.createElementNS('http://www.w3.org/2000/svg',"g");
+		
+		var thumb = draw.thumb(mob,bodyConstants);
+		svgNodes.appendChild(thumb);
+		
+		var handle = document.createElementNS('http://www.w3.org/2000/svg',"path");
+		handle.setAttribute("fill",colors[1]);
+		handle.setAttribute("stroke","#000000");
+		handle.setAttribute("stroke-width","1");
+		handle.setAttribute("stroke-linecap","round");
+		path = 'm'+bodyConstants.wrist.cx.animVal.value+','+bodyConstants.wrist.cy.animVal.value;
+		path += ' m -3,0 ';
+		path += 'v-100 c 0,-3 6,-3 6,0 v150 c 0,2 -6,2 -6,0 v-40';
+		handle.setAttributeNS(null,'d',path);
+		svgNodes.appendChild(handle);
+		
+		// Fist Front
+		
+		var fist = draw.fist(mob,bodyConstants);
+		svgNodes.appendChild(fist);
+		
+		return svgNodes;
+	},	
+	
 	// The Monster
 	
 	drawMob: function(mob) {
