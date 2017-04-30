@@ -752,7 +752,15 @@ var view = {
 		marketTopDiv.appendChild(marketHead);
 		var marketProprietorDiv = document.createElement('div');
 		marketProprietorDiv.id = 'marketProprietorDiv';
-		var marketProprietorSVG = draw.drawMob(market.proprietor);
+		
+		if (market.proprietor.faceData !== undefined) {
+			var marketProprietorSVG = draw.drawMob(market.proprietor);
+		} else if (market.proprietor.heritage !== undefined) {
+			market.proprietor.faceData = mobDesign.randomizeFace(market.proprietor.heritage)
+			var marketProprietorSVG = draw.drawMob(market.proprietor);
+		} else {
+			var marketProprietorSVG = new Image();
+		};
 		marketProprietorSVG.className = 'mobImg';
 		marketProprietorSVG.id = 'marketProprietorSVG';
 		marketProprietorDiv.appendChild(marketProprietorSVG);

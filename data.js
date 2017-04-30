@@ -1338,7 +1338,7 @@ var dataEthnicities = {
  			'pantheon',
  			'points',
  		],
- 		proprietor: dataMobs.prelateKakkel,
+ 		proprietor: dataMobs.vicarKakkel,
  		welcome: "What can I do for my fellow supplicants of the Pantheon?",
  		refusal: "You are welcome to join our services, but we only do business with those who have proven themselves to the Pantheon.  You can never be too careful; I'm sure you understand.",
  		wares: [
@@ -1543,7 +1543,7 @@ var dataEthnicities = {
 	equipment: {
 		armor: dataItems.roughspun,
 		right: dataItems.mothersSword,
-		left: dataItems.simpleSpear,
+		left: dataItems.cargoHook,
 		item0: undefined,
 		item1: undefined,
 		item2: undefined,
