@@ -393,12 +393,13 @@ function Mob(type,x,y,id,name,team,heritage) {
 	this.equipment = type.equipment;
 
 	if (type.imgPath !== undefined) { // outside image file
-		this.imgMob = new Image();
-		this.imgMob.src = type.imgPath;
-		this.imgPortrait = new Image();
-		this.imgPortrait.src = type.imgPath;
-		this.imgBust = new Image();
-		this.imgBust.src = type.imgPath;
+		for (img in {imgMob:0,imgPortrait:0,imgBust:0}) {
+			xhr = new XMLHttpRequest();
+			xhr.open("GET",type.imgPath,false);
+			xhr.overrideMimeType('image/svg+xml');
+			xhr.send('');
+			this[img] = xhr.responseXML.documentElement;
+		};
 		this.imgPath = type.imgPath;
 	} else if (type.imgMob !== undefined) { // internal pre-rendered image
 		this.imgMob = type.imgMob;

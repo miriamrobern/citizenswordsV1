@@ -53,6 +53,13 @@ var ai = {
 				view.refreshMapMobs();
 			};
 		};
+		var masterGroupMob = this.imgMob.getElementById('masterGroup');
+		var masterGroupBust = this.imgBust.getElementById('masterGroup');
+		var masterGroupPortrait = this.imgPortrait.getElementById('masterGroup');
+		var size = 1 + this.stats.strength / 10;
+		masterGroupMob.setAttributeNS(null,'transform','scale('+size+')');
+		masterGroupBust.setAttributeNS(null,'transform','scale('+size+')');
+		masterGroupPortrait.setAttributeNS(null,'transform','scale('+size+')');
 	},
 	
 	defeated: function() {
