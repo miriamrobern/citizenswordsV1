@@ -9,8 +9,7 @@ var theCityRevolts = {
  	background: 'img/theCityRevolts.svg',
  	
  	startLocations: [
- 		{x:16,y:7},
- 		{x:16,y:8},
+ 		{x:22,y:8},
  		{x:1,y:2},
  		{x:2,y:2},
  		{x:1,y:3},
@@ -470,6 +469,42 @@ var theCityRevolts = {
  	],
  	
  	triggers: [
+ 	
+ 		{
+ 			x: 6,
+ 			y: 5,
+ 			event: 'warehouse',
+ 		},
+ 	
+ 		{
+ 			x: 5,
+ 			y: 6,
+ 			event: 'warehouse',
+ 		},
+ 	
+ 		{
+ 			x: 5,
+ 			y: 7,
+ 			event: 'warehouse',
+ 		},
+ 	
+ 		{
+ 			x: 4,
+ 			y: 8,
+ 			event: 'warehouse',
+ 		},
+ 		
+ 		{
+ 			x: 9,
+ 			y: 8,
+ 			event: 'omgFire',
+ 		},
+ 		
+ 		{
+ 			x: 10,
+ 			y: 9,
+ 			event: 'omgFire',
+ 		},
  		
  		{
  			x: 19,
@@ -556,31 +591,56 @@ var theCityRevolts = {
  		},
  		
  		{
- 			x: 20,
- 			y: 4,
+ 			x: 0,
+ 			y: 0,
  			event: 'assassins',
  		},
  		
  		{
- 			x: 21,
- 			y: 5,
+ 			x: 0,
+ 			y: 0,
  			event: 'assassins',
  		},
  		
  		{
- 			x: 21,
- 			y: 9,
+ 			x: 0,
+ 			y: 0,
  			event: 'safe',
- 		},
- 		
- 		{
- 			x: 5,
- 			y: 3,
- 			event: 'well',
  		},
  	],
  	
  	events: {
+ 	
+ 		warehouse: function() {
+ 			var bossNosh = game.findMob('bossNosh');
+ 			view.displayDialogue("Ho there, "+mobs[0].name+"!  Stay safe out here; the city's gone apeshit what with the declaration and all.  It's all I can do to keep the rampaging nitwits away from the warehouses.",bossNosh.name,bossNosh.imgBust,'right');
+ 			if (mobs[0].class === "Work") {
+ 				view.nextEvent('warehouseWork');
+ 			};
+ 			// remove events
+ 			var triggerList = [{x:6,y:5},{x:5,y:6},{x:5,y:7},{x:4,y:8}]
+ 			for (t in triggerList) {
+ 				map.findHex(triggerList[t].x,triggerList[t].y).event = undefined;
+ 			};
+ 		},
+ 		
+ 		warehouseWork: function() {
+ 			view.displayDialogue("We'll be careful, Boss.  Oh also: don't think I'm coming into work any more.  Stout and I are gonna start a freelancer company, help defend the city!",mobs[0].name,mobs[0].imgBust,'left');
+ 			view.nextEvent('warehouseWork2');
+ 		},
+ 		
+ 		warehouseWork2: function() {
+ 			var bossNosh = game.findMob('bossNosh');
+ 			view.displayDialogue("Is that so?  Me, I dunno if that's brave or foolish of you, but I wish you the best of luck regardless.  We'll miss you on the docks–assuming the King doesn't blockade us to starvation.</p><p>That is, I hate to see you go, kid, but I'm not even sure I'd have work for you regardless.  Come visit us when you miss the good times hefting crates and bales, you hear?" ,bossNosh.name,bossNosh.imgBust,'right');
+ 			// log deeds for warehouse training unlock?
+ 		},
+ 		
+ 		omgFire: function() {
+ 			var bossNosh = game.findMob('bossNosh');
+ 			view.displayDialogue("What's that smell?  Smoke?  <strong>Smoke!</strong>  Those carts are full of dry straw for the potters!  They'll catch like tinder and take the flames right into the silos.</p><p>Quick, "+mobs[0].name+" and Stout! I don't care if you work for me or not, help me douse these flames.  If the silos go up, this little rebellion will end when the city starves this winter.  Grab a pail at the well and start slinging water!",bossNosh.name,bossNosh.imgBust,'right');
+ 			map.findHex(9,8).event = undefined;
+ 			map.findHex(10,9).event = undefined;
+ 		},
  		
  		well: function() {
  			if (this.equipment !== undefined && this.equipment.right !== dataItems.pail ) {
@@ -601,6 +661,27 @@ var theCityRevolts = {
  			view.refreshMapMobs();
  			view.selectMob(actor);
  			console.log(actor);
+ 		},
+ 		
+ 		fireDoused: function() {
+ 			var allFiresOut = true;
+ 			for (m in mobs) {
+ 				if (mobs[m].type.name === "Fire" && mobs[m].location !== undefined) {
+ 					allFiresOut = false;
+ 				};
+ 			};
+ 			if (allFiresOut) {
+ 				view.displayDialogue("I think that's all of it!",mobs[0].name,mobs[0].imgBust,"left");
+ 				// Move / remove carts
+ 				for (m in mobs) {
+ 					if (mobs[m].scabbard !== undefined) {
+ 						mobs[m].equipment.left = mobs[m].scabbard.left;
+ 						mobs[m].equipment.right = mobs[m].scabbard.right;
+ 					};
+					view.refreshMapMobs();
+					view.selectMob(mobs[0]);
+ 				};
+ 			};
  		},
  	
  		guildmaster: function() {

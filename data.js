@@ -312,6 +312,9 @@ var dataEthnicities = {
 					if (mobs[mob].name === "Fire" && mobs[mob].stats.strength <= 0) {
 						mobs[mob].location = undefined;
 						mobs[mob].ai = ai.dormant;
+						if (view.focus.level.events.fireDoused !== undefined) {
+							view.focus.level.events.fireDoused();
+						};
 					};
 				};
 				

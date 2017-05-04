@@ -90,6 +90,12 @@ svg {
 .optionDeselected {
 	color: gray;
 	}
+
+.tip {
+	font-style: italic;
+	font-size: 0.6em;
+	color: cornflowerBlue;
+	}
 	
 	
 /* Load/Save Pane */

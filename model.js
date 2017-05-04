@@ -388,7 +388,11 @@ function Mob(type,x,y,id,name,team,heritage) {
 		this.name = type.name;
 	} else {
 		this.name = name;
-	};	
+	};
+	
+	if (type.class !== undefined) {
+		this.class = type.class;
+	};
 	
 	this.equipment = type.equipment;
 
@@ -636,13 +640,13 @@ function Mob(type,x,y,id,name,team,heritage) {
 		
 		rangeOptions = this.removeBlockedHexes(mobHexesWithinRange,vantage);
 		
-		var openRangeOptions = []
-		for (i in rangeOptions) {
-			if (rangeOptions[i].type === 'open') {
-				openRangeOptions.push(rangeOptions[i]);
-			};
-		};
-		return openRangeOptions;
+// 		var openRangeOptions = []
+// 		for (i in rangeOptions) {
+// 			if (rangeOptions[i].type === 'open') {
+// 				openRangeOptions.push(rangeOptions[i]);
+// 			};
+// 		};
+		return rangeOptions;
 	};
 	
 	this.move = function(hex) {
@@ -668,7 +672,6 @@ function Mob(type,x,y,id,name,team,heritage) {
 			paths = paths.concat(newPaths);
 		};
 		
-		console.log(this);
 		for (p=1;p<path.length;p++) {
 			var timedEvent = setTimeout(view.moveMob.bind(view,this,path[p]),p*200);
 			if (this.player) {
@@ -853,6 +856,7 @@ function Mob(type,x,y,id,name,team,heritage) {
 			name: this.name,
 			skills: {maneuvers:[],passives:[]},
 			stats: this.stats,
+			class: this.class,
 		};
 		for (i in this.equipment) {
 			if (this.equipment[i] !== undefined) {
